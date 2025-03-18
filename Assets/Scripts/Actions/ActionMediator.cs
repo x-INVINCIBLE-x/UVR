@@ -1,0 +1,67 @@
+using System.Collections;
+using UnityEngine;
+
+public class ActionMediator : MonoBehaviour
+{
+    public Rigidbody rb;
+    public CharacterController controller;
+    public GameObject bodyCollider;
+    public LayerMask whatIsGround;
+    public Coroutine landRoutine = null;
+
+    public float groundCheckOffset = 0.2f;
+
+    protected virtual void Start()
+    {
+        SetPhysicalMotion(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+            DisablePhysicalMotionOnLand();
+    }
+
+    public void SetPhysicalMotion(bool status)
+    {
+        rb.isKinematic = !status;
+        controller.enabled = !status;
+        bodyCollider.SetActive(status);
+    }
+
+    public void DisablePhysicalMotionOnLand()
+    {
+        landRoutine ??= StartCoroutine(LandRoutine());
+    }
+
+    IEnumerator LandRoutine()
+    {
+        float safteyTimer = 5;
+        yield return new WaitForSeconds(0.1f);
+        while (!IsGrounded() || safteyTimer < 0)
+        {
+            safteyTimer -= Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        
+        SetPhysicalMotion(false);
+        landRoutine = null;
+    }
+
+    public bool IsGrounded()
+    {
+        Vector3 start = controller.transform.TransformPoint(controller.center);
+        float rayLength = controller.height / 2 - controller.radius + groundCheckOffset;
+        bool hasHit = Physics.SphereCast(start, controller.radius, Vector3.down, out RaycastHit _, rayLength, whatIsGround);
+        Debug.Log("IS Grounded: " + hasHit);
+        return hasHit;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 start = controller.transform.TransformPoint(controller.center);
+        float rayLength = controller.height / 2 - controller.radius + groundCheckOffset;
+        Gizmos.DrawRay(start, Vector3.down * rayLength);
+    }
+}
