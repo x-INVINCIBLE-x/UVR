@@ -21,24 +21,10 @@ public class TimeAction : MonoBehaviour
     private void ModifyTime(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         Time.timeScale = Time.timeScale == 1 ? 0.4f : 1f;
+        actionMediator.TimeScaleUpdated(Time.timeScale);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Time.timeScale = 0.3f;
-        }
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            Time.timeScale = 1f;
-        }
     }
-
-    public void ModifyTime()
-    {
-        Time.timeScale = 1.0f;
-    }
-
-    
 }

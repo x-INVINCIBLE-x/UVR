@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class ActionMediator : MonoBehaviour
     public Coroutine landRoutine = null;
 
     public float groundCheckOffset = 0.2f;
+    public event Action<float> OnTimeModified;
 
     protected virtual void Start()
     {
@@ -47,6 +49,8 @@ public class ActionMediator : MonoBehaviour
         SetPhysicalMotion(false);
         landRoutine = null;
     }
+
+    public void TimeScaleUpdated(float timeModifier) => OnTimeModified?.Invoke(timeModifier);
 
     public bool IsGrounded()
     {

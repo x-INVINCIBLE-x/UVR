@@ -5,6 +5,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
 
+    public InputActionProperty leftJoystick;
     public InputActionProperty leftJoystickPress;
     public InputActionProperty rightJoystickPress;
     public InputActionProperty X;
