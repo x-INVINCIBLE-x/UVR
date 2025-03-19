@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b13d88f6739db24186577fab76b7209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hand: 0
   startSwingPoint: {fileID: 6324986917392490795}
   maxDistance: 35
   swingLayer:
@@ -108,8 +109,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  pullingStrngth: 25000
-  playerRb: {fileID: 0}
+  pullingStrength: 0
   lineRenderer: {fileID: 4318263276767986214}
   joint: {fileID: 0}
 --- !u!120 &4318263276767986214
@@ -813,7 +813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2998399906105051304
 Transform:
   m_ObjectHideFlags: 0

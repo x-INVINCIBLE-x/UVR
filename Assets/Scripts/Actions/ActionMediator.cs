@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ActionMediator : MonoBehaviour
 {
+    public GrabStatus grabStatus;
     public Rigidbody rb;
     public CharacterController controller;
     public GameObject bodyCollider;
@@ -12,6 +13,11 @@ public class ActionMediator : MonoBehaviour
 
     public float groundCheckOffset = 0.2f;
     public event Action<float> OnTimeModified;
+
+    private void Awake()
+    {
+        grabStatus = GetComponent<GrabStatus>();
+    }
 
     protected virtual void Start()
     {
@@ -31,9 +37,17 @@ public class ActionMediator : MonoBehaviour
         bodyCollider.SetActive(status);
     }
 
+    public void DisablePhysicalMotion(float duration) => StartCoroutine(DisablePhysicalMotionRoutine(duration));
+
     public void DisablePhysicalMotionOnLand()
     {
         landRoutine ??= StartCoroutine(LandRoutine());
+    }
+
+    IEnumerator DisablePhysicalMotionRoutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SetPhysicalMotion(false);
     }
 
     IEnumerator LandRoutine()

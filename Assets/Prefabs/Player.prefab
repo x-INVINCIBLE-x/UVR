@@ -4911,7 +4911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7674602355991275100
 Transform:
   m_ObjectHideFlags: 0
@@ -7496,6 +7496,7 @@ GameObject:
   - component: {fileID: 1850083550364428451}
   - component: {fileID: 2424745753521518247}
   - component: {fileID: 185761975279686537}
+  - component: {fileID: 518953205416555123}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -7531,6 +7532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703e384d79a3aaa4895a647ce01981fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabStatus: {fileID: 0}
   rb: {fileID: 2173772440850744949}
   controller: {fileID: 1768631438717453101}
   bodyCollider: {fileID: 1418993390314153649}
@@ -7565,6 +7567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb4a097dd955b747aece317e106368f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dynamicMoveProvider: {fileID: 7594992701420698416}
 --- !u!114 &185761975279686537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7582,6 +7585,22 @@ MonoBehaviour:
   moveSpeed: 5
   threshold: 0
   smoothTime: 0.3
+--- !u!114 &518953205416555123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8407348866999892390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a828780f81d3d95479666b8521c3ddd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <LeftInteractor>k__BackingField: {fileID: 5616047827013122514}
+  <RightInteractor>k__BackingField: {fileID: 4726719099557315266}
+  <LeftHand>k__BackingField: 0
+  <RightHand>k__BackingField: 0
 --- !u!1 &8493140311028471354
 GameObject:
   m_ObjectHideFlags: 0

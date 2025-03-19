@@ -7,6 +7,7 @@ public class SwingAction : MonoBehaviour
 {
     private ActionMediator actionMediator;
 
+    public Hand hand; 
     public Transform startSwingPoint;
     public float maxDistance;
     public LayerMask swingLayer;
@@ -17,7 +18,7 @@ public class SwingAction : MonoBehaviour
     public InputActionProperty swingAction;
     public InputActionProperty pullAction;
 
-    public float pullingStrngth = 500f;
+    public float pullingStrength;
 
     public LineRenderer lineRenderer;
     public SpringJoint joint;
@@ -30,8 +31,28 @@ public class SwingAction : MonoBehaviour
         actionMediator = GetComponentInParent<ActionMediator>();
     }
 
+    private void Start()
+    {
+        actionMediator.OnTimeModified += HandleTimeChange;
+    }
+
+    private void HandleTimeChange(float timeMultiplier)
+    {
+        if (timeMultiplier != 1)
+        {
+            pullingStrength *= 2;
+        }
+        else
+        {
+            pullingStrength /= 2;
+        }
+    }
+
     private void Update()
     {
+        if (actionMediator.grabStatus.GetStatus(hand) != GrabType.Empty)
+            return;
+
         GetSwingPoint();
 
         if (swingAction.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.P))
@@ -50,8 +71,8 @@ public class SwingAction : MonoBehaviour
     private void StartSwing()
     {
         if (!hasHit) return;
-        Debug.Log("enter");
 
+        actionMediator.grabStatus.ChangeHandStatus(hand, GrabType.Swing);
         actionMediator.SetPhysicalMotion(true);
 
         joint = actionMediator.rb.gameObject.AddComponent<SpringJoint>();
@@ -68,6 +89,7 @@ public class SwingAction : MonoBehaviour
 
     private void StopSwing()
     {
+        actionMediator.grabStatus.ResetHandStatus(hand);
         actionMediator.DisablePhysicalMotionOnLand();
 
         Debug.Log("Destroy");
@@ -78,10 +100,12 @@ public class SwingAction : MonoBehaviour
     {
         if (!joint) return;
 
+        if (actionMediator.grabStatus.IsClimbing()) { return; }
+
         if (!pullAction.action.IsPressed()) return;
         Debug.Log("pull");
         Vector3 direction = (swingPoint - startSwingPoint.position).normalized;
-        actionMediator.rb.AddForce(direction * pullingStrngth * Time.deltaTime);
+        actionMediator.rb.AddForce(direction * pullingStrength * Time.deltaTime);
 
         float distance = Vector3.Distance(actionMediator.rb.position, swingPoint);
         joint.maxDistance = distance;
