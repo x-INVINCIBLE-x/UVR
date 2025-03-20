@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class ActionMediator : MonoBehaviour
 {
+    public GameObject abilitySelectDisplay;
+
     public GrabStatus grabStatus;
     public Rigidbody rb;
     public CharacterController controller;
@@ -22,12 +25,12 @@ public class ActionMediator : MonoBehaviour
     protected virtual void Start()
     {
         SetPhysicalMotion(false);
+        InputManager.Instance.leftJoystickPress.action.performed += ToggleAbilitySelect;
     }
 
-    private void Update()
+    private void ToggleAbilitySelect(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) 
-            DisablePhysicalMotionOnLand();
+        abilitySelectDisplay.SetActive(!abilitySelectDisplay.activeSelf);
     }
 
     public void SetPhysicalMotion(bool status)

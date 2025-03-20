@@ -1063,7 +1063,16 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""X"",
+                    ""name"": ""XHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""a4a8c479-c7d5-45d6-aebf-c52b4be16524"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""XAbilityActivate"",
                     ""type"": ""Button"",
                     ""id"": ""7326f9bd-658a-443b-b33f-35c656e913ed"",
                     ""expectedControlType"": """",
@@ -1072,9 +1081,36 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Y"",
+                    ""name"": ""XDoubleTap"",
+                    ""type"": ""Button"",
+                    ""id"": ""cfcabbb4-ea97-4482-8394-74255b106902"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""YHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""e119a8ce-7cd4-4d0a-84ce-561afb11a4cf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""YAbilityActivate"",
                     ""type"": ""Button"",
                     ""id"": ""31c7e4e9-91e9-426f-9bf8-e974fe1997d2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""YDoubleTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2784c2a-c4a7-4051-82e9-b1305d28b00a"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1375,7 +1411,29 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""X"",
+                    ""action"": ""XAbilityActivate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff57bb36-98b3-4899-b015-c2a261c963ff"",
+                    ""path"": ""<XRController>{LeftHand}/{PrimaryButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XDoubleTap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0960d1a-5b6d-4b48-8929-2b53a59de8ce"",
+                    ""path"": ""<XRController>{LeftHand}/{PrimaryButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1386,7 +1444,29 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Y"",
+                    ""action"": ""YAbilityActivate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c813e256-245d-4c28-9533-f3a830d53e9e"",
+                    ""path"": ""<XRController>{LeftHand}/{SecondaryButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YDoubleTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa5feb3d-2aff-486c-9ae9-b93af343e428"",
+                    ""path"": ""<XRController>{LeftHand}/{SecondaryButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1434,7 +1514,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                 },
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""9693e25f-8a4f-4aed-842f-3961243c69a1"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -3523,8 +3603,12 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         m_XRILeftInteraction_DirectionalManipulation = m_XRILeftInteraction.FindAction("Directional Manipulation", throwIfNotFound: true);
         m_XRILeftInteraction_ScaleToggle = m_XRILeftInteraction.FindAction("Scale Toggle", throwIfNotFound: true);
         m_XRILeftInteraction_ScaleOverTime = m_XRILeftInteraction.FindAction("Scale Over Time", throwIfNotFound: true);
-        m_XRILeftInteraction_X = m_XRILeftInteraction.FindAction("X", throwIfNotFound: true);
-        m_XRILeftInteraction_Y = m_XRILeftInteraction.FindAction("Y", throwIfNotFound: true);
+        m_XRILeftInteraction_XHold = m_XRILeftInteraction.FindAction("XHold", throwIfNotFound: true);
+        m_XRILeftInteraction_XAbilityActivate = m_XRILeftInteraction.FindAction("XAbilityActivate", throwIfNotFound: true);
+        m_XRILeftInteraction_XDoubleTap = m_XRILeftInteraction.FindAction("XDoubleTap", throwIfNotFound: true);
+        m_XRILeftInteraction_YHold = m_XRILeftInteraction.FindAction("YHold", throwIfNotFound: true);
+        m_XRILeftInteraction_YAbilityActivate = m_XRILeftInteraction.FindAction("YAbilityActivate", throwIfNotFound: true);
+        m_XRILeftInteraction_YDoubleTab = m_XRILeftInteraction.FindAction("YDoubleTab", throwIfNotFound: true);
         // XRI Left Locomotion
         m_XRILeftLocomotion = asset.FindActionMap("XRI Left Locomotion", throwIfNotFound: true);
         m_XRILeftLocomotion_TeleportMode = m_XRILeftLocomotion.FindAction("Teleport Mode", throwIfNotFound: true);
@@ -4107,8 +4191,12 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
     private readonly InputAction m_XRILeftInteraction_DirectionalManipulation;
     private readonly InputAction m_XRILeftInteraction_ScaleToggle;
     private readonly InputAction m_XRILeftInteraction_ScaleOverTime;
-    private readonly InputAction m_XRILeftInteraction_X;
-    private readonly InputAction m_XRILeftInteraction_Y;
+    private readonly InputAction m_XRILeftInteraction_XHold;
+    private readonly InputAction m_XRILeftInteraction_XAbilityActivate;
+    private readonly InputAction m_XRILeftInteraction_XDoubleTap;
+    private readonly InputAction m_XRILeftInteraction_YHold;
+    private readonly InputAction m_XRILeftInteraction_YAbilityActivate;
+    private readonly InputAction m_XRILeftInteraction_YDoubleTab;
     /// <summary>
     /// Provides access to input actions defined in input action map "XRI Left Interaction".
     /// </summary>
@@ -4169,13 +4257,29 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         /// </summary>
         public InputAction @ScaleOverTime => m_Wrapper.m_XRILeftInteraction_ScaleOverTime;
         /// <summary>
-        /// Provides access to the underlying input action "XRILeftInteraction/X".
+        /// Provides access to the underlying input action "XRILeftInteraction/XHold".
         /// </summary>
-        public InputAction @X => m_Wrapper.m_XRILeftInteraction_X;
+        public InputAction @XHold => m_Wrapper.m_XRILeftInteraction_XHold;
         /// <summary>
-        /// Provides access to the underlying input action "XRILeftInteraction/Y".
+        /// Provides access to the underlying input action "XRILeftInteraction/XAbilityActivate".
         /// </summary>
-        public InputAction @Y => m_Wrapper.m_XRILeftInteraction_Y;
+        public InputAction @XAbilityActivate => m_Wrapper.m_XRILeftInteraction_XAbilityActivate;
+        /// <summary>
+        /// Provides access to the underlying input action "XRILeftInteraction/XDoubleTap".
+        /// </summary>
+        public InputAction @XDoubleTap => m_Wrapper.m_XRILeftInteraction_XDoubleTap;
+        /// <summary>
+        /// Provides access to the underlying input action "XRILeftInteraction/YHold".
+        /// </summary>
+        public InputAction @YHold => m_Wrapper.m_XRILeftInteraction_YHold;
+        /// <summary>
+        /// Provides access to the underlying input action "XRILeftInteraction/YAbilityActivate".
+        /// </summary>
+        public InputAction @YAbilityActivate => m_Wrapper.m_XRILeftInteraction_YAbilityActivate;
+        /// <summary>
+        /// Provides access to the underlying input action "XRILeftInteraction/YDoubleTab".
+        /// </summary>
+        public InputAction @YDoubleTab => m_Wrapper.m_XRILeftInteraction_YDoubleTab;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -4238,12 +4342,24 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @ScaleOverTime.started += instance.OnScaleOverTime;
             @ScaleOverTime.performed += instance.OnScaleOverTime;
             @ScaleOverTime.canceled += instance.OnScaleOverTime;
-            @X.started += instance.OnX;
-            @X.performed += instance.OnX;
-            @X.canceled += instance.OnX;
-            @Y.started += instance.OnY;
-            @Y.performed += instance.OnY;
-            @Y.canceled += instance.OnY;
+            @XHold.started += instance.OnXHold;
+            @XHold.performed += instance.OnXHold;
+            @XHold.canceled += instance.OnXHold;
+            @XAbilityActivate.started += instance.OnXAbilityActivate;
+            @XAbilityActivate.performed += instance.OnXAbilityActivate;
+            @XAbilityActivate.canceled += instance.OnXAbilityActivate;
+            @XDoubleTap.started += instance.OnXDoubleTap;
+            @XDoubleTap.performed += instance.OnXDoubleTap;
+            @XDoubleTap.canceled += instance.OnXDoubleTap;
+            @YHold.started += instance.OnYHold;
+            @YHold.performed += instance.OnYHold;
+            @YHold.canceled += instance.OnYHold;
+            @YAbilityActivate.started += instance.OnYAbilityActivate;
+            @YAbilityActivate.performed += instance.OnYAbilityActivate;
+            @YAbilityActivate.canceled += instance.OnYAbilityActivate;
+            @YDoubleTab.started += instance.OnYDoubleTab;
+            @YDoubleTab.performed += instance.OnYDoubleTab;
+            @YDoubleTab.canceled += instance.OnYDoubleTab;
         }
 
         /// <summary>
@@ -4291,12 +4407,24 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @ScaleOverTime.started -= instance.OnScaleOverTime;
             @ScaleOverTime.performed -= instance.OnScaleOverTime;
             @ScaleOverTime.canceled -= instance.OnScaleOverTime;
-            @X.started -= instance.OnX;
-            @X.performed -= instance.OnX;
-            @X.canceled -= instance.OnX;
-            @Y.started -= instance.OnY;
-            @Y.performed -= instance.OnY;
-            @Y.canceled -= instance.OnY;
+            @XHold.started -= instance.OnXHold;
+            @XHold.performed -= instance.OnXHold;
+            @XHold.canceled -= instance.OnXHold;
+            @XAbilityActivate.started -= instance.OnXAbilityActivate;
+            @XAbilityActivate.performed -= instance.OnXAbilityActivate;
+            @XAbilityActivate.canceled -= instance.OnXAbilityActivate;
+            @XDoubleTap.started -= instance.OnXDoubleTap;
+            @XDoubleTap.performed -= instance.OnXDoubleTap;
+            @XDoubleTap.canceled -= instance.OnXDoubleTap;
+            @YHold.started -= instance.OnYHold;
+            @YHold.performed -= instance.OnYHold;
+            @YHold.canceled -= instance.OnYHold;
+            @YAbilityActivate.started -= instance.OnYAbilityActivate;
+            @YAbilityActivate.performed -= instance.OnYAbilityActivate;
+            @YAbilityActivate.canceled -= instance.OnYAbilityActivate;
+            @YDoubleTab.started -= instance.OnYDoubleTab;
+            @YDoubleTab.performed -= instance.OnYDoubleTab;
+            @YDoubleTab.canceled -= instance.OnYDoubleTab;
         }
 
         /// <summary>
@@ -5740,19 +5868,47 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnScaleOverTime(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "X" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "XHold" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnX(InputAction.CallbackContext context);
+        void OnXHold(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Y" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "XAbilityActivate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnY(InputAction.CallbackContext context);
+        void OnXAbilityActivate(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "XDoubleTap" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnXDoubleTap(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "YHold" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnYHold(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "YAbilityActivate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnYAbilityActivate(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "YDoubleTab" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnYDoubleTab(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "XRI Left Locomotion" which allows adding and removing callbacks.

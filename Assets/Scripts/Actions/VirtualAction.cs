@@ -1,8 +1,14 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class VirtualAction : MonoBehaviour
+public class VirtualAction : Action
 {
+    public InputActionProperty moveAction;
+    public XRGazeInteractor gazeInteractor;
     public GameObject targetObject;
     public Transform followTransform;
     private Vector3 lastFollowPos;
@@ -14,15 +20,39 @@ public class VirtualAction : MonoBehaviour
     private Vector2 moveInput;
     private Rigidbody targetRb;
 
+    public bool isMoving = false;
+
     private void Start()
     {
-        targetRb = targetObject.GetComponent<Rigidbody>();
         InputManager.Instance.leftJoystick.action.performed += OnMove;
+        moveAction.action.performed += OnMove;
+        gazeInteractor.selectEntered.AddListener(SelectObject);
+    }
+
+    private void SelectObject(SelectEnterEventArgs args)
+    {
+        SetTargetObject(args.interactableObject.transform.gameObject);
+    }
+
+    protected override void ExecuteAbility()
+    {
+        base.ExecuteAbility();
+        if (targetObject == null)
+        {
+            // Handled by Gaze Interactor
+        }
+        else 
+        {
+            DeselectTargetObject(targetObject);
+        }
     }
 
     private void OnMove(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+
+        isMoving = !Mathf.Approximately(moveInput.x, 0) || !Mathf.Approximately(moveInput.x, 0);
+        Debug.Log(moveInput.x + "   " + moveInput.y);
     }
 
     public void SetTargetObject(GameObject ob)
@@ -34,7 +64,7 @@ public class VirtualAction : MonoBehaviour
         {
             targetRb.isKinematic = false; 
             targetRb.useGravity = false;  
-            targetRb.interpolation = RigidbodyInterpolation.Interpolate; 
+            targetRb.interpolation = RigidbodyInterpolation.Interpolate;
         }
     }
 
@@ -42,10 +72,10 @@ public class VirtualAction : MonoBehaviour
     {
         if (targetObject == null || targetRb == null) return;
 
-        if (moveInput != Vector2.zero) return;
+        if (isMoving) return;
 
         Vector3 deltaMove = (followTransform.position - lastFollowPos);
-        Debug.Log(deltaMove.sqrMagnitude);
+
         if (deltaMove.sqrMagnitude < threshold)
         {
             targetRb.linearVelocity = Vector3.zero;

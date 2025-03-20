@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
-public class TimeAction : MonoBehaviour
+public class TimeAction : Action
 {
     private ActionMediator actionMediator;
     private InputManager inputManager;
@@ -19,10 +19,24 @@ public class TimeAction : MonoBehaviour
     private void Start()
     {
         inputManager = InputManager.Instance;
-        inputManager.X.action.performed += ModifyTime;
+        //inputManager.XTap.action.performed += ModifyTime;
+    }
+
+    protected override void ExecuteAbility()
+    {
+        base.ExecuteAbility();
+        ModifyTime();
     }
 
     private void ModifyTime(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        Time.timeScale = Time.timeScale == 1 ? 0.4f : 1f;
+        AdjustSpeed();
+
+        actionMediator.TimeScaleUpdated(Time.timeScale);
+    }
+
+    private void ModifyTime()
     {
         Time.timeScale = Time.timeScale == 1 ? 0.4f : 1f;
         AdjustSpeed();
@@ -41,9 +55,5 @@ public class TimeAction : MonoBehaviour
         {
             dynamicMoveProvider.moveSpeed = defaultMoveSpeed;
         }
-    }
-
-    private void Update()
-    {
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Climbing;
 
@@ -36,8 +37,8 @@ public class GrabStatus : MonoBehaviour
 
     private void OnLeftHandSelect(SelectEnterEventArgs args)
     {
-        if (args.interactableObject.transform.TryGetComponent(out GrabStatusUpdater statusUpdater))
-            ChangeLeftHandStatus(statusUpdater.GrabType);
+        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable statusUpdater))
+            ChangeLeftHandStatus(GrabType.Object);
         if (args.interactorObject.transform.TryGetComponent(out ClimbInteractable _))
             ChangeLeftHandStatus(GrabType.Climb);
     }
@@ -45,9 +46,9 @@ public class GrabStatus : MonoBehaviour
     private void OnLeftHandDeselect(SelectExitEventArgs args) => ResetHandStatus(Hand.Left);
     private void OnRightHandSelect(SelectEnterEventArgs args)
     {
-        if (args.interactableObject.transform.TryGetComponent(out GrabStatusUpdater statusUpdater))
-            ChangeRightHandStatus(statusUpdater.GrabType);
-        if (args.interactorObject.transform.TryGetComponent(out ClimbInteractable _))
+        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable statusUpdater))
+            ChangeRightHandStatus(GrabType.Object);
+        if (args.interactorObject.transform.parent.TryGetComponent(out ClimbInteractable _))
             ChangeRightHandStatus(GrabType.Climb);
     }
 

@@ -7532,6 +7532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703e384d79a3aaa4895a647ce01981fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitySelectDisplay: {fileID: 0}
   grabStatus: {fileID: 0}
   rb: {fileID: 2173772440850744949}
   controller: {fileID: 1768631438717453101}
@@ -7567,6 +7568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb4a097dd955b747aece317e106368f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPermitted: 0
   dynamicMoveProvider: {fileID: 7594992701420698416}
 --- !u!114 &185761975279686537
 MonoBehaviour:
@@ -7580,11 +7582,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b147b20c99b4764fa40b441be30edeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPermitted: 0
+  moveAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Move
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: d65edf40-8032-49b9-8d7b-a76520a438c3
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  gazeInteractor: {fileID: 0}
   targetObject: {fileID: 0}
   followTransform: {fileID: 4787563541050134626}
   moveSpeed: 5
   threshold: 0
   smoothTime: 0.3
+  isMoving: 0
 --- !u!114 &518953205416555123
 MonoBehaviour:
   m_ObjectHideFlags: 0

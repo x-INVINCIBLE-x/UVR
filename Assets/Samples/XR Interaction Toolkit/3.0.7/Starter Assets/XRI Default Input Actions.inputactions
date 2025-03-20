@@ -977,7 +977,16 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "X",
+                    "name": "XHold",
+                    "type": "Button",
+                    "id": "a4a8c479-c7d5-45d6-aebf-c52b4be16524",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "XAbilityActivate",
                     "type": "Button",
                     "id": "7326f9bd-658a-443b-b33f-35c656e913ed",
                     "expectedControlType": "",
@@ -986,9 +995,36 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Y",
+                    "name": "XDoubleTap",
+                    "type": "Button",
+                    "id": "cfcabbb4-ea97-4482-8394-74255b106902",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "YHold",
+                    "type": "Button",
+                    "id": "e119a8ce-7cd4-4d0a-84ce-561afb11a4cf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "YAbilityActivate",
                     "type": "Button",
                     "id": "31c7e4e9-91e9-426f-9bf8-e974fe1997d2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "YDoubleTab",
+                    "type": "Button",
+                    "id": "c2784c2a-c4a7-4051-82e9-b1305d28b00a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1289,7 +1325,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "X",
+                    "action": "XAbilityActivate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff57bb36-98b3-4899-b015-c2a261c963ff",
+                    "path": "<XRController>{LeftHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "XDoubleTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0960d1a-5b6d-4b48-8929-2b53a59de8ce",
+                    "path": "<XRController>{LeftHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "XHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1300,7 +1358,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Y",
+                    "action": "YAbilityActivate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c813e256-245d-4c28-9533-f3a830d53e9e",
+                    "path": "<XRController>{LeftHand}/{SecondaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "YDoubleTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa5feb3d-2aff-486c-9ae9-b93af343e428",
+                    "path": "<XRController>{LeftHand}/{SecondaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "YHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1348,7 +1428,7 @@
                 },
                 {
                     "name": "Move",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "9693e25f-8a4f-4aed-842f-3961243c69a1",
                     "expectedControlType": "Vector2",
                     "processors": "",

@@ -50,13 +50,13 @@ public class SwingAction : MonoBehaviour
 
     private void Update()
     {
-        if (actionMediator.grabStatus.GetStatus(hand) != GrabType.Empty)
-            return;
-
         GetSwingPoint();
 
         if (swingAction.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.P))
         {
+            if (actionMediator.grabStatus.GetStatus(hand) != GrabType.Empty)
+                return;
+
             StartSwing();
         }
         else if (swingAction.action.WasReleasedThisFrame() || Input.GetKeyUp(KeyCode.P))

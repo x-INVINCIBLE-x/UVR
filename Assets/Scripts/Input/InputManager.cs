@@ -8,8 +8,12 @@ public class InputManager : MonoBehaviour
     public InputActionProperty leftJoystick;
     public InputActionProperty leftJoystickPress;
     public InputActionProperty rightJoystickPress;
-    public InputActionProperty X;
-    public InputActionProperty Y;
+    public InputActionProperty XTap;
+    public InputActionProperty XDoubleTap;
+    public InputActionProperty XHold;
+    public InputActionProperty YTap;
+    public InputActionProperty YDoubleTap;
+    public InputActionProperty YHold;
     public InputActionProperty A;
     public InputActionProperty B;
 
