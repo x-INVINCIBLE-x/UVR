@@ -10,21 +10,26 @@ public class VirtualAction : Action
     public InputActionProperty moveAction;
     public XRGazeInteractor gazeInteractor;
     public GameObject targetObject;
-    public Transform followTransform;
+    public Transform handTransform;
+    public Transform bodyTransform;
     private Vector3 lastFollowPos;
     public float moveSpeed = 3f;
-    public float threshold = 0.01f; 
+    public float threshold = 0.01f;
+
     public float smoothTime = 0.3f;
 
     private Vector3 velocity = Vector3.zero;
     private Vector2 moveInput;
     private Rigidbody targetRb;
+    private Transform followTransform;
 
-    public bool isMoving = false;
+    private bool isMoving = false;
+    private bool lastMovingStatus = false;
 
-    private void Start()
+    protected override void Start()
     {
-        InputManager.Instance.leftJoystick.action.performed += OnMove;
+        base.Start();
+        inputManager.leftJoystick.action.performed += OnMove;
         moveAction.action.performed += OnMove;
         gazeInteractor.selectEntered.AddListener(SelectObject);
     }
@@ -47,18 +52,26 @@ public class VirtualAction : Action
         }
     }
 
-    private void OnMove(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    private void OnMove(InputAction.CallbackContext context)
     {
+        if (targetObject == null) { return; }
+
         moveInput = context.ReadValue<Vector2>();
 
         isMoving = !Mathf.Approximately(moveInput.x, 0) || !Mathf.Approximately(moveInput.x, 0);
+
+        if (lastMovingStatus != isMoving)
+        {
+            lastFollowPos = followTransform.position;
+        }
+
         Debug.Log(moveInput.x + "   " + moveInput.y);
     }
 
     public void SetTargetObject(GameObject ob)
     {
         targetObject = ob;
-        lastFollowPos = followTransform.position;
+        lastFollowPos = handTransform.position;
 
         if (targetObject.TryGetComponent(out targetRb))
         {
@@ -72,7 +85,7 @@ public class VirtualAction : Action
     {
         if (targetObject == null || targetRb == null) return;
 
-        if (isMoving) return;
+        followTransform = isMoving ? bodyTransform : handTransform;
 
         Vector3 deltaMove = (followTransform.position - lastFollowPos);
 
@@ -96,8 +109,6 @@ public class VirtualAction : Action
 
     public void DeselectTargetObject(GameObject ob)
     {
-        if (targetObject != ob) return;
-
         if (targetObject.TryGetComponent(out Rigidbody rb))
         {
             rb.isKinematic = true; 
@@ -105,5 +116,14 @@ public class VirtualAction : Action
         }
 
         targetObject = null;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        inputManager.leftJoystick.action.performed -= OnMove;
+        moveAction.action.performed -= OnMove;
+        gazeInteractor.selectEntered.RemoveListener(SelectObject);
     }
 }

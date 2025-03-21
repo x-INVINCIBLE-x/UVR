@@ -5,21 +5,17 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class TimeAction : Action
 {
-    private ActionMediator actionMediator;
-    private InputManager inputManager;
     public DynamicMoveProvider dynamicMoveProvider;
 
+    [SerializeField] private float slowDuration = 5f;
+    private float slowTimer = 0f;
     private float defaultMoveSpeed;
+    
 
-    private void Awake()
+    protected override void Start()
     {
-        actionMediator = GetComponentInParent<ActionMediator>();
-    }
-
-    private void Start()
-    {
-        inputManager = InputManager.Instance;
-        //inputManager.XTap.action.performed += ModifyTime;
+        base.Start();
+        inputManager.XTap.action.performed += ModifyTime;
     }
 
     protected override void ExecuteAbility()
@@ -31,8 +27,11 @@ public class TimeAction : Action
     private void ModifyTime(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         Time.timeScale = Time.timeScale == 1 ? 0.4f : 1f;
-        AdjustSpeed();
 
+        if (Time.timeScale != 1)
+            slowTimer = Time.time;
+
+        AdjustSpeed();
         actionMediator.TimeScaleUpdated(Time.timeScale);
     }
 
@@ -49,7 +48,7 @@ public class TimeAction : Action
         if (Time.timeScale != 1)
         {
             defaultMoveSpeed = dynamicMoveProvider.moveSpeed;
-            dynamicMoveProvider.moveSpeed = defaultMoveSpeed * 2;
+            dynamicMoveProvider.moveSpeed = defaultMoveSpeed * (1/Time.timeScale);
         }
         else
         {

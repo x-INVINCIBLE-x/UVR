@@ -46,6 +46,7 @@ public class GrabStatus : MonoBehaviour
     private void OnLeftHandDeselect(SelectExitEventArgs args) => ResetHandStatus(Hand.Left);
     private void OnRightHandSelect(SelectEnterEventArgs args)
     {
+        Debug.Log(args.interactorObject.transform.gameObject.name);
         if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable statusUpdater))
             ChangeRightHandStatus(GrabType.Object);
         if (args.interactorObject.transform.parent.TryGetComponent(out ClimbInteractable _))

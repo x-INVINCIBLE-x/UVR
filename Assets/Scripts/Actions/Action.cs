@@ -1,19 +1,32 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Action : MonoBehaviour
 {
+    protected ActionMediator actionMediator;
+    protected InputManager inputManager;
     public bool isPermitted;
 
-    private void Start()
+    [SerializeField] protected float skillCooldown;
+    private float lastTimeSkillUsed = -10f;
+    
+    protected virtual void Awake()
     {
-        InputManager.Instance.rightJoystickPress.action.performed += ctx => StartAbility();
+        actionMediator = GetComponentInParent<ActionMediator>();
+    }
+
+    protected virtual void Start()
+    {
+        inputManager = InputManager.Instance;
+        inputManager.rightJoystickPress.action.performed += ctx => StartAbility();
     }
 
     private void StartAbility()
     {
-        if (!isPermitted) return;
+        if (!CanUseAbility()) return;
 
+        lastTimeSkillUsed = Time.time;
         ExecuteAbility();
     }
 
@@ -22,8 +35,18 @@ public class Action : MonoBehaviour
         
     }
 
-    private void OnDestroy()
+    private bool CanUseAbility()
     {
-        InputManager.Instance.rightJoystickPress.action.performed -= ctx => StartAbility();
+        if (!isPermitted || lastTimeSkillUsed + skillCooldown > Time.time)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        inputManager.rightJoystickPress.action.performed -= ctx => StartAbility();
     }
 }

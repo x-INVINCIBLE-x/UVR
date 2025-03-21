@@ -1029,6 +1029,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "JoystickPress",
+                    "type": "Button",
+                    "id": "565f9d85-4f0c-4898-bceb-6c1f864769d8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1320,6 +1329,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9ce6572f-ce66-493e-99e7-7fd6c2ecb5d5",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Translate Manipulation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bd4395e6-16c0-4063-a526-cbc956918a12",
                     "path": "<XRController>{LeftHand}/{PrimaryButton}",
                     "interactions": "",
@@ -1381,6 +1401,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "YHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ebaa04e-f57f-47c8-a61d-fd4d5dae6e92",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JoystickPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7e83053-a10a-4df9-898d-0760c12e1546",
+                    "path": "<XRController>{LeftHand}/{Primary2DAxisClick}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JoystickPress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2184,6 +2226,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "RightJoystickPress",
+                    "type": "Button",
+                    "id": "0883aa04-0f9e-420d-bad4-df29b3062fda",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -2475,6 +2526,17 @@
                 },
                 {
                     "name": "",
+                    "id": "0541dd24-b24b-4b12-b8d0-603097eea57b",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Translate Manipulation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "349311c8-eefc-4054-bf78-aa41c23172df",
                     "path": "<XRController>{RightHand}/{PrimaryButton}",
                     "interactions": "",
@@ -2492,6 +2554,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "B",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a6f9673f-4f6c-402e-a3c0-6b7b03b80fbc",
+                    "path": "<XRController>{RightHand}/{Primary2DAxisClick}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightJoystickPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dad17ab7-1178-45ff-894c-84bac2f7fdf8",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightJoystickPress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

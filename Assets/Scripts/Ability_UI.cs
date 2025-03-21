@@ -1,23 +1,52 @@
+using JetBrains.Annotations;
 using System.Linq;
 using UnityEngine;
+
+public enum UIDirection
+{
+    North, 
+    South,
+    West,
+    East
+}
 
 public class Ability_UI : MonoBehaviour
 {
     public GameObject abilityDisplay;
-    public GameObject[] abilitySelectDisplay;
+    public Transform abiitySelectUIParent;
+    public Transform[] abilitySelectDisplay;
 
+    [Tooltip("0 -> North, 1 -> South, 2 -> West, 3 -> East")]
     public Action[] actions;
+    private InputManager inputManager;
+    private UIDirection uiSelect;
+    private UIDirection lastSelected;
+
     private void Awake()
     {
-        abilitySelectDisplay = GetComponentsInChildren<Transform>(true)
-            .Skip(1)
-            .Select(t => t.gameObject)
-            .ToArray();
+        //abilitySelectDisplay = abiitySelectUIParent.GetComponentsInChildren<Transform>(true)
+        //    .Skip(1)
+        //    .ToArray();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        InputManager.Instance.leftJoystick.action.performed += HandleJoysickMovement;
+        inputManager = InputManager.Instance;
+        inputManager.rightJoystickPress.action.performed += ToggleAbilitySelect;
+        //HighlightSlot(Vector3.up);
+    }
+
+    private void ToggleAbilitySelect(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        abilityDisplay.SetActive(!abilityDisplay.activeSelf);
+
+        if (abilityDisplay.activeSelf)
+            inputManager.rightJoystick.action.performed += HandleJoysickMovement;
+        else
+        {
+            inputManager.rightJoystick.action.performed -= HandleJoysickMovement;
+            SelectAbility();
+        }
     }
 
     public void ToggleAbilitySelect()
@@ -28,39 +57,58 @@ public class Ability_UI : MonoBehaviour
     private void HandleJoysickMovement(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
+        Vector3 direction = Vector3.up;
 
         if (Mathf.Abs(input.x) > Mathf.Abs(input.y)) 
         {
-            SelectAbility(input.x > 0 ? "East" : "West");
+            uiSelect = input.x > 0 ? UIDirection.East : UIDirection.West;
+            direction = Vector3.right;
         }
         else
         {
-            SelectAbility(input.y > 0 ? "North" : "South");
+            uiSelect = input.y > 0 ? UIDirection.North : UIDirection.South;
+            direction = Vector3.up;
+        }
+
+        if (uiSelect != lastSelected)
+        {
+            HighlightSlot(direction);
         }
     }
 
-
-    public void SelectAbility(string direction)
+    private void HighlightSlot(Vector2 direction)
     {
-        switch (direction)
+        int multiplier = -1;
+
+        if (uiSelect == UIDirection.North || uiSelect == UIDirection.East)
+            multiplier = 1;
+
+        abilitySelectDisplay[((int)lastSelected)].GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+        abilitySelectDisplay[((int)lastSelected)].localScale = Vector3.one;
+
+        abilitySelectDisplay[((int)uiSelect)].GetComponent<RectTransform>().anchoredPosition += (multiplier * direction * 0.01f);
+        abilitySelectDisplay[((int)uiSelect)].localScale = Vector3.one * 1.3f;
+
+        lastSelected = uiSelect;
+    }
+
+    public void SelectAbility()
+    {
+        for (int i = 0; i < actions.Length; i++)
         {
-            case "North":
-                actions[1].isPermitted = false;
-                actions[0].isPermitted = true;
-                break;
-            case "South":
-                actions[0].isPermitted = false;
-                actions[1].isPermitted = true;
-                break;
-            case "East":
-                break;
-            case "West":
-                break;
+            if (actions[i] != null)
+                actions[i].isPermitted = false;
+        }
+        
+        if (actions[((int)uiSelect)] != null)
+        {
+            actions[((int)uiSelect)].isPermitted = true;
+            lastSelected = uiSelect;
         }
     }
 
     private void OnDisable()
     {
-        InputManager.Instance.leftJoystick.action.performed -= HandleJoysickMovement;
+        inputManager.rightJoystickPress.action.performed -= ToggleAbilitySelect;
     }
 }

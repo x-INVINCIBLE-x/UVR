@@ -24,6 +24,7 @@ public class SwingAction : MonoBehaviour
     public SpringJoint joint;
 
     private Vector3 swingPoint;
+    private float defaultPullingStrength;
     private bool hasHit;
 
     private void Awake()
@@ -34,17 +35,19 @@ public class SwingAction : MonoBehaviour
     private void Start()
     {
         actionMediator.OnTimeModified += HandleTimeChange;
+
+        defaultPullingStrength = pullingStrength;
     }
 
     private void HandleTimeChange(float timeMultiplier)
     {
         if (timeMultiplier != 1)
         {
-            pullingStrength *= 2;
+            pullingStrength /= timeMultiplier;
         }
         else
         {
-            pullingStrength /= 2;
+            pullingStrength = defaultPullingStrength;
         }
     }
 

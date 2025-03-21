@@ -5,7 +5,7 @@ using UnityEngine.Windows;
 
 public class ActionMediator : MonoBehaviour
 {
-    public GameObject abilitySelectDisplay;
+    //public GameObject abilitySelectDisplay;
 
     public GrabStatus grabStatus;
     public Rigidbody rb;
@@ -25,19 +25,20 @@ public class ActionMediator : MonoBehaviour
     protected virtual void Start()
     {
         SetPhysicalMotion(false);
-        InputManager.Instance.leftJoystickPress.action.performed += ToggleAbilitySelect;
+        //InputManager.Instance.leftJoystickPress.action.performed += ToggleAbilitySelect;
     }
 
-    private void ToggleAbilitySelect(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        abilitySelectDisplay.SetActive(!abilitySelectDisplay.activeSelf);
-    }
+    //private void ToggleAbilitySelect(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    //{
+    //    abilitySelectDisplay.SetActive(!abilitySelectDisplay.activeSelf);
+    //}
 
     public void SetPhysicalMotion(bool status)
     {
         rb.isKinematic = !status;
         controller.enabled = !status;
         bodyCollider.SetActive(status);
+        rb.interpolation = status ? RigidbodyInterpolation.Interpolate : RigidbodyInterpolation.None;
     }
 
     public void DisablePhysicalMotion(float duration) => StartCoroutine(DisablePhysicalMotionRoutine(duration));
@@ -55,11 +56,11 @@ public class ActionMediator : MonoBehaviour
 
     IEnumerator LandRoutine()
     {
-        float safteyTimer = 5;
+        //float safteyTimer = 5;
         yield return new WaitForSeconds(0.1f);
-        while (!IsGrounded() || safteyTimer < 0)
+        while (!IsGrounded())
         {
-            safteyTimer -= Time.fixedDeltaTime;
+            //safteyTimer -= Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
         

@@ -1115,6 +1115,15 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""JoystickPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""565f9d85-4f0c-4898-bceb-6c1f864769d8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1406,6 +1415,17 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                 },
                 {
                     ""name"": """",
+                    ""id"": ""9ce6572f-ce66-493e-99e7-7fd6c2ecb5d5"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Translate Manipulation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""bd4395e6-16c0-4063-a526-cbc956918a12"",
                     ""path"": ""<XRController>{LeftHand}/{PrimaryButton}"",
                     ""interactions"": """",
@@ -1467,6 +1487,28 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""YHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ebaa04e-f57f-47c8-a61d-fd4d5dae6e92"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JoystickPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7e83053-a10a-4df9-898d-0760c12e1546"",
+                    ""path"": ""<XRController>{LeftHand}/{Primary2DAxisClick}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JoystickPress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2270,6 +2312,15 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightJoystickPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""0883aa04-0f9e-420d-bad4-df29b3062fda"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -2561,6 +2612,17 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                 },
                 {
                     ""name"": """",
+                    ""id"": ""0541dd24-b24b-4b12-b8d0-603097eea57b"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Translate Manipulation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""349311c8-eefc-4054-bf78-aa41c23172df"",
                     ""path"": ""<XRController>{RightHand}/{PrimaryButton}"",
                     ""interactions"": """",
@@ -2578,6 +2640,28 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""B"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6f9673f-4f6c-402e-a3c0-6b7b03b80fbc"",
+                    ""path"": ""<XRController>{RightHand}/{Primary2DAxisClick}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightJoystickPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dad17ab7-1178-45ff-894c-84bac2f7fdf8"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightJoystickPress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -3609,6 +3693,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         m_XRILeftInteraction_YHold = m_XRILeftInteraction.FindAction("YHold", throwIfNotFound: true);
         m_XRILeftInteraction_YAbilityActivate = m_XRILeftInteraction.FindAction("YAbilityActivate", throwIfNotFound: true);
         m_XRILeftInteraction_YDoubleTab = m_XRILeftInteraction.FindAction("YDoubleTab", throwIfNotFound: true);
+        m_XRILeftInteraction_JoystickPress = m_XRILeftInteraction.FindAction("JoystickPress", throwIfNotFound: true);
         // XRI Left Locomotion
         m_XRILeftLocomotion = asset.FindActionMap("XRI Left Locomotion", throwIfNotFound: true);
         m_XRILeftLocomotion_TeleportMode = m_XRILeftLocomotion.FindAction("Teleport Mode", throwIfNotFound: true);
@@ -3649,6 +3734,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         m_XRIRightInteraction_ScaleOverTime = m_XRIRightInteraction.FindAction("Scale Over Time", throwIfNotFound: true);
         m_XRIRightInteraction_A = m_XRIRightInteraction.FindAction("A", throwIfNotFound: true);
         m_XRIRightInteraction_B = m_XRIRightInteraction.FindAction("B", throwIfNotFound: true);
+        m_XRIRightInteraction_RightJoystickPress = m_XRIRightInteraction.FindAction("RightJoystickPress", throwIfNotFound: true);
         // XRI Right Locomotion
         m_XRIRightLocomotion = asset.FindActionMap("XRI Right Locomotion", throwIfNotFound: true);
         m_XRIRightLocomotion_TeleportMode = m_XRIRightLocomotion.FindAction("Teleport Mode", throwIfNotFound: true);
@@ -4197,6 +4283,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
     private readonly InputAction m_XRILeftInteraction_YHold;
     private readonly InputAction m_XRILeftInteraction_YAbilityActivate;
     private readonly InputAction m_XRILeftInteraction_YDoubleTab;
+    private readonly InputAction m_XRILeftInteraction_JoystickPress;
     /// <summary>
     /// Provides access to input actions defined in input action map "XRI Left Interaction".
     /// </summary>
@@ -4281,6 +4368,10 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         /// </summary>
         public InputAction @YDoubleTab => m_Wrapper.m_XRILeftInteraction_YDoubleTab;
         /// <summary>
+        /// Provides access to the underlying input action "XRILeftInteraction/JoystickPress".
+        /// </summary>
+        public InputAction @JoystickPress => m_Wrapper.m_XRILeftInteraction_JoystickPress;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_XRILeftInteraction; }
@@ -4360,6 +4451,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @YDoubleTab.started += instance.OnYDoubleTab;
             @YDoubleTab.performed += instance.OnYDoubleTab;
             @YDoubleTab.canceled += instance.OnYDoubleTab;
+            @JoystickPress.started += instance.OnJoystickPress;
+            @JoystickPress.performed += instance.OnJoystickPress;
+            @JoystickPress.canceled += instance.OnJoystickPress;
         }
 
         /// <summary>
@@ -4425,6 +4519,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @YDoubleTab.started -= instance.OnYDoubleTab;
             @YDoubleTab.performed -= instance.OnYDoubleTab;
             @YDoubleTab.canceled -= instance.OnYDoubleTab;
+            @JoystickPress.started -= instance.OnJoystickPress;
+            @JoystickPress.performed -= instance.OnJoystickPress;
+            @JoystickPress.canceled -= instance.OnJoystickPress;
         }
 
         /// <summary>
@@ -4866,6 +4963,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
     private readonly InputAction m_XRIRightInteraction_ScaleOverTime;
     private readonly InputAction m_XRIRightInteraction_A;
     private readonly InputAction m_XRIRightInteraction_B;
+    private readonly InputAction m_XRIRightInteraction_RightJoystickPress;
     /// <summary>
     /// Provides access to input actions defined in input action map "XRI Right Interaction".
     /// </summary>
@@ -4934,6 +5032,10 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         /// </summary>
         public InputAction @B => m_Wrapper.m_XRIRightInteraction_B;
         /// <summary>
+        /// Provides access to the underlying input action "XRIRightInteraction/RightJoystickPress".
+        /// </summary>
+        public InputAction @RightJoystickPress => m_Wrapper.m_XRIRightInteraction_RightJoystickPress;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_XRIRightInteraction; }
@@ -5001,6 +5103,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @B.started += instance.OnB;
             @B.performed += instance.OnB;
             @B.canceled += instance.OnB;
+            @RightJoystickPress.started += instance.OnRightJoystickPress;
+            @RightJoystickPress.performed += instance.OnRightJoystickPress;
+            @RightJoystickPress.canceled += instance.OnRightJoystickPress;
         }
 
         /// <summary>
@@ -5054,6 +5159,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @B.started -= instance.OnB;
             @B.performed -= instance.OnB;
             @B.canceled -= instance.OnB;
+            @RightJoystickPress.started -= instance.OnRightJoystickPress;
+            @RightJoystickPress.performed -= instance.OnRightJoystickPress;
+            @RightJoystickPress.canceled -= instance.OnRightJoystickPress;
         }
 
         /// <summary>
@@ -5909,6 +6017,13 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnYDoubleTab(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "JoystickPress" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnJoystickPress(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "XRI Left Locomotion" which allows adding and removing callbacks.
@@ -6171,6 +6286,13 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnB(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RightJoystickPress" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRightJoystickPress(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "XRI Right Locomotion" which allows adding and removing callbacks.

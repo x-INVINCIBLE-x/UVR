@@ -1,10 +1,7 @@
 using UnityEngine;
 
-public class JumpAction : MonoBehaviour
+public class JumpAction : Action
 {
-    private InputManager inputManager;
-    private ActionMediator actionMediator;
-
     public bool jumpGroundedOnly = true;
     public float jumpCooldown = 1f;
     public float jumpHeight = 1.5f;
@@ -12,25 +9,22 @@ public class JumpAction : MonoBehaviour
     private float jumpVelocity;
     private float lastTimeJumped = -10f;
 
-    private void Awake()
+    protected override void Start()
     {
-        actionMediator = GetComponent<ActionMediator>();
-    }
-
-    protected void Start()
-    {
-        inputManager = InputManager.Instance;
+        base.Start();
         inputManager.A.action.performed += HandleJump;
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
-            HandleJump();
+        //if (Input.GetKeyUp(KeyCode.Space))
+        //    HandleJump();
     }
 
     private void HandleJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (!isPermitted) return;
+
         if (jumpGroundedOnly && actionMediator.IsGrounded() ||
             (!jumpGroundedOnly && lastTimeJumped + jumpCooldown > Time.deltaTime))
         {
@@ -44,18 +38,25 @@ public class JumpAction : MonoBehaviour
         }
     }
 
-    private void HandleJump()
+    //private void HandleJump()
+    //{
+    //    if (jumpGroundedOnly && actionMediator.IsGrounded() ||
+    //        (!jumpGroundedOnly && lastTimeJumped + jumpCooldown > Time.deltaTime))
+    //    {
+    //        actionMediator.SetPhysicalMotion(true);
+
+    //        lastTimeJumped = Time.time;
+    //        jumpVelocity = Mathf.Sqrt(1 * -Physics.gravity.y * jumpHeight);
+    //        actionMediator.rb.linearVelocity = Vector3.up * jumpVelocity;
+
+    //        actionMediator.DisablePhysicalMotionOnLand();
+    //    }
+    //}
+
+    protected override void OnDestroy()
     {
-        if (jumpGroundedOnly && actionMediator.IsGrounded() ||
-            (!jumpGroundedOnly && lastTimeJumped + jumpCooldown > Time.deltaTime))
-        {
-            actionMediator.SetPhysicalMotion(true);
+        base.OnDestroy();
 
-            lastTimeJumped = Time.time;
-            jumpVelocity = Mathf.Sqrt(1 * -Physics.gravity.y * jumpHeight);
-            actionMediator.rb.linearVelocity = Vector3.up * jumpVelocity;
-
-            actionMediator.DisablePhysicalMotionOnLand();
-        }
+        inputManager.A.action.performed -= HandleJump;
     }
 }
