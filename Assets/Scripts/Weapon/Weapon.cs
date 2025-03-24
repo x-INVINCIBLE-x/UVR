@@ -38,11 +38,13 @@ public class Weapon : MonoBehaviour
     
     protected virtual void ActivateWeapon(ActivateEventArgs args)
     {
-        Debug.Log(abilityHandler.ActiveAbility);
+        //Debug.Log(abilityHandler.ActiveAbility);
     }
 
     protected virtual void DeactivateWeapon(DeactivateEventArgs args)
     {
         
     }
+
+
 }
