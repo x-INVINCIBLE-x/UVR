@@ -25,10 +25,11 @@ public class VirtualAction : Action
 
     private bool isMoving = false;
     private bool lastMovingStatus = false;
-
+    private float defaultMoveSpeed;
     protected override void Start()
     {
         base.Start();
+        defaultMoveSpeed = moveSpeed;
         inputManager.leftJoystick.action.performed += OnMove;
         moveAction.action.performed += OnMove;
         gazeInteractor.selectEntered.AddListener(SelectObject);
@@ -52,22 +53,6 @@ public class VirtualAction : Action
         }
     }
 
-    private void OnMove(InputAction.CallbackContext context)
-    {
-        if (targetObject == null) { return; }
-
-        moveInput = context.ReadValue<Vector2>();
-
-        isMoving = !Mathf.Approximately(moveInput.x, 0) || !Mathf.Approximately(moveInput.x, 0);
-
-        if (lastMovingStatus != isMoving)
-        {
-            lastFollowPos = followTransform.position;
-        }
-
-        Debug.Log(moveInput.x + "   " + moveInput.y);
-    }
-
     public void SetTargetObject(GameObject ob)
     {
         targetObject = ob;
@@ -81,11 +66,37 @@ public class VirtualAction : Action
         }
     }
 
+    private void OnMove(InputAction.CallbackContext context)
+    {
+        if (targetObject == null) { return; }
+
+        moveInput = context.ReadValue<Vector2>();
+
+        isMoving = !Mathf.Approximately(moveInput.x, 0) || !Mathf.Approximately(moveInput.y, 0);
+
+        //if (lastMovingStatus != isMoving)
+        //{
+        //    lastFollowPos = followTransform.position;
+        //}
+
+        if (isMoving)
+        {
+            moveSpeed = defaultMoveSpeed / 30;
+        }
+        else
+        {
+            moveSpeed = defaultMoveSpeed;
+        }
+
+        Debug.Log(moveInput.x + "   " + moveInput.y);
+    }
+
     private void FixedUpdate() 
     {
         if (targetObject == null || targetRb == null) return;
 
-        followTransform = isMoving ? bodyTransform : handTransform;
+        //followTransform = isMoving ? bodyTransform : handTransform;
+        followTransform = handTransform;
 
         Vector3 deltaMove = (followTransform.position - lastFollowPos);
 
@@ -111,7 +122,7 @@ public class VirtualAction : Action
     {
         if (targetObject.TryGetComponent(out Rigidbody rb))
         {
-            rb.isKinematic = true; 
+            rb.isKinematic = false; 
             rb.useGravity = true;  
         }
 

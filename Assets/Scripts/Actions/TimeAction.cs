@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
@@ -10,12 +11,13 @@ public class TimeAction : Action
     [SerializeField] private float slowDuration = 5f;
     private float slowTimer = 0f;
     private float defaultMoveSpeed;
-    
+
+    private Coroutine timerRoutine = null;
 
     protected override void Start()
     {
         base.Start();
-        inputManager.XTap.action.performed += ModifyTime;
+        //inputManager.XTap.action.performed += ModifyTime;
     }
 
     protected override void ExecuteAbility()
@@ -29,7 +31,11 @@ public class TimeAction : Action
         Time.timeScale = Time.timeScale == 1 ? 0.4f : 1f;
 
         if (Time.timeScale != 1)
-            slowTimer = Time.time;
+        {
+            slowTimer = slowDuration;
+            if (timerRoutine == null)
+                StartCoroutine(TimeSlowDurationRoutine());
+        }
 
         AdjustSpeed();
         actionMediator.TimeScaleUpdated(Time.timeScale);
@@ -38,8 +44,24 @@ public class TimeAction : Action
     private void ModifyTime()
     {
         Time.timeScale = Time.timeScale == 1 ? 0.4f : 1f;
-        AdjustSpeed();
 
+        if (Time.timeScale != 1)
+        {
+            slowTimer = slowDuration;
+            if (timerRoutine == null)
+                StartCoroutine(TimeSlowDurationRoutine());
+        }
+        else if (timerRoutine != null)
+            StopCoroutine(timerRoutine);
+
+        AdjustSpeed();
+        actionMediator.TimeScaleUpdated(Time.timeScale);
+    }
+
+    private void ResetTimeScale()
+    {
+        Time.timeScale = 1;
+        AdjustSpeed();
         actionMediator.TimeScaleUpdated(Time.timeScale);
     }
 
@@ -54,5 +76,17 @@ public class TimeAction : Action
         {
             dynamicMoveProvider.moveSpeed = defaultMoveSpeed;
         }
+    }
+
+    IEnumerator TimeSlowDurationRoutine()
+    {
+        while (slowTimer > 0)
+        {
+            slowTimer -= Time.deltaTime * 1/Time.timeScale;
+            yield return new WaitForEndOfFrame();
+        }
+
+        ResetTimeScale();
+        timerRoutine = null;
     }
 }

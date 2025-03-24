@@ -14,15 +14,21 @@ public class DashAction : Action
         base.Start();
 
         inputManager.B.action.performed += Dash;
-        inputManager.leftJoystick.action.performed += ctx => direction = ctx.ReadValue<Vector2>();
+
+        inputManager.leftJoystick.action.performed += ctx =>
+        {
+            Vector2 input = ctx.ReadValue<Vector2>();
+            direction = headTransform.right * input.x + headTransform.forward * input.y;
+            direction.Normalize();
+        };
+
         rb = actionMediator.rb;
     }
 
     private void Dash(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        direction = new Vector3(direction.x, 0, direction.y);
         actionMediator.SetPhysicalMotion(true);
-        rb.AddForce(direction *  dashForce, ForceMode.VelocityChange);
+        rb.AddForce(direction * dashForce, ForceMode.VelocityChange);
         actionMediator.DisablePhysicalMotion(dashDuration);
     }
 

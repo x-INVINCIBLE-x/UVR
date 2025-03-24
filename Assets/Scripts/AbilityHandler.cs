@@ -70,13 +70,14 @@ public class AbilityHandler : MonoBehaviour
     private void ScanAbility(LinkButton button)
     {
         Debug.Log("Scan");
-        Physics.SphereCast(scannerTransform.position, 1f, scannerTransform.forward, out RaycastHit hit, scannerRange, whatIsScannable);
-        Debug.Log(hit.transform == null);
-        if (hit.transform.TryGetComponent(out Scannable scannable))
+        if (Physics.SphereCast(scannerTransform.position, 1f, scannerTransform.forward, out RaycastHit hit, scannerRange, whatIsScannable))
         {
-            hit.transform.localScale = hit.transform.localScale + Vector3.one;
-            abilityLink[button].Type = scannable.Ability.Type;
-            abilityLink[button].level = scannable.Ability.level;
+            if (hit.transform.TryGetComponent(out Scannable scannable))
+            {
+                hit.transform.localScale = hit.transform.localScale + Vector3.one;
+                abilityLink[button].Type = scannable.Ability.Type;
+                abilityLink[button].level = scannable.Ability.level;
+            }
         }
     }
 

@@ -19,7 +19,7 @@ public class Action : MonoBehaviour
     protected virtual void Start()
     {
         inputManager = InputManager.Instance;
-        inputManager.rightJoystickPress.action.performed += ctx => StartAbility();
+        inputManager.leftJoystickPress.action.performed += ctx => StartAbility();
     }
 
     private void StartAbility()
@@ -47,6 +47,6 @@ public class Action : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        inputManager.rightJoystickPress.action.performed -= ctx => StartAbility();
+        inputManager.leftJoystickPress.action.performed -= ctx => StartAbility();
     }
 }

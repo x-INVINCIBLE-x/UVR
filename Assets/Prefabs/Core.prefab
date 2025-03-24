@@ -91,6 +91,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2934619878645802145}
   - component: {fileID: 2644144398354339682}
+  - component: {fileID: 2775431934571792721}
+  - component: {fileID: 1393751431977895440}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -106,8 +108,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6280638891580240898}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.4106154, y: 1.6941321, z: -7.477379}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -269,6 +271,33 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 9176742518488508315, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+--- !u!114 &2775431934571792721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6280638891580240898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7ebfdc410a2be46a4020c9adb16118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <player>k__BackingField: {fileID: 6694214831982772410}
+--- !u!114 &1393751431977895440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6280638891580240898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 563acf7899d1afb49a179c3d6b22a4b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots: []
+  busySlots: 0
 --- !u!1 &8461479721874517363
 GameObject:
   m_ObjectHideFlags: 0

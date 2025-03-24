@@ -38,7 +38,7 @@ public class ActionMediator : MonoBehaviour
         rb.isKinematic = !status;
         controller.enabled = !status;
         bodyCollider.SetActive(status);
-        rb.interpolation = status ? RigidbodyInterpolation.Interpolate : RigidbodyInterpolation.None;
+        //rb.interpolation = status ? RigidbodyInterpolation.Interpolate : RigidbodyInterpolation.None;
     }
 
     public void DisablePhysicalMotion(float duration) => StartCoroutine(DisablePhysicalMotionRoutine(duration));

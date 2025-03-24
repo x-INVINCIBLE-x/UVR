@@ -39,7 +39,7 @@ public class GrabStatus : MonoBehaviour
     {
         if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable statusUpdater))
             ChangeLeftHandStatus(GrabType.Object);
-        if (args.interactorObject.transform.TryGetComponent(out ClimbInteractable _))
+        if (args.interactableObject.transform.TryGetComponent(out ClimbInteractable _))
             ChangeLeftHandStatus(GrabType.Climb);
     }
 
@@ -49,7 +49,7 @@ public class GrabStatus : MonoBehaviour
         Debug.Log(args.interactorObject.transform.gameObject.name);
         if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable statusUpdater))
             ChangeRightHandStatus(GrabType.Object);
-        if (args.interactorObject.transform.parent.TryGetComponent(out ClimbInteractable _))
+        if (args.interactableObject.transform.parent.TryGetComponent(out ClimbInteractable _))
             ChangeRightHandStatus(GrabType.Climb);
     }
 

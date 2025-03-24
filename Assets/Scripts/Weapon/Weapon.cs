@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -10,12 +11,21 @@ public class Weapon : MonoBehaviour
     protected Rigidbody rigidBody;
     protected AbilityHandler abilityHandler;
 
+    public Dictionary<AbilityType, System.Action> abilities;
+
     protected virtual void Awake()
     {
         interactableWeapon = GetComponent<XRGrabInteractable>();
         rigidBody = GetComponent<Rigidbody>();
         abilityHandler = AbilityHandler.Instance;
         SetupInteractableWeaponEvents();
+
+        abilities = new Dictionary<AbilityType, System.Action>
+        {
+            {AbilityType.None, () => HandleNormal() },
+            {AbilityType.Explode, () => HandleExplosive() },
+            {AbilityType.Freeze, () => HandleFreeze() }
+        };
     }
 
     private void SetupInteractableWeaponEvents()
@@ -46,5 +56,18 @@ public class Weapon : MonoBehaviour
         
     }
 
+    protected virtual void HandleNormal()
+    {
 
+    }
+
+    protected virtual void HandleExplosive()
+    {
+
+    }
+
+    protected virtual void HandleFreeze() 
+    { 
+
+    }
 }
