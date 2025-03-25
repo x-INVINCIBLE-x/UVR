@@ -1,16 +1,17 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class TimeAction : Action
 {
     public DynamicMoveProvider dynamicMoveProvider;
+    public ContinuousTurnProvider continuousTurnProvider;
 
     [SerializeField] private float slowDuration = 5f;
     private float slowTimer = 0f;
     private float defaultMoveSpeed;
+    private float defaultTurnSpeed;
 
     private Coroutine timerRoutine = null;
 
@@ -70,11 +71,15 @@ public class TimeAction : Action
         if (Time.timeScale != 1)
         {
             defaultMoveSpeed = dynamicMoveProvider.moveSpeed;
-            dynamicMoveProvider.moveSpeed = defaultMoveSpeed * (1/Time.timeScale);
+            defaultTurnSpeed = continuousTurnProvider.turnSpeed;
+
+            dynamicMoveProvider.moveSpeed = defaultMoveSpeed * (1 / Time.timeScale);
+            continuousTurnProvider.turnSpeed = defaultTurnSpeed * (1 / Time.timeScale);
         }
         else
         {
             dynamicMoveProvider.moveSpeed = defaultMoveSpeed;
+            continuousTurnProvider.turnSpeed = defaultTurnSpeed;
         }
     }
 
@@ -82,7 +87,7 @@ public class TimeAction : Action
     {
         while (slowTimer > 0)
         {
-            slowTimer -= Time.deltaTime * 1/Time.timeScale;
+            slowTimer -= Time.deltaTime * 1 / Time.timeScale;
             yield return new WaitForEndOfFrame();
         }
 

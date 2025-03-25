@@ -15,7 +15,7 @@ public class VirtualAction : Action
     private Vector3 lastFollowPos;
     public float moveSpeed = 3f;
     public float threshold = 0.01f;
-
+    private float effectiveSpeed;
     public float smoothTime = 0.3f;
 
     private Vector3 velocity = Vector3.zero;
@@ -29,7 +29,7 @@ public class VirtualAction : Action
     protected override void Start()
     {
         base.Start();
-        defaultMoveSpeed = moveSpeed;
+        effectiveSpeed = moveSpeed;
         inputManager.leftJoystick.action.performed += OnMove;
         moveAction.action.performed += OnMove;
         gazeInteractor.selectEntered.AddListener(SelectObject);
@@ -74,29 +74,29 @@ public class VirtualAction : Action
 
         isMoving = !Mathf.Approximately(moveInput.x, 0) || !Mathf.Approximately(moveInput.y, 0);
 
-        //if (lastMovingStatus != isMoving)
-        //{
-        //    lastFollowPos = followTransform.position;
-        //}
-
-        if (isMoving)
-        {
-            moveSpeed = defaultMoveSpeed / 30;
-        }
-        else
-        {
-            moveSpeed = defaultMoveSpeed;
-        }
 
         Debug.Log(moveInput.x + "   " + moveInput.y);
     }
 
-    private void FixedUpdate() 
+    private void Update() 
     {
         if (targetObject == null || targetRb == null) return;
 
-        //followTransform = isMoving ? bodyTransform : handTransform;
-        followTransform = handTransform;
+        // Determine the current follow transform
+        //Transform newFollowTransform = isMoving ? bodyTransform : handTransform;
+        Transform newFollowTransform = handTransform;
+        
+        // If switching transforms, reset lastFollowPos to prevent sudden jumps
+        //if (newFollowTransform != followTransform)
+        //{
+            //lastFollowPos = newFollowTransform.position;
+            if (isMoving)
+                effectiveSpeed = moveSpeed / 20;
+            else
+                effectiveSpeed = moveSpeed;
+        //}
+
+        followTransform = newFollowTransform;
 
         Vector3 deltaMove = (followTransform.position - lastFollowPos);
 
@@ -106,11 +106,11 @@ public class VirtualAction : Action
             return;
         }
 
-        lastFollowPos = followTransform.position; 
+        lastFollowPos = followTransform.position;
 
         Vector3 targetPos = Vector3.SmoothDamp(
             targetObject.transform.position,
-            targetObject.transform.position + deltaMove * moveSpeed,
+            targetObject.transform.position + deltaMove * effectiveSpeed,
             ref velocity,
             smoothTime
         );

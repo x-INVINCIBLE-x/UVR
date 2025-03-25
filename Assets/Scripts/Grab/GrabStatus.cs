@@ -27,6 +27,8 @@ public class GrabStatus : MonoBehaviour
     [field: SerializeField] public GrabType LeftHand {  get; private set; }
     [field: SerializeField] public GrabType RightHand {  get; private set; }
 
+    public event Action <GrabType> GrabStatusChanged;
+
     private void Start()
     {
         LeftInteractor.selectEntered.AddListener(OnLeftHandSelect);
@@ -58,9 +60,9 @@ public class GrabStatus : MonoBehaviour
     public void ChangeHandStatus(Hand hand, GrabType type)
     {
         if (hand == Hand.Left)
-            LeftHand = type;
+            ChangeLeftHandStatus(type);
         else
-            RightHand = type;
+            ChangeRightHandStatus(type);
     }
 
     public GrabType GetStatus(Hand hand)
@@ -77,10 +79,21 @@ public class GrabStatus : MonoBehaviour
         else RightHand = GrabType.Empty;
     }
 
-    public void ChangeLeftHandStatus(GrabType type) => LeftHand = type;
-    public void ChangeRightHandStatus(GrabType type) => RightHand = type;
+    public void ChangeLeftHandStatus(GrabType type)
+    {
+        GrabStatusChanged?.Invoke(type);
+        LeftHand = type;
+    }
+
+    public void ChangeRightHandStatus(GrabType type)
+    {
+        GrabStatusChanged?.Invoke(type);
+        RightHand = type;
+    }
+
     public bool AreHandsEmpty() => LeftHand == GrabType.Empty && RightHand == GrabType.Empty;
     public bool IsClimbing() => LeftHand == GrabType.Climb || RightHand == GrabType.Climb;
+    public bool IsSwinging() => LeftHand == GrabType.Swing || RightHand == GrabType.Swing;
 
     private void OnDestroy()
     {

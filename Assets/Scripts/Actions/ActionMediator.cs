@@ -2,10 +2,19 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Windows;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion;
+
+public enum ActionStatus
+{
+    None,
+    Climb,
+    Swing
+}
 
 public class ActionMediator : MonoBehaviour
 {
     //public GameObject abilitySelectDisplay;
+    public XRBodyTransformer xRBodyTransformer;
 
     public GrabStatus grabStatus;
     public Rigidbody rb;
@@ -17,9 +26,40 @@ public class ActionMediator : MonoBehaviour
     public float groundCheckOffset = 0.2f;
     public event Action<float> OnTimeModified;
 
+    public ActionStatus LastActionStatus {  get; private set; } = ActionStatus.None;
+
     private void Awake()
     {
         grabStatus = GetComponent<GrabStatus>();
+        grabStatus.GrabStatusChanged += HandleGrabStatusChange;
+    }
+
+    private void HandleGrabStatusChange(GrabType type)
+    {
+        if (!grabStatus.IsClimbing())
+        {
+            if (LastActionStatus == ActionStatus.Climb)
+            {
+                SetPhysicalMotion(true);
+                DisablePhysicalMotionOnLand();
+            }
+        }
+
+        if (grabStatus.IsClimbing())
+        {
+            LastActionStatus = ActionStatus.Climb;
+            SetPhysicalMotion(false);
+            if (landRoutine != null)
+                StopCoroutine(landRoutine);
+        }
+        else if (grabStatus.IsSwinging())
+        {
+            LastActionStatus = ActionStatus.Swing;
+        }
+        else
+        {
+            LastActionStatus = ActionStatus.None;
+        }
     }
 
     protected virtual void Start()
@@ -38,6 +78,7 @@ public class ActionMediator : MonoBehaviour
         rb.isKinematic = !status;
         controller.enabled = !status;
         bodyCollider.SetActive(status);
+        xRBodyTransformer.useCharacterControllerIfExists = !status;
         //rb.interpolation = status ? RigidbodyInterpolation.Interpolate : RigidbodyInterpolation.None;
     }
 
@@ -77,6 +118,11 @@ public class ActionMediator : MonoBehaviour
         bool hasHit = Physics.SphereCast(start, controller.radius, Vector3.down, out RaycastHit _, rayLength, whatIsGround);
         Debug.Log("IS Grounded: " + hasHit);
         return hasHit;
+    }
+
+    private void OnDisable()
+    {
+        grabStatus.GrabStatusChanged -= HandleGrabStatusChange;
     }
 
     private void OnDrawGizmos()
