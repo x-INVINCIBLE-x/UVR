@@ -7,7 +7,7 @@ public class ShootState : EnemyStateBase
 {
     private ShootEnemy Prefab;
     private ObjectPool<ShootEnemy> Pool;
-
+    
 
 
     public ShootState(
@@ -32,6 +32,7 @@ public class ShootState : EnemyStateBase
         Instance.transform.forward = Enemy.transform.forward;
         Instance.transform.position = Enemy.transform.position + Enemy.transform.forward + Vector3.up * 1.5f;
         Instance.gameObject.SetActive(true);
+        
     }
 
     private void ReleaseObject(ShootEnemy Instance)

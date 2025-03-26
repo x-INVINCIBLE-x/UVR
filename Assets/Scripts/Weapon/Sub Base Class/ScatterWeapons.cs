@@ -1,16 +1,27 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedWeapon : Weapon
+public class ScatterWeapons : Weapon
 {
+    [Header("Shotgun Settings")]
+    [SerializeField] protected List<Transform> bulletSpawns;
     [SerializeField] protected float shootingForce;
-    [SerializeField] protected Transform bulletSpawn;
     [SerializeField] protected float recoilForce;
     [SerializeField] protected float damage;
+    [SerializeField] protected float spreadAngle = 5f; // Spread angle in degrees
 
-    protected virtual void Shoot()
+
+    private void Start()
+    {
+        InputManager.Instance.activate.action.performed += ctx => ScatterShot();
+
+    }
+    protected virtual void ScatterShot()
     {
         ApplyRecoil();
     }
+
+
 
     private void ApplyRecoil()
     {

@@ -18,6 +18,8 @@ public class InputManager : MonoBehaviour
     public InputActionProperty A;
     public InputActionProperty B;
 
+    ///
+    public InputActionProperty activate;
     private void Awake()
     {
         if (Instance == null)

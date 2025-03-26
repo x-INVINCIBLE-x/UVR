@@ -9,7 +9,7 @@ public class ArrowLauncher : MonoBehaviour
     [SerializeField] private float _speed = 10f;
 
     [Header("Visual Effects")]
-    //[SerializeField] private GameObject _trailSystem;
+    [SerializeField] private GameObject _trailSystem;
 
     private Rigidbody _rigidbody;
     private bool _inAir = false;
@@ -59,7 +59,7 @@ public class ArrowLauncher : MonoBehaviour
         _rigidbody.AddForce(force, ForceMode.Impulse);
 
         StartCoroutine(RotateWithVelocity());
-        //_trailSystem.SetActive(true);
+        _trailSystem.SetActive(true);
 
     }
 
@@ -82,7 +82,7 @@ public class ArrowLauncher : MonoBehaviour
     {
         _inAir = false;
         SetPhysics(false);
-        //_trailSystem.SetActive(false);
+        _trailSystem.SetActive(false);
     }
 
     private void SetPhysics(bool usePhysics)
