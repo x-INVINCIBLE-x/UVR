@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public enum RingAxis
@@ -10,16 +9,21 @@ public enum RingAxis
 
 public class RingUIHelper : MonoBehaviour
 {
-    public List<Transform> slots = new(); 
-    public float radius = 2f; 
-    public float heightOffset = 1.5f; 
+    public List<Transform> slots = new();
+    public float radius = 2f;
+    public float heightOffset = 1.5f;
     public float lookOffest = 0f;
     [Range(0, 360)]
     public int angleToUse = 360;
     public int startOffset = 0;
     public RingAxis ringAxis = RingAxis.XZ;
 
-    void OnValidate()
+    private void OnValidate()
+    {
+        PositionSlots();
+    }
+
+    void Update()
     {
         PositionSlots();
     }
@@ -34,7 +38,7 @@ public class RingUIHelper : MonoBehaviour
             return;
         }
 
-        float angleStep =  angleToUse / slots.Count + startOffset;
+        float angleStep = angleToUse / slots.Count + startOffset;
 
         for (int i = 0; i < slots.Count; i++)
         {
