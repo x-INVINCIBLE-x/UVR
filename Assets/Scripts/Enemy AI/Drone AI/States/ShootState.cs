@@ -39,5 +39,12 @@ public class ShootState : EnemyStateBase
     {
         Instance.gameObject.SetActive(false);
     }
+    public override void OnEnter()
+    {
+        Agent.isStopped = true;
+        base.OnEnter();
+        Animator.Play("Fire");
+        Pool.Get();
+    }
 
 }
