@@ -8,6 +8,7 @@ public class PhysicsProjectile : Projectile
 {
     [SerializeField] private float lifeTime;
     private Rigidbody rigidBody;
+   
 
     private void Awake()
     {
@@ -26,4 +27,6 @@ public class PhysicsProjectile : Projectile
         base.Launch(_transform, force);
         rigidBody.linearVelocity = _transform.forward * force;
     }
+
+    
 }

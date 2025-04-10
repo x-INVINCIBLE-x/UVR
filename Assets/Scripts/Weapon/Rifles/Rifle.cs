@@ -4,6 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Rifle : RangedWeapon
 {
     [SerializeField] private Projectile projectilePrefab;
+    [SerializeField] private GameObject muzzleFlash;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private int clickCount;
 
@@ -42,6 +43,7 @@ public class Rifle : RangedWeapon
 
 
         // Instantiate the projectile
+        muzzleFlash = Instantiate(muzzleFlash, spawnPoints[clickCount].position, spawnPoints[clickCount].rotation);
         PhysicsProjectile projectileInstance = Instantiate(projectilePrefab, spawnPoints[clickCount].position, spawnPoints[clickCount].rotation) as PhysicsProjectile; //.GetComponent<PhysicsProjectile>();
         projectileInstance.Init();
         projectileInstance.Launch(spawnPoints[clickCount], shootingForce);
