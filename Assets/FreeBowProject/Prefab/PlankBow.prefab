@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7271609036841977793}
   - component: {fileID: 3005146807287123688}
   - component: {fileID: 7773015984902859734}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: String
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 63c5a2ff9cfb596498fbb6e31f48e702, type: 2}
+  - {fileID: 2100000, guid: 765b0d6a8de457a45895c6f500d6d9bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,7 +144,7 @@ LineRenderer:
   m_MaskInteraction: 0
   m_UseWorldSpace: 0
   m_Loop: 0
-  m_ApplyActiveColorSpace: 0
+  m_ApplyActiveColorSpace: 1
 --- !u!54 &2185361115692925597
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -171,7 +171,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &1650511182338081129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 7773015984902859734}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -302,7 +303,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -416,7 +417,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8091250453159535350}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,7 +448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7022933360431096436}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Notch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,8 +463,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5227401581421119954}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.18}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -480,7 +481,7 @@ GameObject:
   - component: {fileID: 98435889503237070}
   - component: {fileID: 7000107866012806606}
   - component: {fileID: 8906549032932869270}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -564,7 +565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 295816738321003360}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +601,7 @@ GameObject:
   - component: {fileID: 7892071758784393160}
   - component: {fileID: 6640901728861282769}
   - component: {fileID: 1852697676582980297}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: PlankBow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,11 +651,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &7892071758784393160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,7 +673,7 @@ MonoBehaviour:
   - {fileID: 6640901728861282769}
   m_InteractionLayers:
     m_Bits: 1
-  m_DistanceCalculationMode: 1
+  m_DistanceCalculationMode: 2
   m_SelectMode: 0
   m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
@@ -728,7 +729,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 8091250453159535350}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -736,7 +737,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -777,7 +778,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  m_FarAttachMode: 0
+  m_FarAttachMode: 1
 --- !u!65 &6640901728861282769
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -811,8 +812,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355df79e694235245a2515a610f1f58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _arrowPrefab: {fileID: 0}
-  _notchPoint: {fileID: 0}
+  _arrowPrefab: {fileID: 3130782860315168183, guid: 9e71197dbe620ba488e40e24d76543ba, type: 3}
+  _notchPoint: {fileID: 5227401581421119954}
   _spawnDelay: 1
 --- !u!1 &8018393984472290582
 GameObject:
@@ -823,7 +824,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7544021284994201208}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -857,7 +858,7 @@ GameObject:
   - component: {fileID: 147553193228399114}
   - component: {fileID: 7435463007607345169}
   - component: {fileID: 1127872019187984508}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1002,7 +1003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b3de4e686c5b7044088888c14fa882a4, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
