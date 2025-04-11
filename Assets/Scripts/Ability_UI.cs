@@ -7,7 +7,8 @@ public enum UIDirection
     North, 
     South,
     West,
-    East
+    East,
+    None
 }
 
 public class Ability_UI : MonoBehaviour
@@ -20,7 +21,7 @@ public class Ability_UI : MonoBehaviour
     public Action[] actions;
     private InputManager inputManager;
     private UIDirection uiSelect;
-    private UIDirection lastSelected;
+    private UIDirection lastSelected = UIDirection.None;
 
     private void Awake()
     {
@@ -83,10 +84,13 @@ public class Ability_UI : MonoBehaviour
         if (uiSelect == UIDirection.North || uiSelect == UIDirection.East)
             multiplier = 1;
 
-        abilitySelectDisplay[((int)lastSelected)].GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
-        abilitySelectDisplay[((int)lastSelected)].localScale = Vector3.one;
+        if (lastSelected != UIDirection.None)
+        {
+            abilitySelectDisplay[((int)lastSelected)].GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+            abilitySelectDisplay[((int)lastSelected)].localScale = Vector3.one;
+        }
 
-        abilitySelectDisplay[((int)uiSelect)].GetComponent<RectTransform>().anchoredPosition += (multiplier * direction * 0.01f);
+        abilitySelectDisplay[((int)uiSelect)].GetComponent<RectTransform>().anchoredPosition += (0.01f * multiplier * direction);
         abilitySelectDisplay[((int)uiSelect)].localScale = Vector3.one * 1.3f;
 
         lastSelected = uiSelect;
@@ -97,12 +101,12 @@ public class Ability_UI : MonoBehaviour
         for (int i = 0; i < actions.Length; i++)
         {
             if (actions[i] != null)
-                actions[i].isPermitted = false;
+                actions[i].PermitAbility(false);
         }
         
         if (actions[((int)uiSelect)] != null)
         {
-            actions[((int)uiSelect)].isPermitted = true;
+            actions[((int)uiSelect)].PermitAbility(true);
             lastSelected = uiSelect;
         }
     }

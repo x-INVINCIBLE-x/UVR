@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Receiver.Primitives;
 
 public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor
 {
@@ -13,6 +15,8 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
     private InventoryManager inventoryManager;
     private bool isSafe = false;
     private bool hasWeaponInSlot = false;
+
+    [SerializeField] public float spawnDelay = 0f;
 
     protected override void Awake()
     {
@@ -72,6 +76,13 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
         closeHandler.OnClose += HandleClose;
 
         isSafe = true;
+        StartCoroutine(SpawnWeapon());
+    }
+
+    private IEnumerator SpawnWeapon()
+    {
+        yield return new WaitForSeconds(spawnDelay);
+
         InventoryItem item = InventoryManager.Instance.GetItem(this);
         if (item != null)
         {

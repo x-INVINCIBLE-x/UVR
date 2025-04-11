@@ -48,10 +48,9 @@ public class GrabStatus : MonoBehaviour
     private void OnLeftHandDeselect(SelectExitEventArgs args) => ResetHandStatus(Hand.Left);
     private void OnRightHandSelect(SelectEnterEventArgs args)
     {
-        Debug.Log(args.interactorObject.transform.gameObject.name);
         if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable statusUpdater))
             ChangeRightHandStatus(GrabType.Object);
-        if (args.interactableObject.transform.parent.TryGetComponent(out ClimbInteractable _))
+        if (args.interactableObject.transform.TryGetComponent(out ClimbInteractable _))
             ChangeRightHandStatus(GrabType.Climb);
     }
 
@@ -77,18 +76,19 @@ public class GrabStatus : MonoBehaviour
     {
         if (hand == Hand.Left) LeftHand = GrabType.Empty;
         else RightHand = GrabType.Empty;
+        GrabStatusChanged?.Invoke(GrabType.Empty);
     }
 
     public void ChangeLeftHandStatus(GrabType type)
     {
-        GrabStatusChanged?.Invoke(type);
         LeftHand = type;
+        GrabStatusChanged?.Invoke(type);
     }
 
     public void ChangeRightHandStatus(GrabType type)
     {
-        GrabStatusChanged?.Invoke(type);
         RightHand = type;
+        GrabStatusChanged?.Invoke(type);
     }
 
     public bool AreHandsEmpty() => LeftHand == GrabType.Empty && RightHand == GrabType.Empty;

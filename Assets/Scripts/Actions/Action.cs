@@ -8,8 +8,11 @@ public class Action : MonoBehaviour
     protected InputManager inputManager;
     public bool isPermitted;
 
+    [SerializeField] protected float skillDuration = 0f;
+
     [SerializeField] protected float skillCooldown;
-    private float lastTimeSkillUsed = -10f;
+    protected float lastTimeSkillUsed = -10f;
+    public bool showDurationDisplay = false;
     
     protected virtual void Awake()
     {
@@ -22,12 +25,26 @@ public class Action : MonoBehaviour
         inputManager.leftJoystickPress.action.performed += ctx => StartAbility();
     }
 
-    private void StartAbility()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            StartAbility();
+    }
+
+    public virtual void PermitAbility(bool status)
+    {
+        isPermitted = status;
+    }
+
+    protected virtual void StartAbility()
     {
         if (!CanUseAbility()) return;
 
         lastTimeSkillUsed = Time.time;
         ExecuteAbility();
+
+        if (skillDuration > 0f && showDurationDisplay)
+            UI.Instance.playerUI.StartAbilityDurationCooldown(skillDuration);
     }
 
     protected virtual void ExecuteAbility()
@@ -35,7 +52,7 @@ public class Action : MonoBehaviour
         
     }
 
-    private bool CanUseAbility()
+    protected virtual bool CanUseAbility()
     {
         if (!isPermitted || lastTimeSkillUsed + skillCooldown > Time.time)
         {

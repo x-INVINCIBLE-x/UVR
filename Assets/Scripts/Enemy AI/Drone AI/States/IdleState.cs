@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class IdleState : EnemyStateBase
 {
-    public IdleState(bool needsExitTime , Enemy Enemy) : base(needsExitTime , Enemy) 
+    public IdleState(bool needsExitTime , Enemy_Drone Enemy) : base(needsExitTime , Enemy) 
     {
         
     }

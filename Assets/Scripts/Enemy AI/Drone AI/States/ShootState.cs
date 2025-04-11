@@ -12,9 +12,9 @@ public class ShootState : EnemyStateBase
 
     public ShootState(
         bool needsExitTime,
-        Enemy Enemy,
+        Enemy_Drone Enemy,
         ShootEnemy Prefab,
-        Action<State<EnemyState,StateEvent>> onEnter,
+        Action<State<EnemyDrone_State, StateEvent>> onEnter,
         float ExitTime = 0.33f): base(needsExitTime , Enemy , ExitTime, onEnter)
     {
         this.Prefab = Prefab;

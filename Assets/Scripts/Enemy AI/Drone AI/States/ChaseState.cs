@@ -4,7 +4,7 @@ public class ChaseState : EnemyStateBase
 {
     private Transform Target;
 
-    public ChaseState(bool needsExitTime, Enemy Enemy , Transform Target) : base(needsExitTime, Enemy)
+    public ChaseState(bool needsExitTime, Enemy_Drone Enemy , Transform Target) : base(needsExitTime, Enemy)
     {
         this.Target = Target;
     }

@@ -4,27 +4,27 @@ using System;
 using UnityEngine.AI;
 using Unity.VisualScripting;
 
-public abstract class EnemyStateBase : State<EnemyState,StateEvent>
+public abstract class EnemyStateBase : State<EnemyDrone_State,StateEvent>
 {
-    protected readonly Enemy Enemy;
+    protected readonly Enemy_Drone Enemy;
     protected readonly NavMeshAgent Agent;
     protected readonly Animator Animator;
     protected bool RequestedExit;
     protected float ExitTime;
 
     
-    protected readonly Action<State<EnemyState, StateEvent>> onEnter;
-    protected readonly Action<State<EnemyState, StateEvent>> onLogic;
-    protected readonly Action<State<EnemyState, StateEvent>> onExit;
-    protected readonly Func<State<EnemyState, StateEvent>, bool> canExit;
+    protected readonly Action<State<EnemyDrone_State, StateEvent>> onEnter;
+    protected readonly Action<State<EnemyDrone_State, StateEvent>> onLogic;
+    protected readonly Action<State<EnemyDrone_State, StateEvent>> onExit;
+    protected readonly Func<State<EnemyDrone_State, StateEvent>, bool> canExit;
 
     public EnemyStateBase(bool needsExitTime, 
-        Enemy Enemy,
+        Enemy_Drone Enemy,
         float ExitTime = 0.1f,
-        Action<State<EnemyState, StateEvent>> onEnter = null,
-        Action<State<EnemyState, StateEvent>> onLogic = null,
-        Action<State<EnemyState, StateEvent>> onExit = null,
-        Func<State<EnemyState, StateEvent>, bool> canExit = null)
+        Action<State<EnemyDrone_State, StateEvent>> onEnter = null,
+        Action<State<EnemyDrone_State, StateEvent>> onLogic = null,
+        Action<State<EnemyDrone_State, StateEvent>> onExit = null,
+        Func<State<EnemyDrone_State, StateEvent>, bool> canExit = null)
     {
         this.Enemy = Enemy;
         this.onEnter = onEnter;

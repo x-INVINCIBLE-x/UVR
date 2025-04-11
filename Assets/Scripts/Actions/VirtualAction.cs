@@ -1,4 +1,4 @@
-using System;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,24 +8,33 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class VirtualAction : Action
 {
     public InputActionProperty moveAction;
-    public XRGazeInteractor gazeInteractor;
+    public XRAdvanceGazeInteractor gazeInteractor;
     public GameObject targetObject;
     public Transform handTransform;
     public Transform bodyTransform;
     private Vector3 lastFollowPos;
+
     public float moveSpeed = 3f;
     public float threshold = 0.01f;
     private float effectiveSpeed;
     public float smoothTime = 0.3f;
 
     private Vector3 velocity = Vector3.zero;
-    private Vector2 moveInput;
     private Rigidbody targetRb;
-    private Transform followTransform;
 
-    private bool isMoving = false;
-    private bool lastMovingStatus = false;
-    private float defaultMoveSpeed;
+    //Track Player Movement
+    [Header("Track Movement")]
+    public Transform trackingTransform; 
+    public float movementThreshold = 0.01f;
+    public float movingDivisor = 15f;
+
+    private Vector3 lastPosition;
+    public bool isMoving;
+
+    [Header("Tracked Object Rigidbody Status")]
+    private bool isKinematic;
+    private bool hasGravity;
+
     protected override void Start()
     {
         base.Start();
@@ -33,72 +42,27 @@ public class VirtualAction : Action
         inputManager.leftJoystick.action.performed += OnMove;
         moveAction.action.performed += OnMove;
         gazeInteractor.selectEntered.AddListener(SelectObject);
+
+        if (trackingTransform == null)
+            trackingTransform = Camera.main.transform; 
+
+        lastPosition = trackingTransform.position;
+        gazeInteractor.showInteraction = isPermitted;
     }
 
-    private void SelectObject(SelectEnterEventArgs args)
+    private void Update()
     {
-        SetTargetObject(args.interactableObject.transform.gameObject);
-    }
-
-    protected override void ExecuteAbility()
-    {
-        base.ExecuteAbility();
-        if (targetObject == null)
-        {
-            // Handled by Gaze Interactor
-        }
-        else 
-        {
-            DeselectTargetObject(targetObject);
-        }
-    }
-
-    public void SetTargetObject(GameObject ob)
-    {
-        targetObject = ob;
-        lastFollowPos = handTransform.position;
-
-        if (targetObject.TryGetComponent(out targetRb))
-        {
-            targetRb.isKinematic = false; 
-            targetRb.useGravity = false;  
-            targetRb.interpolation = RigidbodyInterpolation.Interpolate;
-        }
-    }
-
-    private void OnMove(InputAction.CallbackContext context)
-    {
-        if (targetObject == null) { return; }
-
-        moveInput = context.ReadValue<Vector2>();
-
-        isMoving = !Mathf.Approximately(moveInput.x, 0) || !Mathf.Approximately(moveInput.y, 0);
-
-
-        Debug.Log(moveInput.x + "   " + moveInput.y);
-    }
-
-    private void Update() 
-    {
+        if (!isPermitted) return;
         if (targetObject == null || targetRb == null) return;
 
-        // Determine the current follow transform
-        //Transform newFollowTransform = isMoving ? bodyTransform : handTransform;
-        Transform newFollowTransform = handTransform;
-        
-        // If switching transforms, reset lastFollowPos to prevent sudden jumps
-        //if (newFollowTransform != followTransform)
-        //{
-            //lastFollowPos = newFollowTransform.position;
-            if (isMoving)
-                effectiveSpeed = moveSpeed / 20;
-            else
-                effectiveSpeed = moveSpeed;
-        //}
+        CheckMovement();
 
-        followTransform = newFollowTransform;
+        if (isMoving)
+            effectiveSpeed = moveSpeed / movingDivisor;
+        else
+            effectiveSpeed = moveSpeed;
 
-        Vector3 deltaMove = (followTransform.position - lastFollowPos);
+        Vector3 deltaMove = (handTransform.position - lastFollowPos);
 
         if (deltaMove.sqrMagnitude < threshold)
         {
@@ -106,7 +70,7 @@ public class VirtualAction : Action
             return;
         }
 
-        lastFollowPos = followTransform.position;
+        lastFollowPos = handTransform.position;
 
         Vector3 targetPos = Vector3.SmoothDamp(
             targetObject.transform.position,
@@ -118,15 +82,91 @@ public class VirtualAction : Action
         targetRb.MovePosition(targetPos);
     }
 
-    public void DeselectTargetObject(GameObject ob)
+    public override void PermitAbility(bool status)
     {
-        if (targetObject.TryGetComponent(out Rigidbody rb))
+        base.PermitAbility(status);
+
+        gazeInteractor.showInteraction = status;
+    }
+
+    private void CheckMovement()
+    {
+        Vector3 currentPosition = trackingTransform.position;
+        float distanceMoved = Vector3.Distance(currentPosition, lastPosition);
+
+        isMoving = distanceMoved > movementThreshold;
+
+        lastPosition = currentPosition;
+    }
+
+    private void SelectObject(SelectEnterEventArgs args)
+    {
+        if (!isPermitted) return;
+
+        SetTargetObject(args.interactableObject.transform.gameObject);
+    }
+
+    protected override void ExecuteAbility()
+    {
+        base.ExecuteAbility();
+        if (targetObject == null)
         {
-            rb.isKinematic = false; 
-            rb.useGravity = true;  
+            // Handled by Gaze Interactor
+        }
+        else
+        {
+            DeselectTargetObject();
+        }
+    }
+
+    public void SetTargetObject(GameObject ob)
+    {
+        if (!CanUseAbility()) return;
+        Debug.Log("SelectS");
+
+        targetObject = ob;
+        lastFollowPos = handTransform.position;
+
+        if (targetObject.TryGetComponent(out targetRb))
+        {
+            isKinematic = targetRb.isKinematic;
+            hasGravity = targetRb.useGravity;
+
+            targetRb.isKinematic = false;
+            targetRb.useGravity = false;
         }
 
+        gazeInteractor.showInteraction = false;
+    }
+
+    protected override void StartAbility()
+    {
+        ExecuteAbility();
+    }
+
+    private void OnMove(InputAction.CallbackContext context)
+    {
+        if (targetObject == null) { return; }
+
+        // By Input
+        //Vector2 moveInput = context.ReadValue<Vector2>();
+        ////isMoving = !Mathf.Approximately(moveInput.x, 0) || !Mathf.Approximately(moveInput.y, 0);
+        //isMoving = isMoving || (!Mathf.Approximately(moveInput.x, 0) && !Mathf.Approximately(moveInput.y, 0));
+        Debug.Log("Moving Status: " + isMoving);
+    }
+
+    public void DeselectTargetObject()
+    {
+        lastTimeSkillUsed = Time.time;
+        if (targetObject.TryGetComponent(out Rigidbody _))
+        {
+            targetRb.isKinematic = isKinematic;
+            targetRb.useGravity = hasGravity;
+        }
+        Debug.Log("Deselect");
         targetObject = null;
+
+        gazeInteractor.showInteraction = true;
     }
 
     protected override void OnDestroy()

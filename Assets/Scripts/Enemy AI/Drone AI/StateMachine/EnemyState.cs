@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum EnemyState
+public enum EnemyDrone_State
 {
     Idle,
     Chase,

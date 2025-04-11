@@ -4,7 +4,8 @@ using UnityEngine;
 public enum RingAxis
 {
     XY,
-    XZ
+    XZ,
+    YZ
 }
 
 public class RingUIHelper : MonoBehaviour
@@ -49,9 +50,13 @@ public class RingUIHelper : MonoBehaviour
             {
                 worldPos = PositionInXZ(angle);
             }
-            else
+            else if (ringAxis == RingAxis.XY)
             {
                 worldPos = PositionInXY(angle);
+            }
+            else
+            {
+                worldPos = PositionInYZ(angle);
             }
             slots[i].position = worldPos;
 
@@ -66,5 +71,10 @@ public class RingUIHelper : MonoBehaviour
     private Vector3 PositionInXZ(float angle)
     {
         return transform.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * radius, heightOffset, Mathf.Sin(angle * Mathf.Deg2Rad) * radius);
+    }
+
+    private Vector3 PositionInYZ(float angle)
+    {
+        return transform.position + new Vector3(heightOffset, Mathf.Cos(angle * Mathf.Deg2Rad) * radius, Mathf.Sin(angle * Mathf.Deg2Rad) * radius);
     }
 }

@@ -937,9 +937,10 @@ GameObject:
   - component: {fileID: 58877817914127023}
   - component: {fileID: 4482964283170062172}
   - component: {fileID: 8166253949140569854}
+  - component: {fileID: 6104269756458222074}
   m_Layer: 0
   m_Name: Flask_Pistol
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -984,8 +985,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
@@ -1150,7 +1151,6 @@ MonoBehaviour:
   recoilForce: 3
   damage: 3
   projectilePrefab: {fileID: 1969587326035667132, guid: c28b79981c1704148b12c97c9c6af738, type: 3}
-  chargeTime: 0
   maxCharge: 3
   maxbulletSize: 2
   maxShootingForce: 50
@@ -1279,6 +1279,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6104269756458222074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200743150739345974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae1430468fd147419c5b32724e389ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: ff2ead5e16e65c44a9ead755b6fc2de5, type: 2}
 --- !u!1 &4862255119533883280
 GameObject:
   m_ObjectHideFlags: 0

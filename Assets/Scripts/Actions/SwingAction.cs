@@ -55,14 +55,14 @@ public class SwingAction : MonoBehaviour
     {
         GetSwingPoint();
 
-        if (swingAction.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.P))
+        if (swingAction.action.WasPressedThisFrame())
         {
             if (actionMediator.grabStatus.GetStatus(hand) != GrabType.Empty)
                 return;
 
             StartSwing();
         }
-        else if (swingAction.action.WasReleasedThisFrame() || Input.GetKeyUp(KeyCode.P))
+        else if (swingAction.action.WasReleasedThisFrame())
         {
             StopSwing();
         }
@@ -95,7 +95,6 @@ public class SwingAction : MonoBehaviour
         actionMediator.grabStatus.ResetHandStatus(hand);
         actionMediator.DisablePhysicalMotionOnLand();
 
-        Debug.Log("Destroy");
         Destroy(joint);
     }
 
@@ -106,7 +105,7 @@ public class SwingAction : MonoBehaviour
         if (actionMediator.grabStatus.IsClimbing()) { return; }
 
         if (!pullAction.action.IsPressed()) return;
-        Debug.Log("pull");
+        
         Vector3 direction = (swingPoint - startSwingPoint.position).normalized;
         actionMediator.rb.AddForce(direction * pullingStrength * Time.deltaTime);
 
@@ -143,7 +142,6 @@ public class SwingAction : MonoBehaviour
     {
         if (joint)
         {
-        Debug.Log("rope");
             lineRenderer.enabled = true;
             lineRenderer.positionCount = 2;
             lineRenderer.SetPosition(0, startSwingPoint.position);

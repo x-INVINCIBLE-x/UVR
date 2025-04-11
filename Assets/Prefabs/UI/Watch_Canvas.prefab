@@ -13,13 +13,14 @@ GameObject:
   - component: {fileID: 6099075974203141365}
   - component: {fileID: 7190081358540375594}
   - component: {fileID: 6308867262303063961}
+  - component: {fileID: 8151064077400538730}
   m_Layer: 5
   m_Name: Watch_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7376289647830069457
 RectTransform:
   m_ObjectHideFlags: 0
@@ -125,6 +126,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
+--- !u!114 &8151064077400538730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8752085841267522839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85c32830c44f3d4182459774a865b55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  enableTrigger: Open
+  disableTrigger: Close
 --- !u!1001 &2234162155494800670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -256,10 +272,6 @@ PrefabInstance:
     - target: {fileID: 9032824725674844621, guid: 3ebc02a4c3858c24b90fc233ad1b6c34, type: 3}
       propertyPath: m_Name
       value: Watch_Slot (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 9032824725674844621, guid: 3ebc02a4c3858c24b90fc233ad1b6c34, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

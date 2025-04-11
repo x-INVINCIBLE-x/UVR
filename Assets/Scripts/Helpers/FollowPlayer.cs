@@ -3,21 +3,32 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     private Transform playerTransform;
+    [SerializeField] private bool followY = false;
     public Vector3 offset;
+    private Vector3 followPosition;
 
     private void Start()
     {
         playerTransform = PlayerManager.instance.player;
+
+        followPosition = playerTransform.position + offset;
+        Follow();
     }
 
     private void Update()
     {
-        transform.position = playerTransform.position + offset;
+        followPosition = playerTransform.position + offset;
+
+        if (!followY)
+        {
+            followPosition.y = transform.position.y;
+        }
+
+        Follow();
     }
 
-    private void OnDrawGizmos()
+    private void Follow()
     {
-        Gizmos.color = Color.blue;
-        //Gizmos.DrawSphere(playerTransform.position + offset, 0.1f);
+        transform.position = followPosition;
     }
 }

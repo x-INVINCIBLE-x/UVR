@@ -8,7 +8,6 @@ public class TimeAction : Action
     public DynamicMoveProvider dynamicMoveProvider;
     public ContinuousTurnProvider continuousTurnProvider;
 
-    [SerializeField] private float slowDuration = 5f;
     private float slowTimer = 0f;
     private float defaultMoveSpeed;
     private float defaultTurnSpeed;
@@ -18,7 +17,7 @@ public class TimeAction : Action
     protected override void Start()
     {
         base.Start();
-        //inputManager.XTap.action.performed += ModifyTime;
+        //inputManager.leftJoystickPress.action.performed += EndAbility;
     }
 
     protected override void ExecuteAbility()
@@ -27,19 +26,14 @@ public class TimeAction : Action
         ModifyTime();
     }
 
-    private void ModifyTime(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    private void EndAbility(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        Time.timeScale = Time.timeScale == 1 ? 0.4f : 1f;
-
-        if (Time.timeScale != 1)
-        {
-            slowTimer = slowDuration;
-            if (timerRoutine == null)
-                StartCoroutine(TimeSlowDurationRoutine());
-        }
+        if (!isPermitted || Time.timeScale == 1) { return; }
+        Time.timeScale = 1f;
 
         AdjustSpeed();
         actionMediator.TimeScaleUpdated(Time.timeScale);
+        UI.Instance.playerUI.StopAbilityDurationCooldown();
     }
 
     private void ModifyTime()
@@ -48,7 +42,7 @@ public class TimeAction : Action
 
         if (Time.timeScale != 1)
         {
-            slowTimer = slowDuration;
+            slowTimer = skillDuration;
             if (timerRoutine == null)
                 StartCoroutine(TimeSlowDurationRoutine());
         }

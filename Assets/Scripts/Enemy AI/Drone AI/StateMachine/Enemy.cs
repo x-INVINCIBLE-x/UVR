@@ -3,10 +3,10 @@ using UnityHFSM;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour
+public class Enemy_Drone : MonoBehaviour
 {
     [Header("References")]
-    private StateMachine<EnemyState, StateEvent> EnemyFSM;
+    private StateMachine<EnemyDrone_State, StateEvent> EnemyFSM;
     private Animator Animator;
     private NavMeshAgent Agent;
     [SerializeField] private Transform Model;  // Drag your 3D model GameObject here
@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
     {
         Animator = GetComponent<Animator>();
         Agent = GetComponent<NavMeshAgent>();
-        EnemyFSM = new StateMachine<EnemyState, StateEvent>();
+        EnemyFSM = new StateMachine<EnemyDrone_State, StateEvent>();
 
 
         // Prevent NavMeshAgent from controlling rotation
@@ -41,39 +41,39 @@ public class Enemy : MonoBehaviour
 
 
         // ADD STATES
-        EnemyFSM.AddState(EnemyState.Idle, new IdleState(false, this));
-        EnemyFSM.AddState(EnemyState.Chase, new ChaseState(true, this, Player.transform));
-        EnemyFSM.AddState(EnemyState.Shoot, new ShootState(true, this, ShootPrefab, onAttack));
+        EnemyFSM.AddState(EnemyDrone_State.Idle, new IdleState(false, this));
+        EnemyFSM.AddState(EnemyDrone_State.Chase, new ChaseState(true, this, Player.transform));
+        EnemyFSM.AddState(EnemyDrone_State.Shoot, new ShootState(true, this, ShootPrefab, onAttack));
 
         // SET START STATE
-        EnemyFSM.SetStartState(EnemyState.Idle);
+        EnemyFSM.SetStartState(EnemyDrone_State.Idle);
 
         // ADD Transitions
-        EnemyFSM.AddTriggerTransition(StateEvent.DetectPlayer, new Transition<EnemyState>(EnemyState.Idle, EnemyState.Chase));
-        EnemyFSM.AddTriggerTransition(StateEvent.LostPlayer, new Transition<EnemyState>(EnemyState.Chase, EnemyState.Idle));
+        EnemyFSM.AddTriggerTransition(StateEvent.DetectPlayer, new Transition<EnemyDrone_State>(EnemyDrone_State.Idle, EnemyDrone_State.Chase));
+        EnemyFSM.AddTriggerTransition(StateEvent.LostPlayer, new Transition<EnemyDrone_State>(EnemyDrone_State.Chase, EnemyDrone_State.Idle));
 
         // Chase Logic
-        EnemyFSM.AddTransition(new Transition<EnemyState>(
-            EnemyState.Idle, EnemyState.Chase,
+        EnemyFSM.AddTransition(new Transition<EnemyDrone_State>(
+            EnemyDrone_State.Idle, EnemyDrone_State.Chase,
             (transition) => IsInChasingRange && Vector3.Distance(Player.transform.position, transform.position) > Agent.stoppingDistance
         ));
 
-        EnemyFSM.AddTransition(new Transition<EnemyState>(
-            EnemyState.Chase, EnemyState.Idle,
+        EnemyFSM.AddTransition(new Transition<EnemyDrone_State>(
+            EnemyDrone_State.Chase, EnemyDrone_State.Idle,
             (transition) => !IsInChasingRange || Vector3.Distance(Player.transform.position, transform.position) <= Agent.stoppingDistance
         ));
 
         // Shoot Transitions (Fixed)
-        EnemyFSM.AddTransition(new Transition<EnemyState>(
-            EnemyState.Chase, EnemyState.Shoot, ShouldShoot
+        EnemyFSM.AddTransition(new Transition<EnemyDrone_State>(
+            EnemyDrone_State.Chase, EnemyDrone_State.Shoot, ShouldShoot
         ));
 
-        EnemyFSM.AddTransition(new Transition<EnemyState>(
-            EnemyState.Shoot, EnemyState.Chase, IsNotWithinIdleRange
+        EnemyFSM.AddTransition(new Transition<EnemyDrone_State>(
+            EnemyDrone_State.Shoot, EnemyDrone_State.Chase, IsNotWithinIdleRange
         ));
 
-        EnemyFSM.AddTransition(new Transition<EnemyState>(
-            EnemyState.Shoot, EnemyState.Idle, IsWithinIdleRange
+        EnemyFSM.AddTransition(new Transition<EnemyDrone_State>(
+            EnemyDrone_State.Shoot, EnemyDrone_State.Idle, IsWithinIdleRange
         ));
 
         EnemyFSM.Init();
@@ -101,18 +101,18 @@ public class Enemy : MonoBehaviour
         IsInChasingRange = true;
     }
 
-    private bool ShouldShoot(Transition<EnemyState> Transition)
+    private bool ShouldShoot(Transition<EnemyDrone_State> Transition)
     {
         Debug.Log("Checking if should shoot...");
         return (LastAttackTime + AttackCooldown <= Time.time) && IsInShootRange;
     }
 
-    private bool IsWithinIdleRange(Transition<EnemyState> Transition)
+    private bool IsWithinIdleRange(Transition<EnemyDrone_State> Transition)
     {
         return Agent.remainingDistance <= Agent.stoppingDistance;
     }
 
-    private bool IsNotWithinIdleRange(Transition<EnemyState> Transition)
+    private bool IsNotWithinIdleRange(Transition<EnemyDrone_State> Transition)
     {
         return !IsWithinIdleRange(Transition);
     }
@@ -129,7 +129,7 @@ public class Enemy : MonoBehaviour
         IsInShootRange = true;
     }
 
-    private void onAttack(State<EnemyState, StateEvent> State)
+    private void onAttack(State<EnemyDrone_State, StateEvent> State)
     {
         Debug.Log("Enemy attacking!");
 

@@ -9,9 +9,15 @@ public class DashAction : Action
     public Transform headTransform;
     private Vector3 direction;
 
+    public bool canSwingDash = true;
+    private float defaultDashForce;
+
     protected override void Start()
     {
         base.Start();
+
+        defaultDashForce = dashForce;
+        actionMediator.OnTimeModified += HandleTimeModification;
 
         inputManager.B.action.performed += Dash;
 
@@ -19,6 +25,7 @@ public class DashAction : Action
         {
             Vector2 input = ctx.ReadValue<Vector2>();
             direction = headTransform.right * input.x + headTransform.forward * input.y;
+            direction.y = 0f;
             direction.Normalize();
         };
 
@@ -27,9 +34,22 @@ public class DashAction : Action
 
     private void Dash(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        if (!canSwingDash && actionMediator.grabStatus.IsSwinging()) return;
+
+        if (actionMediator.grabStatus.IsClimbing()) return;
+
         actionMediator.SetPhysicalMotion(true);
         rb.AddForce(direction * dashForce, ForceMode.VelocityChange);
-        actionMediator.DisablePhysicalMotion(dashDuration);
+        // - Changes-
+        if (actionMediator.IsGrounded())
+            actionMediator.DisablePhysicalMotion(dashDuration);
+        else
+            actionMediator.DisablePhysicalMotionOnLand();
+    }
+
+    private void HandleTimeModification(float modifier)
+    {
+        dashForce = modifier == 1 ? defaultDashForce : defaultDashForce * (1 / Time.timeScale);    
     }
 
     protected override void OnDestroy()

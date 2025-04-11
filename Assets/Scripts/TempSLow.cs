@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TempSLow : MonoBehaviour, ISlowable
 {
-    public bool isSLowed = false;
+    public bool isSlowed = false;
     Rigidbody rb;
 
     private void Awake()
@@ -12,7 +12,7 @@ public class TempSLow : MonoBehaviour, ISlowable
 
     private void Update()
     {
-        if (isSLowed)
+        if (isSlowed)
         {
             rb.linearDamping = 5f; // Increase drag to slow movement gradually
             rb.angularDamping = 5f;
@@ -21,11 +21,11 @@ public class TempSLow : MonoBehaviour, ISlowable
 
     public void OnSlowStart(float speedMultiplir)
     {
-        isSLowed = true;
+        isSlowed = true;
     }
 
     public void OnSlowStop()
     {
-        isSLowed = false;
+        isSlowed = false;
     }
 }
