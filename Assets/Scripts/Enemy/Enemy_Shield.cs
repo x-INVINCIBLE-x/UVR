@@ -24,8 +24,8 @@ public class Enemy_Shield : MonoBehaviour, IDamagable
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(AttackData attackData)
     {
-        ReduceDurability(damage);
+        ReduceDurability(((int)attackData.physicalDamage.Value));
     }
 }

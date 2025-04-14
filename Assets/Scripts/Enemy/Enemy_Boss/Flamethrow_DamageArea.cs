@@ -8,7 +8,7 @@ public class Flamethrow_DamageArea : MonoBehaviour
 
     private float damageCooldown;
     private float lastTimeDamaged;
-    private int flameDamage;
+    private AttackData flameDamage;
 
     private void Awake()
     {

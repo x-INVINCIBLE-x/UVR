@@ -13,7 +13,7 @@ public class Enemy_Range : Enemy
     public GrenadePerk grenadePerk;
 
     [Header("Grenade perk")]
-    public int grenadeDamage;
+    public AttackData grenadeDamage;
     public GameObject grenadePrefab;
     public float impactPower;
     public float explosionTimer = .75f;
@@ -245,7 +245,7 @@ public class Enemy_Range : Enemy
         GameObject newBullet = ObjectPool.instance.GetObject(bulletPrefab,gunPoint);
         newBullet.transform.rotation = Quaternion.LookRotation(gunPoint.forward);
 
-        newBullet.GetComponent<Bullet>().BulletSetup(whatIsAlly,weaponData.bulletDamage);
+        newBullet.GetComponent<Bullet>().BulletSetup(whatIsAlly,weaponData.damageData);
 
         Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
 
@@ -307,15 +307,13 @@ public class Enemy_Range : Enemy
         
         if (Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, Mathf.Infinity, ~whatToIgnore))
         {
-            Debug.Log(hit.transform.gameObject.name);
-
             if (hit.transform.root == player.root)
             {
                 UpdateAimPosition();
                 return true;
             }
         }
-        Debug.Log(hit.transform.gameObject.name);
+
         return false;
     }
 

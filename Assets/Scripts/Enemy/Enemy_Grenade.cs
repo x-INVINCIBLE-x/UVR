@@ -15,7 +15,7 @@ public class Enemy_Grenade : MonoBehaviour
     private LayerMask allyLayerMask;
     private bool canExplode = true;
 
-    private int grenadeDamage;
+    private AttackData grenadeDamage;
 
     private void Awake() => rb = GetComponent<Rigidbody>();
 
@@ -71,7 +71,7 @@ public class Enemy_Grenade : MonoBehaviour
         ObjectPool.instance.ReturnObject(gameObject);
     }
 
-    public void SetupGrenade(LayerMask allyLayerMask, Vector3 target, float timeToTarget, float countdown, float impactPower, int grenadeDamage)
+    public void SetupGrenade(LayerMask allyLayerMask, Vector3 target, float timeToTarget, float countdown, float impactPower, AttackData grenadeDamage)
     {
         canExplode = true;
 

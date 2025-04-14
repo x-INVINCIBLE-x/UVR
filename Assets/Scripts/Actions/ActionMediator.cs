@@ -129,10 +129,10 @@ public class ActionMediator : MonoBehaviour
 
     public void SetPhysicalMotion(bool status)
     {
+        xRBodyTransformer.useCharacterControllerIfExists = !status;
         rb.isKinematic = !status;
         controller.enabled = !status;
         bodyCollider.SetActive(status);
-        xRBodyTransformer.useCharacterControllerIfExists = !status;
         //rb.interpolation = status ? RigidbodyInterpolation.Interpolate : RigidbodyInterpolation.None;
     }
 

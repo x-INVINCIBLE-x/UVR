@@ -16,20 +16,20 @@ public class Enemy_Boss : Enemy
     private float lastTimeUsedAbility;
 
     [Header("Flamethrower")]
-    public int flameDamage;
+    public AttackData flameDamage;
     public float flameDamageCooldown;
     public ParticleSystem flamethrower;
     public float flamethrowDuration;
     public bool flamethrowActive { get; private set; }
 
     [Header("Hummer")]
-    public int hummerActiveDamage;
+    public AttackData hummerActiveDamage;
     public GameObject activationPrefab;
     [SerializeField] private float hummerCheckRadius;
 
 
     [Header("Jump attack")]
-    public int jumpAttackDamage;
+    public AttackData jumpAttackDamage;
     public float jumpAttackCooldown = 10;
     private float lastTimeJumped;
     public float travelTimeToTarget = 1;
@@ -43,7 +43,7 @@ public class Enemy_Boss : Enemy
     [SerializeField] private LayerMask whatToIngore;
 
     [Header("Attack")]
-    [SerializeField] private int meleeAttackDamage;
+    [SerializeField] private AttackData meleeAttackData;
     [SerializeField] private Transform[] damagePoints;
     [SerializeField] private float attackCheckRadius;
     [SerializeField] private GameObject meleeAttackFx;
@@ -87,7 +87,7 @@ public class Enemy_Boss : Enemy
         if (ShouldEnterBattleMode())
             EnterBattleMode();
 
-        MeleeAttackCheck(damagePoints, attackCheckRadius, meleeAttackFx,meleeAttackDamage);
+        MeleeAttackCheck(damagePoints, attackCheckRadius, meleeAttackFx,meleeAttackData);
     }
 
 
@@ -137,7 +137,7 @@ public class Enemy_Boss : Enemy
         GameObject newActivation = ObjectPool.instance.GetObject(activationPrefab, impactPoint);
         ObjectPool.instance.ReturnObject(newActivation, 1);
 
-        MassDamage(damagePoints[0].position, hummerCheckRadius,hummerActiveDamage);
+        MassDamage(damagePoints[0].position, hummerCheckRadius, hummerActiveDamage);
     }
 
     public bool CanDoAbility()
@@ -167,7 +167,7 @@ public class Enemy_Boss : Enemy
         MassDamage(impactPoint.position, impactRadius,jumpAttackDamage);
     }
 
-    private void MassDamage(Vector3 impactPoint, float impactRadius,int damage)
+    private void MassDamage(Vector3 impactPoint, float impactRadius,AttackData damage)
     {
         HashSet<GameObject> uniqueEntities = new HashSet<GameObject>();
         Collider[] colliders = Physics.OverlapSphere(impactPoint, impactRadius, ~whatIsAlly);

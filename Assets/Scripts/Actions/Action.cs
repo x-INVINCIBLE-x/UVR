@@ -22,7 +22,7 @@ public class Action : MonoBehaviour
     protected virtual void Start()
     {
         inputManager = InputManager.Instance;
-        inputManager.leftJoystickPress.action.performed += ctx => StartAbility();
+        inputManager.YHold.action.performed += ctx => StartAbility();
     }
 
     private void Update()

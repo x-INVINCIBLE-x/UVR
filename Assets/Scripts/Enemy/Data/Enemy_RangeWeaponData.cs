@@ -18,7 +18,8 @@ public class Enemy_RangeWeaponData : ScriptableObject
     public float maxWeaponCooldown = 3;
 
     [Header("Bullet details")]
-    public int bulletDamage;
+    public AttackData damageData;
+    
     [Space]
     public float bulletSpeed = 20;
     public float weaponSpread = .1f;

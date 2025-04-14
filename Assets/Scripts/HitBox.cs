@@ -11,9 +11,8 @@ public class HitBox : MonoBehaviour, IDamagable
 
     }
 
-
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(AttackData attackData)
     {
-     
+        
     }
 }

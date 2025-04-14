@@ -20,16 +20,53 @@ public class JumpAction : Action
         if (!isPermitted) return;
 
         if (jumpGroundedOnly && actionMediator.IsGrounded() ||
-            (!jumpGroundedOnly && lastTimeJumped + jumpCooldown > Time.deltaTime))
+            (!jumpGroundedOnly && lastTimeJumped + jumpCooldown < Time.time))
         {
+            Vector3 startPosition = transform.position;
+
+            // Take input and estimate Direction
+            Vector2 input2D = InputManager.Instance.leftJoystick.action.ReadValue<Vector2>();
+            Transform relativeTransform = actionMediator.xRBodyTransformer.transform;
+            Vector3 input = (relativeTransform.right * input2D.x + relativeTransform.forward * input2D.y).normalized;
+
+            // Estimate velocity
+            Vector3 estimatedVelocity = ((transform.position + (actionMediator.moveProvider.moveSpeed * Time.deltaTime * input)) 
+                - startPosition) / Time.deltaTime;
+            Debug.Log(actionMediator.moveProvider.moveSpeed * InputManager.Instance.leftJoystick.action.ReadValue<Vector2>());
+            Vector3 horizontalVelocity = new Vector3(estimatedVelocity.x, 0f, estimatedVelocity.z);
+
+            // Initialize jump
             actionMediator.SetPhysicalMotion(true);
 
             lastTimeJumped = Time.time;
             jumpVelocity = Mathf.Sqrt(1 * -Physics.gravity.y * jumpHeight);
-            actionMediator.rb.linearVelocity += Vector3.up * jumpVelocity;
+            actionMediator.rb.linearVelocity =horizontalVelocity + Vector3.up * jumpVelocity;
 
             actionMediator.DisablePhysicalMotionOnLand();
         }
+    }
+
+    // Floating Jump? - More air time - reduced gravity
+    private void FloatingJump()
+    {
+        Vector2 input2D = InputManager.Instance.leftJoystick.action.ReadValue<Vector2>();
+        Transform reference = actionMediator.xRBodyTransformer.transform;
+        Vector3 inputDir = (reference.right * input2D.x + reference.forward * input2D.y).normalized;
+
+        
+        float moveSpeed = actionMediator.moveProvider.moveSpeed;
+        Vector3 estimatedVelocity = inputDir * moveSpeed;
+        Vector3 horizontalVelocity = new Vector3(estimatedVelocity.x, 0f, estimatedVelocity.z);
+
+        
+        actionMediator.SetPhysicalMotion(true);
+        lastTimeJumped = Time.time;
+
+        float jumpVelocity = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
+        actionMediator.rb.linearVelocity = horizontalVelocity + Vector3.up * jumpVelocity;
+
+        actionMediator.DisablePhysicalMotionOnLand();
+
     }
 
     protected override void OnDestroy()

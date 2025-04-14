@@ -33,7 +33,7 @@ public class BattleState_Range : EnemyState
     public override void Update()
     {
         base.Update();
-        Debug.Log(enemy.IsSeeingPlayer());
+        //Debug.Log(enemy.IsSeeingPlayer());
         if (enemy.IsSeeingPlayer())
         {
             enemy.FaceTarget(enemy.aim.position);

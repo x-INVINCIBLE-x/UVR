@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
     public Enemy_Visuals visuals { get; private set; }
 
     public Enemy_Health health { get; private set; }
+    public EnemyStats stats { get; private set; }
 
     public Ragdoll ragdoll { get; private set; }
 
@@ -46,12 +47,13 @@ public class Enemy : MonoBehaviour
     {
         stateMachine = new EnemyStateMachine();
 
+        stats = GetComponent<EnemyStats>();
         health = GetComponent<Enemy_Health>();
         ragdoll = GetComponent<Ragdoll>();
         visuals = GetComponent<Enemy_Visuals>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        player = GameObject.Find("Player_XR_Rig").GetComponent<Transform>();
+        player = GameObject.Find("XR Origin (XR Rig)").GetComponent<Transform>();
     }
 
     protected virtual void Start()
@@ -87,15 +89,9 @@ public class Enemy : MonoBehaviour
 
     public virtual void ExitBattleMode() => inBattleMode = false;
 
-    public virtual void GetHit(int damage)
+    public virtual void GetHit(AttackData attackData)
     {
-        health.ReduceHealth(damage);
-
-        if (health.ShouldDie())
-            Die();
-
-
-        EnterBattleMode();
+        stats.TakeDamage(attackData);
     }
 
     public virtual void Die()
@@ -103,7 +99,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public virtual void MeleeAttackCheck(Transform[] damagePoints, float attackCheckRadius,GameObject fx,int damage)
+    public virtual void MeleeAttackCheck(Transform[] damagePoints, float attackCheckRadius,GameObject fx,AttackData damage)
     {
         if (isMeleeAttackReady == false)
             return;

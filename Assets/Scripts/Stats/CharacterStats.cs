@@ -146,24 +146,23 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    public virtual void DoDamage(CharacterStats targetStats)
+    public void TakeDamage(AttackData attackData)
     {
-        if (targetStats.isPerfectBlock)
-        {
-            Debug.Log("Perfect Block Successful!");
-            return;
-        }
-
-        targetStats.TakePhysicalDamage(physicalAtk.Value);
-
-        DoAilmentDamage(targetStats);
-        targetStats.UpdateHUD?.Invoke();
+        TakePhysicalDamage(attackData);
+        TakeAilmentDamage(attackData);
     }
 
-    public void DoAilmentDamage(CharacterStats targetStats)
+    private void TakePhysicalDamage(AttackData attackData)
     {
-        float _fireAtk = fireAtk.Value;
-        float _electricAtk = electricAtk.Value;
+        float reducedDamage = Mathf.Max(0, attackData.physicalDamage.Value - physicalDef.Value);
+
+        ReduceHealthBy(reducedDamage);
+    }
+
+    private void TakeAilmentDamage(AttackData attackData)
+    {
+        float _fireAtk = attackData.fireDamage.Value;
+        float _electricAtk = attackData.electricalDamage.Value;
 
         float damage = _fireAtk + _electricAtk;
 
@@ -171,10 +170,40 @@ public class CharacterStats : MonoBehaviour
             return;
 
         if (_fireAtk > 0)
-            targetStats.TryApplyAilmentEffect(_fireAtk, ref targetStats.fireStatus, AilmentType.Fire);
+            TryApplyAilmentEffect(_fireAtk, ref fireStatus, AilmentType.Fire);
         else if (_electricAtk > 0)
-            targetStats.TryApplyAilmentEffect(_electricAtk, ref targetStats.electricStatus, AilmentType.Electric);
+            TryApplyAilmentEffect(_electricAtk, ref electricStatus, AilmentType.Electric);
     }
+
+    //public virtual void DoDamage(CharacterStats targetStats)
+    //{
+    //    if (isPerfectBlock)
+    //    {
+    //        Debug.Log("Perfect Block Successful!");
+    //        return;
+    //    }
+
+    //    TakePhysicalDamage(physicalAtk.Value);
+
+    //    DoAilmentDamage(targetStats);
+    //    UpdateHUD?.Invoke();
+    //}
+
+    //public void DoAilmentDamage(CharacterStats targetStats)
+    //{
+    //    float _fireAtk = fireAtk.Value;
+    //    float _electricAtk = electricAtk.Value;
+
+    //    float damage = _fireAtk + _electricAtk;
+
+    //    if (damage == 0)
+    //        return;
+
+    //    if (_fireAtk > 0)
+    //        TryApplyAilmentEffect(_fireAtk, ref fireStatus, AilmentType.Fire);
+    //    else if (_electricAtk > 0)
+    //        TryApplyAilmentEffect(_electricAtk, ref electricStatus, AilmentType.Electric);
+    //}
 
     protected virtual void TryApplyAilmentEffect(float ailmentAtk, ref AilmentStatus ailmentStatus, AilmentType ailmentType)
     {
@@ -188,6 +217,7 @@ public class CharacterStats : MonoBehaviour
         ailmentStatus.Value = Mathf.Min(ailmentStatus.ailmentLimit + ailmentLimitOffset, ailmentStatus.Value + effectAmount);
         StartCoroutine(ailmentStatus.ReduceValueOverTime());
 
+        // ------------------------ update UI -----------------------------------
         //UI.instance.ailmentSlider[((int)ailmentType)].gameObject.SetActive(true);
         //StartCoroutine(UI.instance.ailmentSlider[((int)ailmentType)].UpdateUI());
 

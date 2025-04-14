@@ -22,9 +22,9 @@ public class AttackState_Melee : EnemyState
         enemy.visuals.EnableWeaponModel(true);
         enemy.visuals.EnableWeaponTrail(true);
 
-        attackMoveSpeed = enemy.attackData.moveSpeed;
-        enemy.anim.SetFloat("AttackAnimationSpeed", enemy.attackData.animationSpeed);
-        enemy.anim.SetFloat("AttackIndex", enemy.attackData.attackIndex);
+        attackMoveSpeed = enemy.attackInfo.moveSpeed;
+        enemy.anim.SetFloat("AttackAnimationSpeed", enemy.attackInfo.animationSpeed);
+        enemy.anim.SetFloat("AttackIndex", enemy.attackInfo.attackIndex);
         enemy.anim.SetFloat("SlashAttackIndex", Random.Range(0, 6)); // we have 6 attacks with index from 0 to 5
 
 
@@ -47,7 +47,7 @@ public class AttackState_Melee : EnemyState
         int recoveryIndex = PlayerClose() ? 1 : 0;
 
         enemy.anim.SetFloat("RecoveryIndex", recoveryIndex);
-        enemy.attackData = UpdatedAttackData();
+        enemy.attackInfo = UpdatedAttackData();
     }
 
     public override void Update()

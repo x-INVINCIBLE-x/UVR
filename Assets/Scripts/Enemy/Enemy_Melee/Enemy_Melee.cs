@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public struct AttackData_EnemyMelee
 {
-    public int attackDamage;
+    public AttackData attackData;
     public string attackName;
     public float attackRange;
     public float moveSpeed;
@@ -43,7 +43,7 @@ public class Enemy_Melee : Enemy
     private float lastTimeDodge = -10;
 
     [Header("Axe throw ability")]
-    public int axeDamage;
+    public AttackData axeDamage;
     public GameObject axePrefab;
     public float axeFlySpeed;
     public float axeAimTimer;
@@ -52,7 +52,7 @@ public class Enemy_Melee : Enemy
     public Transform axeStartPoint;
 
     [Header("Attack Data")]
-    public AttackData_EnemyMelee attackData;
+    public AttackData_EnemyMelee attackInfo;
     public List<AttackData_EnemyMelee> attackList;
     private Enemy_WeaponModel currentWeapon;
     private bool isAttackReady;
@@ -91,7 +91,7 @@ public class Enemy_Melee : Enemy
         stateMachine.currentState.Update();
 
 
-        MeleeAttackCheck(currentWeapon.damagePoints, currentWeapon.attackRadius, meleeAttackFx, attackData.attackDamage);
+        MeleeAttackCheck(currentWeapon.damagePoints, currentWeapon.attackRadius, meleeAttackFx, attackInfo.attackData);
     }
 
 
@@ -215,14 +215,14 @@ public class Enemy_Melee : Enemy
         return 0;
     }
 
-    public bool PlayerInAttackRange() => Vector3.Distance(transform.position, player.position) < attackData.attackRange;
+    public bool PlayerInAttackRange() => Vector3.Distance(transform.position, player.position) < attackInfo.attackRange;
 
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackData.attackRange);
+        Gizmos.DrawWireSphere(transform.position, attackInfo.attackRange);
 
     }
 }

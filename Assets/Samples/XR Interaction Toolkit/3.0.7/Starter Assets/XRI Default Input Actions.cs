@@ -2755,6 +2755,17 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                 },
                 {
                     ""name"": """",
+                    ""id"": ""3517e7fb-8428-43a5-a709-6fb6afd55d81"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""A"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""b83e774d-6ab7-4616-b7be-0711557523f9"",
                     ""path"": ""<XRController>{RightHand}/{SecondaryButton}"",
                     ""interactions"": """",
