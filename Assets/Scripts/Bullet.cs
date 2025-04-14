@@ -92,7 +92,6 @@ public class Bullet : MonoBehaviour
         IDamagable damagable = collision.transform.GetComponent<IDamagable>();
         damagable?.TakeDamage(attackData);
 
-
         ApplyBulletImpactToEnemy(collision);
     }
 
