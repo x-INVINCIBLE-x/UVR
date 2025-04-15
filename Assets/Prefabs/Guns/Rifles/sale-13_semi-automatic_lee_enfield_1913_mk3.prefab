@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 5688226688838970916}
   - component: {fileID: 3162673521359155820}
   - component: {fileID: 7979914743328054352}
+  - component: {fileID: 6029987224317571866}
   m_Layer: 0
   m_Name: sale-13_semi-automatic_lee_enfield_1913_mk3
   m_TagString: Untagged
@@ -232,12 +233,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.61, y: 3.9571, z: 2.625}
-  m_LocalScale: {x: 0.0033, y: 0.0033, z: 0.0033}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7262744808113404217}
   - {fileID: 6884854190598556704}
   - {fileID: 2442998689949963213}
+  - {fileID: 6733113033082254710}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!54 &5688226688838970916
@@ -280,7 +282,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 6029987224317571866}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -388,7 +391,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  m_FarAttachMode: 0
+  m_FarAttachMode: 1
 --- !u!114 &7979914743328054352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,10 +409,32 @@ MonoBehaviour:
   recoilForce: 5
   damage: 50
   projectilePrefab: {fileID: -971809462053949377, guid: 98c09ff343ac08344938878a997637ed, type: 3}
+  muzzleFlash: {fileID: 1743301284569550, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
   spawnPoints:
   - {fileID: 6884854190598556704}
   - {fileID: 2442998689949963213}
   clickCount: 0
+--- !u!65 &6029987224317571866
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662490615481786316}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 185.91025, y: 7.260131, z: 23.096842}
+  m_Center: {x: -0.26999712, y: -33.081825, z: 26.873863}
 --- !u!1 &1714870607107714888
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +467,37 @@ Transform:
   - {fileID: 347859079580833305}
   m_Father: {fileID: 5567225775897857925}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1732715870812133728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6733113033082254710}
+  m_Layer: 0
+  m_Name: AttachPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6733113033082254710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732715870812133728}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 39.1, y: -32.1, z: 20.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2659137296424010485}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
 --- !u!1 &2830760877279363337
 GameObject:
   m_ObjectHideFlags: 0
