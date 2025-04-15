@@ -123,33 +123,46 @@ public class ActionMediator : MonoBehaviour
 
         //moveProvider.enabled = false;
 
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
         moveProvider.leftHandMoveInput.bypass = new ConstantVector2InputReader(Vector2.zero);
         moveProvider.rightHandMoveInput.bypass = new ConstantVector2InputReader(Vector2.zero);
     }
 
-    public void SetPhysicalMotion(bool status)
+    public void SetPhysicalMotion(bool status, bool interpolate = false)
     {
         xRBodyTransformer.useCharacterControllerIfExists = !status;
         rb.isKinematic = !status;
         controller.enabled = !status;
         bodyCollider.SetActive(status);
+
+        if (interpolate && status)
+        {
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+        }
+        else if (interpolate && !status)
+        {
+            rb.interpolation = RigidbodyInterpolation.None;
+        }
+
         //rb.interpolation = status ? RigidbodyInterpolation.Interpolate : RigidbodyInterpolation.None;
     }
 
-    public void DisablePhysicalMotion(float duration) => StartCoroutine(DisablePhysicalMotionRoutine(duration));
+    public void DisablePhysicalMotion(float duration, bool interpolate = false) => StartCoroutine(DisablePhysicalMotionRoutine(duration, interpolate));
 
-    public void DisablePhysicalMotionOnLand()
+    public void DisablePhysicalMotionOnLand(bool interpolate = false)
     {
-        landRoutine ??= StartCoroutine(LandRoutine());
+        landRoutine ??= StartCoroutine(LandRoutine(interpolate));
     }
 
-    IEnumerator DisablePhysicalMotionRoutine(float delay)
+    IEnumerator DisablePhysicalMotionRoutine(float delay, bool interpolate = false)
     {
         yield return new WaitForSeconds(delay);
         SetPhysicalMotion(false);
     }
 
-    IEnumerator LandRoutine()
+    IEnumerator LandRoutine(bool interpolate)
     {
         //float safteyTimer = 5;
         yield return new WaitForSeconds(0.1f);
@@ -159,7 +172,7 @@ public class ActionMediator : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        SetPhysicalMotion(false);
+        SetPhysicalMotion(false, interpolate);
         landRoutine = null;
     }
 
