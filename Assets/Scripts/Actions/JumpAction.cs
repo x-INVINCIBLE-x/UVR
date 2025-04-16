@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using static UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics.HapticsUtility;
 
 public class JumpAction : Action
 {
@@ -8,11 +10,20 @@ public class JumpAction : Action
 
     private float jumpVelocity;
     private float lastTimeJumped = -10f;
-
+    private Vector3 previousMove;
+    public float blendDuration = 0.1f;
     protected override void Start()
     {
         base.Start();
         inputManager.A.action.performed += HandleJump;
+        actionMediator.OnTimeModified += HandleTimeChange;
+    }
+
+    private void HandleTimeChange(float obj)
+    {
+        //if (actionMediator.IsGrounded()) return;
+        //actionMediator.rb.interpolation = RigidbodyInterpolation.Interpolate;
+        //actionMediator.immuneInterpolation = true;
     }
 
     private void HandleJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -22,27 +33,59 @@ public class JumpAction : Action
         if (jumpGroundedOnly && actionMediator.IsGrounded() ||
             (!jumpGroundedOnly && lastTimeJumped + jumpCooldown < Time.time))
         {
-            Vector3 startPosition = transform.position;
-
-            // Take input and estimate Direction
-            Vector2 input2D = InputManager.Instance.leftJoystick.action.ReadValue<Vector2>();
-            Transform relativeTransform = actionMediator.xRBodyTransformer.transform;
-            Vector3 input = (relativeTransform.right * input2D.x + relativeTransform.forward * input2D.y).normalized;
-
-            // Estimate velocity
-            Vector3 estimatedVelocity = ((transform.position + (actionMediator.moveProvider.moveSpeed * Time.deltaTime * input)) 
-                - startPosition) / Time.deltaTime;
-            Debug.Log(actionMediator.moveProvider.moveSpeed * InputManager.Instance.leftJoystick.action.ReadValue<Vector2>());
-            Vector3 horizontalVelocity = new Vector3(estimatedVelocity.x, 0f, estimatedVelocity.z);
-
-            // Initialize jump
-            actionMediator.SetPhysicalMotion(true);
-
             lastTimeJumped = Time.time;
-            jumpVelocity = Mathf.Sqrt(1 * -Physics.gravity.y * jumpHeight);
-            actionMediator.rb.linearVelocity =horizontalVelocity + Vector3.up * jumpVelocity;
+            jumpVelocity = Mathf.Sqrt(2 * -Physics.gravity.y * jumpHeight);
 
-            actionMediator.DisablePhysicalMotionOnLand();
+            StartCoroutine(LerpJump());
+        }
+    }
+
+    private IEnumerator LerpJump()
+    {
+        float jumpDuration = 2f * Mathf.Sqrt(2f * jumpHeight / -Physics.gravity.y);
+        float elapsed = 0f;
+
+        actionMediator.playerGravity.DisableGravity();
+        previousMove = Vector3.zero;
+
+        while (elapsed < jumpDuration)
+        {
+            float t = elapsed / jumpDuration;
+            float height = 4f * jumpHeight * t * (1 - t);
+
+            float deltaHeight = height - previousMove.y;
+            Vector3 move = Vector3.up * deltaHeight;
+
+            actionMediator.controller.Move(move);
+            previousMove.y = height;
+
+            if (elapsed > 0.2f && actionMediator.IsGrounded())
+            {
+                actionMediator.playerGravity.EnableGravity();
+                yield break;
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        actionMediator.playerGravity.SetYVelocity(-Mathf.Sqrt(2 * -Physics.gravity.y * jumpHeight) * blendDuration);
+
+        actionMediator.playerGravity.EnableGravity();
+        previousMove = Vector3.zero;
+    }
+
+
+    private void SetPhysicalMovement()
+    {
+        if (Time.timeScale == 1)
+        {
+            actionMediator.SetPhysicalMotion(true);
+        }
+        else
+        {
+            actionMediator.immuneInterpolation = true;
+            actionMediator.SetPhysicalMotion(true, true);
         }
     }
 
@@ -53,12 +96,12 @@ public class JumpAction : Action
         Transform reference = actionMediator.xRBodyTransformer.transform;
         Vector3 inputDir = (reference.right * input2D.x + reference.forward * input2D.y).normalized;
 
-        
+
         float moveSpeed = actionMediator.moveProvider.moveSpeed;
         Vector3 estimatedVelocity = inputDir * moveSpeed;
         Vector3 horizontalVelocity = new Vector3(estimatedVelocity.x, 0f, estimatedVelocity.z);
 
-        
+
         actionMediator.SetPhysicalMotion(true);
         lastTimeJumped = Time.time;
 

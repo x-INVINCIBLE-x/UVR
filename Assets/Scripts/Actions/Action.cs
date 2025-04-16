@@ -22,7 +22,7 @@ public class Action : MonoBehaviour
     protected virtual void Start()
     {
         inputManager = InputManager.Instance;
-        inputManager.YHold.action.performed += ctx => StartAbility();
+        inputManager.YTap.action.performed += ctx => StartAbility();
     }
 
     private void Update()
@@ -64,6 +64,6 @@ public class Action : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        inputManager.leftJoystickPress.action.performed -= ctx => StartAbility();
+        inputManager.YTap.action.performed -= ctx => StartAbility();
     }
 }

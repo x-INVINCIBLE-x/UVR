@@ -34,6 +34,8 @@ public class PlayerGravity : MonoBehaviour
         }
     }
 
+    public void SetYVelocity(float velocity) => this.velocity.y = velocity;
+
     public void EnableGravity()
     {
         gravityEnabled = true;

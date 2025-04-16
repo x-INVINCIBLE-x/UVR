@@ -41,14 +41,14 @@ public class SwingAction : MonoBehaviour
 
     private void HandleTimeChange(float timeMultiplier)
     {
-        if (timeMultiplier != 1)
-        {
-            pullingStrength /= timeMultiplier;
-        }
-        else
-        {
-            pullingStrength = defaultPullingStrength;
-        }
+        //if (timeMultiplier != 1)
+        //{
+        //    pullingStrength /= timeMultiplier;
+        //}
+        //else
+        //{
+        //    pullingStrength = defaultPullingStrength;
+        //}
     }
 
     private void Update()
@@ -107,7 +107,7 @@ public class SwingAction : MonoBehaviour
         if (!pullAction.action.IsPressed()) return;
         
         Vector3 direction = (swingPoint - startSwingPoint.position).normalized;
-        actionMediator.rb.AddForce(direction * pullingStrength * Time.deltaTime);
+        actionMediator.rb.AddForce(direction * pullingStrength * Time.unscaledDeltaTime);
 
         float distance = Vector3.Distance(actionMediator.rb.position, swingPoint);
         joint.maxDistance = distance;

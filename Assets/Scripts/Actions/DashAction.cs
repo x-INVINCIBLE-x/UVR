@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DashAction : Action
@@ -11,13 +12,14 @@ public class DashAction : Action
 
     public bool canSwingDash = true;
     private float defaultDashForce;
+    private Coroutine dashCoroutine;
 
     protected override void Start()
     {
         base.Start();
 
         defaultDashForce = dashForce;
-        actionMediator.OnTimeModified += HandleTimeModification;
+        //actionMediator.OnTimeModified += HandleTimeModification;
 
         inputManager.B.action.performed += Dash;
 
@@ -35,22 +37,46 @@ public class DashAction : Action
     private void Dash(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         if (!canSwingDash && actionMediator.grabStatus.IsSwinging()) return;
-
         if (actionMediator.grabStatus.IsClimbing()) return;
 
-        actionMediator.SetPhysicalMotion(true);
-        rb.AddForce(direction * dashForce, ForceMode.VelocityChange);
-        // - Changes-
-        if (actionMediator.IsGrounded())
-            actionMediator.DisablePhysicalMotion(dashDuration);
-        else
-            actionMediator.DisablePhysicalMotionOnLand();
+        if (dashCoroutine != null)
+            StopCoroutine(dashCoroutine);
+
+        dashCoroutine = StartCoroutine(DashRoutine());
     }
 
-    private void HandleTimeModification(float modifier)
+    private IEnumerator DashRoutine()
     {
-        dashForce = modifier == 1 ? defaultDashForce : defaultDashForce * (1 / Time.timeScale);    
+        //isActive = true;
+        actionMediator.immuneInterpolation = true;
+        actionMediator.SetPhysicalMotion(true, true);
+
+        float timer = 0f;
+
+        Vector3 dashVelocity = direction * dashForce;
+
+        while (timer < dashDuration)
+        {
+            rb.linearVelocity = dashVelocity * (1/Time.timeScale);
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        //isActive = false;
+        actionMediator.immuneInterpolation = false;
+        rb.linearVelocity = Vector3.zero;
+
+        if (actionMediator.IsGrounded())
+            actionMediator.DisablePhysicalMotion(0f, true);
+        else
+            actionMediator.DisablePhysicalMotionOnLand(true);
     }
+
+    //private void HandleTimeModification(float modifier)
+    //{
+    //    if (isActive)
+    //        actionMediator.rb.interpolation = RigidbodyInterpolation.Interpolate;
+    //}
 
     protected override void OnDestroy()
     {

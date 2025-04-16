@@ -17,7 +17,7 @@ public class ActionMediator : MonoBehaviour
     //public GameObject abilitySelectDisplay;
     public XRBodyTransformer xRBodyTransformer;
     public DynamicMoveProvider moveProvider;
-    private PlayerGravity playerGravity;
+    public PlayerGravity playerGravity;
 
     public GrabStatus grabStatus;
     public Rigidbody rb;
@@ -28,7 +28,8 @@ public class ActionMediator : MonoBehaviour
 
     public float groundCheckOffset = 0.2f;
     public event Action<float> OnTimeModified;
-    private float defaultMoveSpeed = 0;
+    public bool immuneInterpolation = false;
+    public bool defaultKinematicStatus = true;
 
     [field: SerializeField] public ActionStatus LastActionStatus { get; private set; } = ActionStatus.None;
     // ------------ Changes -------------------
@@ -76,6 +77,7 @@ public class ActionMediator : MonoBehaviour
                 //SetPhysicalMotion(true);
                 playerGravity.EnableGravity();
                 EnableMovement();
+                rb.isKinematic = defaultKinematicStatus;
                 //DisablePhysicalMotionOnLand();
             }
         }
@@ -85,6 +87,8 @@ public class ActionMediator : MonoBehaviour
             LastActionStatus = ActionStatus.Climb;
             playerGravity.DisableGravity();
             DisableMovement();
+            defaultKinematicStatus = rb.isKinematic;
+            rb.isKinematic = true;
             //SetPhysicalMotion(false);
             //if (landRoutine != null)
             //    StopCoroutine(landRoutine);
@@ -135,7 +139,7 @@ public class ActionMediator : MonoBehaviour
         xRBodyTransformer.useCharacterControllerIfExists = !status;
         rb.isKinematic = !status;
         controller.enabled = !status;
-        bodyCollider.SetActive(status);
+        //bodyCollider.SetActive(status);
 
         if (interpolate && status)
         {
@@ -159,20 +163,23 @@ public class ActionMediator : MonoBehaviour
     IEnumerator DisablePhysicalMotionRoutine(float delay, bool interpolate = false)
     {
         yield return new WaitForSeconds(delay);
-        SetPhysicalMotion(false);
+        SetPhysicalMotion(false, interpolate);
+        immuneInterpolation = false;
     }
 
     IEnumerator LandRoutine(bool interpolate)
     {
         //float safteyTimer = 5;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.1f); // ---------------- Original 0.1 - that also is a magic numbrt -----------------
         while (!IsGrounded())
         {
             //safteyTimer -= Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
+        yield return new WaitForEndOfFrame();
         SetPhysicalMotion(false, interpolate);
+        immuneInterpolation = false;
         landRoutine = null;
     }
 
@@ -180,16 +187,16 @@ public class ActionMediator : MonoBehaviour
 
     private IEnumerator TimeChangeCoroutine()
     {
-        while (Time.timeScale != 1)
-        {
-            if (!playerGravity.IsGrounded() && rb.interpolation != RigidbodyInterpolation.Interpolate) 
-                rb.interpolation = RigidbodyInterpolation.Interpolate;
+        //while (Time.timeScale != 1)
+        //{
+        //    if (!immuneInterpolation && !playerGravity.IsGrounded() && rb.interpolation != RigidbodyInterpolation.Interpolate) 
+        //        rb.interpolation = RigidbodyInterpolation.Interpolate;
             yield return new WaitForEndOfFrame();
-            if (playerGravity.IsGrounded() && rb.interpolation == RigidbodyInterpolation.Interpolate)
-                rb.interpolation = RigidbodyInterpolation.None;
-        }
+        //    if (!immuneInterpolation && playerGravity.IsGrounded() && rb.interpolation == RigidbodyInterpolation.Interpolate)
+        //        rb.interpolation = RigidbodyInterpolation.None;
+        //}
 
-        rb.interpolation = RigidbodyInterpolation.None;
+        //rb.interpolation = RigidbodyInterpolation.None;
     }
 
     public void TimeScaleUpdated(float timeModifier) => OnTimeModified?.Invoke(timeModifier);
