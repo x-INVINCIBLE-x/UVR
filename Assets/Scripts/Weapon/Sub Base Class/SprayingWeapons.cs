@@ -2,8 +2,8 @@ public class SprayingWeapons : Weapon
 {
     private void Start()
     {
-        InputManager.Instance.activate.action.performed += ctx => StartSpraying();
-        InputManager.Instance.activate.action.canceled += ctx => StopSpraying();
+        //InputManager.Instance.activate.action.performed += ctx => StartSpraying();
+        //InputManager.Instance.activate.action.canceled += ctx => StopSpraying();
     }
 
     // Flamethrower , acid thrower and other spray type weapons

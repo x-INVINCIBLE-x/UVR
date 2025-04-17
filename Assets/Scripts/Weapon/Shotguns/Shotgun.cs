@@ -21,8 +21,13 @@ public class Shotgun : ScatterWeapons
         
         foreach (Transform spawnPoint in bulletSpawns)
         {
-            PhysicsProjectile projectileInstance = Instantiate(projectilePrefab, spawnPoint.position, spawnPoint.rotation) as PhysicsProjectile;
+            //PhysicsProjectile projectileInstance = Instantiate(projectilePrefab, spawnPoint.position, spawnPoint.rotation) as PhysicsProjectile;
+
+            GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, spawnPoint);
+            PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
             projectileInstance.Init();
+
+
             Rigidbody rb = projectileInstance.GetComponent<Rigidbody>(); // Takes rigidbody of each bullet
 
             // Write logic for scattering bullets

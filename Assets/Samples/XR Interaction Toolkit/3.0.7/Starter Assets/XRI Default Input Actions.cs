@@ -1503,6 +1503,17 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                 },
                 {
                     ""name"": """",
+                    ""id"": ""9c5b3a09-1d4b-43de-a9ff-740aa410dd6a"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""3fbf032c-79b2-4a79-a39f-b7e7044fe066"",
                     ""path"": ""<XRController>{LeftHand}/{SecondaryButton}"",
                     ""interactions"": """",

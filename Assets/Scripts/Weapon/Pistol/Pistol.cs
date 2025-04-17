@@ -21,6 +21,12 @@ public class Pistol : RangedWeapon
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot();
+        }
+
         if (isCharging)
         {
             chargeTime += Time.deltaTime;
@@ -60,8 +66,13 @@ public class Pistol : RangedWeapon
 
 
         // Instantiate the projectile
-        PhysicsProjectile projectileInstance = Instantiate(projectilePrefab , bulletSpawn.position , bulletSpawn.rotation)as PhysicsProjectile; //.GetComponent<PhysicsProjectile>();
+        //PhysicsProjectile projectileInstance = Instantiate(projectilePrefab , bulletSpawn.position , bulletSpawn.rotation)as PhysicsProjectile; //.GetComponent<PhysicsProjectile>();
+        
+
+        GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, bulletSpawn);
+        PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
         projectileInstance.Init();
+
 
         // Scale the bulllet based on charged ratio
         float bulletscale = Mathf.Lerp(1f, maxbulletSize, chargeRatio);

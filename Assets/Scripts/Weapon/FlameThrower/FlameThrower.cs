@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class FlameThrower : SprayingWeapons
 {
     [Header("FlameThrower Settings")]
-    [SerializeField]private bool isHolding = false;
+    //[SerializeField]private bool isHolding = false;
     [SerializeField] private GameObject sprayVFX;
     [SerializeField] private CapsuleCollider attackRadius;
 
@@ -14,7 +14,7 @@ public class FlameThrower : SprayingWeapons
     {
         base.Awake();
         attackRadius = GetComponentInChildren<CapsuleCollider>(); 
-        sprayVFX = transform.Find("Flamethrower")?.gameObject;
+        //sprayVFX = transform.Find("Flamethrower")?.gameObject;
 
         if (sprayVFX != null)
             sprayVFX.SetActive(false);
@@ -26,14 +26,14 @@ public class FlameThrower : SprayingWeapons
     protected override void ActivateWeapon(ActivateEventArgs args)
     {
         base.ActivateWeapon(args);
-        isHolding = true;
+        //isHolding = true;
         StartSpraying();       
     }
 
     protected override void DeactivateWeapon(DeactivateEventArgs args)
     {
         base.DeactivateWeapon(args);
-        isHolding = false;
+        //isHolding = false;
         StopSpraying();
     }
 
@@ -43,7 +43,7 @@ public class FlameThrower : SprayingWeapons
 
         if(sprayVFX != null)
         {
-            sprayVFX.gameObject.SetActive(true);
+            sprayVFX.SetActive(true);
         }
 
         if(attackRadius != null)

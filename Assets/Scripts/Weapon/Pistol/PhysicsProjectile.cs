@@ -17,9 +17,9 @@ public class PhysicsProjectile : Projectile
 
     public override void Init()
     {
-        base.Init(); 
-        Destroy(gameObject , lifeTime);
-
+        base.Init();
+        //Destroy(gameObject , lifeTime);
+        ObjectPool.instance.ReturnObject(gameObject, lifeTime);
     }
 
     public override void Launch(Transform _transform, float force)
@@ -28,5 +28,8 @@ public class PhysicsProjectile : Projectile
         rigidBody.linearVelocity = _transform.forward * force;
     }
 
-    
+    private void OnCollisionEnter(Collision collision)
+    {
+        ObjectPool.instance.ReturnObject(gameObject);
+    }
 }
