@@ -2943,10 +2943,10 @@ MonoBehaviour:
   - {fileID: 1279754645371800760}
   - {fileID: 5509023209374096484}
   actions:
-  - {fileID: 2424745753521518247}
-  - {fileID: 2424745753521518247}
   - {fileID: 185761975279686537}
-  - {fileID: 2424745753521518247}
+  - {fileID: 185761975279686537}
+  - {fileID: 185761975279686537}
+  - {fileID: 185761975279686537}
 --- !u!114 &8879997874053161944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8681,6 +8681,7 @@ GameObject:
   - component: {fileID: 6922143358498491761}
   - component: {fileID: 2673583675341024322}
   - component: {fileID: 2173772440850744949}
+  - component: {fileID: 143037677547785880}
   m_Layer: 8
   m_Name: XR Origin (XR Rig)
   m_TagString: Untagged
@@ -8845,6 +8846,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &143037677547785880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6272928743233635196}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d5a364bde4c67478be6b62c08e8624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnInput: {fileID: -440298646266941818, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  torqueStrength: 10
+  maxAngularVelocity: 2
+  angularDragWhenIdle: 20
+  angularDragWhenTurning: 0.05
 --- !u!1 &6281376217171427976
 GameObject:
   m_ObjectHideFlags: 0
@@ -10305,6 +10323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xRBodyTransformer: {fileID: 1336086844523528422}
   moveProvider: {fileID: 7594992701420698416}
+  turnProvider: {fileID: 5435245302160160305}
+  rbTurnProvider: {fileID: 143037677547785880}
   playerGravity: {fileID: 0}
   grabStatus: {fileID: 0}
   rb: {fileID: 2173772440850744949}
@@ -10315,6 +10335,7 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckOffset: 0.2
   immuneInterpolation: 0
+  defaultKinematicStatus: 1
   <LastActionStatus>k__BackingField: 0
 --- !u!114 &1850083550364428451
 MonoBehaviour:
@@ -10386,7 +10407,7 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   handTransform: {fileID: 4787563541050134626}
   bodyTransform: {fileID: 8999834146742099767}
-  moveSpeed: 500
+  moveSpeed: 1500
   threshold: 0
   smoothTime: 0.3
   trackingTransform: {fileID: 0}
@@ -10406,8 +10427,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPermitted: 1
-  skillDuration: 2
-  skillCooldown: 0
+  skillDuration: 0
+  skillCooldown: 2
   showDurationDisplay: 0
   rb: {fileID: 0}
   dashForce: 25

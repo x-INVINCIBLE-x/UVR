@@ -34,6 +34,7 @@ public class ChaseState_Melee : EnemyState
     {
         base.Update();
 
+        Debug.Log(enemy.PlayerInAttackRange());
         if (!enemy.IsPlayerHeightRechable() && enemy.IsPlayerReachable())
         {
             stateMachine.ChangeState(enemy.spectingState);

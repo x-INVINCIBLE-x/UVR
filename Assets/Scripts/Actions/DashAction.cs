@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class DashAction : Action
 {
@@ -13,6 +14,7 @@ public class DashAction : Action
     public bool canSwingDash = true;
     private float defaultDashForce;
     private Coroutine dashCoroutine;
+    private Vector2 input;
 
     protected override void Start()
     {
@@ -25,10 +27,7 @@ public class DashAction : Action
 
         inputManager.leftJoystick.action.performed += ctx =>
         {
-            Vector2 input = ctx.ReadValue<Vector2>();
-            direction = headTransform.right * input.x + headTransform.forward * input.y;
-            direction.y = 0f;
-            direction.Normalize();
+            input = ctx.ReadValue<Vector2>();
         };
 
         rb = actionMediator.rb;
@@ -36,12 +35,14 @@ public class DashAction : Action
 
     private void Dash(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        if (!CanUseAbility()) return;
         if (!canSwingDash && actionMediator.grabStatus.IsSwinging()) return;
         if (actionMediator.grabStatus.IsClimbing()) return;
 
         if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
 
+        lastTimeSkillUsed = Time.time;
         dashCoroutine = StartCoroutine(DashRoutine());
     }
 
@@ -50,8 +51,11 @@ public class DashAction : Action
         //isActive = true;
         actionMediator.immuneInterpolation = true;
         actionMediator.SetPhysicalMotion(true, true);
-
         float timer = 0f;
+
+        direction = headTransform.right * input.x + headTransform.forward * input.y;
+        direction.y = 0f;
+        direction.Normalize();
 
         Vector3 dashVelocity = direction * dashForce;
 

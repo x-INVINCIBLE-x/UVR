@@ -54,7 +54,7 @@ public class Enemy_Melee : Enemy
     [Header("Attack Data")]
     public AttackData_EnemyMelee attackInfo;
     public List<AttackData_EnemyMelee> attackList;
-    private Enemy_WeaponModel currentWeapon;
+    [SerializeField] private Enemy_WeaponModel currentWeapon;
     private bool isAttackReady;
     [Space]
     [SerializeField] private GameObject meleeAttackFx;
@@ -123,6 +123,7 @@ public class Enemy_Melee : Enemy
             attackList = new List<AttackData_EnemyMelee>(currentWeapon.weaponData.attackData);
             turnSpeed = currentWeapon.weaponData.turnSpeed;
         }
+            attackInfo = attackList[0];
     }
 
     protected override void InitializePerk()
@@ -215,8 +216,12 @@ public class Enemy_Melee : Enemy
         return 0;
     }
 
-    public bool PlayerInAttackRange() => Vector3.Distance(transform.position, player.position) < attackInfo.attackRange;
-
+    public bool PlayerInAttackRange()
+    {
+        float distance = Vector3.Distance(transform.position, player.position);
+        Debug.Log(attackInfo.attackRange);
+        return distance < attackInfo.attackRange;
+    }
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();

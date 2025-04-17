@@ -18,7 +18,7 @@ public class AttackState_Melee : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemy.UpdateAttackData();
+        //enemy.attackInfo = UpdateAttackData();
         enemy.visuals.EnableWeaponModel(true);
         enemy.visuals.EnableWeaponTrail(true);
 

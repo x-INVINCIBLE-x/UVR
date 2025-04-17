@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public enum ActionStatus
@@ -17,6 +18,8 @@ public class ActionMediator : MonoBehaviour
     //public GameObject abilitySelectDisplay;
     public XRBodyTransformer xRBodyTransformer;
     public DynamicMoveProvider moveProvider;
+    public ContinuousTurnProvider turnProvider;
+    public ManualRigidbodyTurn rbTurnProvider;
     public PlayerGravity playerGravity;
 
     public GrabStatus grabStatus;
@@ -177,6 +180,10 @@ public class ActionMediator : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        // -------------------- Swing specific ---------------------------
+        turnProvider.enabled = true;
+        rbTurnProvider.enabled = false;
+
         yield return new WaitForEndOfFrame();
         SetPhysicalMotion(false, interpolate);
         immuneInterpolation = false;
@@ -187,14 +194,14 @@ public class ActionMediator : MonoBehaviour
 
     private IEnumerator TimeChangeCoroutine()
     {
-        //while (Time.timeScale != 1)
-        //{
-        //    if (!immuneInterpolation && !playerGravity.IsGrounded() && rb.interpolation != RigidbodyInterpolation.Interpolate) 
-        //        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        while (Time.timeScale != 1)
+        {
+            if (!immuneInterpolation && rb.isKinematic && !playerGravity.IsGrounded() && rb.interpolation != RigidbodyInterpolation.Interpolate)
+                rb.interpolation = RigidbodyInterpolation.Interpolate;
             yield return new WaitForEndOfFrame();
-        //    if (!immuneInterpolation && playerGravity.IsGrounded() && rb.interpolation == RigidbodyInterpolation.Interpolate)
-        //        rb.interpolation = RigidbodyInterpolation.None;
-        //}
+            if (!immuneInterpolation && playerGravity.IsGrounded() && rb.interpolation == RigidbodyInterpolation.Interpolate)
+                rb.interpolation = RigidbodyInterpolation.None;
+        }
 
         //rb.interpolation = RigidbodyInterpolation.None;
     }

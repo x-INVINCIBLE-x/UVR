@@ -45,6 +45,7 @@ public class JumpAction : Action
         float jumpDuration = 2f * Mathf.Sqrt(2f * jumpHeight / -Physics.gravity.y);
         float elapsed = 0f;
 
+        actionMediator.immuneInterpolation = true;
         actionMediator.playerGravity.DisableGravity();
         previousMove = Vector3.zero;
 
@@ -70,7 +71,7 @@ public class JumpAction : Action
         }
 
         actionMediator.playerGravity.SetYVelocity(-Mathf.Sqrt(2 * -Physics.gravity.y * jumpHeight) * blendDuration);
-
+        actionMediator.immuneInterpolation = false;
         actionMediator.playerGravity.EnableGravity();
         previousMove = Vector3.zero;
     }

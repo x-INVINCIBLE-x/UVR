@@ -11,6 +11,8 @@ public class TimeAction : Action
     private float slowTimer = 0f;
     private float defaultMoveSpeed;
     private float defaultTurnSpeed;
+    private float defaultRbTorque;
+    private float defaultRbMaxAngularVelocity;
 
     private Coroutine timerRoutine = null;
 
@@ -66,14 +68,20 @@ public class TimeAction : Action
         {
             defaultMoveSpeed = dynamicMoveProvider.moveSpeed;
             defaultTurnSpeed = continuousTurnProvider.turnSpeed;
+            defaultRbTorque = actionMediator.rbTurnProvider.torqueStrength;
+            defaultRbMaxAngularVelocity = actionMediator.rbTurnProvider.maxAngularVelocity;
 
             dynamicMoveProvider.moveSpeed = defaultMoveSpeed * (1 / Time.timeScale);
             continuousTurnProvider.turnSpeed = defaultTurnSpeed * (1 / Time.timeScale);
+            actionMediator.rbTurnProvider.torqueStrength = defaultRbTorque * (1 / Time.timeScale);
+            actionMediator.rbTurnProvider.maxAngularVelocity = defaultRbMaxAngularVelocity * (1 / Time.timeScale);
         }
         else
         {
             dynamicMoveProvider.moveSpeed = defaultMoveSpeed;
             continuousTurnProvider.turnSpeed = defaultTurnSpeed;
+            actionMediator.rbTurnProvider.torqueStrength = defaultRbTorque;
+            actionMediator.rbTurnProvider.maxAngularVelocity = defaultRbMaxAngularVelocity;
         }
     }
 

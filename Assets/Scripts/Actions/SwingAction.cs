@@ -75,8 +75,14 @@ public class SwingAction : MonoBehaviour
     {
         if (!hasHit) return;
 
+        //actionMediator.immuneInterpolation = true;
+        //actionMediator.
+
         actionMediator.grabStatus.ChangeHandStatus(hand, GrabType.Swing);
         actionMediator.SetPhysicalMotion(true);
+
+        actionMediator.turnProvider.enabled = false;
+        actionMediator.rbTurnProvider.enabled = true;
 
         joint = actionMediator.rb.gameObject.AddComponent<SpringJoint>();
         joint.autoConfigureConnectedAnchor = false;
@@ -93,7 +99,13 @@ public class SwingAction : MonoBehaviour
     private void StopSwing()
     {
         actionMediator.grabStatus.ResetHandStatus(hand);
-        actionMediator.DisablePhysicalMotionOnLand();
+
+        if (!actionMediator.grabStatus.IsSwinging())
+        {
+            actionMediator.DisablePhysicalMotionOnLand();
+            //actionMediator.turnProvider.enabled = true;
+            //actionMediator.rbTurnProvider.enabled = false;
+        }
 
         Destroy(joint);
     }
