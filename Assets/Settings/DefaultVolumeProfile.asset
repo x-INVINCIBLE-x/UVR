@@ -465,6 +465,7 @@ MonoBehaviour:
   - {fileID: -6288072647309666549}
   - {fileID: 7518938298396184218}
   - {fileID: -1410297666881709256}
+  - {fileID: 3835269811991954818}
 --- !u!114 &853819529557874667
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -775,6 +776,57 @@ MonoBehaviour:
   contribution:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &3835269811991954818
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41630289a35c6c14a97a4a70c36f6792, type: 3}
+  m_Name: RecallSettings
+  m_EditorClassIdentifier: 
+  active: 1
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+  objectMask:
+    m_OverrideState: 1
+    m_Value:
+      serializedVersion: 2
+      m_Bits: 0
+  wipeOriginPoint:
+    m_OverrideState: 1
+    m_Value: {x: 0, y: 0}
+  wipeSize:
+    m_OverrideState: 1
+    m_Value: 0.25
+  wipeThickness:
+    m_OverrideState: 1
+    m_Value: 0
+  noiseScale:
+    m_OverrideState: 1
+    m_Value: 100
+  noiseStrength:
+    m_OverrideState: 1
+    m_Value: 0.1
+  highlightSize:
+    m_OverrideState: 1
+    m_Value: 10
+  highlightStrength:
+    m_OverrideState: 1
+    m_Value: {x: 0.05, y: 0.2}
+  highlightSpeed:
+    m_OverrideState: 1
+    m_Value: 0.1
+  highlightThresholds:
+    m_OverrideState: 1
+    m_Value: {x: 0.9, y: 1}
+  edgeColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &3959858460715838825
 MonoBehaviour:
   m_ObjectHideFlags: 3

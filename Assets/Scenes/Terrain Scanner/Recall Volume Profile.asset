@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8354609790387695880
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41630289a35c6c14a97a4a70c36f6792, type: 3}
+  m_Name: RecallSettings
+  m_EditorClassIdentifier: 
+  active: 1
+  strength:
+    m_OverrideState: 1
+    m_Value: 1
+  objectMask:
+    m_OverrideState: 1
+    m_Value:
+      serializedVersion: 2
+      m_Bits: 17536
+  wipeOriginPoint:
+    m_OverrideState: 1
+    m_Value: {x: 0.5, y: 0.5}
+  wipeSize:
+    m_OverrideState: 1
+    m_Value: 0
+  wipeThickness:
+    m_OverrideState: 1
+    m_Value: 0.0196
+  noiseScale:
+    m_OverrideState: 1
+    m_Value: 119.8
+  noiseStrength:
+    m_OverrideState: 1
+    m_Value: 0.35
+  highlightSize:
+    m_OverrideState: 1
+    m_Value: 10
+  highlightStrength:
+    m_OverrideState: 1
+    m_Value: {x: 0.05, y: 50}
+  highlightSpeed:
+    m_OverrideState: 1
+    m_Value: 0.3
+  highlightThresholds:
+    m_OverrideState: 1
+    m_Value: {x: 0.9, y: 1}
+  edgeColor:
+    m_OverrideState: 1
+    m_Value: {r: 1.9665318, g: 0, b: 2, a: 1}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+  m_Name: Recall Volume Profile
+  m_EditorClassIdentifier: 
+  components:
+  - {fileID: -8354609790387695880}
