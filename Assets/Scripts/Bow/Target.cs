@@ -13,14 +13,23 @@ public class Target : MonoBehaviour, IAimable
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+
     }
+
+   //fgdfgdf
     void Update()
     {
-        var dir = new Vector3(Mathf.Cos(Time.time * _speed) * _size, Mathf.Sin(Time.time * _speed) * _size);
+        float randSize = Random.Range(0, _size);
+        float randSpeed = Random.Range(0, _speed);
+        var dir = new Vector3(Mathf.Cos(Time.time * randSpeed) * randSize, Mathf.Sin(Time.time * randSpeed) * randSize);
 
         _rb.linearVelocity = dir;
     }
 
+    void setRandomValue()
+    {
+
+    }
     public void Explode() => Destroy(gameObject);
 }
 
