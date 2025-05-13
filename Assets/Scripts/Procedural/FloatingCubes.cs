@@ -36,8 +36,8 @@ public class FloatingCubes : MonoBehaviour
     {
         foreach (Entity entity in entities)
         {
-            Vector3 scaledPosition = Vector3.Scale(entity.position, transform.localScale);
-            Vector3 worldPosition = transform.position + scaledPosition;
+            //Vector3 scaledPosition = Vector3.Scale(entity.position, transform.localScale);
+            Vector3 worldPosition = transform.position + entity.position;
             Quaternion rotation = Quaternion.Euler(entity.rotation);
 
             GameObject prefabToUse = entity.propPrefab != null

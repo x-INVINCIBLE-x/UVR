@@ -448,12 +448,18 @@ MonoBehaviour:
     minRotation: {x: -10, y: -10, z: -10}
     maxRotation: {x: 10, y: 10, z: 10}
   cubePrefabs:
-  - {fileID: 211280466716591218, guid: e2e5aad904777834e96e2f18764673f0, type: 3}
-  - {fileID: 211280466716591218, guid: 5b200adcaaef52445a06c722ab690bf7, type: 3}
-  - {fileID: 211280466716591218, guid: 1bfcc7a2a6ce9f84fbc62d13027482f7, type: 3}
-  - {fileID: 211280466716591218, guid: 756cd810b2854a049a3f88710e1a0069, type: 3}
-  - {fileID: 211280466716591218, guid: 1de7afc6aeef2ca4895b9e165e27eb52, type: 3}
-  - {fileID: 211280466716591218, guid: fd7064e6fc040034388e132cb23df2f6, type: 3}
+  - prefab: {fileID: 211280466716591218, guid: e2e5aad904777834e96e2f18764673f0, type: 3}
+    spawnChance: 67.6
+  - prefab: {fileID: 211280466716591218, guid: 5b200adcaaef52445a06c722ab690bf7, type: 3}
+    spawnChance: 26.6
+  - prefab: {fileID: 211280466716591218, guid: 1bfcc7a2a6ce9f84fbc62d13027482f7, type: 3}
+    spawnChance: 47.9
+  - prefab: {fileID: 211280466716591218, guid: 756cd810b2854a049a3f88710e1a0069, type: 3}
+    spawnChance: 22.3
+  - prefab: {fileID: 211280466716591218, guid: 1de7afc6aeef2ca4895b9e165e27eb52, type: 3}
+    spawnChance: 45.7
+  - prefab: {fileID: 211280466716591218, guid: fd7064e6fc040034388e132cb23df2f6, type: 3}
+    spawnChance: 28.2
   stonePrefab: {fileID: 7069848389683681410, guid: 0daa9e51e05887f48913f0a5715e974f, type: 3}
   statuePrefab: {fileID: 7180395290746859620, guid: c420f9e2d73df0d4f82960dd8030be56, type: 3}
   transitionTime: 2
@@ -583,8 +589,10 @@ MonoBehaviour:
     minRotation: {x: -10, y: -10, z: -10}
     maxRotation: {x: 10, y: 10, z: 10}
   cubePrefabs:
-  - {fileID: 6258345973424380507, guid: 8f468808195d9984c8f84831f3349300, type: 3}
-  - {fileID: 1749108633849772715, guid: 5ad9b86ad87527443b004956f3ca8bb1, type: 3}
+  - prefab: {fileID: 0}
+    spawnChance: 0
+  - prefab: {fileID: 0}
+    spawnChance: 0
   stonePrefab: {fileID: 0}
   statuePrefab: {fileID: 0}
   transitionTime: 2

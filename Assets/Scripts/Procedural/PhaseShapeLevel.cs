@@ -5,7 +5,15 @@ using Random = UnityEngine.Random;
 
 public class PhaseShapeLevel : MonoBehaviour
 {
-    public enum ShapeType { Web, Pyramid, Star, Castle, Crown,UpSpiral, FlatSpiral, DownSpiral, Box } 
+    public enum ShapeType { Web, Pyramid, Star, Castle, Crown,UpSpiral, FlatSpiral, DownSpiral, Box }
+
+    [System.Serializable]
+    public struct CubePrefabData
+    {
+        public GameObject prefab;
+        [Range(0, 100)]
+        public float spawnChance;
+    }
 
     [System.Serializable]
     public struct PhaseConfig
@@ -29,7 +37,7 @@ public class PhaseShapeLevel : MonoBehaviour
     public PhaseConfig[] phases;
 
     [Header("Prefabs")]
-    public GameObject[] cubePrefabs;
+    public CubePrefabData[] cubePrefabs;
     public GameObject stonePrefab;
     public GameObject statuePrefab;
 
@@ -170,33 +178,21 @@ public class PhaseShapeLevel : MonoBehaviour
             if (Random.value < cfg.gapChance)
                 continue;
 
-            GameObject prefab = cubePrefabs[Random.Range(0, cubePrefabs.Length)];
-            GameObject go = Instantiate(prefab, transform);
+            GameObject prefab = GetRandomPrefab();
+            if (prefab == null) continue;
 
-            // Assign position relative to parent
+            GameObject go = Instantiate(prefab, transform);
             go.transform.localPosition = localPos;
 
-            // Apply rotation based on percentage (local)
             if (Random.value < cfg.rotatedPercentage)
             {
-                float rotX = Random.Range(cfg.minRotation.x, cfg.maxRotation.x);
-                float rotY = Random.Range(cfg.minRotation.y, cfg.maxRotation.y);
-                float rotZ = Random.Range(cfg.minRotation.z, cfg.maxRotation.z);
+                // Apply random rotation while preserving prefab's original rotation
+                Quaternion originalRot = go.transform.localRotation;
+                float rotX = originalRot.eulerAngles.x + Random.Range(cfg.minRotation.x, cfg.maxRotation.x);
+                float rotY = originalRot.eulerAngles.y + Random.Range(cfg.minRotation.y, cfg.maxRotation.y);
+                float rotZ = originalRot.eulerAngles.z + Random.Range(cfg.minRotation.z, cfg.maxRotation.z);
                 go.transform.localRotation = Quaternion.Euler(rotX, rotY, rotZ);
             }
-            else
-            {
-                go.transform.localRotation = Quaternion.identity;
-            }
-
-            // Scale based on original prefab size
-            Vector3 originalScale = prefab.transform.localScale;
-            float scaleMultiplier = Random.Range(0.8f, 1.2f);
-            go.transform.localScale = new Vector3(
-                originalScale.x * scaleMultiplier,
-                originalScale.y * scaleMultiplier * 4f, // increase depth
-                originalScale.z * scaleMultiplier
-            );
 
             spawnedCubes.Add(go);
             spawned++;
@@ -204,6 +200,45 @@ public class PhaseShapeLevel : MonoBehaviour
 
         if (spawned < cfg.cubeCount)
             Debug.LogWarning($"Only spawned {spawned}/{cfg.cubeCount} cubes after {attempts} attempts.");
+    }
+
+    GameObject GetRandomPrefab()
+    {
+        if (cubePrefabs == null || cubePrefabs.Length == 0)
+        {
+            Debug.LogError("No cube prefabs assigned!");
+            return null;
+        }
+
+        // Calculate total spawn chance
+        float totalChance = 0;
+        foreach (var data in cubePrefabs)
+        {
+            totalChance += data.spawnChance;
+        }
+
+        // If total chance is zero or invalid, default to equal distribution
+        if (totalChance <= 0)
+        {
+            Debug.LogWarning("Total spawn chance is zero or negative. Using equal distribution.");
+            int index = Random.Range(0, cubePrefabs.Length);
+            return cubePrefabs[index].prefab;
+        }
+
+        float randomPoint = Random.Range(0, totalChance);
+
+        float current = 0;
+        foreach (var data in cubePrefabs)
+        {
+            current += data.spawnChance;
+            if (randomPoint <= current)
+            {
+                return data.prefab;
+            }
+        }
+
+        // Fallback to last prefab if no selection (shouldn't happen)
+        return cubePrefabs[cubePrefabs.Length - 1].prefab;
     }
 
     Vector3 SamplePoint(PhaseConfig cfg)
