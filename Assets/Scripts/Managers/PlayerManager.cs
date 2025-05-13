@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
-    [field: SerializeField] public Transform player {  get; private set; }
+    [field: SerializeField] public Player player {  get; private set; }
     [field: SerializeField] public Rigidbody rb { get; private set; }
 
     private void Awake()

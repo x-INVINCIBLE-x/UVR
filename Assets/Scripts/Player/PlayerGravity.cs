@@ -7,15 +7,10 @@ public class PlayerGravity : MonoBehaviour
     public LayerMask groundMask;
     public Transform groundCheck;
 
-    private CharacterController controller;
+    public CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
     private bool gravityEnabled = true;
-
-    void Start()
-    {
-        controller = GetComponentInChildren<CharacterController>();
-    }
 
     void Update()
     {

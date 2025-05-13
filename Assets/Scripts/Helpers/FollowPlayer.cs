@@ -9,7 +9,7 @@ public class FollowPlayer : MonoBehaviour
 
     private void Start()
     {
-        playerTransform = PlayerManager.instance.player;
+        playerTransform = PlayerManager.instance.player.playerBody; // --- Possible hazard ---- //
 
         followPosition = playerTransform.position + offset;
         Follow();

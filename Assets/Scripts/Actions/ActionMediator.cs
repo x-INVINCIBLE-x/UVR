@@ -34,6 +34,11 @@ public class ActionMediator : MonoBehaviour
     public bool immuneInterpolation = false;
     public bool defaultKinematicStatus = true;
 
+    public Action TimeAction;
+    public Action JumpAction;
+    public Action TelekemisisAction;
+    public Action DashAction;
+
     [field: SerializeField] public ActionStatus LastActionStatus { get; private set; } = ActionStatus.None;
     // ------------ Changes -------------------
 

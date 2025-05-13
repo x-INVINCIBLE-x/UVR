@@ -54,7 +54,7 @@ public class CharacterStats : MonoBehaviour
     public float currentHealth;
     public float currentStamina;
 
-    public bool isInvincible { get; private set; } = false;
+    [field: SerializeField] public bool isInvincible { get; private set; } = false;
     public bool isBlocking { get; private set; } = false;
     public bool isPerfectBlock { get; private set; } = false;
     public bool isConsumingStamina { get; private set; } = false;
