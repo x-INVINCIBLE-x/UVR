@@ -34,7 +34,8 @@ public class SImpleEnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        Player = GameObject.Find("Cube").transform;
+        //Player = GameObject.Find("Cube").transform;
+        Player = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -118,7 +119,7 @@ public class SImpleEnemyAI : MonoBehaviour
         {
             Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse); 
-            //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+           
             
 
 
@@ -140,4 +141,6 @@ public class SImpleEnemyAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
+
+    // Explode , Slows player , sniper type
 }
