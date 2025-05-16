@@ -3,7 +3,7 @@ using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
 
-public class Missile : MonoBehaviour
+public class HomingMissile : MonoBehaviour
 {
     [Header("REFERENCES")]
     [SerializeField] private Rigidbody _rb;
@@ -24,15 +24,22 @@ public class Missile : MonoBehaviour
     [SerializeField] private float _deviationAmount = 50;
     [SerializeField] private float _deviationSpeed = 2;
 
+    public GameObject Player;
     private Rigidbody targetRb;
 
-    public void Setup()
+    private void Awake()
     {
-
+        Player = GameObject.Find("Cube");
+        //_target = Player;
+    }
+    public void Setup(Rigidbody target)
+    {
+      
     }
 
     private void FixedUpdate()
-    {
+    {   
+       
         _rb.linearVelocity = transform.forward * _speed;
 
         var leadTimePercentage = Mathf.InverseLerp(_minDistancePredict, _maxDistancePredict, Vector3.Distance(transform.position, _target.transform.position));
