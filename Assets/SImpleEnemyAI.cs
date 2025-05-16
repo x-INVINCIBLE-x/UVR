@@ -20,6 +20,7 @@ public class SImpleEnemyAI : MonoBehaviour
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkpointRange;
+    public bool hasSeenPlayer;
 
     public Transform Destination;
 
@@ -32,11 +33,21 @@ public class SImpleEnemyAI : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+
+
+    [Header("VFX Settings")]
+    public EnemyVFXManager VFXManager;
+    public float magicChargeTime = 3f;
+
+    [SerializeField] private bool isChargingAttack = false;
+    [SerializeField] private bool vfxSpawned = false;
+
     private void Awake()
     {
         //Player = GameObject.Find("Cube").transform;
         Player = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
+        VFXManager = GetComponent<EnemyVFXManager>();
     }
 
     private void Update()
@@ -60,8 +71,15 @@ public class SImpleEnemyAI : MonoBehaviour
         }
 
         if (playerInSightRange && playerInAttackRange)
-        {
-            AttackPlayer();
+        {   
+            if(!isChargingAttack && !hasAttacked)
+            {
+                agent.SetDestination(transform.position);
+                transform.LookAt(Player);
+
+                StartChargingAttack();
+            }
+            
         }
     }
 
@@ -109,23 +127,20 @@ public class SImpleEnemyAI : MonoBehaviour
     }
 
     private void AttackPlayer()
-    {   
-        // Stops the agent from moving
+    {
         agent.SetDestination(transform.position);
-
         transform.LookAt(Player);
 
         if (!hasAttacked)
         {
             Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse); 
-           
-            
-
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
 
             hasAttacked = true;
             Invoke(nameof(ResetAttack), attackCooldownTime);
         }
+
+       
     }
 
     private void ResetAttack()
@@ -143,4 +158,27 @@ public class SImpleEnemyAI : MonoBehaviour
     }
 
     // Explode , Slows player , sniper type
+
+    private void StartChargingAttack()
+    {
+        isChargingAttack = true;
+
+        if (!vfxSpawned)
+        {   
+
+            VFXManager.SpawnMagicCircleVFX(magicChargeTime);
+            vfxSpawned = true;
+        }
+
+        Invoke(nameof(PerformAttack), magicChargeTime);
+    }
+
+    private void PerformAttack()
+    {
+        AttackPlayer();
+        isChargingAttack = false;
+        vfxSpawned = false; 
+        VFXManager.DestroyMagicCircleVFX();
+
+    }
 }
