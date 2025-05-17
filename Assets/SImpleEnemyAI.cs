@@ -1,27 +1,69 @@
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class SimpleEnemyAI : MonoBehaviour
 {
+    [Header("References")]
+    [Space]
     public NavMeshAgent agent;
-
     public Transform Player;
-    public Rigidbody playerRb;
-
     public GameObject bullet;
-
-    public HomingMissile missile;
-
     public LayerMask WhatIsground, WhatIsPlayer;
+    public Transform Destination;
+    //public Rigidbody playerRb;
+    //public HomingMissile missile;
 
+    [Space]
+    // Missiles Setup
     public GameObject HomingMissile;
     private GameObject currentHomingMissile;
+    [Space]
+    // Laser Enemy setup
+    public GameObject LaserVFX;
+    private GameObject currentLaser;
+    private LineRenderer laserRenderer;
+    private Coroutine laserFocusRoutine;
+
+    [Space]
+    [Header("Conditions")]
+    [Space]
+   
+    public bool goToDestination = false; // Straight to Destination
+
+    bool walkPointSet;// bool to check that the walkpoint vector is set or not
+
+    public bool hasSeenPlayer; // Bool to check if enemy has seen player
+
+    public bool hasAttacked; // Bool to check the player has attacked the player 
+
+    public bool playerInSightRange, playerInAttackRange;// Bool to check if the player is in sight or attack range as specified 
+
+    [Space]
+    [Header("Values")]
+    [Space]
+    public Vector3 walkPoint; // Vector to store walking area transform
+    public Vector3 LaserOffset; // Offset for the laser when performing attack on player
+    public float walkpointRange; // Defines the range of the walkable area for enemy (Random)
+    public float attackCooldownTime; // Time between each attack
+    public float sightRange, attackRange;// Range of  attack and Range of sight
+
+
+    [Space]
+    [Header("VFX Settings")]
+    [Space]
+    public EnemyVFXManager VFXManager;
+    public float magicChargeTime = 3f; // The magic circle determines for how long the attack will charge with it
+
+    [SerializeField] private bool isChargingAttack = false;
+    [SerializeField] private bool vfxSpawned = false;
+    [SerializeField] public float selfDestructTime;
 
 
     // Enemy Types
     public enum TypesofEnemies
-    {   
+    {
         Normal,
         Sniper,
         Laser,
@@ -31,42 +73,12 @@ public class SimpleEnemyAI : MonoBehaviour
 
     public TypesofEnemies EnemyTypes;
 
-
-    // Straight to Destination
-    public bool goToDestination = false;
-
-    // Patrolling 
-    public Vector3 walkPoint;
-    bool walkPointSet;
-    public float walkpointRange;
-    public bool hasSeenPlayer;
-
-    public Transform Destination;
-
-    // Attacking 
-    public float attackCooldownTime;
-    public bool hasAttacked;
-   
-
-    // States
-
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
-
-
-
-    [Header("VFX Settings")]
-    public EnemyVFXManager VFXManager;
-    public float magicChargeTime = 3f;
-
-    [SerializeField] private bool isChargingAttack = false;
-    [SerializeField] private bool vfxSpawned = false;
-    [SerializeField] public float selfDestructTime;
+    
     private void Awake()
     {
         Player = GameObject.Find("Cube").transform;
-        playerRb = GameObject.Find("Cube").GetComponent<Rigidbody>();
-
+        //playerRb = GameObject.Find("Cube").GetComponent<Rigidbody>();
+        laserRenderer = LaserVFX.GetComponent<LineRenderer>();
         //Player = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         VFXManager = GetComponent<EnemyVFXManager>();
@@ -131,6 +143,8 @@ public class SimpleEnemyAI : MonoBehaviour
         if (EnemyTypes == TypesofEnemies.Laser)
         {
             // Logic for Laser Enemies
+            sightRange = sightRange * 1.2f;
+            attackRange = attackRange * 2f;
         }
 
         if(EnemyTypes == TypesofEnemies.SelfDestruct)
@@ -230,7 +244,7 @@ public class SimpleEnemyAI : MonoBehaviour
     }
 
     private void PerformAttack()
-    {
+    {   
         AttackPlayer();
         isChargingAttack = false;
         vfxSpawned = false; 
@@ -306,6 +320,39 @@ public class SimpleEnemyAI : MonoBehaviour
     private void LaserEnemyBehaviour()
     {
 
+        if (!playerInSightRange && !playerInAttackRange && goToDestination)
+        {
+            GoToDestination();
+            DestroyLaser();
+        }
+
+        if (!playerInSightRange && !playerInAttackRange && !goToDestination)
+        {
+            Patrolling();
+            DestroyLaser();
+        }
+
+        if (playerInSightRange && !playerInAttackRange)
+        {
+            ChasePlayer();
+            DestroyLaser();
+        }
+
+        if (playerInSightRange && playerInAttackRange)
+        {
+            if (!isChargingAttack && !hasAttacked)
+            {
+                agent.SetDestination(transform.position);
+                transform.LookAt(Player);
+
+                PerfromLaserAttack();
+
+
+            }
+
+        }
+        UpdateLaserPositions();
+
     }
 
     private void SelfDestructEnemyBehaviour()
@@ -367,6 +414,70 @@ public class SimpleEnemyAI : MonoBehaviour
 
             currentHomingMissile = Instantiate(HomingMissile, spawnPosition , Quaternion.identity ,this.transform);
             
+        }
+    }
+
+    private void PerfromLaserAttack()
+    {
+        if (currentLaser != null) return; // Prevents duplicates
+        Debug.Log("Laser attack is performing");
+
+        currentLaser = Instantiate(LaserVFX, this.transform);
+        laserRenderer = currentLaser.GetComponent<LineRenderer>();
+
+       // laserRenderer.SetPosition(0, transform.position);
+        //laserRenderer.SetPosition(1, Player.localPosition);
+
+        //if (laserFocusRoutine != null)
+        //{
+           // StopCoroutine(laserFocusRoutine);
+        //}
+
+        //laserFocusRoutine = StartCoroutine(UpdateLaserPositionCoroutine());
+
+    }
+
+    public void DestroyLaser()
+    {   // Destroy the laser when not needed
+        if(currentLaser!= null)
+        {
+            Destroy(currentLaser);
+            Debug.Log("Laser Destroyed");
+        }
+        
+    }
+
+    private void UpdateLaserPositions()
+    {   
+        // Updates the laser to track the players position correctly 
+        if (currentLaser == null || laserRenderer == null) return;
+        laserRenderer.SetPosition(0, transform.position);
+        laserRenderer.SetPosition(1, Player.localPosition);
+
+       
+    }
+
+    private IEnumerator UpdateLaserPositionCoroutine()
+    {
+        if (currentLaser != null) yield break;
+
+        if(laserRenderer == null) yield break;
+
+
+        Vector3 startOffset = Player.position + LaserOffset;
+        Vector3 targetPosition = Player.position;
+
+        float laserFocusDuration = 2f;
+        float timeElapsed = 0f;
+
+        while(timeElapsed < laserFocusDuration)
+        {
+            timeElapsed += Time.deltaTime;
+
+            Vector3 interpolatedPos = Vector3.Lerp(startOffset, targetPosition, timeElapsed / laserFocusDuration);
+
+            laserRenderer.SetPosition(0, transform.position);
+            laserRenderer.SetPosition(1, interpolatedPos);
         }
     }
 }
