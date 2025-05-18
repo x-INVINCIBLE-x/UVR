@@ -1,19 +1,42 @@
-
+﻿
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class SimpleEnemyAI : MonoBehaviour
-{
+{   
+
+    [Space]
+    [Header("Enemy Types")]
+    [Space]
+    public TypesofEnemies EnemyTypes;
+    public enum TypesofEnemies
+    {
+        Normal,
+        Sniper,
+        Laser,
+        SelfDestruct,
+        Homing,
+        Volley
+    }
+
+   
+
+
     [Header("References")]
     [Space]
     public NavMeshAgent agent;
     public Transform Player;
     public GameObject bullet;
+    public GameObject volley;
     public LayerMask WhatIsground, WhatIsPlayer;
     public Transform Destination;
+    public Transform projectileSpawnPosition;
+
     //public Rigidbody playerRb;
     //public HomingMissile missile;
+
+    private GameObject volleySpawned;
 
     [Space]
     // Missiles Setup
@@ -32,13 +55,16 @@ public class SimpleEnemyAI : MonoBehaviour
    
     public bool goToDestination = false; // Straight to Destination
 
-    bool walkPointSet;// bool to check that the walkpoint vector is set or not
+    public bool walkPointSet;// bool to check that the walkpoint vector is set or not
 
     public bool hasSeenPlayer; // Bool to check if enemy has seen player
 
     public bool hasAttacked; // Bool to check the player has attacked the player 
 
     public bool playerInSightRange, playerInAttackRange;// Bool to check if the player is in sight or attack range as specified 
+
+    public bool laserActive;
+    
 
     [Space]
     [Header("Values")]
@@ -61,17 +87,7 @@ public class SimpleEnemyAI : MonoBehaviour
     [SerializeField] public float selfDestructTime;
 
 
-    // Enemy Types
-    public enum TypesofEnemies
-    {
-        Normal,
-        Sniper,
-        Laser,
-        SelfDestruct,
-        Homing
-    }
-
-    public TypesofEnemies EnemyTypes;
+    
 
     
     private void Awake()
@@ -116,6 +132,11 @@ public class SimpleEnemyAI : MonoBehaviour
                 HomingEnemyBehavour();
                 break;
 
+            case TypesofEnemies.Volley:
+                VolleyEnemyBehaviour();
+                break;
+                
+
         }   
 
 
@@ -149,7 +170,7 @@ public class SimpleEnemyAI : MonoBehaviour
 
         if(EnemyTypes == TypesofEnemies.SelfDestruct)
         {
-            attackRange = attackRange / 4f;
+            attackRange = attackRange / 5f;
         }
     }
 
@@ -185,7 +206,7 @@ public class SimpleEnemyAI : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomx,transform.position.y ,transform.position.z + randomz);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, WhatIsground))
+        if (Physics.Raycast(walkPoint, -transform.up, 3f, WhatIsground))
         {
             walkPointSet = true;
         }
@@ -203,14 +224,18 @@ public class SimpleEnemyAI : MonoBehaviour
 
         if (!hasAttacked)
         {
-            Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            Rigidbody rb = Instantiate(bullet, this.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
 
             hasAttacked = true;
             Invoke(nameof(ResetAttack), attackCooldownTime);
         }
 
-       
+        isChargingAttack = false;
+        vfxSpawned = false;
+        VFXManager.DestroyMagicCircleVFX();
+
+        
     }
 
     private void ResetAttack()
@@ -225,31 +250,41 @@ public class SimpleEnemyAI : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        
     }
 
     // Explode , Slows player , sniper type
+    /// <Code_not_in_use>
 
-    private void StartChargingAttack()
+    /// <Code_not_in_use>
+
+
+    private void InitiateChargeSequence()
     {
         isChargingAttack = true;
 
         if (!vfxSpawned)
-        {   
+        {
 
             VFXManager.SpawnMagicCircleVFX(magicChargeTime);
             vfxSpawned = true;
         }
 
-        Invoke(nameof(PerformAttack), magicChargeTime);
-    }
-
-    private void PerformAttack()
-    {   
-        AttackPlayer();
-        isChargingAttack = false;
-        vfxSpawned = false; 
-        VFXManager.DestroyMagicCircleVFX();
-
+        if(EnemyTypes == TypesofEnemies.Normal)
+        {
+            Invoke(nameof(AttackPlayer), magicChargeTime);
+        }
+        if(EnemyTypes == TypesofEnemies.Sniper)
+        {
+            Invoke(nameof(AttackPlayer), magicChargeTime);
+        }
+        // Need to implement homing and volley 
+        if (EnemyTypes == TypesofEnemies.Volley)
+        {
+            Invoke(nameof(VolleyAttack), magicChargeTime);
+        }
+        
     }
 
     private void SelfDestruct()
@@ -276,12 +311,15 @@ public class SimpleEnemyAI : MonoBehaviour
 
         if (playerInSightRange && playerInAttackRange)
         {
+            agent.SetDestination(transform.position);
+            transform.LookAt(Player);
+
             if (!isChargingAttack && !hasAttacked)
             {
-                agent.SetDestination(transform.position);
-                transform.LookAt(Player);
+                InitiateChargeSequence();
+                //StartChargingAttack();
 
-                StartChargingAttack();
+
             }
 
         }
@@ -306,12 +344,13 @@ public class SimpleEnemyAI : MonoBehaviour
 
         if (playerInSightRange && playerInAttackRange)
         {
+            agent.SetDestination(transform.position);
+            transform.LookAt(Player);
             if (!isChargingAttack && !hasAttacked)
             {
-                agent.SetDestination(transform.position);
-                transform.LookAt(Player);
+               
 
-                StartChargingAttack();
+                InitiateChargeSequence();
             }
 
         }
@@ -324,28 +363,34 @@ public class SimpleEnemyAI : MonoBehaviour
         {
             GoToDestination();
             DestroyLaser();
+            
         }
 
         if (!playerInSightRange && !playerInAttackRange && !goToDestination)
         {
             Patrolling();
             DestroyLaser();
+            
         }
 
         if (playerInSightRange && !playerInAttackRange)
-        {
+        {   
             ChasePlayer();
             DestroyLaser();
+           
         }
 
         if (playerInSightRange && playerInAttackRange)
         {
+            agent.SetDestination(transform.position);
+            transform.LookAt(Player);
             if (!isChargingAttack && !hasAttacked)
             {
-                agent.SetDestination(transform.position);
-                transform.LookAt(Player);
+                
+                laserActive = true;
+                PerformLaserAttack();
 
-                PerfromLaserAttack();
+                //InitiateChargeSequence();
 
 
             }
@@ -416,24 +461,61 @@ public class SimpleEnemyAI : MonoBehaviour
             
         }
     }
-
-    private void PerfromLaserAttack()
+    private void VolleyEnemyBehaviour()
     {
+        if (!playerInSightRange && !playerInAttackRange && goToDestination)
+        {
+            GoToDestination();
+        }
+
+        if (!playerInSightRange && !playerInAttackRange && !goToDestination)
+        {
+            Patrolling();
+        }
+
+        if (playerInSightRange && !playerInAttackRange)
+        {
+            ChasePlayer();
+        }
+
+        if (playerInSightRange && playerInAttackRange)
+        {
+            agent.SetDestination(transform.position);
+            transform.LookAt(Player);
+
+            if (!isChargingAttack && !hasAttacked)
+            {
+               
+                InitiateChargeSequence();
+
+                //VolleyAttack();
+                //VolleyProjectile(this.transform,Player.position,2);
+
+            }
+
+        }
+    }
+
+    private void PerformLaserAttack()
+    {   
+        
+
+
         if (currentLaser != null) return; // Prevents duplicates
         Debug.Log("Laser attack is performing");
 
-        currentLaser = Instantiate(LaserVFX, this.transform);
+        currentLaser = Instantiate(LaserVFX, projectileSpawnPosition);
         laserRenderer = currentLaser.GetComponent<LineRenderer>();
 
-       // laserRenderer.SetPosition(0, transform.position);
-        //laserRenderer.SetPosition(1, Player.localPosition);
+        laserRenderer.SetPosition(0, transform.position);
+        laserRenderer.SetPosition(1, Player.position);
 
-        //if (laserFocusRoutine != null)
-        //{
-           // StopCoroutine(laserFocusRoutine);
-        //}
+        if (laserFocusRoutine != null)
+        {
+            StopCoroutine(laserFocusRoutine);
+        }
 
-        //laserFocusRoutine = StartCoroutine(UpdateLaserPositionCoroutine());
+        laserFocusRoutine = StartCoroutine(UpdateLaserPositionCoroutine());
 
     }
 
@@ -442,6 +524,7 @@ public class SimpleEnemyAI : MonoBehaviour
         if(currentLaser!= null)
         {
             Destroy(currentLaser);
+            laserActive = false;
             Debug.Log("Laser Destroyed");
         }
         
@@ -451,7 +534,7 @@ public class SimpleEnemyAI : MonoBehaviour
     {   
         // Updates the laser to track the players position correctly 
         if (currentLaser == null || laserRenderer == null) return;
-        laserRenderer.SetPosition(0, transform.position);
+        laserRenderer.SetPosition(0, projectileSpawnPosition.position);
         laserRenderer.SetPosition(1, Player.localPosition);
 
        
@@ -459,13 +542,13 @@ public class SimpleEnemyAI : MonoBehaviour
 
     private IEnumerator UpdateLaserPositionCoroutine()
     {
-        if (currentLaser != null) yield break;
+        //if (currentLaser != null) yield break;
 
-        if(laserRenderer == null) yield break;
+        //if(laserRenderer == null) yield break;
 
 
         Vector3 startOffset = Player.position + LaserOffset;
-        Vector3 targetPosition = Player.position;
+        Vector3 targetPosition = Player.localPosition;
 
         float laserFocusDuration = 2f;
         float timeElapsed = 0f;
@@ -476,9 +559,51 @@ public class SimpleEnemyAI : MonoBehaviour
 
             Vector3 interpolatedPos = Vector3.Lerp(startOffset, targetPosition, timeElapsed / laserFocusDuration);
 
-            laserRenderer.SetPosition(0, transform.position);
+            laserRenderer.SetPosition(0, projectileSpawnPosition.position);
             laserRenderer.SetPosition(1, interpolatedPos);
+
+            yield return null;
         }
+    }
+
+
+    private void  VolleyAttack()
+    {   
+        
+        if (!hasAttacked)
+        {
+            volleySpawned = Instantiate(volley, projectileSpawnPosition.position, Quaternion.identity);
+            VolleyProjectile(volleySpawned.transform, Player.position, 2f);
+            
+            hasAttacked = true;
+            Invoke(nameof(ResetAttack), attackCooldownTime);
+
+        }
+
+        isChargingAttack = false;
+        vfxSpawned = false;
+        VFXManager.DestroyMagicCircleVFX();
+
+    }
+    private void VolleyProjectile(Transform projectile , Vector3 target , float timeNeeded)
+    {   
+
+        Vector3 startPosition = projectile.position;
+
+        Vector3 toTarget = target - startPosition;
+
+        Vector3 toTargetXZ = new Vector3(toTarget.x, 0, toTarget.z);
+        float distanceXZ = toTargetXZ.magnitude;
+
+
+        float velocityXZ = distanceXZ / timeNeeded;
+
+        float velocityY = (toTarget.y - 0.5f * Physics.gravity.y * timeNeeded * timeNeeded) / timeNeeded; 
+
+        Vector3 result = toTargetXZ.normalized * velocityXZ;
+        result.y = velocityY;
+
+        projectile.GetComponent<Rigidbody>().linearVelocity = result;
     }
 }
     

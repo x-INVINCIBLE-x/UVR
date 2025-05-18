@@ -28,7 +28,7 @@ public class Shotgun : ScatterWeapons
             projectileInstance.Init();
 
 
-            Rigidbody rb = projectileInstance.GetComponent<Rigidbody>(); // Takes rigidbody of each bullet
+            Rigidbody rb = projectileInstance.GetComponent<Rigidbody>(); // Takes rigidbody of current instanced bullet
 
             // Write logic for scattering bullets
 

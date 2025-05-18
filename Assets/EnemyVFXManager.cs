@@ -6,6 +6,7 @@ public class EnemyVFXManager : MonoBehaviour
     [Header("VFX")]
     public GameObject enemyIntiateAttackVfx;
     public GameObject selfDestructVFX;
+    public Transform MagicCircleSpawnPosition;
 
     [Header("VFX Settings")]
     public Vector3 vfxOffset = new Vector3(0, 0.1f, 0); // Slightly above ground
@@ -26,7 +27,7 @@ public class EnemyVFXManager : MonoBehaviour
         }
 
         //Debug.Log("Spawning Magic Circle VFX");
-        spawnedVFX = Instantiate(enemyIntiateAttackVfx, transform.position + vfxOffset, Quaternion.identity, transform);
+        spawnedVFX = Instantiate(enemyIntiateAttackVfx, MagicCircleSpawnPosition.position + vfxOffset, Quaternion.identity, transform);
 
         // Start coroutine to animate scaling
         StartCoroutine(AnimateMagicCircleScale(chargeTime));
