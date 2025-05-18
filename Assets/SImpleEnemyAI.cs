@@ -283,8 +283,7 @@ public class SimpleEnemyAI : MonoBehaviour
         if (EnemyTypes == TypesofEnemies.Volley)
         {
             Invoke(nameof(VolleyAttack), magicChargeTime);
-        }
-        
+        }  
     }
 
     private void SelfDestruct()
@@ -384,17 +383,9 @@ public class SimpleEnemyAI : MonoBehaviour
         {
             agent.SetDestination(transform.position);
             transform.LookAt(Player);
-            if (!isChargingAttack && !hasAttacked)
-            {
-                
-                laserActive = true;
-                PerformLaserAttack();
-
-                //InitiateChargeSequence();
-
-
-            }
-
+            laserActive = true;
+            PerformLaserAttack();
+            
         }
         UpdateLaserPositions();
 
@@ -503,19 +494,22 @@ public class SimpleEnemyAI : MonoBehaviour
 
         if (currentLaser != null) return; // Prevents duplicates
         Debug.Log("Laser attack is performing");
-
-        currentLaser = Instantiate(LaserVFX, projectileSpawnPosition);
-        laserRenderer = currentLaser.GetComponent<LineRenderer>();
-
-        laserRenderer.SetPosition(0, transform.position);
-        laserRenderer.SetPosition(1, Player.position);
-
-        if (laserFocusRoutine != null)
+        if (laserActive)
         {
-            StopCoroutine(laserFocusRoutine);
-        }
+            VFXManager.ActivateMagicCircle();
+            currentLaser = Instantiate(LaserVFX, projectileSpawnPosition);
+            laserRenderer = currentLaser.GetComponent<LineRenderer>();
 
-        laserFocusRoutine = StartCoroutine(UpdateLaserPositionCoroutine());
+            laserRenderer.SetPosition(0, transform.position);
+            laserRenderer.SetPosition(1, Player.position);
+
+            if (laserFocusRoutine != null)
+            {
+                StopCoroutine(laserFocusRoutine);
+            }
+
+            laserFocusRoutine = StartCoroutine(UpdateLaserPositionCoroutine());
+        }
 
     }
 
@@ -526,6 +520,8 @@ public class SimpleEnemyAI : MonoBehaviour
             Destroy(currentLaser);
             laserActive = false;
             Debug.Log("Laser Destroyed");
+            VFXManager.DestroyMagicCircle();
+
         }
         
     }
@@ -580,9 +576,6 @@ public class SimpleEnemyAI : MonoBehaviour
 
         }
 
-        isChargingAttack = false;
-        vfxSpawned = false;
-        VFXManager.DestroyMagicCircleVFX();
 
     }
     private void VolleyProjectile(Transform projectile , Vector3 target , float timeNeeded)

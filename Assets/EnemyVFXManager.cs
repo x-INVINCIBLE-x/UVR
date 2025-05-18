@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyVFXManager : MonoBehaviour
 {
     [Header("VFX")]
-    public GameObject enemyIntiateAttackVfx;
+    public GameObject MagicCircleAttackVfx;
     public GameObject selfDestructVFX;
     public Transform MagicCircleSpawnPosition;
 
@@ -20,14 +20,14 @@ public class EnemyVFXManager : MonoBehaviour
 
     public void SpawnMagicCircleVFX(float chargeTime)
     {
-        if (enemyIntiateAttackVfx == null)
+        if (MagicCircleAttackVfx == null)
         {
             //Debug.LogWarning("enemyIntiateAttackVfx is not assigned!");
             return;
         }
 
         //Debug.Log("Spawning Magic Circle VFX");
-        spawnedVFX = Instantiate(enemyIntiateAttackVfx, MagicCircleSpawnPosition.position + vfxOffset, Quaternion.identity, transform);
+        spawnedVFX = Instantiate(MagicCircleAttackVfx, MagicCircleSpawnPosition.position + vfxOffset, Quaternion.identity, transform);
 
         // Start coroutine to animate scaling
         StartCoroutine(AnimateMagicCircleScale(chargeTime));
@@ -86,11 +86,24 @@ public class EnemyVFXManager : MonoBehaviour
     {
         if (selfDestructVFX == null) return;
 
-        if (spawnedVFX != null) return; // Prevemt duplicates
+        if (spawnedVFX != null) return; // Prevents duplicates
 
         spawnedVFX = Instantiate(selfDestructVFX,this.transform);
 
         Destroy(spawnedVFX,lifetime);
+    }
+
+    public void ActivateMagicCircle()
+    {
+        if (spawnedVFX != null) return; // Prevents duplicates
+        spawnedVFX = Instantiate(MagicCircleAttackVfx, MagicCircleSpawnPosition.position + vfxOffset, Quaternion.identity);
+
+    }
+
+    public void DestroyMagicCircle()
+    {
+        if (spawnedVFX == null) return; // Prevents duplicates
+        Destroy(spawnedVFX);
     }
     
     
