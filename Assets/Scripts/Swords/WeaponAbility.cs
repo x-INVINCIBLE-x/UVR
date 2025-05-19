@@ -117,7 +117,6 @@ public class WeaponAbility : MonoBehaviour
             contactNormal = null;   
         }
 
-
     }
 
     private void OnCollisionEnter(Collision collision)

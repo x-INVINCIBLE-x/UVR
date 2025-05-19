@@ -172,6 +172,12 @@ public class SimpleEnemyAI : MonoBehaviour
         {
             attackRange = attackRange / 5f;
         }
+
+        if(EnemyTypes == TypesofEnemies.Volley)
+        {
+            sightRange = sightRange * 2f;
+            attackRange = attackRange * 2f;
+        }
     }
 
     private void Patrolling()
@@ -575,7 +581,9 @@ public class SimpleEnemyAI : MonoBehaviour
             Invoke(nameof(ResetAttack), attackCooldownTime);
 
         }
-
+        isChargingAttack = false;
+        vfxSpawned = false;
+        VFXManager.DestroyMagicCircleVFX();
 
     }
     private void VolleyProjectile(Transform projectile , Vector3 target , float timeNeeded)

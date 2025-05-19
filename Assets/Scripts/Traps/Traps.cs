@@ -172,7 +172,7 @@ public class Traps : MonoBehaviour
         if (launcherObject == null) return;
         //Debug.Log("Launcher Trap Activated");
 
-        Rigidbody launcherObjectRb = Instantiate(launcherObject, startPosition + new Vector3(0f, 0f, 0.1f), Quaternion.identity).GetComponent<Rigidbody>();
+        Rigidbody launcherObjectRb = Instantiate(launcherObject, startPosition + new Vector3(0f, 0f, 0.1f), transform.rotation).GetComponent<Rigidbody>();
         launcherObjectRb.AddForce(transform.forward * 32f, ForceMode.Impulse);
     }
 
