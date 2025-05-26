@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2854435018633560117}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: -0.70710677}
-  m_LocalPosition: {x: -1.4622924, y: -0.062303618, z: -0.016900714}
+  m_LocalPosition: {x: 5.2893066, y: 1.1378738, z: -0.0241009}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -216,6 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7537733540631304944}
+  - component: {fileID: 7304361793928187080}
   m_Layer: 0
   m_Name: archive_sm_kerosene_lamp_01_a
   m_TagString: Untagged
@@ -240,6 +241,28 @@ Transform:
   - {fileID: 4167215910893588787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -89.647, y: 0, z: 0}
+--- !u!95 &7304361793928187080
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4170911567629153404}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 758fdf1e4514b4f4ba40bb2d0d0d808f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5525862239818415658
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,13 +289,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5525862239818415658}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.9992217, y: -0, z: -0, w: 0.039447423}
-  m_LocalPosition: {x: 0, y: 0.9, z: 5.9}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.6, y: -4.4, z: 56.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7537733540631304944}
-  m_LocalEulerAnglesHint: {x: 175.478, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &8486306746511864890
 Light:
   m_ObjectHideFlags: 0
@@ -283,8 +306,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 1, g: 0.86666673, b: 0.43529415, a: 1}
-  m_Intensity: 50
+  m_Color: {r: 1, g: 0.7156298, b: 0.24213827, a: 1}
+  m_Intensity: 100
   m_Range: 28.939533
   m_SpotAngle: 81.0513
   m_InnerSpotAngle: 17.672403
@@ -323,7 +346,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
