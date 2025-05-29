@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class PhaseShapeLevel : MonoBehaviour
 {
-    public enum ShapeType { Web, Pyramid, Star, Castle, Crown,UpSpiral, FlatSpiral, DownSpiral, Box }
+    public enum ShapeType { Web, Pyramid, Star, Castle, Crown, UpSpiral, FlatSpiral, DownSpiral, Box, Disc }
 
     [System.Serializable]
     public struct CubePrefabData
@@ -41,6 +44,9 @@ public class PhaseShapeLevel : MonoBehaviour
     public GameObject stonePrefab;
     public GameObject statuePrefab;
 
+    [Header("Spacing")]
+    public float minDistanceBetweenCubes = 1.5f; // Adjust depending on prefab size
+
     [Header("Transition duration (seconds)")]
     public float transitionTime = 2f;
 
@@ -51,6 +57,7 @@ public class PhaseShapeLevel : MonoBehaviour
     
     private int currentPhase = 0;
     private List<GameObject> spawnedCubes = new List<GameObject>();
+    private HashSet<GameObject> disabledCubes = new HashSet<GameObject>();
     private List<GameObject> stones = new List<GameObject>();
     private GameObject statue;
     private int stonesDestroyed = 0;
@@ -58,8 +65,18 @@ public class PhaseShapeLevel : MonoBehaviour
     private List<Vector3> castleLayoutPoints = new List<Vector3>();
     private bool castleLayoutGenerated = false;
 
+    private Dictionary<GameObject, Vector3> prefabLocalSizes = new Dictionary<GameObject, Vector3>();
+
     void Start()
     {
+        foreach (CubePrefabData data in cubePrefabs)
+        {
+            GameObject temp = Instantiate(data.prefab);
+            temp.SetActive(true);
+            prefabLocalSizes[data.prefab] = GetLocalBoundsSize(temp);
+            Destroy(temp);
+        }
+
         // Instantiate stone and statue objects once
         if (stonePrefab != null)
         {
@@ -96,7 +113,6 @@ public class PhaseShapeLevel : MonoBehaviour
                 shouldAdvancePhase = true;
         }
     }
-
     IEnumerator RunPhases()
     {
         // Phase 0 setup and stone placement
@@ -112,32 +128,96 @@ public class PhaseShapeLevel : MonoBehaviour
             int N = spawnedCubes.Count;
 
             // Cache old and new cube positions
-            Vector3[] cubeOld = new Vector3[N];
             Vector3[] cubeNew = new Vector3[N];
+            List<Bounds> occupiedBounds = new List<Bounds>();
+
             for (int i = 0; i < N; i++)
             {
-                cubeOld[i] = spawnedCubes[i].transform.position;
-                cubeNew[i] = SamplePoint(nextCfg);
+                Vector3 prefabSize = GetLocalBoundsSize(spawnedCubes[i]);
+                Vector3 paddedSize = prefabSize + Vector3.one * minDistanceBetweenCubes;
+                Bounds candidateBounds;
+                bool valid = false;
+
+                for (int attempt = 0; attempt < 50; attempt++) // Increased attempts for tighter spaces
+                {
+                    Vector3 sample = SamplePoint(nextCfg);
+                    candidateBounds = new Bounds(sample, paddedSize);
+
+                    bool overlap = false;
+                    foreach (var b in occupiedBounds)
+                    {
+                        if (b.Intersects(candidateBounds))
+                        {
+                            overlap = true;
+                            break;
+                        }
+                    }
+
+                    if (!overlap)
+                    {
+                        cubeNew[i] = sample;
+                        occupiedBounds.Add(candidateBounds);
+                        valid = true;
+                        break;
+                    }
+                }
+
+                if (!valid)
+                {
+                    Debug.LogWarning($"Cube {i} could not find non-overlapping position. Disabling.");
+                    spawnedCubes[i].SetActive(false);
+                    disabledCubes.Add(spawnedCubes[i]);
+                }
+                else
+                {
+                    if (disabledCubes.Contains(spawnedCubes[i]))
+                    {
+                        spawnedCubes[i].SetActive(true);
+                        disabledCubes.Remove(spawnedCubes[i]);
+                    }
+                }
+
+
+                if (!valid)
+                {
+                    Debug.LogWarning($"Cube {i} could not find non-overlapping position. Disabling.");
+                    spawnedCubes[i].SetActive(false);
+                    disabledCubes.Add(spawnedCubes[i]);
+                }
+                else
+                {
+                    if (disabledCubes.Contains(spawnedCubes[i]))
+                    {
+                        spawnedCubes[i].SetActive(true);
+                        disabledCubes.Remove(spawnedCubes[i]);
+                    }
+                }
             }
 
-            // Cache old and new stone positions
-            int S = stones.Count;
-            Vector3[] stoneOld = new Vector3[S];
+            // Compute stone positions — only for stones that still exist
+            List<GameObject> validStones = stones.FindAll(s => s != null && s.activeSelf);
+            int S = validStones.Count;
             Vector3[] stoneNew = new Vector3[S];
             List<Vector3> stoneTargets = ComputeStoneTargets(nextCfg);
+
             for (int i = 0; i < S; i++)
             {
-                stoneOld[i] = stones[i].transform.position;
                 GameObject nearest = FindNearest(spawnedCubes, stoneTargets[i]);
                 stoneNew[i] = nearest.transform.position + Vector3.up * 0.5f;
             }
 
-            // Wait until all stones are destroyed or space pressed
-            // Only wait if stones exist
-            if (stones.Count > 0)
+            // Wait until all active stones are destroyed or skip
+            if (validStones.Count > 0)
             {
-                while (stonesDestroyed < stones.Count && !shouldAdvancePhase)
+                while (stonesDestroyed < validStones.Count && !shouldAdvancePhase)
+                {
+                    // Remove destroyed or null stones during wait
+                    validStones.RemoveAll(s => s == null || !s.activeSelf);
+                    if (stonesDestroyed >= validStones.Count)
+                        break;
+
                     yield return null;
+                }
             }
             else
             {
@@ -145,17 +225,22 @@ public class PhaseShapeLevel : MonoBehaviour
                     yield return null;
             }
 
-            shouldAdvancePhase = false; // Reset for next phase
+            shouldAdvancePhase = false;
 
-            // Transition cubes and stones
+            // Transition cubes
             yield return StartCoroutine(TransitionObjects(spawnedCubes, cubeNew));
-            if (stones.Count > 0)
-                yield return StartCoroutine(TransitionObjects(stones, stoneNew));
 
-            // Final phase statue placement
+
+
+            // Transition remaining stones (if any still exist)
+            if (validStones.Count > 0)
+                yield return StartCoroutine(TransitionObjects(validStones, stoneNew));
+
+            // Statue on final phase
             if (p == phases.Length - 1 && statue != null)
             {
-                Vector3 targetPos = FindNearestLocal(spawnedCubes, Vector3.zero).transform.localPosition + new Vector3(0, 0.5f, 0);
+                GameObject anchor = FindNearestLocal(spawnedCubes, Vector3.zero);
+                Vector3 targetPos = anchor.transform.localPosition + Vector3.up * 0.5f;
                 Vector3 startPos = new Vector3(targetPos.x, statueStartHeight, targetPos.z);
                 statue.transform.localPosition = startPos;
                 yield return StartCoroutine(MoveStatueToPosition(statue, targetPos, transitionTime));
@@ -165,28 +250,50 @@ public class PhaseShapeLevel : MonoBehaviour
         }
     }
 
+
     void SpawnPhase(PhaseConfig cfg)
     {
         foreach (var c in spawnedCubes) Destroy(c);
         spawnedCubes.Clear();
 
-        int spawned = 0, attempts = 0, maxAttempts = cfg.cubeCount * 10;
+        List<Bounds> occupiedBounds = new List<Bounds>();
+
+        int spawned = 0, attempts = 0, maxAttempts = cfg.cubeCount * 20;
         while (spawned < cfg.cubeCount && attempts < maxAttempts)
         {
             attempts++;
-            Vector3 localPos = SamplePoint(cfg);
+
             if (Random.value < cfg.gapChance)
                 continue;
 
             GameObject prefab = GetRandomPrefab();
             if (prefab == null) continue;
 
+            Vector3 samplePos = SamplePoint(cfg);
+
+            // Get bounds size of the prefab
+            Vector3 prefabSize = GetLocalBoundsSize(prefab);
+            Bounds newBounds = new Bounds(samplePos, prefabSize);
+
+            // Check for overlap
+            bool overlaps = false;
+            foreach (var b in occupiedBounds)
+            {
+                if (b.Intersects(newBounds))
+                {
+                    overlaps = true;
+                    break;
+                }
+            }
+
+            if (overlaps) continue;
+
+            // Instantiate and apply rotation if needed
             GameObject go = Instantiate(prefab, transform);
-            go.transform.localPosition = localPos;
+            go.transform.localPosition = samplePos;
 
             if (Random.value < cfg.rotatedPercentage)
             {
-                // Apply random rotation while preserving prefab's original rotation
                 Quaternion originalRot = go.transform.localRotation;
                 float rotX = originalRot.eulerAngles.x + Random.Range(cfg.minRotation.x, cfg.maxRotation.x);
                 float rotY = originalRot.eulerAngles.y + Random.Range(cfg.minRotation.y, cfg.maxRotation.y);
@@ -195,12 +302,40 @@ public class PhaseShapeLevel : MonoBehaviour
             }
 
             spawnedCubes.Add(go);
+            occupiedBounds.Add(newBounds);
             spawned++;
         }
 
         if (spawned < cfg.cubeCount)
             Debug.LogWarning($"Only spawned {spawned}/{cfg.cubeCount} cubes after {attempts} attempts.");
     }
+
+    Vector3 GetBoundsSize(GameObject prefab)
+    {
+        var renderers = prefab.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0) return Vector3.one; // fallback
+
+        Bounds bounds = renderers[0].bounds;
+        foreach (Renderer r in renderers)
+        {
+            bounds.Encapsulate(r.bounds);
+        }
+
+        return bounds.size;
+    }
+
+    Vector3 GetLocalBoundsSize(GameObject go)
+    {
+        Renderer[] renderers = go.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0) return Vector3.one;
+
+        Bounds localBounds = renderers[0].localBounds;
+        foreach (Renderer r in renderers)
+            localBounds.Encapsulate(r.localBounds);
+    
+        return Vector3.Scale(localBounds.size, go.transform.localScale);
+    }
+
 
     GameObject GetRandomPrefab()
     {
@@ -254,6 +389,7 @@ public class PhaseShapeLevel : MonoBehaviour
             case ShapeType.FlatSpiral: return SampleFlatSpiral(cfg);
             case ShapeType.DownSpiral: return SampleDownSpiral(cfg);
             case ShapeType.Box: return SampleBox(cfg);
+            case ShapeType.Disc: return SampleDisc(cfg);
             default: return Vector3.zero;
         }
     }
@@ -440,6 +576,26 @@ public class PhaseShapeLevel : MonoBehaviour
         return basePos;
     }
 
+    Vector3 SampleDisc(PhaseConfig cfg)
+    {
+        // Sample radius uniformly in area (not linear) to avoid density clustering
+        float inner = cfg.innerRadius;
+        float outer = cfg.radius;
+
+        float r = Mathf.Sqrt(Random.Range(inner * inner, outer * outer));
+        float angle = Random.Range(0f, 2f * Mathf.PI);
+
+        float x = r * Mathf.Cos(angle);
+        float z = r * Mathf.Sin(angle);
+        float y = 0f;
+
+        Vector3 jitter = Random.insideUnitSphere * cfg.jitter;
+        jitter.y = 0;
+
+        return new Vector3(x, y, z) + jitter;
+    }
+
+
     List<Vector3> ComputeStoneTargets(PhaseConfig cfg)
     {
         var targets = new List<Vector3>();
@@ -468,33 +624,42 @@ public class PhaseShapeLevel : MonoBehaviour
         return targets;
     }
 
-    IEnumerator TransitionObjects(List<GameObject> objs, Vector3[] endPos)
+    IEnumerator TransitionObjects(List<GameObject> objects, Vector3[] targetPositions)
     {
-        float startTime = Time.time;
-        float endTime = startTime + transitionTime;
+        float elapsed = 0f;
 
-        while (Time.time < endTime)
+        // Cache initial positions
+        Vector3[] startPositions = new Vector3[objects.Count];
+        for (int i = 0; i < objects.Count; i++)
         {
-            // how much of this frame to blend, so that we'll exactly hit the target by endTime
-            float dt = Time.deltaTime;
-            float remaining = endTime - Time.time;
-            float blend = dt / (remaining + dt);
+            startPositions[i] = objects[i].transform.localPosition;
+        }
 
-            for (int i = 0; i < objs.Count; i++)
+        while (elapsed < transitionTime)
+        {
+            float t = elapsed / transitionTime;
+
+            for (int i = 0; i < objects.Count; i++)
             {
-                // always lerp from *current* position to the fixed endPos
-                objs[i].transform.localPosition =
-                    Vector3.Lerp(objs[i].transform.localPosition, endPos[i], blend);
+                if (objects[i].activeSelf)
+                {
+                    objects[i].transform.localPosition = Vector3.Lerp(startPositions[i], targetPositions[i], t);
+                }
             }
 
+            elapsed += Time.deltaTime;
             yield return null;
         }
 
-        // ensure everyone ends exactly on target
-        for (int i = 0; i < objs.Count; i++)
-            objs[i].transform.localPosition = endPos[i];
+        // Ensure final positions are set exactly
+        for (int i = 0; i < objects.Count; i++)
+        {
+            if (objects[i].activeSelf)
+            {
+                objects[i].transform.localPosition = targetPositions[i];
+            }
+        }
     }
-
 
     void PositionStones(PhaseConfig cfg)
     {
@@ -575,6 +740,36 @@ public class PhaseShapeLevel : MonoBehaviour
     {
         shouldAdvancePhase = true;
     }
+
+    void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        if (spawnedCubes == null) return;
+
+        for (int i = 0; i < spawnedCubes.Count; i++)
+        {
+            var cube = spawnedCubes[i];
+            if (cube == null) continue;
+
+            // Get base bounds
+            Vector3 size = GetLocalBoundsSize(cube);
+            Vector3 center = cube.transform.position;
+
+            // Draw actual bounds
+            Gizmos.color = cube.activeSelf ? Color.green : Color.red;
+            Gizmos.DrawWireCube(center, size);
+
+            // Draw padded bounds to visualize minDistanceBetweenCubes
+            Vector3 paddedSize = size + Vector3.one * minDistanceBetweenCubes;
+            Gizmos.color = new Color(1f, 0.5f, 0f, 0.4f); // orange
+            Gizmos.DrawWireCube(center, paddedSize);
+
+            // Label with cube index
+            Handles.Label(center + Vector3.up * 0.2f, $"Cube {i}");
+        }
+#endif
+    }
+
 }
 
 public class StoneDestroy : MonoBehaviour

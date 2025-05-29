@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1663486727495297974}
   - component: {fileID: 5823005374906696260}
   - component: {fileID: -2444372054469970181}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 2}
+  m_LocalScale: {x: 20, y: 25, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -95,7 +95,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6258345973424380507}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6b1d6feca39fa254f921327d71157135, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -121,8 +121,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4f8f80982d02644ac4631e16936510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entities:
-  - propPrefab: {fileID: 0}
-    prop: 0
-    position: {x: -0.99, y: 0.81, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
+  entities: []

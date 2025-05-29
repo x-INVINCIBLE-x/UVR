@@ -3,10 +3,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Invincibility Effect", menuName = "Effects/Invincibility")]
 public class InvincibilityEffect : Effect
 {
-    public override void Execute()
+    public override void Apply()
     {
-        base.Execute();
+        base.Apply();
 
-        stats.SetInvincibleFor(activeDuration);    
+        //stats.SetInvincibleFor(activeDuration);    
+    }
+
+    public override void Remove()
+    {
+        base.Remove();
+
+
     }
 }

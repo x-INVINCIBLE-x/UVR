@@ -1,0 +1,595 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1051083214338052952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7653185549274153574}
+  - component: {fileID: 5737115565858695821}
+  m_Layer: 0
+  m_Name: Grid Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7653185549274153574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051083214338052952}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2788827863494473733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5737115565858695821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051083214338052952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1638144539450f344b0139b9890a92d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radiusPrefabs:
+  - radius: 1500
+    centerOffset: {x: 0, y: 0, z: 0}
+    centerElement: {fileID: 7069848389683681410, guid: 0daa9e51e05887f48913f0a5715e974f, type: 3}
+    centralElementRadius: 343
+    prefabs:
+    - prefab: {fileID: 1749108633849772715, guid: 61c89895804748641abe94cd6a63385f, type: 3}
+      weight: 1
+  - radius: 500
+    centerOffset: {x: 449.34, y: 0, z: 600}
+    centerElement: {fileID: 0}
+    centralElementRadius: 0
+    prefabs:
+    - prefab: {fileID: 1749108633849772715, guid: 948df8c7e3d33ac48ad8fca623b7b0fc, type: 3}
+      weight: 1
+  - radius: 250
+    centerOffset: {x: 449.34, y: 0, z: 600}
+    centerElement: {fileID: 7180395290746859620, guid: c420f9e2d73df0d4f82960dd8030be56, type: 3}
+    centralElementRadius: 120
+    prefabs:
+    - prefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
+      weight: 1
+  cornerPrefabs:
+  - prefab: {fileID: 1749108633849772715, guid: 58f97256eb1d70840874dc36766b148b, type: 3}
+    weight: 1
+  cuboidPrefabs:
+  - prefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
+    weight: 1
+  gridWidth: 100
+  gridDepth: 100
+  minSpacing: 5
+  maxSpacing: 10
+  density: 0.172
+  maxJitterXZ: 35
+  maxJitterY: 100
+  innerRadius: 100
+  outerRadius: 1750
+  maxDepth: 400
+  sineAmplitude: 250
+  sineFrequency: 1
+  customWaveSettings:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1.837885
+        outSlope: 1.837885
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.27464274
+        value: 0.50476176
+        inSlope: 1.9835911
+        outSlope: 1.9835911
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5083333
+        value: 1.0023584
+        inSlope: -0.2655121
+        outSlope: -0.2655121
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.697109
+        value: 0.50015455
+        inSlope: -2.155795
+        outSlope: -2.155795
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1.6512691
+        outSlope: -1.6512691
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    amplitude: 2000
+    axis: 2
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.31980205
+        value: 0.620556
+        inSlope: -0.9842058
+        outSlope: -0.9842058
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.17303486
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    amplitude: 1000
+    axis: 1
+  formations:
+  - type: 1
+    jitterX: 0
+    jitterY: 0
+  - type: 0
+    jitterX: 1
+    jitterY: 1
+  - type: 1
+    jitterX: 1
+    jitterY: 1
+  - type: 2
+    jitterX: 1
+    jitterY: 1
+  transitionDuration: 3
+--- !u!1 &1989842126734611794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2788827863494473733}
+  m_Layer: 0
+  m_Name: Formation Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2788827863494473733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989842126734611794}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7653185549274153574}
+  - {fileID: 9038558215129218732}
+  - {fileID: 5937283248708782360}
+  - {fileID: 982593799265618386}
+  - {fileID: 5089432909367516813}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3184507041761567514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9038558215129218732}
+  - component: {fileID: 5748234482282748767}
+  m_Layer: 0
+  m_Name: Formation Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9038558215129218732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3184507041761567514}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2788827863494473733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5748234482282748767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3184507041761567514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2cc675f08dd72478f192d16195f2be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
+  cubeCount: 750
+  shouldRotate: 0
+  inverseRotation: 0
+  rotationSpeed: 20
+  jitterAmount: 10
+  formationLerpTime: 2
+  delayPerCube: 0.01
+  startRadius: 1000
+  startHeight: 1000
+  vortexRadius: 1000
+  vortexHeight: 0
+  vortexSpeed: 100
+  verticalOscillation: 500
+  tornadoInnerRadius: 1100
+  tornadoWallOffset: 5
+  tickCount: 8
+  tickLength: 200
+  tickAngularWidth: 5
+  formationRadius: 1500
+  umbrellaSpanDegrees: 35.8
+  canopyRatio: 0.716
+  ribCount: 12
+  ribStrength: 0.168
+  umbrellaRadius: 1500
+  handleLength: 900
+  shaftRatio: 0.742
+  headWidthStep: 10000
+  gridWidthOverride: 12000
+  gridHeightOverride: 10000
+  formationSequence: 02000000040000000100000001000000
+--- !u!1 &3303866009924219234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6495539339580959240}
+  - component: {fileID: 3526463747834264901}
+  m_Layer: 0
+  m_Name: Formation Aesthetics Inner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6495539339580959240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3303866009924219234}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5937283248708782360}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3526463747834264901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3303866009924219234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2cc675f08dd72478f192d16195f2be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 1749108633849772715, guid: 58f97256eb1d70840874dc36766b148b, type: 3}
+  cubeCount: 500
+  shouldRotate: 1
+  inverseRotation: 0
+  rotationSpeed: 5
+  jitterAmount: 200
+  formationLerpTime: 2
+  delayPerCube: 0.01
+  startRadius: 1000
+  startHeight: 1000
+  vortexRadius: 1000
+  vortexHeight: 0
+  vortexSpeed: 100
+  verticalOscillation: 500
+  tornadoInnerRadius: 1100
+  tornadoWallOffset: 5
+  tickCount: 8
+  tickLength: 2
+  tickAngularWidth: 5
+  formationRadius: 1000
+  umbrellaSpanDegrees: 35.8
+  canopyRatio: 0.716
+  ribCount: 12
+  ribStrength: 0.168
+  umbrellaRadius: 1500
+  handleLength: 900
+  shaftRatio: 0.742
+  headWidthStep: 10000
+  gridWidthOverride: 12000
+  gridHeightOverride: 10000
+  formationSequence: 05000000000000000300000001000000
+--- !u!1 &5113952432440170073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4698323960657792969}
+  - component: {fileID: 6885477660519354693}
+  m_Layer: 0
+  m_Name: Formation Aesthetics Outer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4698323960657792969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5113952432440170073}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5937283248708782360}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6885477660519354693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5113952432440170073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2cc675f08dd72478f192d16195f2be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 1749108633849772715, guid: 58f97256eb1d70840874dc36766b148b, type: 3}
+  cubeCount: 500
+  shouldRotate: 1
+  inverseRotation: 0
+  rotationSpeed: 25
+  jitterAmount: 150
+  formationLerpTime: 2
+  delayPerCube: 0.01
+  startRadius: 1000
+  startHeight: 1000
+  vortexRadius: 1000
+  vortexHeight: 0
+  vortexSpeed: 100
+  verticalOscillation: 500
+  tornadoInnerRadius: 1100
+  tornadoWallOffset: 5
+  tickCount: 8
+  tickLength: 2
+  tickAngularWidth: 5
+  formationRadius: 1500
+  umbrellaSpanDegrees: 35.8
+  canopyRatio: 0.716
+  ribCount: 12
+  ribStrength: 0.168
+  umbrellaRadius: 1500
+  handleLength: 900
+  shaftRatio: 0.742
+  headWidthStep: 10000
+  gridWidthOverride: 12000
+  gridHeightOverride: 10000
+  formationSequence: 05000000000000000300000001000000
+--- !u!1 &5741422989510567793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 982593799265618386}
+  - component: {fileID: 1818271857668096679}
+  m_Layer: 0
+  m_Name: DungeonController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &982593799265618386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5741422989510567793}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2788827863494473733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1818271857668096679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5741422989510567793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e2c9c3770ab8142a644967b58c1ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSpawners: []
+  timedForamtions: []
+  formations:
+  - formationName: Crater
+    formaationInfo:
+    - layout: {fileID: 7653185549274153574}
+      position: {x: 500, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      duration: 5
+    - layout: {fileID: 9038558215129218732}
+      position: {x: -500, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      duration: 5
+  - formationName: water
+    formaationInfo:
+    - layout: {fileID: 7653185549274153574}
+      position: {x: 500, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      duration: 5
+    - layout: {fileID: 9038558215129218732}
+      position: {x: -500, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      duration: 5
+--- !u!1 &7255974970426631854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5937283248708782360}
+  m_Layer: 0
+  m_Name: Aesthetics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5937283248708782360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7255974970426631854}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6495539339580959240}
+  - {fileID: 4698323960657792969}
+  m_Father: {fileID: 2788827863494473733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7936134047946325969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5089432909367516813}
+  - component: {fileID: 7470625766391353886}
+  m_Layer: 0
+  m_Name: FX Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5089432909367516813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7936134047946325969}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1977.5785, y: 576.71265, z: 1067.2755}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2788827863494473733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7470625766391353886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7936134047946325969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f97464720a76fa44b65ccf7089290ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeFormationController: {fileID: 5748234482282748767}
