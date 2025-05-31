@@ -321,6 +321,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Core
       objectReference: {fileID: 0}
+    - target: {fileID: 2953057016828120978, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3813514183900476336, guid: 342d8c61967628541a04456b961334a1, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.34
@@ -392,7 +396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &376274425
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1305,6 +1309,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1932886420090733858, guid: 6b59c8e3febaf5b45b332008c704ae98, type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: -3811945984315983383, guid: 510faa317c72e964581e028a27f8a1cd, type: 3}
+    - target: {fileID: 1932886420090733858, guid: 6b59c8e3febaf5b45b332008c704ae98, type: 3}
       propertyPath: bulletSpawns.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -1794,6 +1802,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 58877817914127023, guid: ca1d575c6f2283d4984f13a98b9dbbaa, type: 3}
+      propertyPath: shootingForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 58877817914127023, guid: ca1d575c6f2283d4984f13a98b9dbbaa, type: 3}
       propertyPath: chargedPitchMax
       value: 4
       objectReference: {fileID: 0}
@@ -1802,9 +1814,13 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 58877817914127023, guid: ca1d575c6f2283d4984f13a98b9dbbaa, type: 3}
+      propertyPath: maxShootingForce
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 58877817914127023, guid: ca1d575c6f2283d4984f13a98b9dbbaa, type: 3}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: -971809462053949377, guid: 98c09ff343ac08344938878a997637ed, type: 3}
+      objectReference: {fileID: 1263001300328454838, guid: b383feb9d13fbd3489f2a716194ce34d, type: 3}
     - target: {fileID: 1332242042530113331, guid: ca1d575c6f2283d4984f13a98b9dbbaa, type: 3}
       propertyPath: m_MovementType
       value: 0

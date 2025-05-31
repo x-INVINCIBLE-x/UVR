@@ -26,6 +26,7 @@ public class PhysicsProjectile : Projectile
     {
         base.Launch(_transform, force);
         rigidBody.linearVelocity = _transform.forward * force;
+        transform.rotation = Quaternion.LookRotation(rigidBody.linearVelocity.normalized);
     }
 
     private void OnCollisionEnter(Collision collision)
