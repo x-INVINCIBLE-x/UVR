@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Receiver.Primitives;
 
 public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor
 {
+    [field: SerializeField] public string ID {  get; private set; }
     public TargetTag targetTag;
     public Item currentWeapon = null;
     public Transform meleeAttatchTransform;
@@ -23,6 +25,23 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
         base.Awake();
         inventoryManager = InventoryManager.Instance;
         closeHandler = GetComponentInParent<UIToogleHandler>();
+    }
+
+    [ContextMenu("Generate UID")]
+    private void GenerateUID()
+    {
+            Debug.Log("enter");
+        if (Application.IsPlaying(gameObject)) return;
+        if (string.IsNullOrEmpty(gameObject.scene.path)) return;
+
+        SerializedObject serializedObject = new SerializedObject(this);
+        SerializedProperty property = serializedObject.FindProperty("id");
+
+        if (string.IsNullOrEmpty(property.stringValue))
+        {
+            property.stringValue = Guid.NewGuid().ToString();
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 
     public override bool CanHover(UnityEngine.XR.Interaction.Toolkit.Interactables.IXRHoverInteractable interactable)
@@ -51,7 +70,7 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
 
         hasWeaponInSlot = true;
         InventoryItem item = new InventoryItem(weapon.data);
-        InventoryManager.Instance.AddItemFromSocket(item, this);
+        InventoryManager.Instance.AddItemFromSocket(item, ID);
         //inventoryManager.AddItemFromSocket(weapon, this);
     }
 
@@ -64,7 +83,7 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
             return;
         }
 
-        InventoryManager.Instance.RemoveItemFromSocket(this);
+        InventoryManager.Instance.RemoveItemFromSocket(ID);
         currentWeapon = null;
         hasWeaponInSlot = false;
         //inventoryManager.RemoveItemFromSocket(this);
@@ -83,7 +102,7 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
     {
         yield return new WaitForSeconds(spawnDelay);
 
-        InventoryItem item = InventoryManager.Instance.GetItem(this);
+        InventoryItem item = InventoryManager.Instance.GetItem(ID);
         if (item != null)
         {
             currentWeapon = Instantiate(item.data.Model, transform.position + new Vector3(0, 0.5f, 0), attachTransform.rotation).GetComponent<Item>();

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using System.Linq;
+using System;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, ISaveable
 {
     public static InventoryManager Instance {  get; private set; }
-    public Dictionary<XRBaseInteractor, InventoryItem> weapondDict = new();
+    [SerializeField] public Dictionary<string, InventoryItem> weapondDict = new();
 
     public Dictionary<ItemData, ItemInfo> inventoryItemsDict = new();
     public UIItemSlot[] slots;
@@ -15,6 +16,7 @@ public class InventoryManager : MonoBehaviour
 
     //public Transform itemSlotParent;
 
+    [System.Serializable]
     public class ItemInfo
     {
         public InventoryItem inventoryitem;
@@ -44,12 +46,12 @@ public class InventoryManager : MonoBehaviour
         //slots = itemSlotParent.GetComponentsInChildren<UIItemSlot>();
     }
 
-    public void AddItemFromSocket(InventoryItem item, XRBaseInteractor socket)
+    public void AddItemFromSocket(InventoryItem item, string socket)
     {
         weapondDict.Add(socket, item);
     }
 
-    public void RemoveItemFromSocket(XRBaseInteractor socket)
+    public void RemoveItemFromSocket(string socket)
     {
         if (!weapondDict.ContainsKey(socket))
         {
@@ -60,7 +62,7 @@ public class InventoryManager : MonoBehaviour
         weapondDict.Remove(socket);
     }
 
-    public InventoryItem GetItem(XRBaseInteractor item)
+    public InventoryItem GetItem(string item)
     {
         if (!weapondDict.ContainsKey(item))
         {
@@ -157,4 +159,46 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
+    public object CaptureState()
+    {
+        var saveData = new Dictionary<string, InventoryItemDTO>();
+        foreach (var pair in weapondDict)
+        {
+            var dto = new InventoryItemDTO
+            {
+                itemID = pair.Value.data.ID,
+                stackSize = pair.Value.stackSize
+            };
+            saveData[pair.Key] = dto;
+        }
+        return saveData;
+    }
+
+    public void RestoreState(object state)
+    {
+        var saveData = state as Dictionary<string, InventoryItemDTO>;
+        if (saveData == null) return;
+
+        weapondDict.Clear();
+        foreach (var pair in saveData)
+        {
+            var itemData = ItemDatabase.GetItemByID(pair.Value.itemID);
+            if (itemData == null)
+            {
+                Debug.LogWarning($"ItemData not found for ID: {pair.Value.itemID}");
+                continue;
+            }
+
+            var item = new InventoryItem(itemData);
+            weapondDict.Add(pair.Key, item);
+        }
+    }
+
+
+    [System.Serializable]
+    public class InventoryItemDTO
+    {
+        public string itemID;
+        public int stackSize;
+    }
 }

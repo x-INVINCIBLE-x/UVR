@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //[CreateAssetMenu(fileName = "InventoryItem", menuName = "Inventory/Inventory Item")]
+[System.Serializable] 
 public class InventoryItem
 {
-    public ItemData data;
+    [SerializeField] public ItemData data;
     public int stackSize { get; private set; } = 0;
     public int stackLimit = 6;
 
