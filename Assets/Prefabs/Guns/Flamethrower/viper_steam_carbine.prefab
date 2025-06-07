@@ -16424,6 +16424,8 @@ GameObject:
   - component: {fileID: 1191119538257612266}
   - component: {fileID: 6425119850974622881}
   - component: {fileID: 5671337694952220247}
+  - component: {fileID: 1565260828465952567}
+  - component: {fileID: 5592995557282563040}
   m_Layer: 0
   m_Name: viper_steam_carbine
   m_TagString: Untagged
@@ -16441,7 +16443,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0.044, y: 3.968, z: 0.581}
-  m_LocalScale: {x: 7.5, y: 7.5, z: 7.5}
+  m_LocalScale: {x: 9, y: 9, z: 9}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3136319376639846432}
@@ -16491,11 +16493,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 1565260828465952567}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
-  m_SelectMode: 0
+  m_SelectMode: 1
   m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
@@ -16612,9 +16615,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c14f41f6e19fd847aefcbab8b895b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHolding: 0
   sprayVFX: {fileID: 3160706569754383614}
   attackRadius: {fileID: 3926460580386684521}
+--- !u!65 &1565260828465952567
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9034654013996399087}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0074474216, y: 0.07334592, z: 0.012594607}
+  m_Center: {x: -0.0004995272, y: 0.0076908115, z: 0.022868047}
+--- !u!114 &5592995557282563040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9034654013996399087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: 8c1fb2993079ba44a9abbaa8d9ed202c, type: 2}
 --- !u!1 &9089225479698806930
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private Gradient graddientSunsetToNight;
 
     [SerializeField] private Light globalLight;
+    [SerializeField] private float speedMultiplier;
 
     private int minutes;
 
@@ -44,7 +45,7 @@ public class TimeManager : MonoBehaviour
     }
     public void Update()
     {
-        tempSecond += Time.deltaTime;
+        tempSecond += Time.deltaTime * speedMultiplier;
 
         if (tempSecond >= 1)
         {

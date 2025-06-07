@@ -520,7 +520,7 @@ MonoBehaviour:
   m_StartingInteractionStrengthFilters: []
   _startPoint: {fileID: 4718766831158106654}
   _endPoint: {fileID: 5719498941184708068}
-  _notchPoint: {fileID: 0}
+  _notchPoint: {fileID: 8917600292586212486}
 --- !u!65 &109920517575216751
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -555,6 +555,7 @@ GameObject:
   - component: {fileID: 6755260233833385979}
   - component: {fileID: 4100084842760521309}
   - component: {fileID: 6350441260352932230}
+  - component: {fileID: 3091692202352644179}
   m_Layer: 0
   m_Name: Wing Bow
   m_TagString: Untagged
@@ -744,8 +745,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355df79e694235245a2515a610f1f58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _arrowPrefab: {fileID: 3130782860315168183, guid: 9e71197dbe620ba488e40e24d76543ba, type: 3}
-  _notchPoint: {fileID: 0}
+  _arrowPrefab: {fileID: 4662338454233567465, guid: 5af2f94021a4f4444aaf9857c3f83e92, type: 3}
+  _notchPoint: {fileID: 8917600292586212486}
   _spawnDelay: 1
 --- !u!65 &6350441260352932230
 BoxCollider:
@@ -768,6 +769,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99999964, y: 0.18843518, z: 0.35018513}
   m_Center: {x: -6.958723e-16, y: 0.0069563687, z: 0.36305043}
+--- !u!114 &3091692202352644179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4423296226796281274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: 8c1fb2993079ba44a9abbaa8d9ed202c, type: 2}
 --- !u!1 &5878805308544984274
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2638295495281924756}
   - component: {fileID: 8971544549480447154}
   - component: {fileID: 5355013690343602480}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: VFX_Trail_Ice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4944,7 +4944,9 @@ GameObject:
   - component: {fileID: 4248877045977830812}
   - component: {fileID: -661082810054273611}
   - component: {fileID: -3811945984315983383}
-  m_Layer: 0
+  - component: {fileID: 4056991152830914125}
+  - component: {fileID: 3836391041491771175}
+  m_Layer: 16
   m_Name: enchanted_crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4992,9 +4994,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &-3811945984315983383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5008,6 +5010,126 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 5
+  impactVFX: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
+  impactSFX: {fileID: 8300000, guid: c6dce04b00559b040ba400c40f3ee00c, type: 3}
+--- !u!65 &4056991152830914125
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510400748763610427}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.058644295, y: 0.049793243, z: 0.10688019}
+  m_Center: {x: -0.00009584427, y: -0.0012493134, z: -0.0027046204}
+--- !u!82 &3836391041491771175
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510400748763610427}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2122939242362193841
 GameObject:
   m_ObjectHideFlags: 0
@@ -5017,7 +5139,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2504195087117315277}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Crystal_low.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5051,7 +5173,7 @@ GameObject:
   - component: {fileID: 5483856920546847625}
   - component: {fileID: 9125216307345377788}
   - component: {fileID: 5330253165364951254}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Trail_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9885,7 +10007,7 @@ GameObject:
   - component: {fileID: 1001819089862100114}
   - component: {fileID: 5736327544745438152}
   - component: {fileID: 5183008204201589243}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Trail_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14717,7 +14839,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 47676511652751668}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: f7a6c4e380104043b1315d17fc4d6704.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14751,7 +14873,7 @@ GameObject:
   - component: {fileID: 2489125457551832946}
   - component: {fileID: 2877204906502085722}
   - component: {fileID: 3842304426799813627}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Crystal_low.002_Crystal_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14835,7 +14957,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 662867099334871686}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}

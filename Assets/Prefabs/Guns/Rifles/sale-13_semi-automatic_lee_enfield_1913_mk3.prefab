@@ -216,6 +216,8 @@ GameObject:
   - component: {fileID: 3162673521359155820}
   - component: {fileID: 7979914743328054352}
   - component: {fileID: 6029987224317571866}
+  - component: {fileID: 7822016378788223807}
+  - component: {fileID: 5887464703547753141}
   m_Layer: 0
   m_Name: sale-13_semi-automatic_lee_enfield_1913_mk3
   m_TagString: Untagged
@@ -233,7 +235,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.61, y: 3.9571, z: 2.625}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.007, y: 0.007, z: 0.007}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7262744808113404217}
@@ -342,7 +344,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 6733113033082254710}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -406,7 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootingForce: 40
   bulletSpawn: {fileID: 0}
-  recoilForce: 5
+  recoilForce: 1
   damage: 50
   projectilePrefab: {fileID: -971809462053949377, guid: 98c09ff343ac08344938878a997637ed, type: 3}
   muzzleFlash: {fileID: 1743301284569550, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
@@ -435,6 +437,36 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 185.91025, y: 7.260131, z: 23.096842}
   m_Center: {x: -0.26999712, y: -33.081825, z: 26.873863}
+--- !u!114 &7822016378788223807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662490615481786316}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: 8c1fb2993079ba44a9abbaa8d9ed202c, type: 2}
+--- !u!114 &5887464703547753141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662490615481786316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 0}
 --- !u!1 &1714870607107714888
 GameObject:
   m_ObjectHideFlags: 0

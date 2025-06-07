@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 177253952177674999}
   - component: {fileID: 3132103470196172726}
   - component: {fileID: 6577950546620180631}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Trail_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4845,7 +4845,7 @@ GameObject:
   - component: {fileID: 402095380093800995}
   - component: {fileID: 5952852030148486136}
   - component: {fileID: 6953386574652351001}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 8_low_Circle_0010_0.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4931,7 +4931,7 @@ GameObject:
   - component: {fileID: 4541525290280406807}
   - component: {fileID: 8270532893021599531}
   - component: {fileID: 6726618425823802906}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Trail_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9763,7 +9763,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8052663409609060534}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9795,7 +9795,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6748320695931827748}
-  m_Layer: 0
+  - component: {fileID: -3228964861419464339}
+  - component: {fileID: 5231629382678314228}
+  - component: {fileID: 2253549638526307326}
+  m_Layer: 13
   m_Name: Radiant Arrow Final
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9811,14 +9814,77 @@ Transform:
   m_GameObject: {fileID: 4662338454233567465}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 22.724, y: 89.860825, z: 40.779495}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6503971289346977239}
   - {fileID: 5943029578316480090}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90}
+--- !u!54 &-3228964861419464339
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4662338454233567465}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &5231629382678314228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4662338454233567465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07cdaf57cc0507343b281b51d05cb802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explodeOnImpact: 0
+  _stickDuration: 3
+  _minEmbedDepth: 0.05
+  _maxEmbedDepth: 0.15
+  _ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 2147573751
+  _tip: {fileID: 402095380093800995}
+  _impactGameObject: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
+  _arrowMeshRenderer: {fileID: 6953386574652351001}
+--- !u!114 &2253549638526307326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4662338454233567465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a00d5273ad91fbc45af56831f65899ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 10
+  _trailSystem: {fileID: 0}
 --- !u!1 &5491814476065512309
 GameObject:
   m_ObjectHideFlags: 0
@@ -9830,7 +9896,7 @@ GameObject:
   - component: {fileID: 1135797189800615859}
   - component: {fileID: 4106913727830844447}
   - component: {fileID: 4040264679636056487}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 8_low_Material.002_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9914,7 +9980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4468405377704390002}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 8_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9951,7 +10017,7 @@ GameObject:
   - component: {fileID: 7349414348919714112}
   - component: {fileID: 1869791175674061014}
   - component: {fileID: 8769772277388135851}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VFX_Trail_Fire (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14883,7 +14949,7 @@ GameObject:
   - component: {fileID: 2005249791543894534}
   - component: {fileID: 3777848406996126105}
   - component: {fileID: 74475087590011591}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 8_low_Circle_0010_0.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14967,7 +15033,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6444883257728284151}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 7d1701f17b6e4ee4933b632074722fc7.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14999,7 +15065,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5943029578316480090}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: radiant arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -6,6 +6,15 @@ using UnityEngine.InputSystem;
 
 public class SliceObject : MonoBehaviour
 {
+    public SliceMode sliceMode;
+    public enum SliceMode
+    {
+        Single,
+        Multi
+    }
+
+
+
     public Transform startSlicePoint;
     public Transform endSlicePoint;
     public LayerMask sliceableLayer;
@@ -40,18 +49,44 @@ public class SliceObject : MonoBehaviour
         
         SlicedHull hull = target.Slice(endSlicePoint.position, planeNormal);
 
-        if (hull != null)
+        // Check for Slice Mode
+
+        // If the slice mode is multi then allows for multiple cuts
+        // upper anf lower hull object's will have the sliceable layer
+        if(sliceMode == SliceMode.Multi)
         {
-            GameObject upperHull = hull.CreateUpperHull(target,crossSectionMaterial);
-            SetupSlicedComponent(upperHull);
-            upperHull.layer = target.layer;
+            if (hull != null)
+            {
+                GameObject upperHull = hull.CreateUpperHull(target, crossSectionMaterial);
+                SetupSlicedComponent(upperHull);
+                upperHull.layer = target.layer;
 
-            GameObject lowerHull = hull.CreateLowerHull(target,crossSectionMaterial);
-            SetupSlicedComponent(lowerHull);
-            lowerHull.layer = target.layer;
+                GameObject lowerHull = hull.CreateLowerHull(target, crossSectionMaterial);
+                SetupSlicedComponent(lowerHull);
+                lowerHull.layer = target.layer;
 
-            Destroy(target);
+                Destroy(target);
+            }
         }
+
+        // if slice mode is single , then only alloes the object to be cut once
+        // upper anf lower hull object's will have not have the sliceable layer
+        if (sliceMode == SliceMode.Single)
+        {
+            if (hull != null)
+            {
+                GameObject upperHull = hull.CreateUpperHull(target, crossSectionMaterial);
+                SetupSlicedComponent(upperHull);
+                
+
+                GameObject lowerHull = hull.CreateLowerHull(target, crossSectionMaterial);
+                SetupSlicedComponent(lowerHull);
+                
+
+                Destroy(target);
+            }
+        }
+        
     }
 
     public void SetupSlicedComponent(GameObject slicedObject)
@@ -61,9 +96,6 @@ public class SliceObject : MonoBehaviour
         collider.convex = true;
 
         rb.AddExplosionForce(cutForce, slicedObject.transform.position, 1);
-
-
-
 
     }
 

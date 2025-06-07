@@ -148,17 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565fec1b585f5e240b1a79bb59b0526e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
-  totalCubes: 100
-  transitionDuration: 2
-  gridRows: 10
-  gridCols: 10
-  gridSpacing: 2
-  sphereRadius: 10
-  castleWidth: 10
-  castleDepth: 10
-  castleWallHeight: 3
-  castleSpacing: 1.5
 --- !u!4 &979450463
 Transform:
   m_ObjectHideFlags: 0
@@ -532,6 +521,54 @@ PrefabInstance:
     - target: {fileID: 2788827863494473733, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: cornerPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: radiusPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: cornerPrefabs.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 1749108633849772715, guid: 948df8c7e3d33ac48ad8fca623b7b0fc, type: 3}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: cornerPrefabs.Array.data[1].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: radiusPrefabs.Array.data[3].radius
+      value: 996.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: radiusPrefabs.Array.data[3].centerElement
+      value: 
+      objectReference: {fileID: 7180395290746859620, guid: c420f9e2d73df0d4f82960dd8030be56, type: 3}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: radiusPrefabs.Array.data[3].centerOffset.x
+      value: 449.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: radiusPrefabs.Array.data[3].centerOffset.z
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: radiusPrefabs.Array.data[3].prefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: radiusPrefabs.Array.data[3].centralElementRadius
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: radiusPrefabs.Array.data[3].prefabs.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
+    - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: radiusPrefabs.Array.data[3].prefabs.Array.data[0].weight
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

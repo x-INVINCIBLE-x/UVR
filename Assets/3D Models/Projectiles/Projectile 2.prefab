@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 8187033530411529662}
   - component: {fileID: 5662905663440108416}
   - component: {fileID: 1263001300328454838}
+  - component: {fileID: 5489128693387043924}
   m_Layer: 0
   m_Name: Projectile 2
   m_TagString: Untagged
@@ -365,6 +366,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 5
+  impactVFX: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
+--- !u!135 &5489128693387043924
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7117252253222608960}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.020001302
+  m_Center: {x: -0.0050428733, y: 0, z: 0}
 --- !u!1 &7459797447102062873
 GameObject:
   m_ObjectHideFlags: 0

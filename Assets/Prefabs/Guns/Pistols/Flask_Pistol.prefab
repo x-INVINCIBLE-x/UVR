@@ -938,6 +938,7 @@ GameObject:
   - component: {fileID: 4482964283170062172}
   - component: {fileID: 8166253949140569854}
   - component: {fileID: 6104269756458222074}
+  - component: {fileID: 1007033841643179042}
   m_Layer: 0
   m_Name: Flask_Pistol
   m_TagString: Weapon
@@ -985,11 +986,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!65 &5797191737483615095
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1098,11 +1099,11 @@ MonoBehaviour:
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 0
-  m_SmoothPositionAmount: 8
-  m_TightenPosition: 0.1
+  m_SmoothPosition: 1
+  m_SmoothPositionAmount: 2.1
+  m_TightenPosition: 1
   m_TrackRotation: 1
-  m_SmoothRotation: 0
+  m_SmoothRotation: 1
   m_SmoothRotationAmount: 8
   m_TightenRotation: 0.1
   m_TrackScale: 1
@@ -1146,20 +1147,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473b71e6b2aec164a9471f5923a4b50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingForce: 30
+  shootingForce: 5
   bulletSpawn: {fileID: 3247670750951175227}
   recoilForce: 3
   damage: 3
-  projectilePrefab: {fileID: 1969587326035667132, guid: c28b79981c1704148b12c97c9c6af738, type: 3}
-  maxCharge: 3
-  maxbulletSize: 2
-  maxShootingForce: 50
+  projectilePrefab: {fileID: -3811945984315983383, guid: 510faa317c72e964581e028a27f8a1cd, type: 3}
+  maxCharge: 10
+  maxbulletSize: 10
+  maxShootingForce: 30
   _shootingSoundPistol: {fileID: 8300000, guid: e791b4cc3c94da94d8239ab3297e1529, type: 3}
   chargingSoundPistol: {fileID: 8300000, guid: ba66d94f7c28b504f83c5c3391479608, type: 3}
   minPitch: 1
   maxPitch: 2
-  chargedPitchMin: 0.7
-  chargedPitchMax: 1
+  chargedPitchMin: 2
+  chargedPitchMax: 4
 --- !u!95 &4482964283170062172
 Animator:
   serializedVersion: 7
@@ -1239,7 +1240,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1292,6 +1293,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: ff2ead5e16e65c44a9ead755b6fc2de5, type: 2}
+--- !u!114 &1007033841643179042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200743150739345974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03588f75fe9d75e41b612292741f40ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemInfo: {fileID: 11400000, guid: a9599de7a60500f4e86fbdf4cd2cd783, type: 2}
+  isShopItem: 0
 --- !u!1 &4862255119533883280
 GameObject:
   m_ObjectHideFlags: 0

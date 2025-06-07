@@ -3,6 +3,7 @@ using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
 
+[RequireComponent(typeof(AudioSource))]
 public class WeaponAbilitiesBase : MonoBehaviour
 {
     
@@ -14,7 +15,7 @@ public class WeaponAbilitiesBase : MonoBehaviour
 
     [Header("Activation Condition")]
     [Space]
-    public bool AbilityEnable = false;
+    [SerializeField] protected bool AbilityEnable = false;
     protected float minVelocity;
     protected float minPitch = 1f;
     protected float maxPitch = 2f;

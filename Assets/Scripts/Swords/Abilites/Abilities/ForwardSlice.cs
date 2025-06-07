@@ -11,8 +11,12 @@ public class ForwardSlice : WeaponAbilitiesBase
     }
 
     private void Update()
-    {
-        ActivateSlashEffect();
+    {   
+        if(AbilityEnable == true)
+        {
+            ActivateSlashEffect();
+        }
+        
     }
 
     private void ActivateSlashEffect()
@@ -26,10 +30,11 @@ public class ForwardSlice : WeaponAbilitiesBase
             //Destroy(SlashVFX,1f);*
             GameObject SlashPool = ObjectPool.instance.GetObject(SlashVFX, transform);
             SlashAudio();
+            ObjectPool.instance.ReturnObject(SlashVFX,2f);
 
         }
 
-        ObjectPool.instance.ReturnObject(SlashVFX);
+        
     }
 
 

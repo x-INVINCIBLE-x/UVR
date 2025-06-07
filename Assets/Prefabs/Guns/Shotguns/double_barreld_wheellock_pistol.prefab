@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1360639382967693448}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Object_20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,8 @@ GameObject:
   - component: {fileID: 1952953977808054413}
   - component: {fileID: 2274155839273805526}
   - component: {fileID: 1932886420090733858}
-  m_Layer: 0
+  - component: {fileID: 2258338342609952162}
+  m_Layer: 10
   m_Name: double_barreld_wheellock_pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +99,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!114 &2274155839273805526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 2258338342609952162}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -171,7 +173,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 1005731451547605005}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -236,11 +238,34 @@ MonoBehaviour:
   bulletSpawns:
   - {fileID: 4397452087903073647}
   - {fileID: 722542711196305574}
-  shootingForce: 30
+  - {fileID: 916252806188285197}
+  - {fileID: 8655926578380241890}
+  shootingForce: 10
   recoilForce: 5
   damage: 10
   spreadAngle: 5
-  projectilePrefab: {fileID: -971809462053949377, guid: 98c09ff343ac08344938878a997637ed, type: 3}
+  projectilePrefab: {fileID: -3811945984315983383, guid: 510faa317c72e964581e028a27f8a1cd, type: 3}
+--- !u!65 &2258338342609952162
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512307540852822356}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 100, y: 358.81418, z: 137.1003}
+  m_Center: {x: 0, y: 52.56772, z: -18.550116}
 --- !u!1 &606438572996731645
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +277,7 @@ GameObject:
   - component: {fileID: 1718043071558053004}
   - component: {fileID: 8194966230813216222}
   - component: {fileID: 1672175036103602611}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: loop_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 572256462793364555}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE2_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +395,7 @@ GameObject:
   - component: {fileID: 6986957125216872876}
   - component: {fileID: 5636306877614913630}
   - component: {fileID: 8084807680889844899}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: lichaam_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +479,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5763523373692214901}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Object_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +511,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3060085536967444965}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: VijsDraai_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +543,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 537737234029568831}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trekkerhout_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,7 +577,7 @@ GameObject:
   - component: {fileID: 7674866994704021514}
   - component: {fileID: 3864501798709839063}
   - component: {fileID: 5755455589914684932}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: VijsDraai_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -638,7 +663,7 @@ GameObject:
   - component: {fileID: 7578131984864732545}
   - component: {fileID: 3346092458707532042}
   - component: {fileID: 6630299499085244207}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE2_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -724,7 +749,7 @@ GameObject:
   - component: {fileID: 4790734167512631319}
   - component: {fileID: 781883335924350524}
   - component: {fileID: 9157349090410014207}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: kubus_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -808,7 +833,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2611254471430721086}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MCirkelG_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -840,7 +865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8465040555409298281}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperplaat_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +897,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3126096974153180857}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 40e88f355ef94d018427e24db6d6ad06.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -904,7 +929,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2388700029009308063}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Object_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -938,7 +963,7 @@ GameObject:
   - component: {fileID: 5912477489531421349}
   - component: {fileID: 5445603024318718826}
   - component: {fileID: 345951293702777928}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hamer_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1022,7 +1047,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8655926578380241890}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bullet Spawn 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1038,7 +1063,7 @@ Transform:
   m_GameObject: {fileID: 3234995660126367788}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 3.4, y: 263.5, z: -3.7}
+  m_LocalPosition: {x: 3.4, y: 300, z: -3.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1053,7 +1078,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7982369818246621673}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: krul_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1087,7 +1112,7 @@ GameObject:
   - component: {fileID: 6026572542054452156}
   - component: {fileID: 855570738281103976}
   - component: {fileID: 7596724550175441024}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: handvatscherm_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1171,7 +1196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 973079078179506308}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE1_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1203,7 +1228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 916252806188285197}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bullet Spawn 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1219,7 +1244,7 @@ Transform:
   m_GameObject: {fileID: 3372593066494254115}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 4.41, y: 263.5, z: -22.05}
+  m_LocalPosition: {x: 4.41, y: 300, z: -22.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1234,7 +1259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6933227684630263257}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: loop_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1268,7 +1293,7 @@ GameObject:
   - component: {fileID: 8941659410109687698}
   - component: {fileID: 7957940074844516022}
   - component: {fileID: 945511332623120074}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE5_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1354,7 +1379,7 @@ GameObject:
   - component: {fileID: 2091395156399973588}
   - component: {fileID: 3228609102433047075}
   - component: {fileID: 4733846090343462102}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trekkerhout_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1438,7 +1463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3898831996477415519}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1492,7 +1517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1005731451547605005}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1525,7 +1550,7 @@ GameObject:
   - component: {fileID: 9106909472126483110}
   - component: {fileID: 3889139695694009850}
   - component: {fileID: 8382507372798728749}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MCirkelG_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1609,7 +1634,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1479163050603938031}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hamer_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1641,7 +1666,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1701742596588432567}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperplaat2_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1675,7 +1700,7 @@ GameObject:
   - component: {fileID: 1078884222649091109}
   - component: {fileID: 6351966741619843005}
   - component: {fileID: 2473301389378646529}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trekker_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1759,7 +1784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8146283948757501493}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: onderkant2_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1791,7 +1816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7454338792530228897}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HamerBol_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1823,7 +1848,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4118231937788979009}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: onderkant_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1857,7 +1882,7 @@ GameObject:
   - component: {fileID: 3824789924705450374}
   - component: {fileID: 5417025441605645541}
   - component: {fileID: 6069580773349374726}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: krul_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1943,7 +1968,7 @@ GameObject:
   - component: {fileID: 6516577351878827041}
   - component: {fileID: 4502479812260038255}
   - component: {fileID: 2066495446333230024}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: vijzen_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2029,7 +2054,7 @@ GameObject:
   - component: {fileID: 6805098287547345782}
   - component: {fileID: 1760300939818156878}
   - component: {fileID: 939298820148166336}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Vijshoofd_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2115,7 +2140,7 @@ GameObject:
   - component: {fileID: 7779893762872054212}
   - component: {fileID: 3565192212764426863}
   - component: {fileID: 8327432794601167238}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: onderkant2_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2201,7 +2226,7 @@ GameObject:
   - component: {fileID: 2134973398819933631}
   - component: {fileID: 5134526701399598369}
   - component: {fileID: 2594995910346623426}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE4_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2285,7 +2310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6226632606125089930}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: lichaam_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2319,7 +2344,7 @@ GameObject:
   - component: {fileID: 8277028375452398039}
   - component: {fileID: 4050329164175828794}
   - component: {fileID: 6021648895608592360}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE3_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2405,7 +2430,7 @@ GameObject:
   - component: {fileID: 2602745378811511062}
   - component: {fileID: 1124844985120935381}
   - component: {fileID: 3978632866509297474}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MCirkelK_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2489,7 +2514,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5596270752843173356}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trekker_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2521,7 +2546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 722542711196305574}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bullet Spawn 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2537,7 +2562,7 @@ Transform:
   m_GameObject: {fileID: 6538162748307604053}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 4.47, y: 263.5, z: -18.7}
+  m_LocalPosition: {x: 4.47, y: 300, z: -18.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2552,7 +2577,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8040246032568519771}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: kubus_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2586,7 +2611,7 @@ GameObject:
   - component: {fileID: 1647105297008599890}
   - component: {fileID: 8706894142631554822}
   - component: {fileID: 4604675404206437759}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperplaat_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2670,7 +2695,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3246782405703515231}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE3_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2702,7 +2727,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7404319276807984676}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Object_52
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2734,7 +2759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1336030621784675370}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Vijshoofd_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2768,7 +2793,7 @@ GameObject:
   - component: {fileID: 2702415967808700445}
   - component: {fileID: 3511419183572747826}
   - component: {fileID: 338538638435686330}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE1_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2852,7 +2877,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4399823686074415894}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Object_39
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2884,7 +2909,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4397452087903073647}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bullet Spawn 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2900,7 +2925,7 @@ Transform:
   m_GameObject: {fileID: 7846636405391523509}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 3.4, y: 263.5, z: 4.4}
+  m_LocalPosition: {x: 3.4, y: 300, z: 4.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2915,7 +2940,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2739589532878516048}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: vijzen_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2947,7 +2972,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4271141075770300951}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE4_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2979,7 +3004,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 50296352440914381}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MCirkelK_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3013,7 +3038,7 @@ GameObject:
   - component: {fileID: 3168239623402343862}
   - component: {fileID: 6029142697882882987}
   - component: {fileID: 1322022589235847178}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: onderkant_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3099,7 +3124,7 @@ GameObject:
   - component: {fileID: 3721775511123744624}
   - component: {fileID: 7115106122287943073}
   - component: {fileID: 2175291123549607841}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HamerBol_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3183,7 +3208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6022299195136384565}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: handvatscherm_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3215,7 +3240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 981358618200880056}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperE5_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3249,7 +3274,7 @@ GameObject:
   - component: {fileID: 6903744809270779831}
   - component: {fileID: 2662736574802489334}
   - component: {fileID: 3519730010690503616}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: koperplaat2_low__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

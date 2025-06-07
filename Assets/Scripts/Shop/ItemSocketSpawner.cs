@@ -6,8 +6,9 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class ItemSocketSpawner : MonoBehaviour
 {   
     // References
-    public ItemInfo itemInfo;
+    public ItemData itemData;
     public Transform AttackPoint;
+    
 
     // Interactors(XR)
     private XRSocketInteractor socketInteractor;
@@ -22,18 +23,20 @@ public class ItemSocketSpawner : MonoBehaviour
     {
         socketInteractor = GetComponent<XRSocketInteractor>();
 
-        if (itemInfo != null && itemInfo.ItemPrefab != null)
+        if (itemData != null && itemData.Model != null)
         {
-            GameObject itemInstance = Instantiate(itemInfo.ItemPrefab , AttackPoint.position , Quaternion.identity);
+            GameObject itemInstance = Instantiate(itemData.Model , AttackPoint.position , Quaternion.identity);
             socketInteractor.StartManualInteraction(itemInstance.GetComponent<IXRSelectInteractable>()); // Manually attaches the weapon when it spawns in the socket at the start of the game
-            ItemDesc.text = itemInfo.ItemName;
-            ItemCost.text = itemInfo.ItemCost.ToString();
+            ItemDesc.text = itemData.Name;
+            ItemCost.text = itemData.ItemCost.ToString();
 
-            itemXRGrabInteractor = itemInstance.GetComponent<XRGrabInteractable>();
-            //itemXRGrabInteractor.enabled = true;
+            PurchasableItem purchasable = itemInstance.GetComponent<PurchasableItem>();
+            if(purchasable != null)
+            {
+                purchasable.itemData = itemData;
+                purchasable.isShopItem = true; // this bool makes it a shop item when instantiate (only the instance of the object)
 
-            itemCollider = itemInstance.GetComponent<BoxCollider>();
-            //itemCollider.enabled = false;
+            }
 
 
 

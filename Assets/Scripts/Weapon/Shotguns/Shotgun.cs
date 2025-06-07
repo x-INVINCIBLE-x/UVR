@@ -13,7 +13,9 @@ public class Shotgun : ScatterWeapons
         base.Awake();
         
     }
-    
+
+   
+
 
     protected override void ScatterShot()
     {
@@ -29,6 +31,7 @@ public class Shotgun : ScatterWeapons
 
 
             Rigidbody rb = projectileInstance.GetComponent<Rigidbody>(); // Takes rigidbody of current instanced bullet
+            
 
             // Write logic for scattering bullets
 
@@ -41,6 +44,7 @@ public class Shotgun : ScatterWeapons
                 ) * spawnPoint.forward;
 
                 rb.linearVelocity = spreadDirection * shootingForce;
+                rb.transform.rotation = Quaternion.LookRotation(rb.linearVelocity.normalized);// makes the bullet go straight 
             }
 
             //Error because rb.linearVelocity = spreadDirection * shootingForce; is not applied so no spread
