@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 5
+  version: 9
 --- !u!114 &-182519959984274497
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -37,8 +37,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_CandleFlame02
-  m_Shader: {fileID: -6465566751694194690, guid: 78c30b15708637148a5317ecae0ead81,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 78c30b15708637148a5317ecae0ead81, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
@@ -46,7 +47,7 @@ Material:
   - _DOUBLESIDED_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
   stringTagMap:
     MotionVector: User
@@ -57,6 +58,7 @@ Material:
   - TransparentBackface
   - MOTIONVECTORS
   - DepthOnly
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -64,11 +66,23 @@ Material:
         m_Texture: {fileID: 2800000, guid: ebb590689acff054baeaa2d924f76810, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_80447c46ef364ae9aa2ed0ceb8ca3a0c_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ebb590689acff054baeaa2d924f76810, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_8d4cc83aee9243bf8d5079eda2bb930f_Texture_1:
         m_Texture: {fileID: 2800000, guid: ebb590689acff054baeaa2d924f76810, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_8d4cc83aee9243bf8d5079eda2bb930f_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ebb590689acff054baeaa2d924f76810, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_9ef3c0b348284cf6bca7a68cdfa1bcad_Texture_1:
+        m_Texture: {fileID: 2800000, guid: ecdaef92758cdad479cc0256f8ab741e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_9ef3c0b348284cf6bca7a68cdfa1bcad_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: ecdaef92758cdad479cc0256f8ab741e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -91,7 +105,7 @@ Material:
     - _AlphaCutoffEnable: 1
     - _AlphaDstBlend: 1
     - _AlphaSrcBlend: 1
-    - _AlphaToMask: 1
+    - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 1
     - _BUILTIN_AlphaClip: 1
     - _BUILTIN_Blend: 2
@@ -106,6 +120,7 @@ Material:
     - _BUILTIN_ZWriteControl: 0
     - _Blend: 0
     - _BlendMode: 1
+    - _BlendModePreserveSpecular: 0
     - _CastShadows: 1
     - _ConservativeDepthOffsetEnable: 0
     - _Cull: 2
@@ -161,6 +176,7 @@ Material:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &6537646919243329682
 MonoBehaviour:
   m_ObjectHideFlags: 11
