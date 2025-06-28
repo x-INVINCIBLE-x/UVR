@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public enum Stats
@@ -24,7 +26,7 @@ public enum AilmentType
     Electric,
 }
 
-public class CharacterStats : MonoBehaviour
+public class CharacterStats : MonoBehaviour, IDamagable
 {
     [Header("Common Abilities")]
     public Stat health;
@@ -62,6 +64,10 @@ public class CharacterStats : MonoBehaviour
     protected Dictionary<AilmentType, System.Action> ailmentActions;
     public Dictionary<Stats, Stat> statDictionary;
 
+    private bool isDead = false;
+
+    public event System.Action OnDamageTaken;
+    public event System.Action OnPlayerDeath;
     public event System.Action UpdateHUD;
 
     [System.Serializable]
@@ -150,6 +156,7 @@ public class CharacterStats : MonoBehaviour
     {
         TakePhysicalDamage(attackData);
         TakeAilmentDamage(attackData);
+        OnDamageTaken?.Invoke();
     }
 
     private void TakePhysicalDamage(AttackData attackData)
@@ -263,10 +270,19 @@ public class CharacterStats : MonoBehaviour
 
     public void ReduceHealthBy(float damage)
     {
-        if (isInvincible)
+        if (isInvincible || isDead)
             return;
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
+
+        if (currentHealth == 0f)
+            KillPlayer();
+    }
+
+    private void KillPlayer()
+    {
+        isDead = true;
+        OnPlayerDeath?.Invoke();
     }
 
     public void SetInvincibleFor(float time) => StartCoroutine(MakeInvincibleFor(time));

@@ -19,5 +19,4 @@ public class LevelManager : MonoBehaviour
         playerOrigin.MoveCameraToWorldLocation(spawnTransform.position);
         playerOrigin.MatchOriginUpCameraForward(spawnTransform.up, spawnTransform.forward);
     }
-
 }
