@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: moving lava
-  m_Shader: {fileID: -6465566751694194690, guid: b9c666bcad59e2540b3f458cb3f4fea4, type: 3}
+  m_Name: Transparent Pillar
+  m_Shader: {fileID: -6465566751694194690, guid: 02711fb132331894591c3af494bffda3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Emission_Map:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 64b130e0b5664b04196be951d961c362, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
@@ -33,7 +33,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture:
-        m_Texture: {fileID: 2800000, guid: 04979d86890657041aad253543bfc482, type: 3}
+        m_Texture: {fileID: 2800000, guid: 64b130e0b5664b04196be951d961c362, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -50,15 +50,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 1
+    - _Metallic: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Rotation: 120
+    - _Rotation: 62
     m_Colors:
-    - _Color: {r: 1.9817895, g: 0.114134476, b: 0, a: 0}
-    - _Direction: {r: 0.2, g: 0.1, b: 0, a: 0}
+    - _Color: {r: 7.6981134, g: 3.7916563, b: 0, a: 0}
+    - _Direction: {r: 0.1, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &7876621401196386459
+--- !u!114 &489478975100924568
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
