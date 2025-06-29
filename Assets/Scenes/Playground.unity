@@ -75904,6 +75904,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Renderer: {fileID: 403778341}
   m_MaterialIndex: 0
+--- !u!1 &1914024302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1914024307}
+  - component: {fileID: 1914024306}
+  - component: {fileID: 1914024304}
+  m_Layer: 0
+  m_Name: Challenge Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1914024304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914024302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c692bf708953134b85125e13efd2a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <challengeName>k__BackingField: Survival
+  survivalDuration: 10
+  timer: 0
+--- !u!114 &1914024306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914024302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a30b0f33ab0574eb98134e06c3207f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  challenges: []
+  possibleChallenges: 
+--- !u!4 &1914024307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914024302}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 517.92413, y: -9.263078, z: 109.322975}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1915030282
 GameObject:
   m_ObjectHideFlags: 0
@@ -85756,3 +85818,4 @@ SceneRoots:
   - {fileID: 1224097718}
   - {fileID: 641889424}
   - {fileID: 909172252}
+  - {fileID: 1914024307}
