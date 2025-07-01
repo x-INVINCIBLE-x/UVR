@@ -43,7 +43,7 @@ public class PhysicsProjectile : Projectile
     private void OnTriggerEnter(Collider other)
     {
 
-        ObjectPool.instance.ReturnObject(gameObject, 0.5f);
+        ObjectPool.instance.ReturnObject(gameObject, 1f);
 
         
         if (VFXparticleSystem != null)

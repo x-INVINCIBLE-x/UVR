@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 2986033487822704266}
   - component: {fileID: 6777250345910558956}
   - component: {fileID: 1194772659682431073}
-  m_Layer: 0
+  - component: {fileID: -8267765627903420045}
+  m_Layer: 16
   m_Name: Shotgun Projectile Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,8 +32,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1093453824807926000}
   - {fileID: 1093453824938577488}
@@ -4939,7 +4940,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -4956,7 +4957,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -5001,7 +5002,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -5055,7 +5056,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 3
   impactVFX: {fileID: 1567463055289550763, guid: df10e66ae39671549bf8604e497bb340, type: 3}
-  impactSFX: {fileID: 8300000, guid: e07387a1e1dd53a428e32bd3774967b1, type: 3}
+  impactSFX: {fileID: 8300000, guid: 9f3c0a14a231d7a4498372a3112b1332, type: 3}
+--- !u!65 &-8267765627903420045
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093453824360451666}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1093453824807926001
 GameObject:
   m_ObjectHideFlags: 0
@@ -5067,7 +5089,7 @@ GameObject:
   - component: {fileID: 1093453824807926000}
   - component: {fileID: 1093453824807926006}
   - component: {fileID: 1093453824807926007}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9988,7 +10010,7 @@ GameObject:
   - component: {fileID: 1093453824938577488}
   - component: {fileID: 1093453824938577494}
   - component: {fileID: 1093453824938577495}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: trail_energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

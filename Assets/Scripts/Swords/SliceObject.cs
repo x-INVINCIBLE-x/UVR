@@ -13,8 +13,6 @@ public class SliceObject : MonoBehaviour
         Multi
     }
 
-
-
     public Transform startSlicePoint;
     public Transform endSlicePoint;
     public LayerMask sliceableLayer;
@@ -85,6 +83,13 @@ public class SliceObject : MonoBehaviour
 
                 Destroy(target);
             }
+        }
+
+        // Implement Slice Event
+
+        if(target.TryGetComponent(out ISliceEvent sliceEvent))
+        {
+            sliceEvent.HandleSlice();
         }
         
     }
