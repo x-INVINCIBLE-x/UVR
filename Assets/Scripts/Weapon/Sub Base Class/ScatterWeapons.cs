@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(Rigidbody))]
 public class ScatterWeapons : Weapon
 {
     [Header("Shotgun Settings")]
@@ -10,6 +12,13 @@ public class ScatterWeapons : Weapon
     [SerializeField] protected float damage;
     [SerializeField] protected float spreadAngle = 5f; // Spread angle in degrees
 
+    protected AudioSource WeaponAudioSource;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        WeaponAudioSource = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {

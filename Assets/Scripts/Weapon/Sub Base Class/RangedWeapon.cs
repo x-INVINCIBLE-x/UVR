@@ -1,14 +1,24 @@
+using Unity.VisualScripting;
 using UnityEngine;
+[RequireComponent(typeof(AudioSource))]
 
 public class RangedWeapon : Weapon
 {   
     [SerializeField] protected float shootingForce;
-    [SerializeField] protected Transform bulletSpawn;
+    
     [SerializeField] protected float recoilForce;
     [SerializeField] protected float damage;
+    [SerializeField] protected GameObject muzzleVFX;
+    [SerializeField] protected AudioClip shootSFX;
+    protected AudioSource WeaponAudioSource;
 
+    protected override void Awake()
+    {   
 
+        base.Awake();
 
+        WeaponAudioSource = GetComponent<AudioSource>();
+    }
     // Pistol , rifle and projectile shooting related weapons
     protected virtual void Shoot()
     {

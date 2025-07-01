@@ -2233,8 +2233,85 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6689974547469112154, guid: e56409df6d9a9824793218a535f2dab0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1342541184054630752}
   m_SourcePrefab: {fileID: 100100000, guid: e56409df6d9a9824793218a535f2dab0, type: 3}
+--- !u!1 &1342541184054630751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6689974547469112154, guid: e56409df6d9a9824793218a535f2dab0, type: 3}
+  m_PrefabInstance: {fileID: 1342541184054630750}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1342541184054630752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342541184054630751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e268f02b12da422498f77b07c61ab5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health:
+    BaseValue: 100
+    statModifiers: []
+  stamina:
+    BaseValue: 0
+    statModifiers: []
+  staminaRegain:
+    BaseValue: 0
+    statModifiers: []
+  physicalAtk:
+    BaseValue: 0
+    statModifiers: []
+  fireAtk:
+    BaseValue: 0
+    statModifiers: []
+  electricAtk:
+    BaseValue: 0
+    statModifiers: []
+  physicalDef:
+    BaseValue: 0
+    statModifiers: []
+  fireDef:
+    BaseValue: 0
+    statModifiers: []
+  electricDef:
+    BaseValue: 0
+    statModifiers: []
+  fireRes:
+    BaseValue: 0
+    statModifiers: []
+  electricRes:
+    BaseValue: 0
+    statModifiers: []
+  fireStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  electricStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  ailmentLimitOffset: 10
+  currentHealth: 0
+  currentStamina: 0
+  <isInvincible>k__BackingField: 0
 --- !u!1001 &4321618625485646693
 PrefabInstance:
   m_ObjectHideFlags: 0

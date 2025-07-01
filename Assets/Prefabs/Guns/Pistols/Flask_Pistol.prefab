@@ -939,7 +939,7 @@ GameObject:
   - component: {fileID: 8166253949140569854}
   - component: {fileID: 6104269756458222074}
   - component: {fileID: 1007033841643179042}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Flask_Pistol
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -1148,10 +1148,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootingForce: 5
-  bulletSpawn: {fileID: 3247670750951175227}
   recoilForce: 3
   damage: 3
-  projectilePrefab: {fileID: -3811945984315983383, guid: 510faa317c72e964581e028a27f8a1cd, type: 3}
+  muzzleVFX: {fileID: 5964926015556990157, guid: ffc81ee0a498559449888baf8451558f, type: 3}
+  shootSFX: {fileID: 0}
+  projectilePrefab: {fileID: -3511821657591002020, guid: 55c00f07ea863644b8d28174ac6b58b5, type: 3}
+  bulletSpawn: {fileID: 3247670750951175227}
   maxCharge: 10
   maxbulletSize: 10
   maxShootingForce: 30
@@ -1305,7 +1307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03588f75fe9d75e41b612292741f40ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInfo: {fileID: 11400000, guid: a9599de7a60500f4e86fbdf4cd2cd783, type: 2}
+  itemData: {fileID: 0}
   isShopItem: 0
 --- !u!1 &4862255119533883280
 GameObject:

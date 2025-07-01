@@ -13,11 +13,17 @@ public class PhysicsProjectile : Projectile
     private Rigidbody rigidBody;
     private AudioSource audioSource;
     public AudioClip impactSFX;
+    private ParticleSystem VFXparticleSystem;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        
+    }
+    private void Start()
+    {
+        VFXparticleSystem = GetComponent<ParticleSystem>();
     }
 
     public override void Init()
@@ -34,19 +40,28 @@ public class PhysicsProjectile : Projectile
         transform.rotation = Quaternion.LookRotation(rigidBody.linearVelocity.normalized);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        ObjectPool.instance.ReturnObject(gameObject,0.2f);
-        if (currentImpactVFX == null && impactVFX != null)
+
+        ObjectPool.instance.ReturnObject(gameObject, 0.5f);
+
+        
+        if (VFXparticleSystem != null)
+        {
+            VFXparticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+
+        if (impactVFX != null)
         {
             currentImpactVFX = ObjectPool.instance.GetObject(impactVFX.gameObject, transform);
-            if (impactSFX != null)
-            {
-                audioSource.PlayOneShot(impactSFX);
-            }
-            
+            ObjectPool.instance.ReturnObject(currentImpactVFX, 0.5f);
         }
-        
-        
+
+        if (impactSFX != null)
+        {
+            audioSource.PlayOneShot(impactSFX);
+        }
+
     }
+    
 }

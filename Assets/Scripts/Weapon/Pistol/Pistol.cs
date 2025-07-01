@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Pistol : RangedWeapon
 {
     [SerializeField] private Projectile projectilePrefab;
+    [SerializeField] private Transform bulletSpawn; 
     private float chargeTime = 0f;
     private bool isCharging = false;
     public float maxCharge = 3f;
@@ -16,7 +17,6 @@ public class Pistol : RangedWeapon
     protected override void Awake()
     {
         base.Awake();
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -82,6 +82,10 @@ public class Pistol : RangedWeapon
         float appliedforce = Mathf.Lerp(shootingForce , maxShootingForce , chargeRatio);
         projectileInstance.Launch(bulletSpawn, appliedforce);
 
+        // VFX Implement
+        GameObject newMuzzleVFX = ObjectPool.instance.GetObject(muzzleVFX, bulletSpawn);
+        ObjectPool.instance.ReturnObject(newMuzzleVFX,1f);
+
         chargeTime = 0f; // Reset after shooting
     }
 
@@ -99,19 +103,19 @@ public class Pistol : RangedWeapon
     [SerializeField] private float chargedPitchMin = 0.7f;
     [SerializeField] private float chargedPitchMax = 1f;
 
-    private AudioSource audioSource;
+    
 
     private void AudioHandlerPistol()
     {
         if(isCharging == false)
         {
-            if(audioSource.clip != _shootingSoundPistol || !audioSource.isPlaying)
+            if(WeaponAudioSource.clip != _shootingSoundPistol || !WeaponAudioSource.isPlaying)
             {   
-                audioSource.Stop(); // to stop ongoing sfx sounds
-                audioSource.clip = _shootingSoundPistol;
-                audioSource.loop = false;
-                audioSource.pitch = Random.Range(minPitch, maxPitch);
-                audioSource.Play();
+                WeaponAudioSource.Stop(); // to stop ongoing sfx sounds
+                WeaponAudioSource.clip = _shootingSoundPistol;
+                WeaponAudioSource.loop = false;
+                WeaponAudioSource.pitch = Random.Range(minPitch, maxPitch);
+                WeaponAudioSource.Play();
             }
             
         }
@@ -119,15 +123,15 @@ public class Pistol : RangedWeapon
         {
             if (chargeTime <= 0.01f)
             {
-                audioSource.Stop();
+                WeaponAudioSource.Stop();
             }
 
-            else if (audioSource.clip != chargingSoundPistol || !audioSource.isPlaying)
+            else if (WeaponAudioSource.clip != chargingSoundPistol || !WeaponAudioSource.isPlaying)
             {
-                audioSource.clip = chargingSoundPistol;
-                audioSource.pitch = Mathf.Lerp(chargedPitchMin, chargedPitchMax, chargeTime);
-                audioSource.loop = true;
-                audioSource.Play();  
+                WeaponAudioSource.clip = chargingSoundPistol;
+                WeaponAudioSource.pitch = Mathf.Lerp(chargedPitchMin, chargedPitchMax, chargeTime);
+                WeaponAudioSource.loop = true;
+                WeaponAudioSource.Play();  
             }
             
             

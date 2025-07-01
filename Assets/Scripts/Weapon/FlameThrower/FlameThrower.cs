@@ -9,7 +9,9 @@ public class FlameThrower : SprayingWeapons
     //[SerializeField]private bool isHolding = false;
     [SerializeField] private GameObject sprayVFX;
     [SerializeField] private CapsuleCollider attackRadius;
+    [SerializeField] private AudioClip spraySFX;
 
+   
     protected override void Awake()
     {
         base.Awake();
@@ -21,6 +23,9 @@ public class FlameThrower : SprayingWeapons
 
         if (attackRadius != null)
             attackRadius.enabled = false;
+
+        WeaponAudioSource.loop = true;
+        WeaponAudioSource.clip = spraySFX;
     }
 
     protected override void ActivateWeapon(ActivateEventArgs args)
@@ -40,6 +45,8 @@ public class FlameThrower : SprayingWeapons
     protected override void StartSpraying()
     {
         base.StartSpraying();
+        
+        WeaponAudioSource.Play();
 
         if(sprayVFX != null)
         {
@@ -56,7 +63,9 @@ public class FlameThrower : SprayingWeapons
     {
         base.StopSpraying();
 
-        if(sprayVFX != null)
+        WeaponAudioSource.Stop();
+
+        if (sprayVFX != null)
         {
             sprayVFX.gameObject.SetActive(false);
         }

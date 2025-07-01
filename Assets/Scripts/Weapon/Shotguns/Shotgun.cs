@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Shotgun : ScatterWeapons
 {
     [SerializeField] private Projectile projectilePrefab;
+    [SerializeField] private AudioClip shootSFX;
 
 
     protected override void Awake()
@@ -13,14 +14,13 @@ public class Shotgun : ScatterWeapons
         base.Awake();
         
     }
-
-   
-
-
     protected override void ScatterShot()
     {
         base.ScatterShot();
-        
+
+        // SFX Implement
+        WeaponAudioSource.PlayOneShot(shootSFX);
+
         foreach (Transform spawnPoint in bulletSpawns)
         {
             //PhysicsProjectile projectileInstance = Instantiate(projectilePrefab, spawnPoint.position, spawnPoint.rotation) as PhysicsProjectile;

@@ -4,9 +4,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Rifle : RangedWeapon
 {
     [SerializeField] private Projectile projectilePrefab;
-    [SerializeField] private GameObject muzzleFlash;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private int clickCount;
+
 
 
     protected override void Awake()
@@ -43,15 +43,31 @@ public class Rifle : RangedWeapon
 
 
         // Instantiate the projectile
-        muzzleFlash = Instantiate(muzzleFlash, spawnPoints[clickCount].position, spawnPoints[clickCount].rotation);
-        PhysicsProjectile projectileInstance = Instantiate(projectilePrefab, spawnPoints[clickCount].position, spawnPoints[clickCount].rotation) as PhysicsProjectile; //.GetComponent<PhysicsProjectile>();
+        //PhysicsProjectile projectileInstance = Instantiate(projectilePrefab, spawnPoints[clickCount].position, spawnPoints[clickCount].rotation) as PhysicsProjectile; //.GetComponent<PhysicsProjectile>();
+        //projectileInstance.Init();
+        
+
+
+        GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, spawnPoints[clickCount]);
+        PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
         projectileInstance.Init();
         projectileInstance.Launch(spawnPoints[clickCount], shootingForce);
 
         clickCount = (clickCount + 1) % spawnPoints.Length; // cyclic buffer , if we put mode(%) in equation it cannot exceed the value which is modding it.
 
+        // SFX Implement
+        WeaponAudioSource.PlayOneShot(shootSFX);
+
+        // VFX Implement
+        GameObject newMuzzleVFX = ObjectPool.instance.GetObject(muzzleVFX, spawnPoints[clickCount]);
+        newMuzzleVFX.transform.rotation = spawnPoints[clickCount].rotation;
+        ObjectPool.instance.ReturnObject(newMuzzleVFX, 1f);
 
     }
+
+    // Implement cool down here
+
+
 
 
 }
