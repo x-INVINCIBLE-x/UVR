@@ -133,7 +133,7 @@ public class Enemy_Drone : MonoBehaviour
     {
         Debug.Log("Enemy attacking!");
 
-        // Direction to the player
+        // Direction to the Core
         Vector3 directionToPlayer = (Player.transform.position - transform.position).normalized;
 
         // Calculate rotation using LookRotation

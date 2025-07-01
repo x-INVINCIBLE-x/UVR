@@ -1,3 +1,4 @@
+using Unity.XR.CoreUtils;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -5,6 +6,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
     [field: SerializeField] public Player player {  get; private set; }
     [field: SerializeField] public Rigidbody rb { get; private set; }
+    [field: SerializeField] public XROrigin playerOrigin { get; private set; }
 
     public event System.Action OnPlayerDeath
     {

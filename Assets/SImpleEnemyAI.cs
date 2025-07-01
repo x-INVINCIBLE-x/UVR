@@ -57,11 +57,11 @@ public class SimpleEnemyAI : MonoBehaviour
 
     public bool walkPointSet;// bool to check that the walkpoint vector is set or not
 
-    public bool hasSeenPlayer; // Bool to check if enemy has seen player
+    public bool hasSeenPlayer; // Bool to check if enemy has seen Core
 
-    public bool hasAttacked; // Bool to check the player has attacked the player 
+    public bool hasAttacked; // Bool to check the Core has attacked the Core 
 
-    public bool playerInSightRange, playerInAttackRange;// Bool to check if the player is in sight or attack range as specified 
+    public bool playerInSightRange, playerInAttackRange;// Bool to check if the Core is in sight or attack range as specified 
 
     public bool laserActive;
     
@@ -70,7 +70,7 @@ public class SimpleEnemyAI : MonoBehaviour
     [Header("Values")]
     [Space]
     public Vector3 walkPoint; // Vector to store walking area transform
-    public Vector3 LaserOffset; // Offset for the laser when performing attack on player
+    public Vector3 LaserOffset; // Offset for the laser when performing attack on Core
     public float walkpointRange; // Defines the range of the walkable area for enemy (Random)
     public float attackCooldownTime; // Time between each attack
     public float sightRange, attackRange;// Range of  attack and Range of sight
@@ -95,7 +95,7 @@ public class SimpleEnemyAI : MonoBehaviour
         Player = GameObject.Find("Cube").transform;
         //playerRb = GameObject.Find("Cube").GetComponent<Rigidbody>();
         laserRenderer = LaserVFX.GetComponent<LineRenderer>();
-        //Player = PlayerManager.instance.player.transform;
+        //Player = PlayerManager.instance.Core.transform;
         agent = GetComponent<NavMeshAgent>();
         VFXManager = GetComponent<EnemyVFXManager>();
     
@@ -260,7 +260,7 @@ public class SimpleEnemyAI : MonoBehaviour
         
     }
 
-    // Explode , Slows player , sniper type
+    // Explode , Slows Core , sniper type
     /// <Code_not_in_use>
 
     /// <Code_not_in_use>

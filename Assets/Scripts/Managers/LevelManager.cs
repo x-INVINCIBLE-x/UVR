@@ -16,6 +16,9 @@ public class LevelManager : MonoBehaviour
 
     public void ResetPlayerPosition()
     {
+        if (playerOrigin == null)
+            playerOrigin = PlayerManager.instance.playerOrigin;
+
         playerOrigin.MoveCameraToWorldLocation(spawnTransform.position);
         playerOrigin.MatchOriginUpCameraForward(spawnTransform.up, spawnTransform.forward);
     }

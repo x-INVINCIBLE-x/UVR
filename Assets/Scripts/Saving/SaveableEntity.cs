@@ -9,7 +9,7 @@ using UnityEngine;
 /// This class gives the GameObject a unique ID in the scene file. The ID is
 /// used for saving and restoring the state related to this GameObject. This
 /// ID can be manually override to link GameObjects between scenes (such as
-/// recurring characters, the player or a score board). Take care not to set
+/// recurring characters, the Core or a score board). Take care not to set
 /// this in a prefab unless you want to link all instances between scenes.
 /// </summary>
 [ExecuteAlways]

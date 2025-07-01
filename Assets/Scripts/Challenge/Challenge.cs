@@ -1,11 +1,31 @@
+using System;
 using UnityEngine;
+
 
 public abstract class Challenge: MonoBehaviour
 {
-    [field: SerializeField] public string challengeName { get; private set; }
+    protected enum ChallengeStatus
+    {
+        Success,
+        InProgress,
+        Failed,
+    }
+    [field: SerializeField] public string ChallengeName { get; private set; }
+    protected ChallengeStatus status;
+
+    public event System.Action OnChallengeCompleted;
+    public event System.Action OnChallengeFailed;
 
     public abstract void InitializeChallenge();
     public abstract void StartChallenge();
-    public abstract void ChallengeCompleted();
-    public abstract void ChallengeFailed();
+
+    public virtual void ChallengeCompleted()
+    {
+        OnChallengeCompleted?.Invoke();
+    }
+
+    public virtual void ChallengeFailed()
+    {
+        OnChallengeFailed?.Invoke();
+    }
 }

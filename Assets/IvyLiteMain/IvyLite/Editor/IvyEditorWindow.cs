@@ -66,7 +66,7 @@ namespace IvyLite
         private bool checkBaseMesh;//TRUE if Host Mesh has been found.
        
 
-        // We need these bool Variables to start the placement of the Seed and QuestTarget position using RayCast Picking on the Scene View
+        // We need these bool Variables to start the placement of the Seed and ObjectiveType position using RayCast Picking on the Scene View
         private bool placeSeeds;
         private bool placeFirstPoint;
         private bool placeSecondPoint;
@@ -84,7 +84,7 @@ namespace IvyLite
         MeshIO meshIO;        
        
         ///// UNCOMMENT TO ALLOW SETTING THE SEED AND TARGET WITH EMPTY GAMEOBJECTS
-        // Transform references so you can attacht a game object to set the Seed and QuestTarget positions        
+        // Transform references so you can attacht a game object to set the Seed and ObjectiveType positions        
         private Transform seedTransform;        
         private Transform targetTransform;
 

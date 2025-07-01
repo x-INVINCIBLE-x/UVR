@@ -8,14 +8,13 @@ public class SurvivalChallenge : Challenge
     [SerializeField] private float timer;
 
     private Coroutine currentRoutine;
-    private float tickTime = 1f;
-    private bool isChallengeCompleted;
+    private const float TickTime = 1f;
 
     public override void InitializeChallenge()
     {
         PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
 
-        isChallengeCompleted = false;
+        status = ChallengeStatus.InProgress;
         timer = survivalDuration;
     }
 
@@ -27,16 +26,23 @@ public class SurvivalChallenge : Challenge
 
     public override void ChallengeCompleted()
     {
-        Debug.Log(challengeName + "Completed");
+        if (status == ChallengeStatus.Failed)
+            return;
+
+        base.ChallengeCompleted();
+
+        Debug.Log(ChallengeName + " Completed");
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
     }
 
     public override void ChallengeFailed()
     {
-        if (isChallengeCompleted) return;
+        if (status == ChallengeStatus.Success) return;
         StopCoroutine(currentRoutine);
 
-        Debug.Log(challengeName + "Failed");
+        base.ChallengeFailed();
+
+        Debug.Log(ChallengeName + " Failed");
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
     }
 
@@ -44,15 +50,15 @@ public class SurvivalChallenge : Challenge
     {
         while (timer > 0f)
         {
-            yield return new WaitForSeconds(tickTime);
+            yield return new WaitForSeconds(TickTime);
 
-            timer -= tickTime;
+            timer -= TickTime;
         }
 
         if (timer <= 0f)
         {
             ChallengeCompleted();
-            isChallengeCompleted = true;
+            status = ChallengeStatus.Success;
         }
 
         currentRoutine = null;

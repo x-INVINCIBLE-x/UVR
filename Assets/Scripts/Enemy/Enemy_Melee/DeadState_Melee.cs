@@ -16,6 +16,8 @@ public class DeadState_Melee : EnemyState
     {
         base.Enter();
 
+        EnemyEvents.OnElimination?.Invoke(ObjectiveType.MeleeEnemy);
+
         interactionDisabled = false;
 
         enemy.anim.enabled = false;

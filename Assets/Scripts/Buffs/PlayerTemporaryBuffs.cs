@@ -14,7 +14,7 @@
 
 //    private void Start()
 //    {
-//        stats = PlayerManager.instance.player.stats;
+//        stats = PlayerManager.instance.Core.stats;
 //    }
 
 //    private void Update()

@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public enum Stats
@@ -57,16 +55,16 @@ public class CharacterStats : MonoBehaviour, IDamagable
     public float currentStamina;
 
     [field: SerializeField] public bool isInvincible { get; private set; } = false;
-    public bool isBlocking { get; private set; } = false;
-    public bool isPerfectBlock { get; private set; } = false;
-    public bool isConsumingStamina { get; private set; } = false;
+    public bool IsBlocking { get; private set; } = false;
+    public bool IsPerfectBlock { get; private set; } = false;
+    public bool IsConsumingStamina { get; private set; } = false;
 
     protected Dictionary<AilmentType, System.Action> ailmentActions;
     public Dictionary<Stats, Stat> statDictionary;
 
     private bool isDead = false;
 
-    public event System.Action OnDamageTaken;
+    public event System.Action<float, float> OnDamageTaken;
     public event System.Action OnPlayerDeath;
     public event System.Action UpdateHUD;
 
@@ -145,7 +143,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        if (!isConsumingStamina && currentStamina < stamina.Value)
+        if (!IsConsumingStamina && currentStamina < stamina.Value)
         {
             currentStamina += staminaRegain.Value * Time.deltaTime;
             UpdateHUD?.Invoke();
@@ -156,7 +154,6 @@ public class CharacterStats : MonoBehaviour, IDamagable
     {
         TakePhysicalDamage(attackData);
         TakeAilmentDamage(attackData);
-        OnDamageTaken?.Invoke();
     }
 
     private void TakePhysicalDamage(AttackData attackData)
@@ -275,6 +272,8 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
 
+        OnDamageTaken?.Invoke(currentHealth, health.Value);
+
         if (currentHealth == 0f)
             KillPlayer();
     }
@@ -298,11 +297,11 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     public void SetInvincible(bool invincible) => isInvincible = invincible;
 
-    public void SetBlocking(bool blocking) => isBlocking = blocking;
+    public void SetBlocking(bool blocking) => IsBlocking = blocking;
 
-    public void SetPerfectBlock(bool perfectBlock) => isPerfectBlock = perfectBlock;
+    public void SetPerfectBlock(bool perfectBlock) => IsPerfectBlock = perfectBlock;
 
-    public void SetConsumingStamina(bool status) => isConsumingStamina = status;
+    public void SetConsumingStamina(bool status) => IsConsumingStamina = status;
 
     public bool HasEnoughStamina(float staminaAmount)
     {
@@ -316,5 +315,6 @@ public class CharacterStats : MonoBehaviour, IDamagable
         return false;
     }
 
+    public (float, float) GetHealth() => (currentHealth, health.Value);
     public float GetCurrentStamina() => currentStamina;
 }

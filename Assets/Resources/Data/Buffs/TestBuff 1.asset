@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ccda486bc4d4ba438b1b326cf0182ac, type: 3}
   m_Name: TestBuff 1
   m_EditorClassIdentifier: 
+  ActivationType: 0
+  ActivationStatus: 0
   statsToBuff:
   - stat: 0
     modType: 100
     value: 50
   - stat: 3
     modType: 100
-    value: 100
+    value: 200
   effects:
   - {fileID: 11400000, guid: 930c648a6522fdd4fbe27db1985c0cec, type: 2}
   timer: 10
+  activeDuration: 2
+  cooldownDuration: 2

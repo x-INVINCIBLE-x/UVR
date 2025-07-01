@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class TemporaryBuffs : MonoBehaviour
 {
-    public List<Buff> oneOffBufffs = new();
-    public List<Buff> timerBuffs = new();
-    public List<BuffInfo> onHitBuffs = new();
+    public List<Buff> oneOffBufffs = new(); // => Temporary Buff always working, Stats + 10
+    public List<Buff> timerBuffs = new(); // => Activates after certain period of time, if always active then calls itself
+    public List<BuffInfo> onHitBuffs = new(); 
     public List<BuffInfo> onDamageBuffs = new();
 
     public List<BuffInfo> disabledHitBuffs = new();
     public List<BuffInfo> disabledDamageBuffs = new();
 
+    [System.Serializable]
     public class BuffInfo
     {
         public Buff buff;
@@ -26,7 +27,7 @@ public class TemporaryBuffs : MonoBehaviour
     }
 
     private CharacterStats stats;
-    private HashSet<Buff> activeBuffs;
+    private HashSet<Buff> activeBuffs = new();
 
     private void Start()
     {
@@ -122,7 +123,7 @@ public class TemporaryBuffs : MonoBehaviour
         }
     }
 
-
+    // Applying buff, If a buff is active for starting of the level then starting remove routine too
     private void ActivateBuff(Buff buff)
     {
         if (buff.activeDuration > 0 && buff.ActivationType != ActivationType.Timer)

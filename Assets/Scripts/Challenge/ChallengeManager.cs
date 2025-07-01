@@ -43,10 +43,31 @@ public class ChallengeManager : MonoBehaviour
         currentChallenge = challenges[challengeIndex];
         currentChallenge.InitializeChallenge();
 
+        currentChallenge.OnChallengeCompleted += HandleChallengeSuccess;
+        currentChallenge.OnChallengeFailed += HandleChallengeFailure;
+
         possibleChallenges.Remove(challengeIndex);
 
         if (possibleChallenges.Count == 0)
             ResetPossibleChallenges();
+    }
+
+    private void HandleChallengeSuccess()
+    {
+        // Instantiate door and level upgrade
+
+        DungeonManager.Instance.HandleLevelCompletion();
+
+        currentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
+        currentChallenge.OnChallengeFailed -= HandleChallengeFailure;
+    }
+
+    private void HandleChallengeFailure()
+    {
+        // Exit Core from dungeon
+        
+        currentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
+        currentChallenge.OnChallengeFailed -= HandleChallengeFailure;
     }
 
     private void ResetPossibleChallenges()
