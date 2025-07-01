@@ -2814,6 +2814,7 @@ GameObject:
   - component: {fileID: 1878172841}
   - component: {fileID: 1878172840}
   - component: {fileID: 1878172839}
+  - component: {fileID: 1878172843}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2865,7 +2866,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 46dcb0e20452e0c4f91ef3120c8d275c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2910,6 +2911,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1878172843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878172838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f890e9361122a45b079c7f129b7b16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dissolveMaterial: {fileID: 2100000, guid: 46dcb0e20452e0c4f91ef3120c8d275c, type: 2}
+  dissolveSpeed: 1
+  dissolve: 0
 --- !u!1 &1922359086
 GameObject:
   m_ObjectHideFlags: 0
@@ -3104,7 +3120,7 @@ MonoBehaviour:
   healthSlider: {fileID: 1988383059}
   tempMaxHealth: 200
   tempCurrentHealth: 200
-  sliderSmoothness: 5
+  sliderSmoothness: 7
 --- !u!114 &1988383059 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2151246261338849929, guid: 6d2c71b9c08c8ee418986941977b76b6, type: 3}
