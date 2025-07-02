@@ -36,7 +36,7 @@ public class DungeonManager : MonoBehaviour
     private Dictionary<(int, BuffCategory), HashSet<Buff>> shownBuffs = new();
 
     public event Action<int> OnDifficultyChange;
-    public GameObject tempEnemy;
+    //public GameObject tempEnemy;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -68,15 +68,15 @@ public class DungeonManager : MonoBehaviour
         DifficultyLevel = 1;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            DifficultyLevel++;
-            Instantiate(tempEnemy, transform.position, Quaternion.identity);
-            OnDifficultyChange?.Invoke(DifficultyLevel);
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.U))
+    //    {
+    //        DifficultyLevel++;
+    //        Instantiate(tempEnemy, transform.position, Quaternion.identity);
+    //        OnDifficultyChange?.Invoke(DifficultyLevel);
+    //    }
+    //}
 
     private void Start()
     {

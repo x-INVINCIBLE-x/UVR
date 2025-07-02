@@ -119,7 +119,6 @@ public class CharacterStats : MonoBehaviour, IDamagable
         InitializeStatDictionary();
         if (difficultyProfile != null)
         {
-            Debug.Log("upgrade");
             difficultyProfile.ApplyModifiers(statDictionary, DungeonManager.Instance.DifficultyLevel, this);
         }
     }
