@@ -9931,6 +9931,7 @@ GameObject:
   - component: {fileID: 213979784}
   - component: {fileID: 213979783}
   - component: {fileID: 213979782}
+  - component: {fileID: 213979786}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
@@ -10027,6 +10028,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &213979786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213979781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 305a430fd02ddb848861864e3a48ad49, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &217632817
 GameObject:
   m_ObjectHideFlags: 0
@@ -39325,6 +39358,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Renderer: {fileID: 505280057}
   m_MaterialIndex: 0
+--- !u!1 &962257726 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4674272102425963332, guid: 342d8c61967628541a04456b961334a1, type: 3}
+  m_PrefabInstance: {fileID: 6020626136308087142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &962257730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962257726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427a280bd8068224a9067596071ce3c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ChallengeName>k__BackingField: 
+  targetAmount: 10
+  challengeDuration: 3
+  bonusTime: 0
+  timer: 0
 --- !u!1 &963840780
 GameObject:
   m_ObjectHideFlags: 0
@@ -45779,6 +45834,10 @@ MonoBehaviour:
     sceneAsset: {fileID: 102900000, guid: 2e5e095bb5a0463488fcbfb98e409da2, type: 3}
     scenePath: Assets/Scenes/DungeonTargetTransition.unity
     sceneName: DungeonTargetTransition
+  providedTransitionScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+    sceneName: 
   Core: {fileID: 1832768154}
   fader: {fileID: 1856307668}
 --- !u!65 &1108328671
@@ -85632,9 +85691,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4438666298402806610, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: tempEnemy
+      value: 
+      objectReference: {fileID: 4459468067721603774, guid: a74a0427bdbe60d4bbc928a1a068d609, type: 3}
+    - target: {fileID: 4438666298402806610, guid: 342d8c61967628541a04456b961334a1, type: 3}
       propertyPath: transitionProvider
       value: 
       objectReference: {fileID: 1108328670}
+    - target: {fileID: 4438666298402806610, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: cityScene.sceneName
+      value: CityTestScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438666298402806610, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: cityScene.scenePath
+      value: Assets/Scenes/CityTestScene.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438666298402806610, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: cityScene.sceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: b65e1784d14298144b0bf8bf29e57525, type: 3}
+    - target: {fileID: 4438666298402806610, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: dungeonFailTransitionScene.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438666298402806610, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: dungeonFailTransitionScene.Array.data[0].sceneName
+      value: DungeonTransition
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438666298402806610, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: dungeonFailTransitionScene.Array.data[0].scenePath
+      value: Assets/Scenes/DungeonTransition.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438666298402806610, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: dungeonFailTransitionScene.Array.data[0].sceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: b5a8993cb60f94346be59e176e0192c3, type: 3}
     - target: {fileID: 4921347164892089754, guid: 342d8c61967628541a04456b961334a1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.162
@@ -85743,9 +85834,13 @@ PrefabInstance:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 2513620214287866562, guid: 342d8c61967628541a04456b961334a1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4674272102425963332, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 962257730}
   m_SourcePrefab: {fileID: 100100000, guid: 342d8c61967628541a04456b961334a1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

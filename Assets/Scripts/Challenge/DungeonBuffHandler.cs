@@ -14,7 +14,7 @@ public class DungeonBuffHandler : MonoBehaviour
 {
     [SerializeField] private BuffMaterialInfo[] materialsInfo;
 
-    [SerializeField] private List<DungeonBuffProvider> buffProviders;
+    [field: SerializeField] public List<DungeonBuffProvider> buffProviders { get; private set; }
     public readonly float Dissolve_Duration = 4f;
     private Dictionary<BuffCategory, BuffMaterialInfo> materialInfoDic = new();
 

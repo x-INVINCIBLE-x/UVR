@@ -5,8 +5,10 @@ using UnityEngine;
 
 public enum ObjectiveType
 {
+    StartCrystal,
     MeleeEnemy,
     RangedEnemy,
+    Turret,
     Crystal,
     Statue
 }
@@ -20,7 +22,7 @@ public class TimeTrialChallenge : Challenge
     private List<int> possibleTargets = new();
 
     private ObjectiveType currentObjective;
-    private float timer;
+    [SerializeField] private float timer;
     private const int TickTime = 1;
     private int currentAmount = 0;
     private Coroutine currentRoutine;
@@ -28,8 +30,9 @@ public class TimeTrialChallenge : Challenge
     public override void InitializeChallenge()
     {
         status = ChallengeStatus.InProgress;
-        if (possibleTargets.Count != 0) { return; }
+        timer = challengeDuration;
 
+        if (possibleTargets.Count != 0) { return; }
         currentAmount = 0;
         ResetTargets();
     }
@@ -55,6 +58,7 @@ public class TimeTrialChallenge : Challenge
         if (currentRoutine != null)
             StopCoroutine(currentRoutine);
 
+        base.ChallengeCompleted();
     }
 
     public override void ChallengeFailed()
@@ -67,6 +71,8 @@ public class TimeTrialChallenge : Challenge
         Debug.Log(ChallengeName + " Failed");
         if (currentRoutine != null)
             StopCoroutine(currentRoutine);
+
+        base.ChallengeFailed();
     }
 
     private void UpdateChallengeStatus(ObjectiveType type)

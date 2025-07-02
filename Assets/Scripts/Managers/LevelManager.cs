@@ -6,20 +6,17 @@ public class LevelManager : MonoBehaviour
     public XROrigin playerOrigin;
     public Transform spawnTransform;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ResetPlayerPosition();
-        }
-    }
-
     public void ResetPlayerPosition()
     {
         if (playerOrigin == null)
             playerOrigin = PlayerManager.instance.playerOrigin;
 
-        playerOrigin.MoveCameraToWorldLocation(spawnTransform.position);
-        playerOrigin.MatchOriginUpCameraForward(spawnTransform.up, spawnTransform.forward);
+        SetPlayerPosition(spawnTransform);
+    }
+
+    public void SetPlayerPosition(Transform targetTransform)
+    {
+        playerOrigin.MoveCameraToWorldLocation(targetTransform.position);
+        playerOrigin.MatchOriginUpCameraForward(targetTransform.up, targetTransform.forward);
     }
 }

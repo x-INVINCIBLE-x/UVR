@@ -16,6 +16,19 @@ public class ChallengeManager : MonoBehaviour
         ResetPossibleChallenges();
     }
 
+    private void Start()
+    {
+        EnemyEvents.OnElimination += HandleChallengeStart;
+    }
+
+    private void HandleChallengeStart(ObjectiveType type)
+    {
+        if (type == ObjectiveType.StartCrystal)
+        {
+            StartChallenge();
+        }
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
@@ -24,6 +37,7 @@ public class ChallengeManager : MonoBehaviour
             StartChallenge();
     }
 
+    // Starting Sliceable Crystal must be marked as StartCrystal to Start Challenge
     private void StartChallenge()
     {
         if ( currentChallenge == null)
@@ -65,6 +79,7 @@ public class ChallengeManager : MonoBehaviour
     private void HandleChallengeFailure()
     {
         // Exit Core from dungeon
+        DungeonManager.Instance.HandleLevelFailure();
         
         currentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
         currentChallenge.OnChallengeFailed -= HandleChallengeFailure;

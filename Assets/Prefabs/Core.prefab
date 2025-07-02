@@ -46,13 +46,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <DifficultyLevel>k__BackingField: 1
+  levelsToComplete: 2
+  cityScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+    sceneName: 
   transitionProvider: {fileID: 0}
   dungeonScenes:
   - sceneAsset: {fileID: 102900000, guid: 2e5e095bb5a0463488fcbfb98e409da2, type: 3}
     scenePath: Assets/Scenes/DungeonTargetTransition.unity
     sceneName: DungeonTargetTransition
+  dungeonFailTransitionScene: []
   buffGroups:
   - {fileID: 11400000, guid: f7927c8ac8e998447a3059e53ed3a684, type: 2}
+  tempEnemy: {fileID: 0}
 --- !u!114 &1307188639979143348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,10 +82,7 @@ MonoBehaviour:
   - Category: 2
     baseMaterial: {fileID: 2100000, guid: a280f6d6177168f4d875c45ccabfc295, type: 2}
     dissolveMaterial: {fileID: 2100000, guid: b57b057eba465c3498a92f17380a2ffa, type: 2}
-  buffProviders:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  <buffProviders>k__BackingField: []
 --- !u!1 &2953057016828120978
 GameObject:
   m_ObjectHideFlags: 0

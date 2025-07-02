@@ -26,6 +26,8 @@ public enum AilmentType
 
 public class CharacterStats : MonoBehaviour, IDamagable
 {
+    [SerializeField] private DifficultyProfile difficultyProfile;
+
     [Header("Common Abilities")]
     public Stat health;
     public Stat stamina;
@@ -115,6 +117,11 @@ public class CharacterStats : MonoBehaviour, IDamagable
     private void Start()
     {
         InitializeStatDictionary();
+        if (difficultyProfile != null)
+        {
+            Debug.Log("upgrade");
+            difficultyProfile.ApplyModifiers(statDictionary, DungeonManager.Instance.DifficultyLevel, this);
+        }
     }
 
     private void InitializeValues()

@@ -11,7 +11,9 @@ public class SliceChallenge : Challenge
     public override void InitializeChallenge()
     {
         status = ChallengeStatus.InProgress;
-        activeCrystals = 3;
+        activeCrystals = totalCrystals;
+        
+        statueShield.SetActive(true);
     }
 
     public override void StartChallenge()
@@ -30,6 +32,8 @@ public class SliceChallenge : Challenge
         Debug.Log(ChallengeName + " Completed");
         EnemyEvents.OnElimination -= HandleElimination;
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
+
+        base.ChallengeCompleted();
     }
 
     public override void ChallengeFailed()
@@ -42,6 +46,8 @@ public class SliceChallenge : Challenge
         Debug.Log(ChallengeName + " Completed");
         EnemyEvents.OnElimination -= HandleElimination;
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
+
+        base.ChallengeFailed();
     }
 
     public void HandleElimination(ObjectiveType type)

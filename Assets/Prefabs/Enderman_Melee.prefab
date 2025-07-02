@@ -2680,6 +2680,7 @@ GameObject:
   - component: {fileID: 2939726995523510876}
   - component: {fileID: 5793342854118659681}
   - component: {fileID: 7592960644357988047}
+  - component: {fileID: 3711954103703501727}
   m_Layer: 0
   m_Name: Enderman_Melee
   m_TagString: Untagged
@@ -2762,42 +2763,43 @@ MonoBehaviour:
   shieldDurability: 22
   shieldTransform: {fileID: 8083575714687725254}
   dodgeCooldown: 5
-  axeDamage: 2
+  axeDamage: {fileID: 0}
   axePrefab: {fileID: 6661166700321188574, guid: 9871d75e626c3b140ab121b8dea7de52, type: 3}
   axeFlySpeed: 6
   axeAimTimer: 1.25
   axeThrowCooldown: 0
   axeStartPoint: {fileID: 3546750349689157640}
-  attackData:
-    attackDamage: 0
+  attackInfo:
+    attackData: {fileID: 0}
     attackName: 
-    attackRange: 1.5
+    attackRange: 0
     moveSpeed: 0
-    attackIndex: 1
-    animationSpeed: 1.4
+    attackIndex: 0
+    animationSpeed: 1
     attackType: 0
   attackList:
-  - attackDamage: 21
+  - attackData: {fileID: 0}
     attackName: Sword slash
     attackRange: 1
     moveSpeed: 0
     attackIndex: 1
     animationSpeed: 1.7
     attackType: 0
-  - attackDamage: 25
+  - attackData: {fileID: 0}
     attackName: Sword spin attack
     attackRange: 1.5
     moveSpeed: 3.5
     attackIndex: 0
     animationSpeed: 1
     attackType: 1
-  - attackDamage: 25
+  - attackData: {fileID: 0}
     attackName: Sword spin attack
     attackRange: 1.5
     moveSpeed: 3.5
     attackIndex: 0
     animationSpeed: 1
     attackType: 1
+  currentWeapon: {fileID: 0}
   meleeAttackFx: {fileID: 4266559762961818354, guid: 44f153c8d36847d4c82d862b7d2bcbca, type: 3}
 --- !u!114 &2939726995523510876
 MonoBehaviour:
@@ -2849,6 +2851,76 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ragdollParent: {fileID: 1613011075033922019}
+--- !u!114 &3711954103703501727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4459468067721603774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e268f02b12da422498f77b07c61ab5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficultyProfile: {fileID: 11400000, guid: f36ca4f47ea78c641818026cb1c26ba2, type: 2}
+  health:
+    BaseValue: 0
+    statModifiers: []
+  stamina:
+    BaseValue: 0
+    statModifiers: []
+  staminaRegain:
+    BaseValue: 0
+    statModifiers: []
+  physicalAtk:
+    BaseValue: 0
+    statModifiers: []
+  fireAtk:
+    BaseValue: 0
+    statModifiers: []
+  electricAtk:
+    BaseValue: 0
+    statModifiers: []
+  physicalDef:
+    BaseValue: 0
+    statModifiers: []
+  fireDef:
+    BaseValue: 0
+    statModifiers: []
+  electricDef:
+    BaseValue: 0
+    statModifiers: []
+  fireRes:
+    BaseValue: 0
+    statModifiers: []
+  electricRes:
+    BaseValue: 0
+    statModifiers: []
+  fireStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  electricStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  ailmentLimitOffset: 10
+  currentHealth: 0
+  currentStamina: 0
+  <isInvincible>k__BackingField: 0
 --- !u!1 &4479824684296641264
 GameObject:
   m_ObjectHideFlags: 0

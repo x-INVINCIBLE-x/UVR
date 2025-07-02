@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using Unity.XR.CoreUtils;
+using NUnit.Framework.Internal.Builders;
 
 public class SceneTransitionProvider : MonoBehaviour
 {
@@ -15,12 +16,15 @@ public class SceneTransitionProvider : MonoBehaviour
     [Header("Scene References")]
     public SceneReference transitionScene;
     public SceneReference targetScene;
+    public SceneReference providedTransitionScene;
 
     [Header("Player")]
     public GameObject Core;
 
     [Header("UI")]
     public Fader fader;
+
+    private int stayDuraion = 5;
 
     private void Awake()
     {
@@ -59,16 +63,34 @@ public class SceneTransitionProvider : MonoBehaviour
         DungeonManager.Instance.RegisterSceneTransitionProvider(this);
     }
 
-    public void Initialize(SceneReference newTargetScene)
+    public void Initialize(SceneReference newTargetScene, int transitionStayDuration = 5, SceneReference newTransitionReference = null)
     {
         targetScene = newTargetScene;
+
+        if (newTransitionReference != null)
+        {
+            providedTransitionScene = newTransitionReference;
+        }
+        else
+        {
+            providedTransitionScene = null;
+        }
+
+        stayDuraion = transitionStayDuration;
+    }
+
+    public void StartTransition()
+    {
+        DontDestroyOnLoad(gameObject);
+        CoroutineManager.instance.StartCoroutine(TransitionRoutine());
+        //StartCoroutine(TransitionRoutine());
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(Player_Tag))
         {
-            StartCoroutine(TransitionRoutine());
+            StartTransition();
         }
     }
 
@@ -82,16 +104,18 @@ public class SceneTransitionProvider : MonoBehaviour
         // --- Remember the currently active scene ---
         Scene previousScene = SceneManager.GetActiveScene();
 
+        SceneReference currentTransitionScene = providedTransitionScene != null ? providedTransitionScene : transitionScene;
+
         // --- Load transition scene ---
-        AsyncOperation loadTransition = SceneManager.LoadSceneAsync(transitionScene.SceneName, LoadSceneMode.Additive);
+        AsyncOperation loadTransition = SceneManager.LoadSceneAsync(currentTransitionScene.SceneName, LoadSceneMode.Additive);
         yield return new WaitUntil(() => loadTransition.isDone);
 
-        Scene transitionLoadedScene = SceneManager.GetSceneByName(transitionScene.SceneName);
+        Scene transitionLoadedScene = SceneManager.GetSceneByName(currentTransitionScene.SceneName);
         SceneManager.MoveGameObjectToScene(Core, transitionLoadedScene);
         SceneManager.SetActiveScene(transitionLoadedScene);
 
         // --- Unload the previous scene now that transition is ready ---
-        if (previousScene.name != transitionScene.SceneName)
+        if (previousScene.name != currentTransitionScene.SceneName)
         {
             SceneManager.UnloadSceneAsync(previousScene);
         }
@@ -126,7 +150,7 @@ public class SceneTransitionProvider : MonoBehaviour
         yield return new WaitUntil(() => loadTarget.progress >= 0.9f);
 
         // Optional delay (e.g., play animation)
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(stayDuraion);
 
         // Optional: fade, animation, input, etc.
         if (fader != null)
@@ -169,9 +193,8 @@ public class SceneTransitionProvider : MonoBehaviour
             yield return fader.FadeIn(1f);
 
         // --- Unload other scenes ---
-        SceneManager.UnloadSceneAsync(transitionScene.SceneName);
+        SceneManager.UnloadSceneAsync(currentTransitionScene.SceneName);
 
-        // --- Cleanup ---
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
