@@ -11,6 +11,7 @@ public class ScatterWeapons : Weapon
     [SerializeField] protected float recoilForce;
     [SerializeField] protected float damage;
     [SerializeField] protected float spreadAngle = 5f; // Spread angle in degrees
+    [SerializeField] protected GameObject muzzleVFX;
 
     protected AudioSource WeaponAudioSource;
 

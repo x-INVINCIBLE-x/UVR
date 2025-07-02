@@ -21,6 +21,12 @@ public class Shotgun : ScatterWeapons
         // SFX Implement
         WeaponAudioSource.PlayOneShot(shootSFX);
 
+        // VFX Implement
+        GameObject newMuzzleVFX = ObjectPool.instance.GetObject(muzzleVFX, bulletSpawns[0]);// hot fix muzzle is spawned at the position of 0 index bullet spawn
+        newMuzzleVFX.transform.rotation = bulletSpawns[0].rotation;
+        ObjectPool.instance.ReturnObject(newMuzzleVFX, 1f);
+
+
         foreach (Transform spawnPoint in bulletSpawns)
         {
             //PhysicsProjectile projectileInstance = Instantiate(projectilePrefab, spawnPoint.position, spawnPoint.rotation) as PhysicsProjectile;
