@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class FallResetHandler : MonoBehaviour
 {
-    public Fader fader;
+    private Fader fader;
+
+    private void Awake()
+    {
+        fader = GameObject.Find("Fader_Canvas").GetComponentInChildren<Fader>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

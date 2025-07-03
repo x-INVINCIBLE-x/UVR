@@ -5,7 +5,7 @@ public class FormationFX : MonoBehaviour
 {
     [SerializeField] private CubeFormationController cubeFormationController;
 
-    private void Awake()
+    private void Start()
     {
         cubeFormationController.OnFormationStart += HandleFormationStart;
         cubeFormationController.OnFormationComplete += HandleFormationComplete;
@@ -31,5 +31,13 @@ public class FormationFX : MonoBehaviour
     private void HandleFormationStart()
     {
         Debug.Log("Formation Start");
+    }
+
+    private void OnDestroy()
+    {
+        cubeFormationController.OnFormationStart -= HandleFormationStart;
+        cubeFormationController.OnFormationComplete -= HandleFormationComplete;
+        cubeFormationController.OnUnwrapStart -= HandleUnwrapStart;
+        cubeFormationController.OnUnwrapComplete -= HandleUnwrapComplete;
     }
 }
