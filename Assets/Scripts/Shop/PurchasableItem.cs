@@ -2,62 +2,92 @@ using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class PurchasableItem : MonoBehaviour
-{   
+public class PurchasableItem : XRSocketInteractor
+{
+    [Space]
+    [Header("References")]
     public ItemData itemData;
     public bool isShopItem = false;
+    [Space]
 
+    [Space]
+    [Header("Condition")]
+    [Space]
     private XRGrabInteractable grabInteractable;
     private bool hasPurchased = false;
+    private bool canAffordItem = false;
 
-    private void Awake()
+    [Space]
+    [Header("Visual Effect")]
+    [Space]
+    private MeshRenderer[] Meshes;
+    private Material[] originalMaterials;
+    public Material affordableMaterial;
+    public Material unaffordableMaterial;
+
+    protected override void Awake()
     {
+        base.Awake();
         grabInteractable = GetComponent<XRGrabInteractable>();
-        grabInteractable.selectEntered.AddListener(OnGrabAttempt);
+
+        // Get all the mesh renderers for changing the material 
+        Meshes = GetComponentsInChildren<MeshRenderer>();
+        originalMaterials = new Material[Meshes.Length];
+        for (int i = 0; i < Meshes.Length; i++)
+        {
+            originalMaterials[i] = Meshes[i].material;
+            //Debug.Log("Mat" + Meshes[i].material.name);
+        }
     }
 
-    private void OnDestroy()
+
+    public override void ProcessInteractor(XRInteractionUpdateOrder.UpdatePhase updatePhase)
     {
-        grabInteractable.selectEntered.RemoveListener(OnGrabAttempt);
+        base.ProcessInteractor(updatePhase);
+
+        if (updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic && isShopItem && !hasPurchased)
+        {   
+            // Checking if Player has enough money to buy the item 
+            bool currentAffordability = MoneyManager.Instance != null && MoneyManager.Instance.Gold >= itemData.ItemCost;
+
+            if (currentAffordability != canAffordItem)
+            {
+                canAffordItem = currentAffordability; // Update check for weapon
+            }
+        }
     }
 
-    private void OnGrabAttempt(SelectEnterEventArgs args)
+
+    public override bool CanHover(IXRHoverInteractable interactable)
     {
-        if (!isShopItem)
-            return;
-
-        if(hasPurchased)
-            return;
-
-        var moneyManager = MoneyManager.Instance;
-
-        if(moneyManager == null)
-        {
-            Debug.Log("Money Manager is Missing");
-            CancelGrab(args);
-            return;
-        }
-
-        if(moneyManager.Gold >= itemData.ItemCost)
-        {
-            moneyManager.SpendMoney(itemData.ItemCost);
-            hasPurchased = true;
-            Debug.Log($"{itemData.Name} purchased for {itemData.ItemCost}");
-        }
-
-        else
+        if (isShopItem && !hasPurchased && !canAffordItem)
         {
             Debug.Log($" not enough money to buy {itemData.Name}");
-            CancelGrab(args);
+            return false;
         }
+
+        return base.CanHover(interactable);
     }
 
-    private void CancelGrab(SelectEnterEventArgs args)
-    {
-        if (grabInteractable.isSelected && grabInteractable.interactionManager != null)
+    public override bool CanSelect(IXRSelectInteractable interactable)
+    {   
+        if(isShopItem && !hasPurchased)
         {
-            grabInteractable.interactionManager.SelectExit(args.interactorObject, grabInteractable);
+            if(canAffordItem && MoneyManager.Instance.SpendMoney(itemData.ItemCost))
+            {
+                hasPurchased = true;
+                return base.CanSelect(interactable);
+            }
+            return false;
         }
+        return base.CanSelect(interactable);
     }
+
+    private void HoverVisuals()
+    {
+        // Implement code for changing the material of all the meshes when we hover in (can buy or cannot buy) and out (reset to original)
+    }
+
 }
