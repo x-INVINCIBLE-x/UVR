@@ -14,7 +14,7 @@ public enum ActionStatus
 }
 
 public class ActionMediator : MonoBehaviour
-{
+{ 
     //public GameObject abilitySelectDisplay;
     public XRBodyTransformer xRBodyTransformer;
     public DynamicMoveProvider moveProvider;
@@ -40,7 +40,6 @@ public class ActionMediator : MonoBehaviour
     public Action DashAction;
 
     [field: SerializeField] public ActionStatus LastActionStatus { get; private set; } = ActionStatus.None;
-    // ------------ Changes -------------------
 
     public class ConstantVector2InputReader : IXRInputValueReader<Vector2>
     {
@@ -116,6 +115,7 @@ public class ActionMediator : MonoBehaviour
         SetPhysicalMotion(false);
         //InputManager.Instance.leftJoystickPress.action.performed += ToggleAbilitySelect;
     }
+
 
     //private void ToggleAbilitySelect(UnityEngine.InputSystem.InputAction.CallbackContext context)
     //{

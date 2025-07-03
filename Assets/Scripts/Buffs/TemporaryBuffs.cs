@@ -31,7 +31,7 @@ public class TemporaryBuffs : MonoBehaviour
 
     private void Start()
     {
-        stats = PlayerManager.instance.player.stats;
+        stats = PlayerManager.instance.Player.stats;
     }
 
     public void AddBuff(Buff buff)

@@ -11,14 +11,14 @@ public class ChallengeManager : MonoBehaviour
     private void Awake()
     {
         challenges = GetComponentsInChildren<Challenge>();
-        possibleChallenges = new List<int>(challenges.Length);
-
-        ResetPossibleChallenges();
     }
 
     private void Start()
     {
         EnemyEvents.OnElimination += HandleChallengeStart;
+        possibleChallenges = new List<int>(challenges.Length);
+        ResetPossibleChallenges();
+        ChooseChallenge();
     }
 
     private void HandleChallengeStart(ObjectiveType type)

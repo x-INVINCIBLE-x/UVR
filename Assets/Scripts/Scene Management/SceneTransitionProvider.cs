@@ -10,13 +10,12 @@ using NUnit.Framework.Internal.Builders;
 
 public class SceneTransitionProvider : MonoBehaviour
 {
-    public static SceneTransitionProvider Instance;
     private const string Player_Tag = "Player";
 
     [Header("Scene References")]
     public SceneReference transitionScene;
     public SceneReference targetScene;
-    public SceneReference providedTransitionScene;
+    public SceneReference providedTransitionScene = null;
 
     [Header("Player")]
     public GameObject Core;
@@ -25,20 +24,6 @@ public class SceneTransitionProvider : MonoBehaviour
     public Fader fader;
 
     private int stayDuraion = 5;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -60,7 +45,11 @@ public class SceneTransitionProvider : MonoBehaviour
 
     private void Start()
     {
-        DungeonManager.Instance.RegisterSceneTransitionProvider(this);
+        if (DungeonManager.Instance != null)
+        {
+            DungeonManager.Instance.RegisterSceneTransitionProvider(this);
+            gameObject.SetActive(false);
+        }
     }
 
     public void Initialize(SceneReference newTargetScene, int transitionStayDuration = 5, SceneReference newTransitionReference = null)
@@ -103,8 +92,7 @@ public class SceneTransitionProvider : MonoBehaviour
         // --- Load transition scene ---
         // --- Remember the currently active scene ---
         Scene previousScene = SceneManager.GetActiveScene();
-
-        SceneReference currentTransitionScene = providedTransitionScene != null ? providedTransitionScene : transitionScene;
+        SceneReference currentTransitionScene = providedTransitionScene.HasSceneAsset ? providedTransitionScene : transitionScene;
 
         // --- Load transition scene ---
         AsyncOperation loadTransition = SceneManager.LoadSceneAsync(currentTransitionScene.SceneName, LoadSceneMode.Additive);
@@ -131,7 +119,7 @@ public class SceneTransitionProvider : MonoBehaviour
 
         if (transitionLevelManager != null)
         {
-            transitionLevelManager.ResetPlayerPosition();
+            transitionLevelManager.SetPlayerToSpawnPosition();
         }
         else
         {
@@ -181,7 +169,7 @@ public class SceneTransitionProvider : MonoBehaviour
 
         if (targetLevelManager != null)
         {
-            targetLevelManager.ResetPlayerPosition();
+            targetLevelManager.SetPlayerToSpawnPosition();
         }
         else
         {

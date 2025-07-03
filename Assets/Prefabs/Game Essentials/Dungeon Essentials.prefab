@@ -1,0 +1,200 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3846299643219624982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6729770576392158882}
+  - component: {fileID: 4755814767156134391}
+  - component: {fileID: 3417520076172352710}
+  m_Layer: 0
+  m_Name: Dungeon Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6729770576392158882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846299643219624982}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6517624357674343893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4755814767156134391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846299643219624982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9303c6b25b4fabf409192adf29c9f08a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DifficultyLevel>k__BackingField: 1
+  levelsToComplete: 2
+  cityScene:
+    sceneAsset: {fileID: 102900000, guid: b65e1784d14298144b0bf8bf29e57525, type: 3}
+    scenePath: Assets/Scenes/DungeonTests/CityTestScene.unity
+    sceneName: CityTestScene
+  transitionProvider: {fileID: 0}
+  dungeonScenes:
+  - sceneAsset: {fileID: 102900000, guid: 2e5e095bb5a0463488fcbfb98e409da2, type: 3}
+    scenePath: Assets/Scenes/DungeonTests/DungeonTargetTransition.unity
+    sceneName: DungeonTargetTransition
+  dungeonFailTransitionScene:
+  - sceneAsset: {fileID: 102900000, guid: b5a8993cb60f94346be59e176e0192c3, type: 3}
+    scenePath: Assets/Scenes/DungeonTests/DungeonTransition.unity
+    sceneName: DungeonTransition
+  buffGroups:
+  - {fileID: 11400000, guid: f7927c8ac8e998447a3059e53ed3a684, type: 2}
+--- !u!114 &3417520076172352710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846299643219624982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8624d0704cdf7334680a1d447846297c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialsInfo:
+  - Category: 0
+    baseMaterial: {fileID: 2100000, guid: b7a50ac5782e0604988f46fd9da964d7, type: 2}
+    dissolveMaterial: {fileID: 2100000, guid: b57b057eba465c3498a92f17380a2ffa, type: 2}
+  - Category: 1
+    baseMaterial: {fileID: 2100000, guid: e2ae952b36c1f6749a1e927db8121c5a, type: 2}
+    dissolveMaterial: {fileID: 2100000, guid: b57b057eba465c3498a92f17380a2ffa, type: 2}
+  - Category: 2
+    baseMaterial: {fileID: 2100000, guid: a280f6d6177168f4d875c45ccabfc295, type: 2}
+    dissolveMaterial: {fileID: 2100000, guid: b57b057eba465c3498a92f17380a2ffa, type: 2}
+  <buffProviders>k__BackingField: []
+--- !u!1 &5302657304476110489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6517624357674343893}
+  m_Layer: 0
+  m_Name: Dungeon Essentials
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6517624357674343893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5302657304476110489}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6729770576392158882}
+  - {fileID: 7656869024173632173}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5414482438387155517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7656869024173632173}
+  - component: {fileID: 3321683624302865404}
+  - component: {fileID: 4449062454858359139}
+  - component: {fileID: 99238198834974883}
+  m_Layer: 0
+  m_Name: Challenge Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7656869024173632173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5414482438387155517}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6517624357674343893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3321683624302865404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5414482438387155517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a30b0f33ab0574eb98134e06c3207f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  challenges: []
+  possibleChallenges: 
+--- !u!114 &4449062454858359139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5414482438387155517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c692bf708953134b85125e13efd2a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ChallengeName>k__BackingField: 
+  survivalDuration: 300
+  timer: 0
+--- !u!114 &99238198834974883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5414482438387155517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427a280bd8068224a9067596071ce3c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ChallengeName>k__BackingField: 
+  targetAmount: 10
+  challengeDuration: 5
+  bonusTime: 5
+  timer: 0

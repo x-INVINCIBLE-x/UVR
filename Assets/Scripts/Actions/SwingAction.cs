@@ -29,7 +29,7 @@ public class SwingAction : MonoBehaviour
 
     private void Awake()
     {
-        actionMediator = GetComponentInParent<ActionMediator>();
+        actionMediator = GetComponent<ActionMediator>();
     }
 
     private void Start()

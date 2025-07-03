@@ -6,7 +6,8 @@ public enum Prop {
     Statues,
     Rocks,
     Turret,
-    Enemy,
+    EnemyMelee,
+    EnemyRange,
     Extra
 }
 
@@ -27,7 +28,7 @@ public class FloatingCubes : MonoBehaviour
         { Prop.Statues, Color.blue },
         { Prop.Rocks, Color.grey },
         { Prop.Turret, Color.red },
-        { Prop.Extra, Color.cyan }
+        { Prop.Extra, Color.cyan },
     };
 
     [SerializeField] private List<Entity> entities;
@@ -36,7 +37,6 @@ public class FloatingCubes : MonoBehaviour
     {
         foreach (Entity entity in entities)
         {
-            //Vector3 scaledPosition = Vector3.Scale(entity.position, transform.localScale);
             Vector3 worldPosition = transform.position + entity.position;
             Quaternion rotation = Quaternion.Euler(entity.rotation);
 
@@ -46,39 +46,8 @@ public class FloatingCubes : MonoBehaviour
 
             if (prefabToUse == null) continue;
 
-            Collider prefabCollider = prefabToUse.GetComponentInChildren<Collider>();
-            if (prefabCollider == null)
-            {
-                Debug.LogWarning($"No collider found on prefab {prefabToUse.name}");
-                continue;
-            }
-
-            Vector3 halfExtents = prefabCollider.bounds.extents;
-            Vector3 center = worldPosition + prefabCollider.bounds.center - prefabToUse.transform.position;
-
-            Collider[] overlaps = Physics.OverlapBox(center, halfExtents, rotation, ~LayerMask.GetMask("Ignore Raycast"), QueryTriggerInteraction.Ignore);
-
-            bool isBlocked = false;
-            string colName =  "";
-            foreach (var col in overlaps)
-            {
-                if (col.transform != transform)
-                {
-                    colName = col.name;
-                    isBlocked = true;
-                    break;
-                }
-            }
-
-            if (isBlocked)
-            {
-                Debug.Log($"Skipped instantiating {entity.prop} at {transform.name} due to external collision {colName}.");
-                continue;
-            }
-
             GameObject prop = Instantiate(prefabToUse, worldPosition, rotation);
             prop.transform.parent = transform;
-
         }
     }
 

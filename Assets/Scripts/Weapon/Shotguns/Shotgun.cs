@@ -14,6 +14,22 @@ public class Shotgun : ScatterWeapons
         base.Awake();
         
     }
+
+
+    protected override void ActivateWeapon(ActivateEventArgs args)
+    {
+        Debug.Log("rbt");
+        base.ActivateWeapon(args);
+        ScatterShot();
+
+    }
+
+    protected override void DeactivateWeapon(DeactivateEventArgs args)
+    {
+        base.DeactivateWeapon(args);
+
+    }
+
     protected override void ScatterShot()
     {
         base.ScatterShot();

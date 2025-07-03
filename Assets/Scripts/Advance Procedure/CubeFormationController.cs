@@ -119,7 +119,7 @@ public class CubeFormationController : MonoBehaviour
     private int rotationMultiplier = 1;
 
     public event System.Action OnFormationStart;
-    public event System.Action OnFormationComplete;
+    public event System.Action<FormationType> OnFormationComplete;
     public event System.Action OnUnwrapStart;
     public event System.Action OnUnwrapComplete;
 
@@ -376,7 +376,7 @@ public class CubeFormationController : MonoBehaviour
         formationCenter = nextCenter;
         finalPositions = nextFormationPositions;
 
-        OnUnwrapComplete?.Invoke();
+        OnFormationComplete?.Invoke(formationSequence[currentFormationIndex]);
         isAnimating = false;
     }
 
@@ -465,7 +465,7 @@ public class CubeFormationController : MonoBehaviour
             yield return null;
         }
 
-        OnFormationComplete?.Invoke();
+        OnFormationComplete?.Invoke(formationSequence[currentFormationIndex]);
         isAnimating = false;
     }
 

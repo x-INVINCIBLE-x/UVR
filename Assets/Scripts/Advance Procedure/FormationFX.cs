@@ -23,9 +23,9 @@ public class FormationFX : MonoBehaviour
         Debug.Log("Unwrap Start");
     }
 
-    private void HandleFormationComplete()
+    private void HandleFormationComplete(FormationType formationType)
     {
-        Debug.Log("Formation Complete");
+        Debug.Log("Formation Complete -> " + formationType);
     }
 
     private void HandleFormationStart()

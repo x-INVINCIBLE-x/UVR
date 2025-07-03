@@ -1,0 +1,33 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class StartDungeon : MonoBehaviour
+{
+    [SerializeField] private GameObject dungeonEssentials;
+
+    void Start()
+    {
+        GameObject core = FindRootCore();
+        if (core != null)
+        {
+            Debug.Log("Found");
+            Instantiate(dungeonEssentials, core.transform);
+        }
+        else
+            Debug.Log("Core not found in root objects.");
+    }
+
+    GameObject FindRootCore()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        GameObject[] rootObjects = currentScene.GetRootGameObjects();
+
+        foreach (GameObject obj in rootObjects)
+        {
+            if (obj.name == "Core")
+                return obj;
+        }
+
+        return null;
+    }
+}

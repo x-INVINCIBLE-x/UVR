@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerGravity : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class PlayerGravity : MonoBehaviour
 
     public CharacterController controller;
     private Vector3 velocity;
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
     private bool gravityEnabled = true;
 
     void Update()

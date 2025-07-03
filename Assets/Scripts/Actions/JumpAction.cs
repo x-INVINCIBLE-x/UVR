@@ -57,7 +57,8 @@ public class JumpAction : Action
             float deltaHeight = height - previousMove.y;
             Vector3 move = Vector3.up * deltaHeight;
 
-            actionMediator.controller.Move(move);
+            if (actionMediator.controller.enabled)
+                actionMediator.controller.Move(move);
             previousMove.y = height;
 
             if (elapsed > 0.2f && actionMediator.IsGrounded())

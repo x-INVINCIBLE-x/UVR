@@ -13,6 +13,7 @@ public class SceneReference
 
     public string ScenePath => scenePath;
     public string SceneName => sceneName;
+    public bool HasSceneAsset => sceneAsset != null;
 
 #if UNITY_EDITOR
     public void UpdateFields()
