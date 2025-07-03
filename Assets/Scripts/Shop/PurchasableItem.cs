@@ -2,92 +2,71 @@ using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class PurchasableItem : XRSocketInteractor
+public class PurchasableItem : MonoBehaviour
 {
-    [Space]
-    [Header("References")]
     public ItemData itemData;
     public bool isShopItem = false;
-    [Space]
 
-    [Space]
-    [Header("Condition")]
-    [Space]
     private XRGrabInteractable grabInteractable;
     private bool hasPurchased = false;
-    private bool canAffordItem = false;
 
-    [Space]
-    [Header("Visual Effect")]
-    [Space]
-    private MeshRenderer[] Meshes;
-    private Material[] originalMaterials;
-    public Material affordableMaterial;
-    public Material unaffordableMaterial;
-
-    protected override void Awake()
+    int layerMask; 
+    private void Awake()
     {
-        base.Awake();
         grabInteractable = GetComponent<XRGrabInteractable>();
+        grabInteractable.selectEntered.AddListener(OnGrabAttempt);
+        layerMask = LayerMask.GetMask("Player");
+    }
 
-        // Get all the mesh renderers for changing the material 
-        Meshes = GetComponentsInChildren<MeshRenderer>();
-        originalMaterials = new Material[Meshes.Length];
-        for (int i = 0; i < Meshes.Length; i++)
+    private void OnDestroy()
+    {
+        grabInteractable.selectEntered.RemoveListener(OnGrabAttempt);
+    }
+
+    private void OnGrabAttempt(SelectEnterEventArgs args)
+    {
+        if ((layerMask & (1 << args.interactorObject.transform.gameObject.layer)) == 0)
         {
-            originalMaterials[i] = Meshes[i].material;
-            //Debug.Log("Mat" + Meshes[i].material.name);
+            Debug.Log(args.interactorObject.transform.gameObject.name);
+            Debug.Log("Block");
+            return;
         }
-    }
 
+        if (!isShopItem)
+            return;
 
-    public override void ProcessInteractor(XRInteractionUpdateOrder.UpdatePhase updatePhase)
-    {
-        base.ProcessInteractor(updatePhase);
+        if (hasPurchased)
+            return;
 
-        if (updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic && isShopItem && !hasPurchased)
-        {   
-            // Checking if Player has enough money to buy the item 
-            bool currentAffordability = MoneyManager.Instance != null && MoneyManager.Instance.Gold >= itemData.ItemCost;
+        var moneyManager = MoneyManager.Instance;
 
-            if (currentAffordability != canAffordItem)
-            {
-                canAffordItem = currentAffordability; // Update check for weapon
-            }
+        if (moneyManager == null)
+        {
+            Debug.Log("Money Manager is Missing");
+            CancelGrab(args);
+            return;
         }
-    }
 
+        if (moneyManager.Gold >= itemData.ItemCost)
+        {
+            moneyManager.SpendMoney(itemData.ItemCost);
+            hasPurchased = true;
+            Debug.Log($"{itemData.Name} purchased for {itemData.ItemCost}");
+        }
 
-    public override bool CanHover(IXRHoverInteractable interactable)
-    {
-        if (isShopItem && !hasPurchased && !canAffordItem)
+        else
         {
             Debug.Log($" not enough money to buy {itemData.Name}");
-            return false;
+            CancelGrab(args);
         }
-
-        return base.CanHover(interactable);
     }
 
-    public override bool CanSelect(IXRSelectInteractable interactable)
-    {   
-        if(isShopItem && !hasPurchased)
-        {
-            if(canAffordItem && MoneyManager.Instance.SpendMoney(itemData.ItemCost))
-            {
-                hasPurchased = true;
-                return base.CanSelect(interactable);
-            }
-            return false;
-        }
-        return base.CanSelect(interactable);
-    }
-
-    private void HoverVisuals()
+    private void CancelGrab(SelectEnterEventArgs args)
     {
-        // Implement code for changing the material of all the meshes when we hover in (can buy or cannot buy) and out (reset to original)
+        if (grabInteractable.isSelected && grabInteractable.interactionManager != null)
+        {
+            grabInteractable.interactionManager.SelectExit(args.interactorObject, grabInteractable);
+        }
     }
-
 }

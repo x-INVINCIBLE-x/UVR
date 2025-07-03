@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class SwingAction : MonoBehaviour
 {
-    private ActionMediator actionMediator;
+    [SerializeField] private ActionMediator actionMediator;
 
     public Hand hand; 
     public Transform startSwingPoint;
@@ -29,7 +29,7 @@ public class SwingAction : MonoBehaviour
 
     private void Awake()
     {
-        actionMediator = GetComponent<ActionMediator>();
+        //actionMediator = GetComponentInParent<ActionMediator>();
     }
 
     private void Start()

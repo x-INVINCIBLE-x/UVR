@@ -1393,7 +1393,7 @@ GameObject:
   - component: {fileID: 6543995471313418511}
   m_Layer: 8
   m_Name: Right Controller
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7974,7 +7974,7 @@ GameObject:
   - component: {fileID: 6017691384956048427}
   m_Layer: 8
   m_Name: Left Controller
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9682,6 +9682,7 @@ MonoBehaviour:
     m_Bits: 64
   groundCheck: {fileID: 2077173408495614444}
   controller: {fileID: 1768631438717453101}
+  isGrounded: 0
 --- !u!114 &3970734026325943607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10554,6 +10555,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <playerBody>k__BackingField: {fileID: 7799870187184767804}
+  playerGravity: {fileID: 0}
+  updateTimer: 2
+  safePositionOffset: {x: 0, y: 0, z: 0}
+  lastSafePosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2221226634371410362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11777,6 +11782,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8808007648702226704, guid: 18e5fea21b041d54daf27b28c0705e49, type: 3}
+      propertyPath: actionMediator
+      value: 
+      objectReference: {fileID: 3069128345864846745}
+    - target: {fileID: 8808007648702226704, guid: 18e5fea21b041d54daf27b28c0705e49, type: 3}
       propertyPath: pullingStrngth
       value: 12500
       objectReference: {fileID: 0}
@@ -12700,6 +12709,10 @@ PrefabInstance:
       propertyPath: swingRadius
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1378191021904618832, guid: e71c65b6b1508324881f40c72081ae1c, type: 3}
+      propertyPath: actionMediator
+      value: 
+      objectReference: {fileID: 3069128345864846745}
     - target: {fileID: 1378191021904618832, guid: e71c65b6b1508324881f40c72081ae1c, type: 3}
       propertyPath: swingLayer.m_Bits
       value: 128
