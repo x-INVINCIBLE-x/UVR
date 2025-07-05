@@ -9,13 +9,17 @@ public class PropPool : MonoBehaviour
     public class PropEntry
     {
         public Prop propType;
+        public int difficultyLevel;
         public List<GameObject> prefabs;
     }
 
     [SerializeField] private List<PropEntry> propEntries;
 
-    private Dictionary<Prop, List<GameObject>> pool = new();
+    private Dictionary<int ,Dictionary<Prop, List<GameObject>>> pool = new();
+    private const int Window_Size = 3;
+    private int highestDifficulty = 1;
 
+    // Fills Prop Dictionary from list
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -25,18 +29,32 @@ public class PropPool : MonoBehaviour
         }
         Instance = this;
 
+        var possibleProps = DungeonManager.Instance.DifficultyLevel;
+
         foreach (var entry in propEntries)
         {
-            if (!pool.ContainsKey(entry.propType))
-                pool[entry.propType] = new List<GameObject>();
+            if (!pool.ContainsKey(entry.difficultyLevel))
+            {
+                pool[entry.difficultyLevel] = new();
+                highestDifficulty = Mathf.Max(highestDifficulty, entry.difficultyLevel);
+            }
 
-            pool[entry.propType].AddRange(entry.prefabs);
+            if (!pool[entry.difficultyLevel].ContainsKey(entry.propType))
+                pool[entry.difficultyLevel][entry.propType] = new();
+
+            pool[entry.difficultyLevel][entry.propType].AddRange(entry.prefabs);
         }
     }
 
-    public GameObject GetRandomPrefab(Prop prop)
+    // Pick Props from SLiding Window of 3 : From currentDifficulty - 3 to currentDifficulty
+    public GameObject GetRandomPrefab(Prop prop, bool currentDifficultyOnly)
     {
-        if (pool.TryGetValue(prop, out var list) && list.Count > 0)
+        int currentDifficulty = Mathf.Min(DungeonManager.Instance.DifficultyLevel, highestDifficulty); 
+
+        int difficultyLevel = currentDifficultyOnly ? currentDifficulty
+            : Random.Range(Mathf.Max(currentDifficulty - Window_Size, 1), currentDifficulty);
+
+        if (pool[difficultyLevel].TryGetValue(prop, out var list) && list.Count > 0)
         {
             return list[Random.Range(0, list.Count)];
         }

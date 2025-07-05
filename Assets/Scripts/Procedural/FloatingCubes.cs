@@ -32,9 +32,12 @@ public class FloatingCubes : MonoBehaviour
     };
 
     [SerializeField] private List<Entity> entities;
+    [SerializeField] private bool strictlyCurrentDifficulty;
 
     private void Start()
     {
+        if (PropPool.Instance == null) return;
+
         foreach (Entity entity in entities)
         {
             Vector3 worldPosition = transform.position + entity.position;
@@ -42,7 +45,7 @@ public class FloatingCubes : MonoBehaviour
 
             GameObject prefabToUse = entity.propPrefab != null
                 ? entity.propPrefab
-                : PropPool.Instance.GetRandomPrefab(entity.prop);
+                : PropPool.Instance.GetRandomPrefab(entity.prop, strictlyCurrentDifficulty);
 
             if (prefabToUse == null) continue;
 

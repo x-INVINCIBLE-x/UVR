@@ -109,8 +109,8 @@ public class TemporaryBuffs : MonoBehaviour
             if (buffInfo.buff.ActivationStatus == ActivationStatus.OneShot)
             {
                 ActivateBuff(buffInfo.buff);
-                disabledHitBuffs.Add(buffInfo);
-                onHitBuffs.Remove(buffInfo);
+                disabledDamageBuffs.Add(buffInfo);
+                onDamageBuffs.Remove(buffInfo);
             }
             else if (buffInfo.buff.ActivationStatus == ActivationStatus.AlwaysActive)
             {
@@ -141,6 +141,7 @@ public class TemporaryBuffs : MonoBehaviour
         activeBuffs.Add(buff);
     }
 
+    #region Apply Modifiers and Effectors
     private void ApplyModifiers(Buff buff)
     {
         foreach (Modifier modifier in buff.statsToBuff)
@@ -164,6 +165,7 @@ public class TemporaryBuffs : MonoBehaviour
             effect.Apply();
         }
     }
+    #endregion
 
     private void RemoveTimerBuffs()
     {

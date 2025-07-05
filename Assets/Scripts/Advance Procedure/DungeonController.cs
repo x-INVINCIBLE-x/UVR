@@ -91,6 +91,5 @@ public class DungeonController : MonoBehaviour
     {
         timedFormation.cubeFormationController.NextTransition();
         yield return new WaitForSeconds(timedFormation.duration);
-
     }
 }
