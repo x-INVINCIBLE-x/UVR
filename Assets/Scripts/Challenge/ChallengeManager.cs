@@ -3,13 +3,23 @@ using UnityEngine;
 
 public class ChallengeManager : MonoBehaviour
 {
+    public static ChallengeManager instance;
     public Challenge[] challenges;
     public List<int> possibleChallenges;
 
     private Challenge currentChallenge;
 
+    public event System.Action OnChallengeStart;
+    public event System.Action OnChallengeSuccess;
+    public event System.Action OnChallengeFail;
+
     private void Awake()
     {
+        if (instance == null)
+            instance = this;
+        else 
+            Destroy(gameObject);
+
         challenges = GetComponentsInChildren<Challenge>();
     }
 
@@ -47,6 +57,7 @@ public class ChallengeManager : MonoBehaviour
         }
 
         currentChallenge.StartChallenge();
+        OnChallengeStart?.Invoke();
     }
 
     public void ChooseChallenge()
@@ -70,7 +81,7 @@ public class ChallengeManager : MonoBehaviour
     {
         // Instantiate door and level upgrade
 
-        DungeonManager.Instance.HandleLevelCompletion();
+        OnChallengeSuccess?.Invoke();
 
         currentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
         currentChallenge.OnChallengeFailed -= HandleChallengeFailure;
@@ -79,7 +90,7 @@ public class ChallengeManager : MonoBehaviour
     private void HandleChallengeFailure()
     {
         // Exit Core from dungeon
-        DungeonManager.Instance.HandleLevelFailure();
+        OnChallengeFail?.Invoke();
         
         currentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
         currentChallenge.OnChallengeFailed -= HandleChallengeFailure;
@@ -91,5 +102,10 @@ public class ChallengeManager : MonoBehaviour
 
         for (int i = 0; i < challenges.Length; i++)
             possibleChallenges.Add(i);
+    }
+
+    private void OnDestroy()
+    {
+        EnemyEvents.OnElimination -= HandleChallengeStart;
     }
 }

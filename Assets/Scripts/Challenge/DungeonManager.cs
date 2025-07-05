@@ -92,6 +92,9 @@ public class DungeonManager : MonoBehaviour
                 buffLookup[group.difficultyLevel][buffBind.category] = buffBind.buffs;
             }
         }
+
+        ChallengeManager.instance.OnChallengeSuccess += HandleLevelCompletion;
+        ChallengeManager.instance.OnChallengeFail += HandleLevelFailure;
     }
 
     public void HandleLevelCompletion()
@@ -144,7 +147,6 @@ public class DungeonManager : MonoBehaviour
         transitionProvider.Initialize(dungeonScenes[sceneIndex]);
         transitionProvider.gameObject.SetActive(true);
     }
-
 
     public List<Buff> GetAvailableBuffs(BuffCategory category)
     {
@@ -202,4 +204,10 @@ public class DungeonManager : MonoBehaviour
     public void RegisterBuffPortal(DungeonBuffProvider buffProvider) => buffHandler.AddBuffProvider(buffProvider);
     public void RegisterSceneTransitionProvider(SceneTransitionProvider sceneTransitionProvider) =>
         transitionProvider = sceneTransitionProvider;
+
+    private void OnDestroy()
+    {
+        ChallengeManager.instance.OnChallengeSuccess -= HandleLevelCompletion;
+        ChallengeManager.instance.OnChallengeFail -= HandleLevelFailure;
+    }
 }

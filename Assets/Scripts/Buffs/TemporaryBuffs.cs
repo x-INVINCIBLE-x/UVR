@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +6,7 @@ public class TemporaryBuffs : MonoBehaviour
 {
     public List<Buff> oneOffBufffs = new(); // => Temporary Buff always working, Stats + 10
     public List<Buff> timerBuffs = new(); // => Activates after certain period of time, if always active then calls itself
-    public List<BuffInfo> onHitBuffs = new(); 
+    public List<BuffInfo> onHitBuffs = new();
     public List<BuffInfo> onDamageBuffs = new();
 
     public List<BuffInfo> disabledHitBuffs = new();
@@ -32,6 +31,22 @@ public class TemporaryBuffs : MonoBehaviour
     private void Start()
     {
         stats = PlayerManager.instance.Player.stats;
+
+        ChallengeManager.instance.OnChallengeStart += ActivateAllBuffs;
+        ChallengeManager.instance.OnChallengeSuccess += RemoveAllBuffs;
+        ChallengeManager.instance.OnChallengeFail += ClearAllBuffs;
+
+        stats.OnDamageTaken += HandleHit;
+    }
+
+    private void ActivateAllBuffs()
+    {
+        StartTimerBuff();
+        onDamageBuffs.AddRange(disabledDamageBuffs);
+        onHitBuffs.AddRange(disabledHitBuffs);
+
+        disabledDamageBuffs.Clear();
+        onHitBuffs.Clear();
     }
 
     public void AddBuff(Buff buff)
@@ -53,13 +68,13 @@ public class TemporaryBuffs : MonoBehaviour
         }
     }
 
-    private void HandleTimerBuff()
+    private void StartTimerBuff()
     {
         foreach (Buff buff in timerBuffs)
         {
             StartCoroutine(TimerBuffCoroutine(buff));
         }
-    } 
+    }
 
     private IEnumerator TimerBuffCoroutine(Buff buff)
     {
@@ -81,7 +96,7 @@ public class TemporaryBuffs : MonoBehaviour
     }
 
 
-    private void HandleHit()
+    private void HandleHit(float currentHealth, float maxHealth)
     {
         foreach (BuffInfo buffInfo in onHitBuffs)
         {
@@ -102,6 +117,7 @@ public class TemporaryBuffs : MonoBehaviour
         }
     }
 
+    //TODO: Handle Damage Buff Activation
     private void HandleDamage()
     {
         foreach (BuffInfo buffInfo in onDamageBuffs)
@@ -123,7 +139,6 @@ public class TemporaryBuffs : MonoBehaviour
         }
     }
 
-    // Applying buff, If a buff is active for starting of the level then starting remove routine too
     private void ActivateBuff(Buff buff)
     {
         if (buff.activeDuration > 0 && buff.ActivationType != ActivationType.Timer)
@@ -167,6 +182,23 @@ public class TemporaryBuffs : MonoBehaviour
     }
     #endregion
 
+    private void RemoveAllBuffs()
+    {
+        RemoveTimerBuffs();
+        RemoveBuffFrom(activeBuffs);
+        activeBuffs.Clear();
+    }
+
+    private void ClearAllBuffs()
+    {
+        RemoveAllBuffs();
+
+        oneOffBufffs.Clear();
+        onHitBuffs.Clear();
+        onDamageBuffs.Clear();
+        timerBuffs.Clear();
+    }
+
     private void RemoveTimerBuffs()
     {
         StopAllCoroutines();
@@ -179,7 +211,7 @@ public class TemporaryBuffs : MonoBehaviour
         RemoveBuff(buff);
     }
 
-    private void RemoveBuffFrom(List<Buff> buffs)
+    private void RemoveBuffFrom(IEnumerable<Buff> buffs)
     {
         foreach (Buff buff in buffs)
         {
@@ -205,11 +237,6 @@ public class TemporaryBuffs : MonoBehaviour
         }
     }
 
-    private void RemoveAllBuffs()
-    {
-
-    }
-
     private void AddOneOffBuff(Buff buff)
     {
         oneOffBufffs.Add(buff);
@@ -219,4 +246,11 @@ public class TemporaryBuffs : MonoBehaviour
     private void AddTimerBuff(Buff buff) => timerBuffs.Add(buff);
     private void AddHitBuff(Buff buff) => onHitBuffs.Add(new BuffInfo(buff, -10f));
     private void AddDamageBuff(Buff buff) => onDamageBuffs.Add(new BuffInfo(buff, -10f));
+
+    private void OnDestroy()
+    {
+        ChallengeManager.instance.OnChallengeStart -= ActivateAllBuffs;
+        ChallengeManager.instance.OnChallengeSuccess -= RemoveAllBuffs;
+        ChallengeManager.instance.OnChallengeFail -= ClearAllBuffs;
+    }
 }
