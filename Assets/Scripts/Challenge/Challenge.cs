@@ -10,7 +10,7 @@ public abstract class Challenge: MonoBehaviour
         InProgress,
         Failed,
     }
-    [field: SerializeField] public string ChallengeName { get; private set; }
+    [field: SerializeField] public string ChallengeName { get; protected set; }
     protected ChallengeStatus status;
 
     public event System.Action OnChallengeCompleted;

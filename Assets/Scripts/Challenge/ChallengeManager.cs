@@ -9,7 +9,7 @@ public class ChallengeManager : MonoBehaviour
 
     private Challenge currentChallenge;
 
-    public event System.Action OnChallengeStart;
+    public event System.Action<string> OnChallengeStart;
     public event System.Action OnChallengeSuccess;
     public event System.Action OnChallengeFail;
 
@@ -57,7 +57,7 @@ public class ChallengeManager : MonoBehaviour
         }
 
         currentChallenge.StartChallenge();
-        OnChallengeStart?.Invoke();
+        OnChallengeStart?.Invoke(currentChallenge.ChallengeName);
     }
 
     public void ChooseChallenge()

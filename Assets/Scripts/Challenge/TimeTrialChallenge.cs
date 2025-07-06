@@ -27,6 +27,11 @@ public class TimeTrialChallenge : Challenge
     private int currentAmount = 0;
     private Coroutine currentRoutine;
 
+    private void Awake()
+    {
+        ChallengeName = "TimeTrial";
+    }
+
     public override void InitializeChallenge()
     {
         status = ChallengeStatus.InProgress;

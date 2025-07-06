@@ -16,8 +16,16 @@ public enum FormationType
     // … add more as you create new generators …
 }
 
-public class CubeFormationController : MonoBehaviour
+// Skip Index Number ZERO
+public class DynamicFormationController : FormationProvider
 {
+    [System.Serializable]
+    public class FormationContainer
+    {
+        public int difficulty = 1;
+        public List<FormationType> formationTypes;
+    }
+
     [Header("General")]
     public GameObject cubePrefab;
     public int cubeCount = 300;
@@ -89,13 +97,7 @@ public class CubeFormationController : MonoBehaviour
 
     // 2) Expose a public formations of FormationType so you can pick the sequence in Inspector
     [Header("Pick Your Sequence of Formations")]
-    public List<FormationType> formationSequence = new List<FormationType>()
-    {
-        FormationType.Sphere,
-        FormationType.Arrow,
-        FormationType.Clock,
-        FormationType.JapaneseUmbrella
-    };
+    public List<FormationContainer> formationSequence = new List<FormationContainer>();
 
     // Internal formations of delegate pointers (built at runtime from the enum formations)
     private List<FormationGen> formations = new List<FormationGen>();
@@ -123,7 +125,17 @@ public class CubeFormationController : MonoBehaviour
     public event System.Action OnUnwrapStart;
     public event System.Action OnUnwrapComplete;
 
+    private int difficultyLevel = 1;
+
     void Start()
+    {
+        difficultyLevel = DungeonManager.Instance.DifficultyLevel;
+        Initialize();
+
+        StartFormation();
+    }
+
+    private void Initialize()
     {
         // Initialize per‐cube arrays
         orbitAngles = new float[cubeCount];
@@ -150,7 +162,7 @@ public class CubeFormationController : MonoBehaviour
 
         // Build the internal “formations” formations based on the enum formations from Inspector
         formations.Clear();
-        foreach (var type in formationSequence)
+        foreach (var type in formationSequence[difficultyLevel].formationTypes)
         {
             switch (type)
             {
@@ -179,7 +191,10 @@ public class CubeFormationController : MonoBehaviour
                     // If you add new FormationType entries, handle them here…
             }
         }
+    }
 
+    private void StartFormation()
+    {
         // If the user left the Inspector formations empty, at least default to Sphere
         if (formations.Count == 0)
         {
@@ -209,7 +224,7 @@ public class CubeFormationController : MonoBehaviour
         }
     }
 
-    public void NextTransition()
+    public override void NextTransition()
     {
         currentFormationIndex = (currentFormationIndex + 1) % formations.Count;
         StartCoroutine(FormationToVortexThenToNextFormation());
@@ -376,7 +391,7 @@ public class CubeFormationController : MonoBehaviour
         formationCenter = nextCenter;
         finalPositions = nextFormationPositions;
 
-        OnFormationComplete?.Invoke(formationSequence[currentFormationIndex]);
+        OnFormationComplete?.Invoke(formationSequence[difficultyLevel].formationTypes[currentFormationIndex]);
         isAnimating = false;
     }
 
@@ -465,7 +480,7 @@ public class CubeFormationController : MonoBehaviour
             yield return null;
         }
 
-        OnFormationComplete?.Invoke(formationSequence[currentFormationIndex]);
+        OnFormationComplete?.Invoke(formationSequence[difficultyLevel].formationTypes[currentFormationIndex]);
         isAnimating = false;
     }
 
@@ -481,7 +496,7 @@ public class CubeFormationController : MonoBehaviour
         {
             float phi = Mathf.Acos(1 - 2f * (i + 0.5f) / cubeCount);
             float theta = Mathf.PI * (1 + Mathf.Sqrt(5f)) * (i + 0.5f);
-            positions[i] = new Vector3(
+            positions[i] = transform.position + new Vector3(
                 r * Mathf.Sin(phi) * Mathf.Cos(theta),
                 r * Mathf.Sin(phi) * Mathf.Sin(theta),
                 r * Mathf.Cos(phi)
@@ -500,7 +515,7 @@ public class CubeFormationController : MonoBehaviour
         for (int i = 0; i < cubeCount; i++)
         {
             float angleRad = Mathf.Deg2Rad * angleStep * i;
-            positions[i] = new Vector3(
+            positions[i] = transform.position + new Vector3(
                 Mathf.Cos(angleRad) * r,
                 0f,
                 Mathf.Sin(angleRad) * r
@@ -546,7 +561,7 @@ public class CubeFormationController : MonoBehaviour
         int placed = 0;
         for (int y = shaftStartY; y <= shaftEndY && placed < shaftCount; y++)
         {
-            positions[placed++] = new Vector3((centerX - cx), (y - cy), 0f);
+            positions[placed++] = transform.position + new Vector3((centerX - cx), (y - cy), 0f);
         }
 
         int headPlaced = 0;
@@ -657,7 +672,7 @@ public class CubeFormationController : MonoBehaviour
                     float x = Mathf.Cos(angle) * radialDistance;
                     float z = Mathf.Sin(angle) * radialDistance;
 
-                    positions[idx++] = new Vector3(x, 0f, z);
+                    positions[idx++] = transform.position + new Vector3(x, 0f, z);
                 }
             }
         }
@@ -702,7 +717,7 @@ public class CubeFormationController : MonoBehaviour
             float ribFactor = Mathf.Clamp01(1f - (bestDelta / (Mathf.PI / ribCount)));
             Vector3 ribNudge = canopyPoint.normalized * (ribStrength * ribFactor * r);
             Vector3 finalCanopyPoint = canopyPoint + ribNudge;
-            positions[i] = finalCanopyPoint;
+            positions[i] = transform.position + finalCanopyPoint;
 
             if (finalCanopyPoint.y < minCanopyY)
                 minCanopyY = finalCanopyPoint.y;
@@ -712,7 +727,7 @@ public class CubeFormationController : MonoBehaviour
         {
             float t = (handleCount == 1 ? 1f : (float)j / (handleCount - 1));
             float y = Mathf.Lerp(minCanopyY, minCanopyY - handleLength, t);
-            positions[canopyCount + j] = new Vector3(0f, y, 0f);
+            positions[canopyCount + j] = transform.position + new Vector3(0f, y, 0f);
         }
 
         return positions;
@@ -782,8 +797,8 @@ public class CubeFormationController : MonoBehaviour
 
             float xRaw = point2D.x * 0.5f;
 
-            Vector3 rightPos = new Vector3(xRaw, 0f, zRaw);
-            Vector3 leftPos = new Vector3(-xRaw, 0f, zRaw);
+            Vector3 rightPos = transform.position + new Vector3(xRaw, 0f, zRaw);
+            Vector3 leftPos = transform.position + new Vector3(-xRaw, 0f, zRaw);
 
             if (idx < cubeCount) positions[idx++] = rightPos;
             if (idx < cubeCount) positions[idx++] = leftPos;
@@ -795,7 +810,7 @@ public class CubeFormationController : MonoBehaviour
             // Original top tip was at point2D.y = +R. 
             // rawZ_top = (R * 0.5) + (R * 0.5) = R, 
             // then zRaw = R - R = 0 → the very bottom of our [0…R] band.
-            positions[idx++] = new Vector3(0f, 0f, 0f);
+            positions[idx++] = transform.position + new Vector3(0f, 0f, 0f);
         }
 
         // 7) Apply jitter if you like:
@@ -833,7 +848,7 @@ public class CubeFormationController : MonoBehaviour
             float angle = (float)i / outlineCount * Mathf.PI * 2f;
             float x = Mathf.Pow(Mathf.Abs(Mathf.Cos(angle)), 2f / eyeSharpness) * eyeWidth * Mathf.Sign(Mathf.Cos(angle));
             float z = Mathf.Pow(Mathf.Abs(Mathf.Sin(angle)), 2f / eyelidCurve) * eyeHeight * Mathf.Sign(Mathf.Sin(angle));
-            positions[index++] = new Vector3(x, 0, z);
+            positions[index++] = transform.position + new Vector3(x, 0, z);
         }
 
         // 2. Cosmic Iris (Spiral pattern with golden ratio)
@@ -847,7 +862,7 @@ public class CubeFormationController : MonoBehaviour
             float armOffset = (i % spiralArms) * (Mathf.PI * 2f / spiralArms);
             float spiralDensity = 1f + Mathf.Sin(angle * 0.5f + armOffset) * 0.3f;
 
-            positions[index++] = new Vector3(
+            positions[index++] = transform.position + new Vector3(
                 Mathf.Cos(angle) * radius * spiralDensity,
                 0,
                 Mathf.Sin(angle) * radius * spiralDensity * 0.8f
@@ -863,7 +878,7 @@ public class CubeFormationController : MonoBehaviour
             for (int a = 0; a < perRing * (r + 1); a++)
             {
                 float angle = a * Mathf.PI * 2f / (perRing * (r + 1));
-                positions[index++] = new Vector3(
+                positions[index++] = transform.position + new Vector3(
                     Mathf.Cos(angle) * ringRadius,
                     0,
                     Mathf.Sin(angle) * ringRadius * 0.6f
@@ -886,7 +901,7 @@ public class CubeFormationController : MonoBehaviour
                 float angle = baseAngle + Mathf.Sin(progress * Mathf.PI * 4f + noiseOffset) * 0.5f;
                 float radius = flameRadius * progress * (1f + Mathf.PerlinNoise(t, c * 0.1f) * 0.3f);
 
-                positions[index++] = new Vector3(
+                positions[index++] = transform.position + new Vector3(
                     Mathf.Cos(angle) * radius,
                     0,
                     Mathf.Sin(angle) * radius * 0.7f
@@ -902,7 +917,7 @@ public class CubeFormationController : MonoBehaviour
             float radius = flameRadius * 1.1f + Random.Range(-0.2f, 0.2f) * formationRadius;
             float yOffset = Mathf.Sin(Time.time * 2f + i) * 0.3f * formationRadius;
 
-            positions[index++] = new Vector3(
+            positions[index++] = transform.position + new Vector3(
                 Mathf.Cos(angle) * radius,
                 yOffset,
                 Mathf.Sin(angle) * radius

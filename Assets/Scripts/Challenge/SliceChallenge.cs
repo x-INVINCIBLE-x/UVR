@@ -8,6 +8,11 @@ public class SliceChallenge : Challenge
 
     private int activeCrystals;
 
+    private void Awake()
+    {
+        ChallengeName = "Slice";
+    }
+
     public override void InitializeChallenge()
     {
         status = ChallengeStatus.InProgress;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class FomationConsequence : MonoBehaviour
 {
-    [SerializeField] private CubeFormationController cubeFormationController;
+    [SerializeField] private DynamicFormationController cubeFormationController;
     [SerializeField] protected FormationType type;
 
     protected virtual void Start()

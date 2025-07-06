@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 982593799265618386}
   - component: {fileID: 1818271857668096679}
   m_Layer: 0
-  m_Name: DungeonController
+  m_Name: Formations Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -493,28 +493,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSpawners: []
-  timedForamtions: []
+  timedForamtions:
+  - cubeFormationController: {fileID: 5737115565858695821}
+    duration: 10
+  - cubeFormationController: {fileID: 5748234482282748767}
+    duration: 12
+  - cubeFormationController: {fileID: 3526463747834264901}
+    duration: 15
+  - cubeFormationController: {fileID: 6885477660519354693}
+    duration: 20
   formations:
   - formationName: Crater
-    formaationInfo:
-    - layout: {fileID: 7653185549274153574}
-      position: {x: 500, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      duration: 5
+    formationInfo:
     - layout: {fileID: 9038558215129218732}
-      position: {x: -500, y: 0, z: 0}
+      position: {x: 5000, y: 5000, z: 0}
       rotation: {x: 0, y: 0, z: 0}
-      duration: 5
+      duration: 10
+    - layout: {fileID: 5937283248708782360}
+      position: {x: 5000, y: 5000, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      duration: 10
   - formationName: Water
-    formaationInfo:
-    - layout: {fileID: 7653185549274153574}
-      position: {x: 500, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      duration: 5
+    formationInfo:
     - layout: {fileID: 9038558215129218732}
-      position: {x: -500, y: 0, z: 0}
+      position: {x: 5000, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
-      duration: 5
+      duration: 0
+    - layout: {fileID: 5937283248708782360}
+      position: {x: 5000, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      duration: 0
 --- !u!1 &7255974970426631854
 GameObject:
   m_ObjectHideFlags: 0

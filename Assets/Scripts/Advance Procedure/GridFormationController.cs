@@ -33,8 +33,14 @@ public class FormationConfig
     public bool jitterY = true;
 }
 
-[ExecuteInEditMode]
-public class GridCuboidSpawner : MonoBehaviour
+[System.Serializable]
+public class FormationContainer
+{
+    public int difficultyLevel;
+    public List<FormationConfig> config;
+}
+
+public class GridFormationController : FormationProvider
 {
     [Header("Radius Based Prefabs")]
     public List<RadiusBasedPrefab> radiusPrefabs = new List<RadiusBasedPrefab>();
@@ -50,8 +56,7 @@ public class GridCuboidSpawner : MonoBehaviour
     [Header("Sine")] public float sineAmplitude = 2f, sineFrequency = 2f;
     [Header("Custom Wave")] public List<CustomWaveSettings> customWaveSettings = new List<CustomWaveSettings>();
     [Header("Formation Sequence")]
-    public List<FormationConfig> formations = new List<FormationConfig>
-    { new FormationConfig{type=FormationTypeGround.Crater}, new FormationConfig{type=FormationTypeGround.Sine}, new FormationConfig{type=FormationTypeGround.CustomWave} };
+    public List<FormationContainer> formations = new List<FormationContainer>();
     public float transitionDuration = 3f;
 
     private List<Transform> instances = new List<Transform>();
@@ -61,23 +66,33 @@ public class GridCuboidSpawner : MonoBehaviour
 
     private float gridSpanX, gridSpanZ; private Vector3 gridCenter;
     private int currentIndex = 0; private bool isTransitioning = false; private float timer = 0f;
+    private int difficultyLevel = 1;
 
     void Start()
     {
         if (!Application.isPlaying) return;
+
+        difficultyLevel = DungeonManager.Instance.DifficultyLevel;
+        //DungeonManager.Instance.OnDifficultyChange += HandleDifficultyChange;
         InitializeFormations();
         SpawnFormation(currentIndex);
     }
+
+    //private void HandleDifficultyChange(int difficultyLevel)
+    //{
+    //    this.difficultyLevel = difficultyLevel;
+    //    currentIndex = 0;
+    //    InitializeFormations();
+    //}
+
+    //public void StartFormation() => SpawnFormation(currentIndex);
 
     void Update()
     {
         if (!Application.isPlaying || instances.Count == 0 || formations.Count < 2) return;
         if (!isTransitioning && Input.GetKeyDown(KeyCode.Space))
         {
-            isTransitioning = true; timer = 0f;
-            transitionStart = new List<Vector3>(GetCurrentPositions());
-            int next = (currentIndex + 1) % formations.Count;
-            transitionTarget = new List<Vector3>(positionsPerFormation[next]);
+            NextTransition();
         }
         if (isTransitioning)
         {
@@ -88,10 +103,19 @@ public class GridCuboidSpawner : MonoBehaviour
             if (timer >= transitionDuration)
             {
                 isTransitioning = false;
-                currentIndex = (currentIndex + 1) % formations.Count;
+                currentIndex = (currentIndex + 1) % formations[difficultyLevel].config.Count;
             }
         }
     }
+
+    public override void NextTransition()
+    {
+        isTransitioning = true; timer = 0f;
+        transitionStart = new List<Vector3>(GetCurrentPositions());
+        int next = (currentIndex + 1) % formations[difficultyLevel].config.Count;
+        transitionTarget = new List<Vector3>(positionsPerFormation[next]);
+    }
+
     void InitializeFormations()
     {
         //── compute spans (unchanged) ──
@@ -127,9 +151,9 @@ public class GridCuboidSpawner : MonoBehaviour
 
         positionsPerFormation.Clear();
 
-        for (int f = 0; f < formations.Count; f++)
+        for (int f = 0; f < formations[difficultyLevel].config.Count; f++)
         {
-            var config = formations[f];
+            var config = formations[difficultyLevel].config[f];
             float safeY = maxJitterY * (1f - density);
 
             // 1) Build all grid positions (with frozen XZ jitter, variable Y)
@@ -169,7 +193,7 @@ public class GridCuboidSpawner : MonoBehaviour
                 if (rp.centerElement != null)
                 {
                     Vector3 centerXZ = gridCenter + rp.centerOffset;
-                    float y = EvaluateFormation(formations[f].type, centerXZ, f);
+                    float y = EvaluateFormation(formations[difficultyLevel].config[f].type, centerXZ, f);
                     // (No Y‐jitter here—keeps matching simple.)
                     list.Add(new Vector3(centerXZ.x, y, centerXZ.z));
                 }
@@ -248,7 +272,7 @@ public class GridCuboidSpawner : MonoBehaviour
     float EvaluateSine(Vector3 w) { float nx = (w.x - transform.position.x) / gridSpanX; return Mathf.Sin(nx * Mathf.PI * sineFrequency) * sineAmplitude; }
     float EvaluateCustomWave(Vector3 w, int idx)
     {
-        int occ = 0; for (int i = 0; i <= idx; i++) if (formations[i].type == FormationTypeGround.CustomWave) occ++; int iC = Mathf.Clamp(occ - 1, 0, customWaveSettings.Count - 1);
+        int occ = 0; for (int i = 0; i <= idx; i++) if (formations[difficultyLevel].config[i].type == FormationTypeGround.CustomWave) occ++; int iC = Mathf.Clamp(occ - 1, 0, customWaveSettings.Count - 1);
         var s = customWaveSettings[iC]; float y = 0f;
         if (s.axis == WaveAxis.X || s.axis == WaveAxis.Both) { float tx = (w.x - transform.position.x) / gridSpanX; y += s.curve.Evaluate(tx); }
         if (s.axis == WaveAxis.Z || s.axis == WaveAxis.Both) { float tz = (w.z - transform.position.z) / gridSpanZ; y += s.curve.Evaluate(tz); }
@@ -334,7 +358,7 @@ public class GridCuboidSpawner : MonoBehaviour
         Vector3 center = gridCenter;
         float width = gridSpanX;
         float depth = gridSpanZ;
-        Vector3 bottomLeft = new Vector3(center.x - width / 2f, transform.position.y, center.z - depth / 2f);
+        Vector3 bottomLeft = transform.position + new Vector3(center.x - width / 2f, 0, center.z - depth / 2f);
         Vector3 bottomRight = bottomLeft + new Vector3(width, 0, 0);
         Vector3 topLeft = bottomLeft + new Vector3(0, 0, depth);
         Vector3 topRight = bottomLeft + new Vector3(width, 0, depth);
@@ -350,7 +374,7 @@ public class GridCuboidSpawner : MonoBehaviour
             foreach (var rp in radiusPrefabs)
             {
                 float radius = rp.radius;
-                Vector3 customCenter = gridCenter + rp.centerOffset;
+                Vector3 customCenter = transform.position + gridCenter + rp.centerOffset;
 
                 int segments = 64;
                 float angleStep = 360f / segments;

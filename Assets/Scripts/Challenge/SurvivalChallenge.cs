@@ -10,9 +10,15 @@ public class SurvivalChallenge : Challenge
     private Coroutine currentRoutine;
     private const float TickTime = 1f;
 
+    private void Awake()
+    {
+        ChallengeName = "Survival";
+    }
+
     public override void InitializeChallenge()
     {
-        PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
+        if (PlayerManager.instance != null)
+            PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
 
         status = ChallengeStatus.InProgress;
         timer = survivalDuration;
@@ -62,5 +68,11 @@ public class SurvivalChallenge : Challenge
         }
 
         currentRoutine = null;
+    }
+
+    private void OnDestroy()
+    {
+        if (PlayerManager.instance != null)
+            PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
     }
 }

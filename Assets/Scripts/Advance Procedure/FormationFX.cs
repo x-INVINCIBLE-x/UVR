@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FormationFX : MonoBehaviour
 {
-    [SerializeField] private CubeFormationController cubeFormationController;
+    [SerializeField] private DynamicFormationController cubeFormationController;
 
     private void Start()
     {

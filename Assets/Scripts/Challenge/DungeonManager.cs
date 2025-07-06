@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(DungeonBuffHandler))]
 public class DungeonManager : MonoBehaviour
@@ -19,7 +18,7 @@ public class DungeonManager : MonoBehaviour
     [field: SerializeField] private int levelsToComplete = 2;
     private int levelsTillScale = 0;
 
-    [SerializeField] private SceneReference cityScene; 
+    [SerializeField] private SceneReference cityScene;
     [SerializeField] private SceneTransitionProvider transitionProvider;
 
     [SerializeField] private SceneReference[] dungeonScenes;
@@ -65,18 +64,18 @@ public class DungeonManager : MonoBehaviour
 
         buffHandler = GetComponent<DungeonBuffHandler>();
         ResetAvailbleScenes();
-        DifficultyLevel = 1;
+        //DifficultyLevel = 1;
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.U))
-    //    {
-    //        DifficultyLevel++;
-    //        Instantiate(tempEnemy, transform.position, Quaternion.identity);
-    //        OnDifficultyChange?.Invoke(DifficultyLevel);
-    //    }
-    //}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            DifficultyLevel++;
+            //Instantiate(tempEnemy, transform.position, Quaternion.identity);
+            OnDifficultyChange?.Invoke(DifficultyLevel);
+        }
+    }
 
     private void Start()
     {
@@ -93,8 +92,13 @@ public class DungeonManager : MonoBehaviour
             }
         }
 
-        ChallengeManager.instance.OnChallengeSuccess += HandleLevelCompletion;
-        ChallengeManager.instance.OnChallengeFail += HandleLevelFailure;
+        ChallengeManager challengeManager = ChallengeManager.instance;
+
+        if (challengeManager != null)
+        {
+            ChallengeManager.instance.OnChallengeSuccess += HandleLevelCompletion;
+            ChallengeManager.instance.OnChallengeFail += HandleLevelFailure;
+        }
     }
 
     public void HandleLevelCompletion()
@@ -207,7 +211,10 @@ public class DungeonManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        ChallengeManager.instance.OnChallengeSuccess -= HandleLevelCompletion;
-        ChallengeManager.instance.OnChallengeFail -= HandleLevelFailure;
+        if (ChallengeManager.instance != null)
+        {
+            ChallengeManager.instance.OnChallengeSuccess -= HandleLevelCompletion;
+            ChallengeManager.instance.OnChallengeFail -= HandleLevelFailure;
+        }
     }
 }
