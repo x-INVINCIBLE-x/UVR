@@ -50,6 +50,14 @@ public class SceneTransitionProvider : MonoBehaviour
             DungeonManager.Instance.RegisterSceneTransitionProvider(this);
             gameObject.SetActive(false);
         }
+
+        GameObject core = FindRootCore();
+        if (core != null)
+        {
+            Debug.Log("Found");
+        }
+        else
+            Debug.Log("Core not found in root objects.");
     }
 
     public void Initialize(SceneReference newTargetScene, int transitionStayDuration = 5, SceneReference newTransitionReference = null)
@@ -72,6 +80,7 @@ public class SceneTransitionProvider : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         CoroutineManager.instance.StartCoroutine(TransitionRoutine());
+
         //StartCoroutine(TransitionRoutine());
     }
 
@@ -99,6 +108,10 @@ public class SceneTransitionProvider : MonoBehaviour
         yield return new WaitUntil(() => loadTransition.isDone);
 
         Scene transitionLoadedScene = SceneManager.GetSceneByName(currentTransitionScene.SceneName);
+
+        if (Core == null)
+            FindRootCore();
+
         SceneManager.MoveGameObjectToScene(Core, transitionLoadedScene);
         SceneManager.SetActiveScene(transitionLoadedScene);
 
@@ -185,4 +198,20 @@ public class SceneTransitionProvider : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    GameObject FindRootCore()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        GameObject[] rootObjects = currentScene.GetRootGameObjects();
+
+        foreach (GameObject obj in rootObjects)
+        {
+            if (obj.name == "Core")
+                return obj;
+        }
+
+        Debug.Log("Cant find core in " + currentScene.name);
+        return null;
+    }
+
 }

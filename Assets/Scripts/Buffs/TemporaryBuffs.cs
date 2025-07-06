@@ -31,7 +31,11 @@ public class TemporaryBuffs : MonoBehaviour
     private void Start()
     {
         stats = PlayerManager.instance.Player.stats;
+        InitializeDungeonSetup();
+    }
 
+    private void InitializeDungeonSetup()
+    {
         ChallengeManager.instance.OnChallengeStart += ActivateAllBuffs;
         ChallengeManager.instance.OnChallengeSuccess += RemoveAllBuffs;
         ChallengeManager.instance.OnChallengeFail += ClearAllBuffs;

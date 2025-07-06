@@ -47,6 +47,8 @@ public class FormationHandler : MonoBehaviour
             ChallengeManager.instance.OnChallengeSuccess += HandleLevelEnd;
             ChallengeManager.instance.OnChallengeFail += HandleLevelEnd;
         }
+
+        FormationActiveStatusTo(false);
     }
 
     private void HandleLevelEnd()
@@ -72,6 +74,7 @@ public class FormationHandler : MonoBehaviour
         {
             for (int i = 0; i < gridSpawners.Length; i++)
             {
+                Debug.Log("Grid Routine");
                 StartCoroutine(StartTimedFormationRoutine(gridSpawners[i], gridChangeDuration));
             }
             
@@ -153,6 +156,8 @@ public class FormationHandler : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(duration);
+            Debug.Log("Grid Routine Restarty");
+
             timedFormation.NextTransition();
         }
     }
