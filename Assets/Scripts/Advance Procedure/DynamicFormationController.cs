@@ -136,6 +136,12 @@ public class DynamicFormationController : FormationProvider
         }
     }
 #endif
+
+    private void OnEnable()
+    {
+        FormationConsequenceManager.Register(this);
+    }
+
     void Start()
     {
         difficultyLevel = DungeonManager.Instance.DifficultyLevel;
@@ -965,5 +971,10 @@ public class DynamicFormationController : FormationProvider
             );
         }
         return positions;
+    }
+
+    private void OnDisable()
+    {
+        FormationConsequenceManager.Unregister(this);
     }
 }
