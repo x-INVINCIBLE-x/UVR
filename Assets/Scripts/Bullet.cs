@@ -69,14 +69,14 @@ public class Bullet : MonoBehaviour
     protected void FadeTrailIfNeeded()
     {
         if (Vector3.Distance(startPosition, transform.position) > flyDistance - 1.5f)
-            trailRenderer.time -= 2 * Time.deltaTime; // magic number 2 is choosen trhou testing
+            trailRenderer.time -= 2 * Time.deltaTime; // magic number 2 is choosen throu testing
     }
 
 
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (FriendlyFare() == false)
+        if (FriendlyFire() == false)
         {
             // Use a bitwise AND to check if the collsion layer is in the allyLayerMask
             if ((allyLayerMask.value & (1 << collision.gameObject.layer)) > 0)
@@ -115,5 +115,5 @@ public class Bullet : MonoBehaviour
         ObjectPool.instance.ReturnObject(newImpactFx, 1);
     }
 
-    private bool FriendlyFare() => GameManager.instance.friendlyFire;
+    private bool FriendlyFire() => GameManager.instance.friendlyFire;
 }

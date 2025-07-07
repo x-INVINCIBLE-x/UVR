@@ -174,14 +174,14 @@ MonoBehaviour:
     amplitude: 1000
     axis: 1
   formations:
-  - difficultyLevel: 0
-    config: []
   - difficultyLevel: 1
+    config: []
+  - difficultyLevel: 2
     config:
     - type: 0
       jitterX: 0
       jitterY: 0
-  - difficultyLevel: 2
+  - difficultyLevel: 3
     config:
     - type: 2
       jitterX: 0
@@ -301,11 +301,11 @@ MonoBehaviour:
   gridWidthOverride: 12000
   gridHeightOverride: 10000
   formationSequence:
-  - difficulty: 0
-    formationTypes: 
   - difficulty: 1
-    formationTypes: 02000000000000000300000001000000
+    formationTypes: 
   - difficulty: 2
+    formationTypes: 02000000000000000300000001000000
+  - difficulty: 3
     formationTypes: 00000000020000000300000001000000
 --- !u!1 &3303866009924219234
 GameObject:
@@ -382,11 +382,11 @@ MonoBehaviour:
   gridWidthOverride: 12000
   gridHeightOverride: 10000
   formationSequence:
-  - difficulty: 0
-    formationTypes: 
   - difficulty: 1
-    formationTypes: 05000000000000000100000004000000
+    formationTypes: 
   - difficulty: 2
+    formationTypes: 05000000000000000100000004000000
+  - difficulty: 3
     formationTypes: 00000000050000000100000004000000
 --- !u!1 &5113952432440170073
 GameObject:
@@ -463,11 +463,11 @@ MonoBehaviour:
   gridWidthOverride: 12000
   gridHeightOverride: 10000
   formationSequence:
-  - difficulty: 0
-    formationTypes: 
   - difficulty: 1
-    formationTypes: 05000000000000000100000004000000
+    formationTypes: 
   - difficulty: 2
+    formationTypes: 05000000000000000100000004000000
+  - difficulty: 3
     formationTypes: 00000000050000000100000004000000
 --- !u!1 &5741422989510567793
 GameObject:
@@ -518,32 +518,44 @@ MonoBehaviour:
   gridChangeDuration: 5
   timedForamtions:
   - cubeFormationController: {fileID: 5748234482282748767}
-    duration: 25
+    duration: 60
   - cubeFormationController: {fileID: 3526463747834264901}
-    duration: 35
+    duration: 60
   - cubeFormationController: {fileID: 6885477660519354693}
-    duration: 45
-  formations:
-  - formationName: Crater
-    formationInfo:
-    - layout: {fileID: 9038558215129218732}
-      position: {x: 5000, y: 5000, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      duration: 10
-    - layout: {fileID: 5937283248708782360}
-      position: {x: 5000, y: 5000, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      duration: 10
-  - formationName: Water
-    formationInfo:
-    - layout: {fileID: 9038558215129218732}
-      position: {x: 5000, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      duration: 0
-    - layout: {fileID: 5937283248708782360}
-      position: {x: 5000, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      duration: 0
+    duration: 60
+  scalingFormations:
+  - difficultyLevel: 1
+    formations:
+    - formationName: 
+      formationNumber: 1
+      formationInfo:
+      - layout: {fileID: 9038558215129218732}
+        position: {x: 1000, y: 1000, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        duration: 0
+    - formationName: 
+      formationNumber: 2
+      formationInfo:
+      - layout: {fileID: 6495539339580959240}
+        position: {x: 1000, y: 1000, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        duration: 0
+  - difficultyLevel: 2
+    formations:
+    - formationName: 
+      formationNumber: 1
+      formationInfo:
+      - layout: {fileID: 9038558215129218732}
+        position: {x: 1000, y: 1000, z: 0}
+        rotation: {x: 10, y: 10, z: 10}
+        duration: 0
+    - formationName: 
+      formationNumber: 2
+      formationInfo:
+      - layout: {fileID: 6495539339580959240}
+        position: {x: 2000, y: 2000, z: 0}
+        rotation: {x: 50, y: 40, z: 50}
+        duration: 0
 --- !u!1 &7255974970426631854
 GameObject:
   m_ObjectHideFlags: 0

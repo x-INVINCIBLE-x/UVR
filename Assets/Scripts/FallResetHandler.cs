@@ -1,19 +1,22 @@
-using System.Collections;
+ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.GPUSort;
 
 public class FallResetHandler : MonoBehaviour
 {
     private Fader fader;
+    private LayerMask layerMask;
 
     private void Awake()
     {
         fader = GameObject.Find("Fader_Canvas").GetComponentInChildren<Fader>();
+        layerMask = LayerMask.GetMask("Player");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if ((layerMask & (1 << other.gameObject.layer)) != 0)
         {
             StartCoroutine(ApplyFade());
         }

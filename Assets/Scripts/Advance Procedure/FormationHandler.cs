@@ -18,8 +18,16 @@ public class FormationHandler : MonoBehaviour
     {
 #if UNITY_EDITOR
         public string formationName;
+        public int formationNumber;
 #endif
         public FormationInfo[] formationInfo;
+    }
+
+    [System.Serializable]
+    public class ScalingFormation
+    {
+        public int difficultyLevel;
+        public Formation[] formations;
     }
 
     [System.Serializable]
@@ -33,9 +41,25 @@ public class FormationHandler : MonoBehaviour
     [SerializeField] private int gridChangeDuration = 60;
 
     public TimedFormation[] timedForamtions;
-    public Formation[] formations;
+    public ScalingFormation[] scalingFormations;
 
     private int index;
+    private int currentDifficulty;
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        for (int i = 0; i < scalingFormations.Length; i++)
+        {
+            scalingFormations[i].difficultyLevel = i + 1;
+
+            for (int j = 0; j < scalingFormations[i].formations.Length; j++)
+            {
+                scalingFormations[i].formations[j].formationNumber = j + 1;
+            }
+        }
+    }
+#endif
 
     private void Start()
     {
@@ -48,7 +72,19 @@ public class FormationHandler : MonoBehaviour
             ChallengeManager.instance.OnChallengeFail += HandleLevelEnd;
         }
 
-        FormationActiveStatusTo(false);
+        if (DungeonManager.Instance != null)
+        {
+            currentDifficulty = DungeonManager.Instance.DifficultyLevel - 1;
+
+            if (currentDifficulty >= scalingFormations.Length)
+            {
+                Debug.Log("<color=cyan>  " + gameObject.name + "</color> <color=green> Does Not have INFO about this Difficulty Level. Reverting to LAST possible DIFFICULTY </color>");
+                currentDifficulty = scalingFormations.Length - 1;
+            }
+        }
+
+        //FormationActiveStatusTo(false);
+        CloseAllTimedFormation();
     }
 
     private void HandleLevelEnd()
@@ -94,12 +130,20 @@ public class FormationHandler : MonoBehaviour
 
     private void FormationActiveStatusTo(bool status)
     {
-        for (int i = 0; i < formations.Length; i++)
+        foreach (Formation formation in scalingFormations[currentDifficulty].formations)
         {
-            for (int j = 0; j < formations[i].formationInfo.Length; j++)
+            for (int j = 0; j < formation.formationInfo.Length; j++)
             {
-                formations[i].formationInfo[j].layout.gameObject.SetActive(status);
+                formation.formationInfo[j].layout.gameObject.SetActive(status);
             }
+        }
+    }
+
+    private void CloseAllTimedFormation()
+    {
+        for (int i = 0; i < timedForamtions.Length; i++)
+        {
+            timedForamtions[i].cubeFormationController.gameObject.SetActive(false);
         }
     }
 
@@ -110,15 +154,16 @@ public class FormationHandler : MonoBehaviour
             UpdateFormation();
         }
     }
+
     public void UpdateFormation()
     {
-        if (index >= formations.Length)
+        if (index >= scalingFormations.Length)
         {
             Debug.Log("Reached End of Formations");
             return;
         }
 
-        Formation nextFormation = formations[index++];
+        Formation nextFormation = scalingFormations[currentDifficulty].formations[index++];
 
         foreach (FormationInfo formationInfo in nextFormation.formationInfo)
         {

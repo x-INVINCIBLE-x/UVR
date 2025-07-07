@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using static UnityEngine.Rendering.HableCurve;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class WeightedPrefab { public GameObject prefab; public float weight = 1f; }
@@ -68,11 +67,27 @@ public class GridFormationController : FormationProvider
     private int currentIndex = 0; private bool isTransitioning = false; private float timer = 0f;
     private int difficultyLevel = 1;
 
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        for (int i = 0; i < formations.Count; i++)
+        {
+            formations[i].difficultyLevel = i + 1;
+        }
+    }
+#endif
     void Start()
     {
         if (!Application.isPlaying) return;
 
-        difficultyLevel = DungeonManager.Instance.DifficultyLevel;
+        difficultyLevel = DungeonManager.Instance.DifficultyLevel - 1;
+
+        if (difficultyLevel >= formations.Count)
+        {
+            Debug.Log("<color=cyan>  " + gameObject.name + "</color> <color=green>has no data for CURRENT DIFFICULTY. Reverting to LAST DIFFICULTY DATA </color>");
+            difficultyLevel = formations.Count - 1;
+        }
+
         //DungeonManager.Instance.OnDifficultyChange += HandleDifficultyChange;
         InitializeFormations();
         SpawnFormation(currentIndex);

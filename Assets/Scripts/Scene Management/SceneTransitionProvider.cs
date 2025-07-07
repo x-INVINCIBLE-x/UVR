@@ -23,7 +23,9 @@ public class SceneTransitionProvider : MonoBehaviour
     [Header("UI")]
     public Fader fader;
 
+    private float fadeInTime = 1f;
     private int stayDuraion = 5;
+    private Coroutine currentTransitionRoutine = null;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -45,14 +47,19 @@ public class SceneTransitionProvider : MonoBehaviour
 
     private void Start()
     {
+        currentTransitionRoutine = null;
         if (DungeonManager.Instance != null)
         {
             DungeonManager.Instance.RegisterSceneTransitionProvider(this);
             gameObject.SetActive(false);
         }
 
-        GameObject core = FindRootCore();
-        if (core != null)
+        Core = FindRootCore();
+
+        if (Core != null && fader == null)
+            fader = Core.GetComponentInChildren<Fader>();
+
+        if (Core != null)
         {
             Debug.Log("Found");
         }
@@ -60,7 +67,7 @@ public class SceneTransitionProvider : MonoBehaviour
             Debug.Log("Core not found in root objects.");
     }
 
-    public void Initialize(SceneReference newTargetScene, int transitionStayDuration = 5, SceneReference newTransitionReference = null)
+    public void Initialize(SceneReference newTargetScene, float fadeInTime = 1f, int transitionStayDuration = 5, SceneReference newTransitionReference = null)
     {
         targetScene = newTargetScene;
 
@@ -73,13 +80,20 @@ public class SceneTransitionProvider : MonoBehaviour
             providedTransitionScene = null;
         }
 
+        this.fadeInTime = fadeInTime;
         stayDuraion = transitionStayDuration;
+
+        if (Core == null)
+            Core = FindRootCore();
+
+        if (fader == null)
+            fader = Core.GetComponentInChildren<Fader>();
     }
 
     public void StartTransition()
     {
         DontDestroyOnLoad(gameObject);
-        CoroutineManager.instance.StartCoroutine(TransitionRoutine());
+        currentTransitionRoutine ??= CoroutineManager.instance.StartCoroutine(TransitionRoutine());
 
         //StartCoroutine(TransitionRoutine());
     }
@@ -96,7 +110,7 @@ public class SceneTransitionProvider : MonoBehaviour
     {
         // --- Fade out from current scene ---
         if (fader != null)
-            yield return fader.FadeOut(1f);
+            yield return fader.FadeOut(fadeInTime);
 
         // --- Load transition scene ---
         // --- Remember the currently active scene ---
@@ -108,9 +122,6 @@ public class SceneTransitionProvider : MonoBehaviour
         yield return new WaitUntil(() => loadTransition.isDone);
 
         Scene transitionLoadedScene = SceneManager.GetSceneByName(currentTransitionScene.SceneName);
-
-        if (Core == null)
-            FindRootCore();
 
         SceneManager.MoveGameObjectToScene(Core, transitionLoadedScene);
         SceneManager.SetActiveScene(transitionLoadedScene);
@@ -207,11 +218,14 @@ public class SceneTransitionProvider : MonoBehaviour
         foreach (GameObject obj in rootObjects)
         {
             if (obj.name == "Core")
+            {
+                Debug.Log("oy=nd");
                 return obj;
+            }
+
         }
 
         Debug.Log("Cant find core in " + currentScene.name);
         return null;
     }
-
 }

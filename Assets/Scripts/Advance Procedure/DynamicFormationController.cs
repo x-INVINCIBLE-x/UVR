@@ -127,9 +127,25 @@ public class DynamicFormationController : FormationProvider
 
     private int difficultyLevel = 1;
 
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        for (int i = 0; i < formationSequence.Count; i++)
+        {
+            formationSequence[i].difficulty = i + 1;
+        }
+    }
+#endif
     void Start()
     {
         difficultyLevel = DungeonManager.Instance.DifficultyLevel;
+
+        if (difficultyLevel >= formationSequence.Count)
+        {
+            Debug.Log("<color=cyan>  " + gameObject.name + "</color> <color=green> has no data for CURRENT DIFFICULTY. Reverting to LAST DIFFICULTY DATA </color>");
+            difficultyLevel = formationSequence.Count - 1;
+        }
+
         Initialize();
 
         StartFormation();
@@ -198,7 +214,7 @@ public class DynamicFormationController : FormationProvider
         // If the user left the Inspector formations empty, at least default to Sphere
         if (formations.Count == 0)
         {
-            Debug.LogWarning("No formations selected! Defaulting to Sphere.");
+            Debug.LogWarning("No scalingFormations selected! Defaulting to Sphere.");
             formations.Add(GenerateSphere);
         }
 

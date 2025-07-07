@@ -123,7 +123,7 @@ public class DungeonManager : MonoBehaviour
 
     public void HandleLevelFailure()
     {
-        transitionProvider.Initialize(cityScene, Failure_Transition_Stay, dungeonFailTransitionScene[currentFailTransitionSceneIndex]);
+        transitionProvider.Initialize(cityScene, 3f, Failure_Transition_Stay, dungeonFailTransitionScene[currentFailTransitionSceneIndex]);
         transitionProvider.StartTransition();
 
         currentFailTransitionSceneIndex = (currentFailTransitionSceneIndex + 1) % dungeonFailTransitionScene.Length;
