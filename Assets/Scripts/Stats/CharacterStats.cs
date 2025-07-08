@@ -20,8 +20,12 @@ public enum Stats
 
 public enum AilmentType
 {
-    Fire,
-    Electric,
+    Ignis,
+    Frost,
+    Blitz,
+    Hex,
+    Radiance,
+    Gaia
 }
 
 public class CharacterStats : MonoBehaviour, IDamagable
@@ -34,22 +38,30 @@ public class CharacterStats : MonoBehaviour, IDamagable
     public Stat staminaRegain;
 
     [Header("Attack Abilities")]
-    public Stat physicalAtk;
-    public Stat fireAtk;
-    public Stat electricAtk;
+    public Stat physicalDamage;
+    public Stat ignisDamage;
+    public Stat frostDamage;
+    public Stat blitzDamage;
+    public Stat hexDamage;
+    public Stat radianceDamage;
+    public Stat gaiaDamage;
 
     [Header("Defence")]
     public Stat physicalDef;
-    public Stat fireDef;
-    public Stat electricDef;
+    //public Stat fireDef;
+    //public Stat electricDef;
 
     [Space]
-    public Stat fireRes;
-    public Stat electricRes;
+    //public Stat fireRes;
+    //public Stat electricRes;
 
     [Header("Ailment Status")]
-    public AilmentStatus fireStatus;
-    public AilmentStatus electricStatus;
+    public AilmentStatus ignisStatus;
+    public AilmentStatus frostStatus;
+    public AilmentStatus blitzStatus;
+    public AilmentStatus hexStatus;
+    public AilmentStatus radianceStatus;
+    public AilmentStatus gaiaStatus;
 
     public float ailmentLimitOffset = 10;
 
@@ -109,8 +121,12 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
         ailmentActions = new Dictionary<AilmentType, System.Action>
         {
-            { AilmentType.Fire, ApplyFireAilment },
-            { AilmentType.Electric, ApplyElectricAilment }
+            { AilmentType.Ignis, ApplyFireAilment },
+            { AilmentType.Frost, ApplyFrostAilment },
+            { AilmentType.Blitz, ApplyBlitzAilment },
+            { AilmentType.Hex, ApplyHexStatus },
+            { AilmentType.Radiance, ApplyRadianceAilment },
+            { AilmentType.Gaia, ApplyGaiaStatus }
         };
     }
 
@@ -136,14 +152,14 @@ public class CharacterStats : MonoBehaviour, IDamagable
             { Stats.Health,   health },
             { Stats.Stamina,  stamina },
             { Stats.StaminaRegain, staminaRegain },
-            { Stats.PhysicalAtk, physicalAtk },
-            { Stats.FireAtk, fireAtk },
-            { Stats.ElectricAtk, electricAtk },
+            { Stats.PhysicalAtk, physicalDamage },
+            { Stats.FireAtk, ignisDamage },
+            { Stats.ElectricAtk, blitzDamage },
             { Stats.PhysicalDef, physicalDef },
-            { Stats.FireDef, fireDef },
-            { Stats.ElectricDef, electricDef },
-            { Stats.FireRes, fireRes },
-            { Stats.ElectricRes, electricRes }
+            //{ Stats.FireDef, fireDef },
+            //{ Stats.ElectricDef, electricDef },
+            //{ Stats.FireRes, fireRes },
+            //{ Stats.ElectricRes, electricRes }
         };
     }
 
@@ -171,8 +187,8 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     private void TakeAilmentDamage(AttackData attackData)
     {
-        float _fireAtk = attackData.fireDamage.Value;
-        float _electricAtk = attackData.electricalDamage.Value;
+        float _fireAtk = attackData.ignisDamage.Value;
+        float _electricAtk = attackData.blitzDamage.Value;
 
         float damage = _fireAtk + _electricAtk;
 
@@ -180,9 +196,9 @@ public class CharacterStats : MonoBehaviour, IDamagable
             return;
 
         if (_fireAtk > 0)
-            TryApplyAilmentEffect(_fireAtk, ref fireStatus, AilmentType.Fire);
+            TryApplyAilmentEffect(_fireAtk, ref ignisStatus, AilmentType.Ignis);
         else if (_electricAtk > 0)
-            TryApplyAilmentEffect(_electricAtk, ref electricStatus, AilmentType.Electric);
+            TryApplyAilmentEffect(_electricAtk, ref blitzStatus, AilmentType.Blitz);
     }
 
     //public virtual void DoDamage(CharacterStats targetStats)
@@ -257,7 +273,27 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     }
 
-    private void ApplyElectricAilment()
+    private void ApplyFrostAilment()
+    {
+
+    }
+
+    private void ApplyBlitzAilment()
+    {
+
+    }
+
+    private void ApplyHexStatus()
+    {
+
+    }
+
+    private void ApplyRadianceAilment()
+    {
+
+    }
+
+    private void ApplyGaiaStatus()
     {
 
     }

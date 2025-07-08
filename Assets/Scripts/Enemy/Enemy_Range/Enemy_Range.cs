@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum CoverPerk { Unavalible, CanTakeCover, CanTakeAndChangeCover }
-public enum UnstoppablePerk { Unavalible, Unstoppable}
-public enum GrenadePerk { Unavalible, CanThrowGrenade}
+public enum UnstoppablePerk { Unavalible, Unstoppable }
+public enum GrenadePerk { Unavalible, CanThrowGrenade }
 public class Enemy_Range : Enemy
 {
     [Header("Enemy perks")]
@@ -21,8 +21,6 @@ public class Enemy_Range : Enemy
     public float grenadeCooldown;
     private float lastTimeGrenadeThrown = -10;
     [SerializeField] private Transform grenadeStartPoint;
-
-
 
     [Header("Advance perk")]
     public float advanceSpeed;
@@ -52,7 +50,7 @@ public class Enemy_Range : Enemy
     public Transform playersBody;
     public LayerMask whatToIgnore;
 
-
+    [SerializeField] private AttackData finalDamageData;
     [SerializeField] List<Enemy_RangeWeaponData> avalibleWeaponData;
 
     #region States
@@ -82,7 +80,7 @@ public class Enemy_Range : Enemy
     {
         base.Start();
 
-        playersBody = player.GetComponent<Player>().playerBody;
+        playersBody = PlayerManager.instance.Player.playerBody;
         aim.parent = null;
 
         InitializePerk();
@@ -90,6 +88,9 @@ public class Enemy_Range : Enemy
         stateMachine.Initialize(idleState);
         visuals.SetupLook();
         SetupWeapon();
+
+        finalDamageData = stats.CombineWith(weaponData.damageData);
+
         Debug.Log("dtar");
     }
 
@@ -113,7 +114,7 @@ public class Enemy_Range : Enemy
         if (grenadePerk == GrenadePerk.Unavalible)
             return false;
 
-        if(Vector3.Distance(player.transform.position, transform.position) < safeDistance)
+        if (Vector3.Distance(player.transform.position, transform.position) < safeDistance)
             return false;
 
         if (Time.time > grenadeCooldown + lastTimeGrenadeThrown)
@@ -127,16 +128,16 @@ public class Enemy_Range : Enemy
         lastTimeGrenadeThrown = Time.time;
         visuals.EnableGrenadeModel(false);
 
-        GameObject newGrenade = ObjectPool.instance.GetObject(grenadePrefab,grenadeStartPoint);
+        GameObject newGrenade = ObjectPool.instance.GetObject(grenadePrefab, grenadeStartPoint);
         Enemy_Grenade newGrenadeScript = newGrenade.GetComponent<Enemy_Grenade>();
 
         if (stateMachine.currentState == deadState)
         {
-            newGrenadeScript.SetupGrenade(whatIsAlly, transform.position, 1,explosionTimer,impactPower,grenadeDamage);
+            newGrenadeScript.SetupGrenade(whatIsAlly, transform.position, 1, explosionTimer, impactPower, grenadeDamage);
             return;
         }
 
-        newGrenadeScript.SetupGrenade(whatIsAlly,player.transform.position, timeToTarget,explosionTimer,impactPower,grenadeDamage);
+        newGrenadeScript.SetupGrenade(whatIsAlly, player.transform.position, timeToTarget, explosionTimer, impactPower, grenadeDamage);
     }
 
     protected override void InitializePerk()
@@ -242,10 +243,9 @@ public class Enemy_Range : Enemy
 
         Vector3 bulletsDirection = (aim.position - gunPoint.position).normalized;
 
-        GameObject newBullet = ObjectPool.instance.GetObject(bulletPrefab,gunPoint);
+        GameObject newBullet = ObjectPool.instance.GetObject(bulletPrefab, gunPoint);
         newBullet.transform.rotation = Quaternion.LookRotation(gunPoint.forward);
-
-        newBullet.GetComponent<Bullet>().BulletSetup(whatIsAlly,weaponData.damageData);
+        newBullet.GetComponent<Bullet>().BulletSetup(whatIsAlly, finalDamageData);
 
         Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
 
@@ -254,11 +254,6 @@ public class Enemy_Range : Enemy
         rbNewBullet.mass = 20 / weaponData.bulletSpeed;
         rbNewBullet.linearVelocity = bulletDirectionWithSpread * weaponData.bulletSpeed;
 
-    }
-
-    private void CombineDamageData(AttackData _attackData)
-    {
-        _attackData.fireDamage.AddModifier(new StatModifier(stats.fireAtk.BaseValue, StatModType.Flat));
     }
 
     private void SetupWeapon()
@@ -310,7 +305,7 @@ public class Enemy_Range : Enemy
         // --------------------------------------------------------------- Hottest Fix Ever for PLayer Position ------------------------------------------------------- //
         //
         Vector3 directionToPlayer = playersBody.position - myPosition + new Vector3(0, 1.2f, 0);
-        
+
         if (Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, Mathf.Infinity, ~whatToIgnore))
         {
             if (hit.transform.root == player.root)

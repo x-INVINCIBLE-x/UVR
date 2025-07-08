@@ -15887,6 +15887,121 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379121950}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &380880266 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6643271318636895611, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+  m_PrefabInstance: {fileID: 1473092043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &380880273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380880266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e268f02b12da422498f77b07c61ab5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficultyProfile: {fileID: 0}
+  health:
+    BaseValue: 0
+    statModifiers: []
+  stamina:
+    BaseValue: 0
+    statModifiers: []
+  staminaRegain:
+    BaseValue: 0
+    statModifiers: []
+  physicalDamage:
+    BaseValue: 40
+    statModifiers: []
+  ignisDamage:
+    BaseValue: 0
+    statModifiers: []
+  frostDamage:
+    BaseValue: 0
+    statModifiers: []
+  blitzDamage:
+    BaseValue: 0
+    statModifiers: []
+  hexDamage:
+    BaseValue: 0
+    statModifiers: []
+  radianceDamage:
+    BaseValue: 0
+    statModifiers: []
+  gaiaDamage:
+    BaseValue: 0
+    statModifiers: []
+  physicalDef:
+    BaseValue: 0
+    statModifiers: []
+  ignisStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  frostStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  blitzStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  hexStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  radianceStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  gaiaStatus:
+    Value: 0
+    resistance:
+      BaseValue: 0
+      statModifiers: []
+    defence:
+      BaseValue: 0
+      statModifiers: []
+    isMaxed: 0
+    ailmentLimit: 100
+  ailmentLimitOffset: 10
+  currentHealth: 0
+  currentStamina: 0
+  <isInvincible>k__BackingField: 0
 --- !u!1 &390107529
 GameObject:
   m_ObjectHideFlags: 0
@@ -51228,6 +51343,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1283136922}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1283377585 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6280638891580240898, guid: 342d8c61967628541a04456b961334a1, type: 3}
+  m_PrefabInstance: {fileID: 6020626136308087142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1283377591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283377585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e994369f20ef60c4f8474efb3ee89310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  friendlyFire: 0
 --- !u!1 &1288027117
 GameObject:
   m_ObjectHideFlags: 0
@@ -59404,6 +59537,66 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472983328}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1473092043
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388094860409759922, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6643271318636895611, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      propertyPath: m_Name
+      value: Enderman
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6643271318636895611, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 380880273}
+  m_SourcePrefab: {fileID: 100100000, guid: 35b78efcd27c28347bf5eddba905fb6c, type: 3}
 --- !u!1 &1475396928
 GameObject:
   m_ObjectHideFlags: 0
@@ -85979,13 +86172,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6258567871373985085, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: health.BaseValue
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6258567871373985085, guid: 342d8c61967628541a04456b961334a1, type: 3}
       propertyPath: fireStatus.resistance.BaseValue
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6280638891580240898, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1283377591}
   m_SourcePrefab: {fileID: 100100000, guid: 342d8c61967628541a04456b961334a1, type: 3}
 --- !u!1001 &6395995714511203698
 PrefabInstance:
@@ -86077,3 +86277,4 @@ SceneRoots:
   - {fileID: 6395995714511203698}
   - {fileID: 1711836683}
   - {fileID: 1323208779}
+  - {fileID: 1473092043}

@@ -53,11 +53,11 @@ public class Enemy : MonoBehaviour
         visuals = GetComponent<Enemy_Visuals>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        player = GameObject.Find("XR Origin (XR Rig)").GetComponent<Transform>();
     }
 
     protected virtual void Start()
     {
+        player = PlayerManager.instance.PlayerOrigin.GetComponent<Transform>();
         InitializePatrolPoints();
     }
 

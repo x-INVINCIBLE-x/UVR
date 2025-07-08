@@ -71,7 +71,7 @@ public class SpawnProjectiles : MonoBehaviour
         } 
         else
         {
-            Debug.Log("No Fire Point");
+            Debug.Log("No Ignis Point");
         }
     }
 }

@@ -52,7 +52,7 @@ public class Enemy_Melee : Enemy
     public Transform axeStartPoint;
 
     [Header("Attack Data")]
-    public AttackData_EnemyMelee attackInfo;
+    [HideInInspector] public AttackData_EnemyMelee attackInfo;
     public List<AttackData_EnemyMelee> attackList;
     [SerializeField] private Enemy_WeaponModel currentWeapon;
     private bool isAttackReady;

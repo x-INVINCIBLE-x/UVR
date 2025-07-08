@@ -43,7 +43,7 @@ public class ShootState : EnemyStateBase
     {
         Agent.isStopped = true;
         base.OnEnter();
-        Animator.Play("Fire");
+        Animator.Play("Ignis");
         Pool.Get();
     }
 

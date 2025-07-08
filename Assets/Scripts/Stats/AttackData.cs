@@ -4,6 +4,10 @@ using UnityEngine;
 public class AttackData : ScriptableObject
 {
     public Stat physicalDamage;
-    public Stat fireDamage;
-    public Stat electricalDamage;
+    public Stat ignisDamage;
+    public Stat frostDamage;
+    public Stat blitzDamage;
+    public Stat hexDamage;
+    public Stat radianceDamage;
+    public Stat gaiaDamage;
 }
