@@ -5,7 +5,6 @@ using UnityEngine;
 public class RangedWeapon : Weapon
 {   
     [SerializeField] protected float shootingForce;
-    
     [SerializeField] protected float recoilForce;
     [SerializeField] protected float damage;
     [SerializeField] protected GameObject muzzleVFX;

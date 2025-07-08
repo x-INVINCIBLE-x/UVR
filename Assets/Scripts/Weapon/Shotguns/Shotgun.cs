@@ -7,6 +7,8 @@ public class Shotgun : ScatterWeapons
 {
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private AudioClip shootSFX;
+    [SerializeField] private float minPitch = 1f;
+    [SerializeField] protected float maxPitch = 3f;
 
 
     protected override void Awake()
@@ -14,7 +16,13 @@ public class Shotgun : ScatterWeapons
         base.Awake();
         
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ScatterShot();
+        }
+    }
 
     protected override void ActivateWeapon(ActivateEventArgs args)
     {
@@ -35,7 +43,7 @@ public class Shotgun : ScatterWeapons
         base.ScatterShot();
 
         // SFX Implement
-        WeaponAudioSource.PlayOneShot(shootSFX);
+        ShootAudio();
 
         // VFX Implement
         GameObject newMuzzleVFX = ObjectPool.instance.GetObject(muzzleVFX, bulletSpawns[0]);// hot fix muzzle is spawned at the position of 0 index bullet spawn
@@ -74,5 +82,10 @@ public class Shotgun : ScatterWeapons
         }
 
 
+    }
+    private void ShootAudio()
+    {
+        WeaponAudioSource.pitch = UnityEngine.Random.Range(minPitch, maxPitch);
+        WeaponAudioSource.PlayOneShot(shootSFX);
     }
 }

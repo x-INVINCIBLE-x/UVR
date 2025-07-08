@@ -6,6 +6,8 @@ public class Rifle : RangedWeapon
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private int clickCount;
+    [SerializeField] private float minPitch = 1f;
+    [SerializeField] protected float maxPitch = 3f;
 
 
 
@@ -56,7 +58,7 @@ public class Rifle : RangedWeapon
         clickCount = (clickCount + 1) % spawnPoints.Length; // cyclic buffer , if we put mode(%) in equation it cannot exceed the value which is modding it.
 
         // SFX Implement
-        WeaponAudioSource.PlayOneShot(shootSFX);
+        ShootAudio();
 
         // VFX Implement
         GameObject newMuzzleVFX = ObjectPool.instance.GetObject(muzzleVFX, spawnPoints[clickCount]);
@@ -65,7 +67,11 @@ public class Rifle : RangedWeapon
 
     }
 
-    // Implement cool down here
+    private void ShootAudio()
+    {
+        WeaponAudioSource.pitch = UnityEngine.Random.Range(minPitch, maxPitch);
+        WeaponAudioSource.PlayOneShot(shootSFX);
+    }
 
 
 

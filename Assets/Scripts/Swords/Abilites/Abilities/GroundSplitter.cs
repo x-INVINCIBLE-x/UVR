@@ -11,6 +11,10 @@ public class GroundSplitter : WeaponAbilitiesBase
     public bool isStillInContact = false;
     public BoxCollider hitBox;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     protected override void Start()
     {

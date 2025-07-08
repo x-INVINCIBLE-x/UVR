@@ -41,6 +41,14 @@ public class Weapon : MonoBehaviour
         interactableWeapon.deactivated.AddListener(DeactivateWeapon);
     }
 
+    private void OnDestroy()
+    {
+        interactableWeapon.selectEntered.RemoveListener(PickUpWeapon);
+        interactableWeapon.selectExited.RemoveListener(DropWeapon);
+        interactableWeapon.activated.RemoveListener(ActivateWeapon);
+        interactableWeapon.deactivated.RemoveListener(DeactivateWeapon);
+    }
+
     private void PickUpWeapon(SelectEnterEventArgs args)
     {
         args.interactorObject.transform.GetComponent<MeshHidder>()?.Hide();

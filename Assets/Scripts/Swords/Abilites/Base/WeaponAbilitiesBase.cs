@@ -2,12 +2,18 @@ using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(XRGrabInteractable))]
 public class WeaponAbilitiesBase : MonoBehaviour
 {
     
     public VelocityEstimator velocityEstimator;
+    private XRGrabInteractable interactableWeapon;
+    protected Rigidbody rigidBody;
 
     private Vector3? contactPoint = null;
     private Vector3? contactNormal = null;
@@ -25,10 +31,17 @@ public class WeaponAbilitiesBase : MonoBehaviour
     public AudioClip WeaponSFX;
     private AudioSource WeaponSFXSource;
 
+    protected virtual void Awake()
+    {
+        interactableWeapon = GetComponent<XRGrabInteractable>();
+        rigidBody = GetComponent<Rigidbody>();
+        WeaponSFXSource = GetComponent<AudioSource>();
+    }
+
     protected virtual void Start()
     {
         
-        WeaponSFXSource = GetComponent<AudioSource>();
+        
     }
 
     protected virtual void SlashAudio()
@@ -40,5 +53,25 @@ public class WeaponAbilitiesBase : MonoBehaviour
         WeaponSFXSource.PlayOneShot(WeaponSFX);
     }
 
+
+    private void SetupInteractableWeaponEvents()
+    {
+        interactableWeapon.activated.AddListener(ActivateWeapon);
+        interactableWeapon.deactivated.AddListener(DeactivateWeapon);
+    }
+    private void OnDestroy()
+    {
+        interactableWeapon.activated.RemoveListener(ActivateWeapon);
+        interactableWeapon.deactivated.RemoveListener(DeactivateWeapon);
+    }
+
+    private void ActivateWeapon(ActivateEventArgs args)
+    {
+        AbilityEnable = true;
+    }
+    private void DeactivateWeapon(DeactivateEventArgs args)
+    {
+        AbilityEnable = false;
+    }
 
 }
