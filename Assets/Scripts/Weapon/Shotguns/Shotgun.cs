@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+
 public class Shotgun : ScatterWeapons
 {
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private AudioClip shootSFX;
     [SerializeField] private float minPitch = 1f;
     [SerializeField] protected float maxPitch = 3f;
-
+    [SerializeField] protected float bulletLifeTime = 5f;
 
     protected override void Awake()
     {
         base.Awake();
-        
+
     }
     private void Update()
     {
@@ -57,15 +55,15 @@ public class Shotgun : ScatterWeapons
 
             GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, spawnPoint);
             PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
-            projectileInstance.Init();
+            projectileInstance.Init(bulletLifeTime, attackData);
 
 
             Rigidbody rb = projectileInstance.GetComponent<Rigidbody>(); // Takes rigidbody of current instanced bullet
-            
+
 
             // Write logic for scattering bullets
 
-            if (rb != null )
+            if (rb != null)
             {
                 Vector3 spreadDirection = Quaternion.Euler(
                     Random.Range(-spreadAngle, spreadAngle), // Random X rotation (up/down) 

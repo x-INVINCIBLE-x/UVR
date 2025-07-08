@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-   protected Weapon weapon;
+   //protected Weapon weapon;
 
-    public virtual void Init()
+    public virtual void Init(float _lifeTime, AttackData _attackData)
     {
     }
 

@@ -6,14 +6,13 @@ public class RangedWeapon : Weapon
 {   
     [SerializeField] protected float shootingForce;
     [SerializeField] protected float recoilForce;
-    [SerializeField] protected float damage;
+    //[SerializeField] protected float damage;
     [SerializeField] protected GameObject muzzleVFX;
     [SerializeField] protected AudioClip shootSFX;
     protected AudioSource WeaponAudioSource;
 
     protected override void Awake()
     {   
-
         base.Awake();
 
         WeaponAudioSource = GetComponent<AudioSource>();
@@ -24,8 +23,6 @@ public class RangedWeapon : Weapon
         ApplyRecoil();
     }
 
-    
-
     private void ApplyRecoil()
     {
         rigidBody.AddRelativeForce(Vector3.back * recoilForce, ForceMode.Impulse);
@@ -34,10 +31,5 @@ public class RangedWeapon : Weapon
     public float GetShootingForce()
     {
         return shootingForce;
-    }
-
-    public float GetDamage()
-    {
-        return damage;
     }
 }

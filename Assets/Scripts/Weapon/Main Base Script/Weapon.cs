@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour
     protected AbilityHandler abilityHandler;
 
     public Dictionary<AbilityType, System.Action> abilities;
+    public AttackData attackData;
 
     protected virtual void Awake()
     {

@@ -255,6 +255,12 @@ public class Enemy_Range : Enemy
         rbNewBullet.linearVelocity = bulletDirectionWithSpread * weaponData.bulletSpeed;
 
     }
+
+    private void CombineDamageData(AttackData _attackData)
+    {
+        _attackData.fireDamage.AddModifier(new StatModifier(stats.fireAtk.BaseValue, StatModType.Flat));
+    }
+
     private void SetupWeapon()
     {
         List<Enemy_RangeWeaponData> filteredData = new List<Enemy_RangeWeaponData>();

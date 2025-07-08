@@ -44,39 +44,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1638144539450f344b0139b9890a92d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawGizmos: 1
   radiusPrefabs:
-  - radius: 1500
+  - radius: 200
     centerOffset: {x: 0, y: 0, z: 0}
-    centerElement: {fileID: 7069848389683681410, guid: 0daa9e51e05887f48913f0a5715e974f, type: 3}
-    centralElementRadius: 343
+    centerElement: {fileID: 4739613752448104849, guid: 1f71ccfd2585c294db9c50b635140529, type: 3}
+    centralElementRadius: 2
     prefabs:
-    - prefab: {fileID: 1749108633849772715, guid: 61c89895804748641abe94cd6a63385f, type: 3}
+    - prefab: {fileID: 6921580789432111162, guid: 7695718d06656de4586ae166db050374, type: 3}
       weight: 1
-  - radius: 500
-    centerOffset: {x: 449.34, y: 0, z: 600}
+    - prefab: {fileID: 3433538684502565419, guid: 820a4e9f0aed89247a31987bdbf30c5b, type: 3}
+      weight: 1
+    - prefab: {fileID: 5180985487718942631, guid: 8832817fc8095b7409893c33ac792172, type: 3}
+      weight: 1
+    - prefab: {fileID: 4008438186527085041, guid: 5cbbb8d4a04103e46a77ebf0c1079f6e, type: 3}
+      weight: 1
+    - prefab: {fileID: 3366249703053718997, guid: 939b66fad84f7e8469b0073800bd0ee6, type: 3}
+      weight: 1
+    - prefab: {fileID: 9020908263005789703, guid: 0730f330eea140f4ea1ff561d045715b, type: 3}
+      weight: 1
+    - prefab: {fileID: 1015880761529596253, guid: 860a61ea5e171f641872fb54d601d93f, type: 3}
+      weight: 1
+    - prefab: {fileID: 7286421891589626632, guid: d799baab4fe268b4abee9384f7ea7c60, type: 3}
+      weight: 1
+  - radius: 80
+    centerOffset: {x: 80, y: 0, z: 60}
     centerElement: {fileID: 0}
     centralElementRadius: 0
     prefabs:
-    - prefab: {fileID: 1749108633849772715, guid: 948df8c7e3d33ac48ad8fca623b7b0fc, type: 3}
+    - prefab: {fileID: 3132706665113342400, guid: 1df98318775c2854bab1f658f6ede4d1, type: 3}
       weight: 1
-  - radius: 250
-    centerOffset: {x: 449.34, y: 0, z: 600}
-    centerElement: {fileID: 7180395290746859620, guid: c420f9e2d73df0d4f82960dd8030be56, type: 3}
-    centralElementRadius: 120
+    - prefab: {fileID: 4008438186527085041, guid: 5cbbb8d4a04103e46a77ebf0c1079f6e, type: 3}
+      weight: 1
+  - radius: 30
+    centerOffset: {x: 80, y: 0, z: 60}
+    centerElement: {fileID: 7034414583517266989, guid: ca2d5a2e61a7d8b4e8f530fae3df9477, type: 3}
+    centralElementRadius: 2
     prefabs:
-    - prefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
+    - prefab: {fileID: 3366249703053718997, guid: 939b66fad84f7e8469b0073800bd0ee6, type: 3}
+      weight: 1
+    - prefab: {fileID: 6921580789432111162, guid: 7695718d06656de4586ae166db050374, type: 3}
       weight: 1
   cornerPrefabs:
-  - prefab: {fileID: 1749108633849772715, guid: 58f97256eb1d70840874dc36766b148b, type: 3}
+  - prefab: {fileID: 5068854031626633136, guid: 369de00258a0e48418db33d8fb099c48, type: 3}
+    weight: 1
+  - prefab: {fileID: 7609915391036661921, guid: 85f223bbcdfa0534d83645d12b041f5b, type: 3}
+    weight: 1
+  - prefab: {fileID: 1785732444385638350, guid: ae0f3ca6387300a4a903e5a7c1eb8fe0, type: 3}
+    weight: 1
+  - prefab: {fileID: 5324778295045588374, guid: 1b5939f5eb6316d41b38725474fa190e, type: 3}
+    weight: 1
+  - prefab: {fileID: 1738201253236683952, guid: fa7a971d7de935648beda83af834f7d1, type: 3}
     weight: 1
   cuboidPrefabs:
   - prefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
     weight: 1
-  gridWidth: 100
-  gridDepth: 100
-  minSpacing: 5
-  maxSpacing: 10
-  density: 0.172
+  gridWidth: 20
+  gridDepth: 20
+  minSpacing: 1
+  maxSpacing: 2
+  density: 0.3
   maxJitterXZ: 35
   maxJitterY: 100
   innerRadius: 100
@@ -136,7 +163,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    amplitude: 2000
+    amplitude: 10
     axis: 2
   - curve:
       serializedVersion: 2
@@ -171,11 +198,17 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    amplitude: 1000
+    amplitude: 2
     axis: 1
   formations:
   - difficultyLevel: 1
-    config: []
+    config:
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+    - type: 2
+      jitterX: 0
+      jitterY: 0
   - difficultyLevel: 2
     config:
     - type: 0
@@ -224,6 +257,7 @@ Transform:
   - {fileID: 5937283248708782360}
   - {fileID: 982593799265618386}
   - {fileID: 5089432909367516813}
+  - {fileID: 3992057100705294245}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3184507041761567514
@@ -388,6 +422,59 @@ MonoBehaviour:
     formationTypes: 05000000000000000100000004000000
   - difficulty: 3
     formationTypes: 00000000050000000100000004000000
+--- !u!1 &3451302545732271688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3992057100705294245}
+  - component: {fileID: 5050528471288481238}
+  m_Layer: 0
+  m_Name: Formation Consequence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3992057100705294245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451302545732271688}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2788827863494473733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5050528471288481238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451302545732271688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9cca88dbfab314491ea4e69e25441e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabsToSpawn:
+  - {fileID: -3811945984315983383, guid: 510faa317c72e964581e028a27f8a1cd, type: 3}
+  spawnFrequency: 2
+  concurrentSpawnAmount: 5
+  spawnArea: {fileID: 0}
+  innerRadius: 20.1
+  innerRadiusPercentage: 0.758
+  shootingForce: 100
+  bulletLifeTime: 10
 --- !u!1 &5113952432440170073
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,14 +613,14 @@ MonoBehaviour:
   scalingFormations:
   - difficultyLevel: 1
     formations:
-    - formationName: 
+    - formationName: Spheres
       formationNumber: 1
       formationInfo:
       - layout: {fileID: 9038558215129218732}
         position: {x: 1000, y: 1000, z: 0}
         rotation: {x: 0, y: 0, z: 0}
         duration: 0
-    - formationName: 
+    - formationName: Umbrella + ring
       formationNumber: 2
       formationInfo:
       - layout: {fileID: 6495539339580959240}

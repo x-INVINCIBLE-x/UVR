@@ -50,6 +50,6 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(lastSafePosition, 1f);
+        Gizmos.DrawSphere(lastSafePosition, 0.2f);
     }
 }

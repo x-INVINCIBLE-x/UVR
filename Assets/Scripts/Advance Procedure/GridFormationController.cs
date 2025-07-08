@@ -41,6 +41,7 @@ public class FormationContainer
 
 public class GridFormationController : FormationProvider
 {
+    [SerializeField] private bool drawGizmos;
     [Header("Radius Based Prefabs")]
     public List<RadiusBasedPrefab> radiusPrefabs = new List<RadiusBasedPrefab>();
     [Header("Fallback Corner Prefabs")]
@@ -349,63 +350,64 @@ public class GridFormationController : FormationProvider
     float EstimateTotalSpan(GameObject s, int c, float minS, float maxS) { float size = s.GetComponent<Renderer>().bounds.size.x; float avg = (minS + maxS) * 0.5f; return c * size + (c - 1) * avg; }
 #if UNITY_EDITOR
 #if UNITY_EDITOR
-    //void OnDrawGizmosSelected()
-    //{
-    //    if (cuboidPrefabs == null || cuboidPrefabs.Count == 0) return;
+    void OnDrawGizmosSelected()
+    {
+        if (cuboidPrefabs == null || cuboidPrefabs.Count == 0) return;
+        if (drawGizmos == false) return;
 
-    //    // Ensure formations are initialized for gizmos
-    //    if (positionsPerFormation == null || positionsPerFormation.Count != formations.Count)
-    //    {
-    //        InitializeFormations();
-    //    }
+        // Ensure formations are initialized for gizmos
+        if (positionsPerFormation == null || positionsPerFormation.Count != formations.Count)
+        {
+            InitializeFormations();
+        }
 
-    //    // Draw spawn positions
-    //    int idx = Mathf.Clamp(currentIndex, 0, positionsPerFormation.Count - 1);
-    //    var list = positionsPerFormation[idx];
-    //    Gizmos.color = Color.cyan;
-    //    foreach (var pos in list)
-    //    {
-    //        Gizmos.DrawWireCube(pos, Vector3.one * 0.1f);
-    //    }
+        // Draw spawn positions
+        int idx = Mathf.Clamp(currentIndex, 0, positionsPerFormation.Count - 1);
+        var list = positionsPerFormation[idx];
+        Gizmos.color = Color.cyan;
+        foreach (var pos in list)
+        {
+            Gizmos.DrawWireCube(pos, Vector3.one * 0.1f);
+        }
 
-    //    // Draw grid outline
-    //    Gizmos.color = Color.yellow;
-    //    Vector3 center = gridCenter;
-    //    float width = gridSpanX;
-    //    float depth = gridSpanZ;
-    //    Vector3 bottomLeft = transform.position + new Vector3(center.x - width / 2f, 0, center.z - depth / 2f);
-    //    Vector3 bottomRight = bottomLeft + new Vector3(width, 0, 0);
-    //    Vector3 topLeft = bottomLeft + new Vector3(0, 0, depth);
-    //    Vector3 topRight = bottomLeft + new Vector3(width, 0, depth);
+        // Draw grid outline
+        Gizmos.color = Color.yellow;
+        Vector3 center = gridCenter;
+        float width = gridSpanX;
+        float depth = gridSpanZ;
+        Vector3 bottomLeft = transform.position + new Vector3(center.x - width / 2f, 0, center.z - depth / 2f);
+        Vector3 bottomRight = bottomLeft + new Vector3(width, 0, 0);
+        Vector3 topLeft = bottomLeft + new Vector3(0, 0, depth);
+        Vector3 topRight = bottomLeft + new Vector3(width, 0, depth);
 
-    //    Gizmos.DrawLine(bottomLeft, bottomRight);
-    //    Gizmos.DrawLine(bottomRight, topRight);
-    //    Gizmos.DrawLine(topRight, topLeft);
-    //    Gizmos.DrawLine(topLeft, bottomLeft);
+        Gizmos.DrawLine(bottomLeft, bottomRight);
+        Gizmos.DrawLine(bottomRight, topRight);
+        Gizmos.DrawLine(topRight, topLeft);
+        Gizmos.DrawLine(topLeft, bottomLeft);
 
-    //    if (radiusPrefabs != null && radiusPrefabs.Count > 0)
-    //    {
-    //        Gizmos.color = Color.green;
-    //        foreach (var rp in radiusPrefabs)
-    //        {
-    //            float radius = rp.radius;
-    //            Vector3 customCenter = transform.position + gridCenter + rp.centerOffset;
+        if (radiusPrefabs != null && radiusPrefabs.Count > 0)
+        {
+            Gizmos.color = Color.green;
+            foreach (var rp in radiusPrefabs)
+            {
+                float radius = rp.radius;
+                Vector3 customCenter = transform.position + gridCenter + rp.centerOffset;
 
-    //            int segments = 64;
-    //            float angleStep = 360f / segments;
-    //            Vector3 prevPoint = customCenter + new Vector3(Mathf.Cos(0), 0, Mathf.Sin(0)) * radius;
+                int segments = 64;
+                float angleStep = 360f / segments;
+                Vector3 prevPoint = customCenter + new Vector3(Mathf.Cos(0), 0, Mathf.Sin(0)) * radius;
 
-    //            for (int i = 1; i <= segments; i++)
-    //            {
-    //                float rad = Mathf.Deg2Rad * (i * angleStep);
-    //                Vector3 nextPoint = customCenter + new Vector3(Mathf.Cos(rad), 0, Mathf.Sin(rad)) * radius;
-    //                Gizmos.DrawLine(prevPoint, nextPoint);
-    //                prevPoint = nextPoint;
-    //            }
-    //        }
+                for (int i = 1; i <= segments; i++)
+                {
+                    float rad = Mathf.Deg2Rad * (i * angleStep);
+                    Vector3 nextPoint = customCenter + new Vector3(Mathf.Cos(rad), 0, Mathf.Sin(rad)) * radius;
+                    Gizmos.DrawLine(prevPoint, nextPoint);
+                    prevPoint = nextPoint;
+                }
+            }
 
-    //    }
-    //}
+        }
+    }
 #endif
 
 #endif

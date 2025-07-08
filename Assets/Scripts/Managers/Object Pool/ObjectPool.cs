@@ -49,6 +49,26 @@ public class ObjectPool : MonoBehaviour
         return objectToGet;
     }
 
+    public GameObject GetObject(GameObject prefab, Vector3 target)
+    {
+        if (poolDictionary.ContainsKey(prefab) == false)
+        {
+            InitializeNewPool(prefab);
+        }
+
+        if (poolDictionary[prefab].Count == 0)
+            CreateNewObject(prefab); // if all objects of this type are in uise, create a new one.
+
+        GameObject objectToGet = poolDictionary[prefab].Dequeue();
+
+        objectToGet.transform.position = target;
+        objectToGet.transform.parent = null;
+
+        objectToGet.SetActive(true);
+
+        return objectToGet;
+    }
+
     public void ReturnObject(GameObject objectToReturn, float delay = .001f)
     {
         StartCoroutine(DelayReturn(delay, objectToReturn));

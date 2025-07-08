@@ -13,6 +13,7 @@ public class ChargingGun : RangedWeapon
     public float maxCharge = 3f;
     public float maxbulletSize = 2f;
     public float maxShootingForce = 50f;// Max spped of bullet
+    [SerializeField] protected float bulletLifeTime = 5f;
 
     protected override void Awake()
     {
@@ -71,7 +72,7 @@ public class ChargingGun : RangedWeapon
 
         GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, bulletSpawn);
         PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
-        projectileInstance.Init();
+        projectileInstance.Init(bulletLifeTime, attackData);
 
 
         // Scale the bulllet based on charged ratio

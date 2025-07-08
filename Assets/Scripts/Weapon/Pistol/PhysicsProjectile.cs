@@ -8,6 +8,8 @@ using UnityEngine;
 public class PhysicsProjectile : Projectile
 {
     [SerializeField] private float lifeTime;
+    private AttackData attackData;
+
     public GameObject impactVFX;
     private GameObject currentImpactVFX;
     private Rigidbody rigidBody;
@@ -15,21 +17,30 @@ public class PhysicsProjectile : Projectile
     public AudioClip impactSFX;
     private ParticleSystem VFXparticleSystem;
 
+    private HashSet<IDamagable> damaged = new();
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         
     }
+
+    private void OnEnable()
+    {
+        damaged.Clear();
+    }
+
     private void Start()
     {
         VFXparticleSystem = GetComponent<ParticleSystem>();
     }
 
-    public override void Init()
+    public override void Init(float _lifeTime, AttackData _attackData)
     {
-        base.Init();
-        //Destroy(gameObject , lifeTime);
+        base.Init(_lifeTime, _attackData);
+        lifeTime = _lifeTime;
+        attackData = _attackData;
         ObjectPool.instance.ReturnObject(gameObject, lifeTime);
     }
 
@@ -42,7 +53,14 @@ public class PhysicsProjectile : Projectile
 
     private void OnTriggerEnter(Collider other)
     {
-
+        IDamagable damagable = other.GetComponentInParent<IDamagable>();
+        damagable ??= other.GetComponentInChildren<IDamagable>();
+        if (damagable != null && !damaged.Contains(damagable))
+        {
+            damagable.TakeDamage(attackData);
+            damaged.Add(damagable);
+        }
+        
         ObjectPool.instance.ReturnObject(gameObject, 1f);
 
         

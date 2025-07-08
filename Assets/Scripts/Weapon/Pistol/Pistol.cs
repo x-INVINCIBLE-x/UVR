@@ -11,6 +11,7 @@ public class Pistol : RangedWeapon
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private float minPitch = 1f;
     [SerializeField] protected float maxPitch = 3f;
+    [SerializeField] protected float bulletLifeTime = 5f;
 
     protected override void Awake()
     {
@@ -44,7 +45,7 @@ public class Pistol : RangedWeapon
 
         GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, bulletSpawn);
         PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
-        projectileInstance.Init();
+        projectileInstance.Init(bulletLifeTime, attackData);
 
         projectileInstance.Launch(bulletSpawn, shootingForce);
 

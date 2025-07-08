@@ -8,7 +8,7 @@ public class Rifle : RangedWeapon
     [SerializeField] private int clickCount;
     [SerializeField] private float minPitch = 1f;
     [SerializeField] protected float maxPitch = 3f;
-
+    [SerializeField] protected float bulletLifeTime = 3f; 
 
 
     protected override void Awake()
@@ -52,7 +52,7 @@ public class Rifle : RangedWeapon
 
         GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, spawnPoints[clickCount]);
         PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
-        projectileInstance.Init();
+        projectileInstance.Init(bulletLifeTime, attackData);
         projectileInstance.Launch(spawnPoints[clickCount], shootingForce);
 
         clickCount = (clickCount + 1) % spawnPoints.Length; // cyclic buffer , if we put mode(%) in equation it cannot exceed the value which is modding it.

@@ -35,14 +35,6 @@ public class SceneTransitionProvider : MonoBehaviour
         EditorUtility.SetDirty(this);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            StartCoroutine(TransitionRoutine());
-        }
-    }
-
 #endif
 
     private void Start()

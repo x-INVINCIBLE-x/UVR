@@ -9,7 +9,13 @@ public class FollowPlayer : MonoBehaviour
 
     private void Start()
     {
-        playerTransform = PlayerManager.instance.Player.playerBody; // --- Possible hazard ---- //
+        if (PlayerManager.instance != null)
+            playerTransform = PlayerManager.instance.Player.playerBody; // --- Possible hazard ---- //
+        else
+        {
+            Debug.Log("PlayerManager instance not found by " + gameObject.name);
+            return;
+        }
 
         followPosition = playerTransform.position + offset;
         Follow();
@@ -17,6 +23,12 @@ public class FollowPlayer : MonoBehaviour
 
     private void Update()
     {
+        if (playerTransform == null)
+        {
+            enabled = false;
+            return;
+        }
+
         followPosition = playerTransform.position + offset;
 
         if (!followY)

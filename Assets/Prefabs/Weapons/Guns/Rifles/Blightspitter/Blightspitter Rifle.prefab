@@ -382,6 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a59d9957be3c044f9e00663961e2cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: bcd63d091edc0bb44bd373c08cd31688, type: 2}
   shootingForce: 25
   recoilForce: 0
   damage: 50
@@ -391,6 +392,9 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 9047478593758859412}
   clickCount: 0
+  minPitch: 1
+  maxPitch: 3
+  bulletLifeTime: 3
 --- !u!1 &3456834813900504471
 GameObject:
   m_ObjectHideFlags: 0
