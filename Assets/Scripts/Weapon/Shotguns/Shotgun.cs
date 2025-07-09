@@ -55,7 +55,7 @@ public class Shotgun : ScatterWeapons
 
             GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, spawnPoint);
             PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
-            projectileInstance.Init(bulletLifeTime, attackData);
+            projectileInstance.Init(bulletLifeTime, finalAttackData);
 
 
             Rigidbody rb = projectileInstance.GetComponent<Rigidbody>(); // Takes rigidbody of current instanced bullet

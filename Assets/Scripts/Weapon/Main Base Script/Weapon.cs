@@ -13,8 +13,8 @@ public class Weapon : MonoBehaviour
     protected AbilityHandler abilityHandler;
 
     public Dictionary<AbilityType, System.Action> abilities;
-    public AttackData attackData;
-    private AttackData finalAttackData;
+    [SerializeField] private AttackData attackData;
+    protected AttackData finalAttackData;
 
     protected virtual void Awake()
     {
@@ -53,13 +53,11 @@ public class Weapon : MonoBehaviour
 
     private void PickUpWeapon(SelectEnterEventArgs args)
     {
-        args.interactorObject.transform.GetComponent<MeshHidder>()?.Hide();
         finalAttackData = PlayerManager.instance.Player.stats.CombineWith(attackData);
     }
 
     private void DropWeapon(SelectExitEventArgs args)
     {
-        args.interactorObject.transform.GetComponent<MeshHidder>()?.Show();
         finalAttackData = null;
     }
     

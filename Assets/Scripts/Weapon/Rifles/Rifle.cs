@@ -52,7 +52,7 @@ public class Rifle : RangedWeapon
 
         GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, spawnPoints[clickCount]);
         PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
-        projectileInstance.Init(bulletLifeTime, attackData);
+        projectileInstance.Init(bulletLifeTime, finalAttackData);
         projectileInstance.Launch(spawnPoints[clickCount], shootingForce);
 
         clickCount = (clickCount + 1) % spawnPoints.Length; // cyclic buffer , if we put mode(%) in equation it cannot exceed the value which is modding it.

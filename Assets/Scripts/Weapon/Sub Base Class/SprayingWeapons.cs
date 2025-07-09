@@ -35,7 +35,7 @@ public class SprayingWeapons : Weapon
 
     private void OnDisable()
     {
-        //InputManager.Instance.activate.action.performed -= ctx => StartSpraying();
-        //InputManager.Instance.activate.action.canceled -= ctx => StopSpraying();
+        InputManager.Instance.activate.action.performed -= ctx => StartSpraying();
+        InputManager.Instance.activate.action.canceled -= ctx => StopSpraying();
     }
 }

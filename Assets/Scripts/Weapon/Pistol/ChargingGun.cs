@@ -72,7 +72,7 @@ public class ChargingGun : RangedWeapon
 
         GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, bulletSpawn);
         PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
-        projectileInstance.Init(bulletLifeTime, attackData);
+        projectileInstance.Init(bulletLifeTime, finalAttackData);
 
 
         // Scale the bulllet based on charged ratio

@@ -30,13 +30,11 @@ public class Pistol : RangedWeapon
     {
         base.ActivateWeapon(args);
         Shoot();
-
     }
 
     protected override void DeactivateWeapon(DeactivateEventArgs args)
     {
         base.DeactivateWeapon(args);
-
     }
 
     protected override void Shoot()
@@ -45,7 +43,7 @@ public class Pistol : RangedWeapon
 
         GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, bulletSpawn);
         PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
-        projectileInstance.Init(bulletLifeTime, attackData);
+        projectileInstance.Init(bulletLifeTime, finalAttackData);
 
         projectileInstance.Launch(bulletSpawn, shootingForce);
 
@@ -56,7 +54,6 @@ public class Pistol : RangedWeapon
 
         // SFX Implement
         ShootAudio();
-
     }
 
     private void ShootAudio()
@@ -64,5 +61,4 @@ public class Pistol : RangedWeapon
         WeaponAudioSource.pitch = UnityEngine.Random.Range(minPitch, maxPitch);
         WeaponAudioSource.PlayOneShot(shootSFX);
     }
-
 }
