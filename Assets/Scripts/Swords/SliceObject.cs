@@ -87,7 +87,7 @@ public class SliceObject : MonoBehaviour
 
         // Implement Slice Event
 
-        if(target.TryGetComponent(out ISliceEvent sliceEvent))
+        if(target.TryGetComponent(out ISliceable sliceEvent))
         {
             sliceEvent.HandleSlice();
         }

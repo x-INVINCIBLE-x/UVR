@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [field: SerializeField] public Transform playerBody { get; internal set; }
     public PlayerStats stats { get; private set; }
+
     [field: SerializeField] private PlayerGravity playerGravity;
 
     [Header("Safe Position")]

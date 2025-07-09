@@ -25,7 +25,7 @@ public class ChallengeManager : MonoBehaviour
 
     private void Start()
     {
-        EnemyEvents.OnElimination += HandleChallengeStart;
+        GameEvents.OnElimination += HandleChallengeStart;
         possibleChallenges = new List<int>(challenges.Length);
         ResetPossibleChallenges();
         ChooseChallenge();
@@ -106,6 +106,6 @@ public class ChallengeManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        EnemyEvents.OnElimination -= HandleChallengeStart;
+        GameEvents.OnElimination -= HandleChallengeStart;
     }
 }

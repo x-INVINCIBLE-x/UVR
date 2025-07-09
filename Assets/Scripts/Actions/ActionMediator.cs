@@ -41,6 +41,8 @@ public class ActionMediator : MonoBehaviour
 
     [field: SerializeField] public ActionStatus LastActionStatus { get; private set; } = ActionStatus.None;
 
+    private float defaultSpeed;
+
     public class ConstantVector2InputReader : IXRInputValueReader<Vector2>
     {
         private Vector2 _value;
@@ -65,6 +67,7 @@ public class ActionMediator : MonoBehaviour
     {
         grabStatus = GetComponent<GrabStatus>();
         playerGravity = GetComponent<PlayerGravity>();
+        defaultSpeed = moveProvider.moveSpeed;
         //grabStatus.GrabStatusChanged += HandleGrabStatusChange;
     }
 
@@ -73,6 +76,11 @@ public class ActionMediator : MonoBehaviour
         // ----------------- Changes: From Awake -> OnEnable ---------------------------------------------
         grabStatus.GrabStatusChanged += HandleGrabStatusChange;
         OnTimeModified += HandleTimeChange;
+    }
+
+    protected virtual void Start()
+    {
+        SetPhysicalMotion(false);
     }
 
     private void HandleGrabStatusChange(GrabType type)
@@ -110,17 +118,13 @@ public class ActionMediator : MonoBehaviour
         }
     }
 
-    protected virtual void Start()
+    #region Handles Movement
+    public void ModifySpeedMultiplier(float multiplier)
     {
-        SetPhysicalMotion(false);
-        //InputManager.Instance.leftJoystickPress.action.performed += ToggleAbilitySelect;
+        moveProvider.moveSpeed *= multiplier;
     }
 
-
-    //private void ToggleAbilitySelect(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    //{
-    //    abilitySelectDisplay.SetActive(!abilitySelectDisplay.activeSelf);
-    //}
+    public void ResetMovementSpeed() => moveProvider.moveSpeed = defaultSpeed;
 
     public void EnableMovement()
     {
@@ -130,18 +134,15 @@ public class ActionMediator : MonoBehaviour
 
     public void DisableMovement()
     {
-        //moveProvider.leftHandMoveInput.manualValue = Vector2.zero;
-        //moveProvider.rightHandMoveInput.manualValue = Vector2.zero;
-
-        //moveProvider.enabled = false;
-
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
         moveProvider.leftHandMoveInput.bypass = new ConstantVector2InputReader(Vector2.zero);
         moveProvider.rightHandMoveInput.bypass = new ConstantVector2InputReader(Vector2.zero);
     }
+    #endregion
 
+    #region Handle Physical Motion
     public void SetPhysicalMotion(bool status, bool interpolate = false)
     {
         xRBodyTransformer.useCharacterControllerIfExists = !status;
@@ -177,11 +178,9 @@ public class ActionMediator : MonoBehaviour
 
     IEnumerator LandRoutine(bool interpolate)
     {
-        //float safteyTimer = 5;
         yield return new WaitForSeconds(0.1f); // ---------------- Original 0.1 - that also is a magic numbrt -----------------
         while (!IsGrounded())
         {
-            //safteyTimer -= Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
@@ -195,6 +194,9 @@ public class ActionMediator : MonoBehaviour
         landRoutine = null;
     }
 
+    #endregion
+
+    #region Handle Time Change
     private void HandleTimeChange(float timeScale) => StartCoroutine(TimeChangeCoroutine()); 
 
     private IEnumerator TimeChangeCoroutine()
@@ -212,6 +214,8 @@ public class ActionMediator : MonoBehaviour
     }
 
     public void TimeScaleUpdated(float timeModifier) => OnTimeModified?.Invoke(timeModifier);
+
+    #endregion
 
     public bool IsGrounded()
     {

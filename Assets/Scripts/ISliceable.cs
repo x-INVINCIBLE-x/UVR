@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public interface ISliceEvent
+public interface ISliceable
 {
     public void HandleSlice();
-  
 }

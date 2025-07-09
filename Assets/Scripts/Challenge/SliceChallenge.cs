@@ -23,7 +23,7 @@ public class SliceChallenge : Challenge
 
     public override void StartChallenge()
     {
-        EnemyEvents.OnElimination += HandleElimination;
+        GameEvents.OnElimination += HandleElimination;
         PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
     }
 
@@ -35,7 +35,7 @@ public class SliceChallenge : Challenge
         status = ChallengeStatus.Success;
 
         Debug.Log(ChallengeName + " Completed");
-        EnemyEvents.OnElimination -= HandleElimination;
+        GameEvents.OnElimination -= HandleElimination;
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
 
         base.ChallengeCompleted();
@@ -49,7 +49,7 @@ public class SliceChallenge : Challenge
         status = ChallengeStatus.Failed;
 
         Debug.Log(ChallengeName + " Completed");
-        EnemyEvents.OnElimination -= HandleElimination;
+        GameEvents.OnElimination -= HandleElimination;
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
 
         base.ChallengeFailed();

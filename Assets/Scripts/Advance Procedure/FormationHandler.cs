@@ -104,7 +104,7 @@ public class FormationHandler : MonoBehaviour
 
         if (challengeNanme == "Slice")
         {
-            EnemyEvents.OnElimination += HandleElimination;
+            GameEvents.OnElimination += HandleElimination;
         }
         else
         {

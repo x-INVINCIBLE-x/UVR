@@ -44,7 +44,7 @@ public class TimeTrialChallenge : Challenge
 
     public override void StartChallenge()
     {
-        EnemyEvents.OnElimination += UpdateChallengeStatus;
+        GameEvents.OnElimination += UpdateChallengeStatus;
         int targetIndex = UnityEngine.Random.Range(0, possibleTargets.Count);
         currentObjective = (ObjectiveType)possibleTargets[targetIndex];
 
@@ -57,7 +57,7 @@ public class TimeTrialChallenge : Challenge
         if (status == ChallengeStatus.Failed) return;
 
         status = ChallengeStatus.Success;
-        EnemyEvents.OnElimination -= UpdateChallengeStatus;
+        GameEvents.OnElimination -= UpdateChallengeStatus;
 
         Debug.Log(ChallengeName + " Completed");
         if (currentRoutine != null)
@@ -71,7 +71,7 @@ public class TimeTrialChallenge : Challenge
         if (status == ChallengeStatus.Success) return;
 
         status = ChallengeStatus.Failed;
-        EnemyEvents.OnElimination -= UpdateChallengeStatus;
+        GameEvents.OnElimination -= UpdateChallengeStatus;
 
         Debug.Log(ChallengeName + " Failed");
         if (currentRoutine != null)

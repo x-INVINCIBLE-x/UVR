@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObjectSliceEvent : MonoBehaviour,ISliceEvent
+public class ObjectSliceEvent : MonoBehaviour,ISliceable
 {
     [SerializeField] private ObjectiveType type;
     private bool hasRaisedEvent;
@@ -16,7 +16,7 @@ public class ObjectSliceEvent : MonoBehaviour,ISliceEvent
         if(hasRaisedEvent == false)
         {
             hasRaisedEvent = true;
-            EnemyEvents.OnElimination?.Invoke(type);
+            GameEvents.OnElimination?.Invoke(type);
         }
     }
 }
