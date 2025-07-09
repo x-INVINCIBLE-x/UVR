@@ -8,7 +8,6 @@ public class MoveState_Melee : EnemyState
     private Enemy_Melee enemy;
     private Vector3 destination;
 
-
     public MoveState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = enemyBase as Enemy_Melee;
@@ -18,7 +17,7 @@ public class MoveState_Melee : EnemyState
     {
         base.Enter();
 
-        enemy.agent.speed = enemy.walkSpeed;
+        enemy.agent.speed = enemy.WalkSpeed;
 
         destination = enemy.GetPatrolDestination();
         enemy.agent.SetDestination(destination);

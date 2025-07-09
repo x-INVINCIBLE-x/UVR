@@ -35,7 +35,7 @@ public class JumpAttackState_Boss : EnemyState
         if (enemy.bossWeaponType == BossWeaponType.Hummer)
         {
             enemy.agent.isStopped = false;
-            enemy.agent.speed = enemy.runSpeed;
+            enemy.SetToRunSpeed();
             enemy.agent.SetDestination(lastPlayerPos);
         }
     }

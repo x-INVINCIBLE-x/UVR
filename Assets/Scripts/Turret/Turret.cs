@@ -14,9 +14,9 @@ public abstract class Turret : MonoBehaviour, ISliceable
         col = GetComponent<SphereCollider>();
     }
 
-    protected abstract void Activate();
+    protected abstract void Activate(Collider activatingCollider);
 
-    protected abstract void Deactivate();
+    protected abstract void Deactivate(Collider deactivatingCollider);
 
     protected virtual void OnTriggerEnter(Collider other)
     {
@@ -25,7 +25,7 @@ public abstract class Turret : MonoBehaviour, ISliceable
         if (other.CompareTag(activationTag))
         {
             isActivated = true;
-            Activate();
+            Activate(other);
         }
     }
 
@@ -34,7 +34,7 @@ public abstract class Turret : MonoBehaviour, ISliceable
         if (isActivated == true && other.CompareTag(activationTag))
         {
             isActivated = false;
-            Deactivate();
+            Deactivate(other);
         }
     }
 
@@ -42,6 +42,6 @@ public abstract class Turret : MonoBehaviour, ISliceable
     {
         isSliced = true;
         col.enabled = false;
-        Deactivate();
+        Deactivate(null);
     }
 }

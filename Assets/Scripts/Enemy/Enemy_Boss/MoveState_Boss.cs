@@ -32,7 +32,7 @@ public class MoveState_Boss : EnemyState
         speedUpActivated = false;
         enemy.anim.SetFloat("MoveAnimSpeedMultiplier", 1);
         enemy.anim.SetFloat("MoveAnimIndex", 0);
-        enemy.agent.speed = enemy.walkSpeed;
+        enemy.SetToWalkSpeed();
     }
 
     public override void Update()
@@ -66,7 +66,7 @@ public class MoveState_Boss : EnemyState
 
     private void SpeedUp()
     {
-        enemy.agent.speed = enemy.runSpeed;
+        enemy.SetToRunSpeed();
         enemy.anim.SetFloat("MoveAnimIndex", 1);
         enemy.anim.SetFloat("MoveAnimSpeedMultiplier", 1.5f);
         speedUpActivated = true;

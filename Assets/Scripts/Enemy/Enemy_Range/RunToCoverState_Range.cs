@@ -22,7 +22,7 @@ public class RunToCoverState_Range : EnemyState
         enemy.visuals.EnableIK(true,false);
 
         enemy.agent.isStopped = false;
-        enemy.agent.speed = enemy.runSpeed;
+        enemy.agent.speed = enemy.RunSpeed;
         enemy.agent.SetDestination(destination);
     }
 

@@ -109,7 +109,7 @@ public class Enemy_Melee : Enemy
     {
         base.AbilityTrigger();
 
-        walkSpeed = walkSpeed * .6f;
+        walkSpeed = walkSpeed * .6f; 
         visuals.EnableWeaponModel(false);
     }
 

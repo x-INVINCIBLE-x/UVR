@@ -19,11 +19,25 @@ public class Enemy : MonoBehaviour
     public float chaseDuration = 5f;
 
     [Header("Move data")]
-    public float walkSpeed = 1.5f;
-    public float runSpeed = 3;
+    [SerializeField] protected float walkSpeed = 1.5f;
+    [SerializeField] protected float runSpeed = 3;
     public float turnSpeed;
     private bool manualMovement;
     private bool manualRotation;
+    private float currentBaseSpeed;
+    private float speedMultiplier = 1f;
+    public float SpeedMultiplier
+    {
+        get => speedMultiplier;
+        set
+        {
+            if (Mathf.Approximately(speedMultiplier, value)) return;
+            speedMultiplier = value;
+            UpdateMovementSpeed();
+        }
+    }
+    public float WalkSpeed => walkSpeed * speedMultiplier;
+    public float RunSpeed => runSpeed * speedMultiplier;
 
     [SerializeField] private Transform[] patrolPoints;
     private Vector3[] patrolPointsPosition;
@@ -97,6 +111,23 @@ public class Enemy : MonoBehaviour
     public virtual void Die()
     {
 
+    }
+
+    public void SetToWalkSpeed()
+    {
+        currentBaseSpeed = walkSpeed;
+        UpdateMovementSpeed();
+    }
+
+    public void SetToRunSpeed()
+    {
+        currentBaseSpeed = runSpeed;
+        UpdateMovementSpeed();
+    }
+
+    public void UpdateMovementSpeed()
+    {
+        agent.speed = currentBaseSpeed * speedMultiplier;
     }
 
     public virtual void MeleeAttackCheck(Transform[] damagePoints, float attackCheckRadius,GameObject fx,AttackData damage)

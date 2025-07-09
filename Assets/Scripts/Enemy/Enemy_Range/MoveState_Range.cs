@@ -16,7 +16,7 @@ public class MoveState_Range : EnemyState
     {
         base.Enter();
 
-        enemy.agent.speed = enemy.walkSpeed;
+        enemy.agent.speed = enemy.WalkSpeed;
 
         destination = enemy.GetPatrolDestination();
         enemy.agent.SetDestination(destination);
