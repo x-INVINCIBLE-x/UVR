@@ -31787,7 +31787,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1766493715090787288}
-  - component: {fileID: 3519047780629652173}
   - component: {fileID: 6218986033095211842}
   m_Layer: 0
   m_Name: AirShip Enemy
@@ -31813,21 +31812,6 @@ Transform:
   - {fileID: 8070081620880207540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3519047780629652173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8195992198379065135}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4409b111ef4add4ba6630d5b6f2a828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetMultiplier: 200
-  duration: 20
-  resolution: 10
 --- !u!114 &6218986033095211842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31847,7 +31831,7 @@ MonoBehaviour:
   toReachMaxRadius: 20
   attackCoolDown: 5
   lastAttackTime: 0
-  bombPrefab: {fileID: 6433934524998870675, guid: 1ecb7aece2461c64290409cbfb6c9d0a, type: 3}
+  bombPrefab: {fileID: 2442727302728053605, guid: ea12cd1cd1d126641aeb621f5b9e65a6, type: 3}
   bombSpawnPoint: {fileID: 8070081620880207540}
   radiusLerpTime: 0
 --- !u!1 &8199525044525787537
