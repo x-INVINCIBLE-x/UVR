@@ -44,10 +44,11 @@ public class PhysicsProjectile : Projectile
         ObjectPool.instance.ReturnObject(gameObject, lifeTime);
     }
 
-    public override void Launch(Transform _transform, float force)
+    public override void Launch(Transform _transform, float force, Vector3? dir = null)
     {
         base.Launch(_transform, force);
-        rigidBody.linearVelocity = _transform.forward * force;
+        Vector3 lookDirection = dir ?? _transform.forward;
+        rigidBody.linearVelocity = lookDirection * force;
         transform.rotation = Quaternion.LookRotation(rigidBody.linearVelocity.normalized);
     }
 

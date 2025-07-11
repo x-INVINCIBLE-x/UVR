@@ -43,6 +43,13 @@ public class Enemy : MonoBehaviour
     private Vector3[] patrolPointsPosition;
     private int currentPatrolIndex;
 
+    [SerializeField] private float attackSpeedMultiplier = 1f;
+    public float AttackSpeedMultiplier
+    {
+        get => attackSpeedMultiplier;
+        set => attackSpeedMultiplier = value;
+    }
+
     public bool inBattleMode { get; private set; }
     protected bool isMeleeAttackReady;
 

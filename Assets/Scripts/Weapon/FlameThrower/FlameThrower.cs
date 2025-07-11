@@ -7,17 +7,16 @@ public class FlameThrower : SprayingWeapons
 {
     [Header("FlameThrower Settings")]
     //[SerializeField]private bool isHolding = false;
-    [SerializeField] private GameObject sprayVFX;
+    [SerializeField] private GameObject sprayVFX; // TODO: Convert this Into DamageOnTouch
     [SerializeField] private CapsuleCollider attackRadius;
     [SerializeField] private AudioClip spraySFX;
-
    
     protected override void Awake()
     {
         base.Awake();
         attackRadius = GetComponentInChildren<CapsuleCollider>(); 
         //sprayVFX = transform.Find("Flamethrower")?.gameObject;
-
+        
         if (sprayVFX != null)
             sprayVFX.SetActive(false);
 

@@ -6,7 +6,7 @@ public abstract class Turret : MonoBehaviour, ISliceable
 {
     protected string activationTag = "Player";
     protected SphereCollider col;
-    private bool isActivated = true;
+    protected bool isActive = true;
     protected bool isSliced = false;
 
     protected virtual void Awake()
@@ -24,16 +24,16 @@ public abstract class Turret : MonoBehaviour, ISliceable
 
         if (other.CompareTag(activationTag))
         {
-            isActivated = true;
+            isActive = true;
             Activate(other);
         }
     }
 
     protected virtual void OnTriggerExit(Collider other)
     {
-        if (isActivated == true && other.CompareTag(activationTag))
+        if (isActive == true && other.CompareTag(activationTag))
         {
-            isActivated = false;
+            isActive = false;
             Deactivate(other);
         }
     }

@@ -36,4 +36,21 @@ public static class StatExtensions
 
         return combined;
     }
+
+    public static AttackData CombineWith(this AttackData a, AttackData b)
+    {
+        if (a == null || b == null) return null;
+
+        AttackData combined = ScriptableObject.CreateInstance<AttackData>();
+
+        combined.physicalDamage = a.physicalDamage.CombineWith(b.physicalDamage);
+        combined.ignisDamage = a.ignisDamage.CombineWith(b.ignisDamage);
+        combined.frostDamage = a.frostDamage.CombineWith(b.frostDamage);
+        combined.blitzDamage = a.blitzDamage.CombineWith(b.blitzDamage);
+        combined.hexDamage = a.hexDamage.CombineWith(b.hexDamage);
+        combined.radianceDamage = a.radianceDamage.CombineWith(b.radianceDamage);
+        combined.gaiaDamage = a.gaiaDamage.CombineWith(b.gaiaDamage);
+
+        return combined;
+    }
 }

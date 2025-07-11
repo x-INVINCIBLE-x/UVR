@@ -23,7 +23,7 @@ public class AttackState_Melee : EnemyState
         enemy.visuals.EnableWeaponTrail(true);
 
         attackMoveSpeed = enemy.attackInfo.moveSpeed;
-        enemy.anim.SetFloat("AttackAnimationSpeed", enemy.attackInfo.animationSpeed);
+        enemy.anim.SetFloat("AttackAnimationSpeed", enemy.attackInfo.animationSpeed * enemy.AttackSpeedMultiplier);
         enemy.anim.SetFloat("AttackIndex", enemy.attackInfo.attackIndex);
         enemy.anim.SetFloat("SlashAttackIndex", Random.Range(0, 6)); // we have 6 attacks with index from 0 to 5
 

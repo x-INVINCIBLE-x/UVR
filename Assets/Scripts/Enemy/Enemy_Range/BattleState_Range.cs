@@ -26,7 +26,7 @@ public class BattleState_Range : EnemyState
 
         enemy.visuals.EnableIK(true, true);
 
-        stateTimer = enemy.attackDelay;
+        stateTimer = enemy.attackDelay / enemy.AttackSpeedMultiplier;
     }
 
 
@@ -156,9 +156,12 @@ public class BattleState_Range : EnemyState
         bulletsPerAttack = enemy.weaponData.GetBulletsPerAttack();
         weaponCooldown = enemy.weaponData.GetWeaponCooldown();
     }
-    private bool WeaponOnCooldown() => Time.time > lastTimeShot + weaponCooldown;
+    private bool WeaponOnCooldown()
+    {
+        return Time.time > lastTimeShot + (weaponCooldown / enemy.AttackSpeedMultiplier);
+    }
     private bool WeaponOutOfBullets() => bulletsShot >= bulletsPerAttack;
-    private bool CanShoot() => Time.time > lastTimeShot + 1 / enemy.weaponData.fireRate;
+    private bool CanShoot() => Time.time > lastTimeShot + (1f / (enemy.weaponData.fireRate * enemy.AttackSpeedMultiplier));
     private void Shoot()
     {
         enemy.FireSingleBullet();

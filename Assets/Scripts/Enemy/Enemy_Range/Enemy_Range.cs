@@ -90,8 +90,6 @@ public class Enemy_Range : Enemy
         SetupWeapon();
 
         finalDamageData = stats.CombineWith(weaponData.damageData);
-
-        Debug.Log("dtar");
     }
 
     protected override void Update()

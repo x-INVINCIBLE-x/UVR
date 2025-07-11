@@ -17,6 +17,7 @@ public class UmbrellaFormationConsequence : FomationConsequence
 
     [SerializeField] private float shootingForce;
     [SerializeField] private float bulletLifeTime = 10f;
+    [SerializeField] private AttackData attackData;
     private float timer;
 
     private void Update()
@@ -44,16 +45,22 @@ public class UmbrellaFormationConsequence : FomationConsequence
         int innerCount = Mathf.RoundToInt(concurrentSpawnAmount * innerRadiusPercentage);
         int outerCount = concurrentSpawnAmount - innerCount;
 
+        PhysicsProjectile newPP= null;
+
         for (int i = 0; i < innerCount; i++)
         {
             GameObject newProjectile = ObjectPool.instance.GetObject(GetRandomPrefab().gameObject, GetPointInInnerRadius());
-            newProjectile.GetComponent<PhysicsProjectile>().Launch(transform, shootingForce);
+            newPP = newProjectile.GetComponent<PhysicsProjectile>();
+            newPP.Init(bulletLifeTime, attackData);
+            newPP.Launch(spawnArea.transform, shootingForce, Vector3.down);
         }
 
         for (int i = 0; i < outerCount; i++)
         {
             GameObject newProjectile = ObjectPool.instance.GetObject(GetRandomPrefab().gameObject, GetPointInOuterRegion());
-            newProjectile.GetComponent<PhysicsProjectile>().Launch(transform, shootingForce);
+            newPP = newProjectile.GetComponent<PhysicsProjectile>();
+            newPP.Init(bulletLifeTime, attackData);
+            newPP.Launch(spawnArea.transform, shootingForce, Vector3.down);
         }
     }
 

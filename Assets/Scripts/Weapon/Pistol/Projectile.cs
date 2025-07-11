@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
     {
     }
 
-    public virtual void Launch(Transform _transform, float shootingForce)
+    public virtual void Launch(Transform _transform, float shootingForce, Vector3? dir = null)
     {
 
     }
