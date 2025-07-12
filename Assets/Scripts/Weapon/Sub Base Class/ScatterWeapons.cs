@@ -37,14 +37,4 @@ public class ScatterWeapons : Weapon
     {
         rigidBody.AddRelativeForce(Vector3.back * recoilForce, ForceMode.Impulse);
     }
-
-    public float GetShootingForce()
-    {
-        return shootingForce;
-    }
-
-    public float GetDamage()
-    {
-        return damage;
-    }
 }

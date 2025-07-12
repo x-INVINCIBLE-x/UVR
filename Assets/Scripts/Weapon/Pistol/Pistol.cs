@@ -21,7 +21,9 @@ public class Pistol : RangedWeapon
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-        {
+        {   
+            
+
             Shoot();
         }
     }
@@ -40,6 +42,8 @@ public class Pistol : RangedWeapon
     protected override void Shoot()
     {
         base.Shoot();
+
+        if (!CanShoot()) return;
 
         GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, bulletSpawn);
         PhysicsProjectile projectileInstance = newProjectile.GetComponent<PhysicsProjectile>();
