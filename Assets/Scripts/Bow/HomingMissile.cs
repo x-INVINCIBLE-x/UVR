@@ -73,8 +73,8 @@ public class HomingMissile : MonoBehaviour
     {
         if (_homingDuration < 0) return;
 
-        _speed += _acceleration * Time.fixedDeltaTime;
-        Debug.Log(_speed);
+        //_speed += _acceleration * Time.fixedDeltaTime;
+
         _rb.linearVelocity = transform.forward * _speed;
 
         var leadTimePercentage = Mathf.InverseLerp(_minDistancePredict, _maxDistancePredict, Vector3.Distance(transform.position, _targetRb.transform.position));
@@ -95,7 +95,7 @@ public class HomingMissile : MonoBehaviour
 
     private void AddDeviation(float leadTimePercentage)
     {
-        var deviation = new Vector3(Mathf.Cos(Time.time * _deviationSpeed * _acceleration), 0, 0);
+        var deviation = new Vector3(Mathf.Cos(Time.time * _deviationSpeed), 0, 0);
 
         var predictionOffset = transform.TransformDirection(deviation) * _deviationAmount * leadTimePercentage;
 
@@ -107,7 +107,7 @@ public class HomingMissile : MonoBehaviour
         var heading = _deviatedPrediction - transform.position;
 
         var rotation = Quaternion.LookRotation(heading);
-        _rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotation, _rotateSpeed * _acceleration * Time.deltaTime));
+        _rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotation, _rotateSpeed * Time.deltaTime));
     }
 
     private void OnCollisionEnter(Collision collision)

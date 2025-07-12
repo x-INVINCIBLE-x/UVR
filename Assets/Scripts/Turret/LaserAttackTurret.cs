@@ -70,7 +70,7 @@ public class LaserAttackTurret : AttackTurret
 
     private IEnumerator RotationCoroutine()
     {
-        while (isAttacking)
+        while (isActive)
         {
             rotator.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
             yield return null;

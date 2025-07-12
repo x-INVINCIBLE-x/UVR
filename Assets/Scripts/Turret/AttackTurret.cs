@@ -18,28 +18,23 @@ public class AttackTurret : Turret
 
     protected TurretPhase currentPhase = TurretPhase.Rest;
     protected float phaseTimer = 0f;
-    protected bool isAttacking = false;
 
     public float PhaseProgressNormalized { get; protected set; } = 0f;
     public TurretPhase CurrentPhase => currentPhase;
 
     protected override void Activate(Collider activatingCollider)
     {
-        if (!isAttacking)
-        {
-            isAttacking = true;
-            StartCoroutine(PhaseRoutine());
-        }
+        StartCoroutine(PhaseRoutine());
     }
 
     protected override void Deactivate(Collider deactivatingCollider)
     {
-        isAttacking = false;
+
     }
 
     private IEnumerator PhaseRoutine()
     {
-        while (isAttacking)
+        while (isActive)
         {
             yield return StartCoroutine(EnterPhase(TurretPhase.PreAttack, initializeTime));
             yield return StartCoroutine(EnterPhase(TurretPhase.Attack, attackDuration));
