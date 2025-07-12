@@ -16,7 +16,7 @@ MonoBehaviour:
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -33,7 +33,7 @@ Material:
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2450
   stringTagMap:
-    RenderType: Opaque
+    RenderType: TransparentCutout
   disabledShaderPasses:
   - SHADOWCASTER
   - MOTIONVECTORS
@@ -163,7 +163,7 @@ Material:
     - _Depth_Distance: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Disolve: 0
+    - _Disolve: 0.304
     - _DisolveSmooth: 1
     - _Disolve_Distortion: 0
     - _Disolve_Mask: 0

@@ -11,6 +11,8 @@ public class RangedWeapon : Weapon
     [SerializeField] protected AudioClip shootSFX;
     protected AudioSource WeaponAudioSource;
 
+    
+
     protected override void Awake()
     {   
         base.Awake();
