@@ -40,6 +40,7 @@ public abstract class Turret : MonoBehaviour, ISliceable
 
     public virtual void HandleSlice()
     {
+        isActive = false;
         isSliced = true;
         col.enabled = false;
         Deactivate(null);

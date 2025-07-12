@@ -1,3 +1,5 @@
+using GLTFast.Schema;
+using System.Collections;
 using UnityEngine;
 
 public class UmbrellaFormationConsequence : FomationConsequence
@@ -15,13 +17,23 @@ public class UmbrellaFormationConsequence : FomationConsequence
     [Range(0f, 1f)]
     public float innerRadiusPercentage = 0.5f;
 
+    [Header("Spawner rotation")]
+    public float angle = 45f;
+    public float oscillationSpeed = 1f;
+
+    [Header("Shooting Info")]
     [SerializeField] private float shootingForce;
     [SerializeField] private float bulletLifeTime = 10f;
     [SerializeField] private AttackData attackData;
+
+    [SerializeField] private bool isActive = false;
+    private Quaternion initialRotation;
     private float timer;
 
     private void Update()
     {
+        if (!isActive) { return; }
+
         timer += Time.deltaTime;
         if (timer >= spawnFrequency)
         {
@@ -37,7 +49,9 @@ public class UmbrellaFormationConsequence : FomationConsequence
 
     protected override void HandleFormationComplete(FormationType formationType)
     {
-
+        isActive = true;
+        initialRotation = spawnArea.transform.localRotation;
+        StartCoroutine(OscillationRoutine());
     }
 
     private void SpawnObjects()
@@ -52,7 +66,7 @@ public class UmbrellaFormationConsequence : FomationConsequence
             GameObject newProjectile = ObjectPool.instance.GetObject(GetRandomPrefab().gameObject, GetPointInInnerRadius());
             newPP = newProjectile.GetComponent<PhysicsProjectile>();
             newPP.Init(bulletLifeTime, attackData);
-            newPP.Launch(spawnArea.transform, shootingForce, Vector3.down);
+            newPP.Launch(spawnArea.transform, shootingForce, -spawnArea.transform.up);
         }
 
         for (int i = 0; i < outerCount; i++)
@@ -60,7 +74,7 @@ public class UmbrellaFormationConsequence : FomationConsequence
             GameObject newProjectile = ObjectPool.instance.GetObject(GetRandomPrefab().gameObject, GetPointInOuterRegion());
             newPP = newProjectile.GetComponent<PhysicsProjectile>();
             newPP.Init(bulletLifeTime, attackData);
-            newPP.Launch(spawnArea.transform, shootingForce, Vector3.down);
+            newPP.Launch(spawnArea.transform, shootingForce, -spawnArea.transform.up);
         }
     }
 
@@ -110,6 +124,19 @@ public class UmbrellaFormationConsequence : FomationConsequence
         while (attempts < maxAttempts);
 
         return point;
+    }
+
+    private IEnumerator OscillationRoutine()
+    {
+        while (isActive)
+        {
+            float rotX = Mathf.PingPong(Time.time * oscillationSpeed * 2, angle * 2) - angle;
+
+            // Apply rotation only on X axis, preserving original Y and Z
+            spawnArea.transform.localRotation = initialRotation * Quaternion.Euler(rotX, 0f, 0f);
+
+            yield return null;
+        }
     }
 
     private void OnDrawGizmosSelected()
