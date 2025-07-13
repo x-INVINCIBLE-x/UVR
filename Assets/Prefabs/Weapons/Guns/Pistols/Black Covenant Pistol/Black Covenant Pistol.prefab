@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 06bc00863d50e044f93ab6694245d6cc, type: 2}
+  - {fileID: 2100000, guid: 8ee0cabbd02d86d47a9a6a28da091766, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -501,13 +501,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5446eac93e254c5498011ef21db3c197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackData: {fileID: 0}
   shootingForce: 15
   recoilForce: 0
-  damage: 25
   muzzleVFX: {fileID: 4261401178541585102, guid: d1078aea6864e714da833997823aeb93, type: 3}
   shootSFX: {fileID: 8300000, guid: a4d9a3f4831d4e74ba00f57030822199, type: 3}
+  fireRate: 3
+  maxHeatLimit: 100
+  coolDownRate: 70
+  overheatResistance: 5
+  currentHeat: 0
+  isOverheated: 0
+  OverHeatMaterial: {fileID: 2100000, guid: 8ee0cabbd02d86d47a9a6a28da091766, type: 2}
+  currentEmissionIntensity: 0
+  minEmissionIntensity: 0.02
   projectilePrefab: {fileID: 4794003180515700712, guid: 0c235e83a45556d48b6634c083d01d63, type: 3}
   bulletSpawn: {fileID: 168033713054490012}
+  minPitch: 1
+  maxPitch: 3
+  bulletLifeTime: 5
 --- !u!1 &4823664108286857341
 GameObject:
   m_ObjectHideFlags: 0

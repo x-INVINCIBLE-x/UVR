@@ -385,9 +385,17 @@ MonoBehaviour:
   attackData: {fileID: 11400000, guid: bcd63d091edc0bb44bd373c08cd31688, type: 2}
   shootingForce: 25
   recoilForce: 0
-  damage: 50
   muzzleVFX: {fileID: 2612828321144929153, guid: 1a83147b163cd8a47b2c767e208eb7e5, type: 3}
   shootSFX: {fileID: 8300000, guid: 2bf64cd058715a94f84dd8fda1286feb, type: 3}
+  fireRate: 3.3
+  maxHeatLimit: 100
+  coolDownRate: 70
+  overheatResistance: 5
+  currentHeat: 0
+  isOverheated: 0
+  OverHeatMaterial: {fileID: 2100000, guid: 6cb36c38b9ef4da458a607b8ef03edc2, type: 2}
+  currentEmissionIntensity: 0
+  minEmissionIntensity: 0.02
   projectilePrefab: {fileID: -4103925763287670555, guid: a673ea1b63a7f944b931f31226df11b9, type: 3}
   spawnPoints:
   - {fileID: 9047478593758859412}

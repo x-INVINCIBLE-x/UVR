@@ -41,13 +41,13 @@ public class Rifle : RangedWeapon
     {
         base.Shoot();
 
-
+        if (!CanShoot()) return;
 
 
         // Instantiate the projectile
         //PhysicsProjectile projectileInstance = Instantiate(projectilePrefab, spawnPoints[clickCount].position, spawnPoints[clickCount].rotation) as PhysicsProjectile; //.GetComponent<PhysicsProjectile>();
         //projectileInstance.Init();
-        
+
 
 
         GameObject newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, spawnPoints[clickCount]);

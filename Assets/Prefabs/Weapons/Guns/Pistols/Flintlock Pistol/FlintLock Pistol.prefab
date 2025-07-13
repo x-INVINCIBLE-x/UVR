@@ -1477,13 +1477,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5446eac93e254c5498011ef21db3c197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackData: {fileID: 0}
   shootingForce: 15
   recoilForce: 0
-  damage: 20
   muzzleVFX: {fileID: 8157769222371710761, guid: 839e4cead7a39124f84da419b14556ca, type: 3}
   shootSFX: {fileID: 8300000, guid: 38d3fa89153ca734aac3751227463540, type: 3}
+  fireRate: 4
+  maxHeatLimit: 100
+  coolDownRate: 75
+  overheatResistance: 8
+  currentHeat: 0
+  isOverheated: 0
+  OverHeatMaterial: {fileID: 2100000, guid: f77a3af226488e247971c1ee5554bec3, type: 2}
+  currentEmissionIntensity: 0
+  minEmissionIntensity: 0.02
   projectilePrefab: {fileID: 2495458850166253510, guid: 1c2190541774b394887136a3c19a5ae0, type: 3}
   bulletSpawn: {fileID: 584248725277510663}
+  minPitch: 1
+  maxPitch: 3
+  bulletLifeTime: 5
 --- !u!1 &2871239394737267039
 GameObject:
   m_ObjectHideFlags: 0

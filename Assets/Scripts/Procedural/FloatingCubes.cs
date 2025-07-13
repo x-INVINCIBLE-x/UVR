@@ -25,9 +25,11 @@ public class FloatingCubes : MonoBehaviour
     private Dictionary<Prop, Color> colorCode = new()
     {
         { Prop.Trees, Color.green },
-        { Prop.Statues, Color.blue },
+        { Prop.Statues, Color.white },
         { Prop.Rocks, Color.grey },
-        { Prop.Turret, Color.red },
+        { Prop.Turret, Color.blue },
+        { Prop.EnemyMelee, Color.yellow},
+        { Prop.EnemyRange, Color.red},
         { Prop.Extra, Color.cyan },
     };
 
@@ -61,7 +63,7 @@ public class FloatingCubes : MonoBehaviour
         foreach (Entity entity in entities)
         {
             Gizmos.color = colorCode[entity.prop];
-            Gizmos.DrawSphere(transform.position + entity.position, 0.1f);
+            Gizmos.DrawSphere(transform.position + entity.position, 0.5f);
 
             Quaternion rotation = Quaternion.Euler(entity.rotation);
             Vector3 forward = rotation * Vector3.forward;

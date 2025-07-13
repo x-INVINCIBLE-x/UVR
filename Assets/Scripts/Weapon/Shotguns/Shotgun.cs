@@ -40,6 +40,8 @@ public class Shotgun : ScatterWeapons
     {
         base.ScatterShot();
 
+        if (!CanShoot()) return;
+
         // SFX Implement
         ShootAudio();
 

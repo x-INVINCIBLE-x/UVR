@@ -319,13 +319,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5446eac93e254c5498011ef21db3c197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackData: {fileID: 0}
   shootingForce: 20
   recoilForce: 0
-  damage: 30
   muzzleVFX: {fileID: 4186470608034871016, guid: 4fdae677cfe1e8443b28d3db33bc72eb, type: 3}
   shootSFX: {fileID: 8300000, guid: 7276bde1ab4cb6d41bbbdfaec959120a, type: 3}
+  fireRate: 3
+  maxHeatLimit: 100
+  coolDownRate: 60
+  overheatResistance: 3
+  currentHeat: 0
+  isOverheated: 0
+  OverHeatMaterial: {fileID: 2100000, guid: e1b3736223a4dd3428b8ade960a5ef26, type: 2}
+  currentEmissionIntensity: 0
+  minEmissionIntensity: 0.01
   projectilePrefab: {fileID: -7535901742283886474, guid: 3c3658a442538d7438e963b1858490cd, type: 3}
   bulletSpawn: {fileID: 8141504121298507442}
+  minPitch: 1
+  maxPitch: 3
+  bulletLifeTime: 5
 --- !u!1 &694508181103638802
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +466,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d05b31c2ec6d0345978a635c9f22365, type: 2}
+  - {fileID: 2100000, guid: e1b3736223a4dd3428b8ade960a5ef26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -635,7 +647,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d05b31c2ec6d0345978a635c9f22365, type: 2}
+  - {fileID: 2100000, guid: e1b3736223a4dd3428b8ade960a5ef26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1152,7 +1164,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d05b31c2ec6d0345978a635c9f22365, type: 2}
+  - {fileID: 2100000, guid: e1b3736223a4dd3428b8ade960a5ef26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
