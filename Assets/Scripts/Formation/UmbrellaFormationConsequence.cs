@@ -30,28 +30,35 @@ public class UmbrellaFormationConsequence : FomationConsequence
     private Quaternion initialRotation;
     private float timer;
 
-    private void Update()
+    protected override void Start()
     {
-        if (!isActive) { return; }
-
-        timer += Time.deltaTime;
-        if (timer >= spawnFrequency)
-        {
-            SpawnObjects();
-            timer = 0f;
-        }
+        base.Start();
+        type = FormationType.JapaneseUmbrella;
     }
 
-    protected override void HandleUnwrapStart()
+ 
+    protected override void HandleUnwrapStart(FormationType formationType)
     {
-
+        if (formationType != type) return;
     }
 
     protected override void HandleFormationComplete(FormationType formationType)
     {
+        if (formationType != type) return;
+
         isActive = true;
         initialRotation = spawnArea.transform.localRotation;
+        StartCoroutine(StartSpawnRoutine());
         StartCoroutine(OscillationRoutine());
+    }
+
+    private IEnumerator StartSpawnRoutine()
+    {
+        while (isActive)
+        {
+            yield return new WaitForSeconds(spawnFrequency);
+            SpawnObjects();
+        }
     }
 
     private void SpawnObjects()
@@ -132,7 +139,6 @@ public class UmbrellaFormationConsequence : FomationConsequence
         {
             float rotX = Mathf.PingPong(Time.time * oscillationSpeed * 2, angle * 2) - angle;
 
-            // Apply rotation only on X axis, preserving original Y and Z
             spawnArea.transform.localRotation = initialRotation * Quaternion.Euler(rotX, 0f, 0f);
 
             yield return null;

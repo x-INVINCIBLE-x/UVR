@@ -122,7 +122,7 @@ public class DynamicFormationController : FormationProvider
 
     public event System.Action OnFormationStart;
     public event System.Action<FormationType> OnFormationComplete;
-    public event System.Action OnUnwrapStart;
+    public event System.Action<FormationType> OnUnwrapStart;
     public event System.Action OnUnwrapComplete;
 
     private int difficultyLevel = 1;
@@ -144,7 +144,7 @@ public class DynamicFormationController : FormationProvider
 
     void Start()
     {
-        difficultyLevel = DungeonManager.Instance.DifficultyLevel;
+        difficultyLevel = DungeonManager.Instance.DifficultyLevel - 1;
 
         if (difficultyLevel >= formationSequence.Count)
         {
@@ -248,7 +248,7 @@ public class DynamicFormationController : FormationProvider
 
     public override void NextTransition()
     {
-        currentFormationIndex = (currentFormationIndex + 1) % formations.Count;
+        currentFormationIndex = (currentFormationIndex + 1) % formationSequence[difficultyLevel].formationTypes.Count;
         StartCoroutine(FormationToVortexThenToNextFormation());
     }
 
@@ -260,7 +260,10 @@ public class DynamicFormationController : FormationProvider
         isAnimating = true;
         float now = Time.time;
 
-        OnUnwrapStart?.Invoke();
+        int count = formationSequence[difficultyLevel].formationTypes.Count;
+        int prevIndex = (currentFormationIndex - 1 + count) % count;
+
+        OnUnwrapStart?.Invoke(formationSequence[difficultyLevel].formationTypes[prevIndex]);
 
         // Get the next‐formation positions & center
         Vector3[] nextFormationPositions = formations[currentFormationIndex]();

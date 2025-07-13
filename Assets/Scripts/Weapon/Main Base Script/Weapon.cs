@@ -33,6 +33,7 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         abilityHandler = AbilityHandler.Instance;
+        finalAttackData = attackData;
     }
 
     private void SetupInteractableWeaponEvents()
@@ -58,7 +59,7 @@ public class Weapon : MonoBehaviour
 
     private void DropWeapon(SelectExitEventArgs args)
     {
-        finalAttackData = null;
+        finalAttackData = attackData;
     }
     
     protected virtual void ActivateWeapon(ActivateEventArgs args)

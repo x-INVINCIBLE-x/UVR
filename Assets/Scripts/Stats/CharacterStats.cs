@@ -65,6 +65,13 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     public float ailmentLimitOffset = 10;
 
+    private float vulnerability = 1f;
+    public float Vulnerability
+    {
+        get => vulnerability;
+        set => vulnerability = value;
+    }
+    
     public float currentHealth;
     public float currentStamina;
 
@@ -311,6 +318,8 @@ public class CharacterStats : MonoBehaviour, IDamagable
     {
         if (isInvincible || isDead)
             return;
+
+        damage *= vulnerability;
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
 

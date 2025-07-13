@@ -35,7 +35,7 @@ public class AttackSpeedTurret : Turret
         if (enemies.Contains(enemy)) { return; }
 
         enemies.Add(enemy);
-        enemy.AttackSpeedMultiplier = attackSpeedMultiplier;
+        enemy.LocalAttackSpeedMultiplier = attackSpeedMultiplier;
     }
 
     protected override void Deactivate(Collider other)
@@ -48,7 +48,7 @@ public class AttackSpeedTurret : Turret
 
         if (enemies.Contains(enemy))
         {
-            enemy.AttackSpeedMultiplier = 1f;
+            enemy.LocalAttackSpeedMultiplier = 1f;
             enemies.Remove(enemy);
         }
     }

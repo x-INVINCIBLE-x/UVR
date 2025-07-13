@@ -49,7 +49,7 @@ public abstract class FomationConsequence : MonoBehaviour
 
     }
 
-    protected abstract void HandleUnwrapStart();
+    protected abstract void HandleUnwrapStart(FormationType formationType);
 
     protected abstract void HandleFormationComplete(FormationType formationType);
     protected virtual void HandleFormationStart()

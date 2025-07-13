@@ -203,7 +203,8 @@ public class FormationHandler : MonoBehaviour
             yield return new WaitForSeconds(duration);
             Debug.Log("Grid Routine Restarty");
 
-            timedFormation.NextTransition();
+            if (timedFormation.gameObject.activeSelf)
+                timedFormation.NextTransition();
         }
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 using Unity.VisualScripting;
+using System;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
@@ -25,34 +26,68 @@ public class Enemy : MonoBehaviour
     private bool manualMovement;
     private bool manualRotation;
     private float currentBaseSpeed;
-    private float speedMultiplier = 1f;
-    public float SpeedMultiplier
+
+//-------------------------------------------------------------- Movement Speed -----------------------------------------
+    [Header("Speed Modifiers")]
+    [SerializeField] private float minSpeedMultiplier = 0.1f;
+    [SerializeField] private float maxSpeedMultiplier = 3f;
+
+    private float globalSpeedMultiplier = 1f;
+    private float localSpeedMultiplier = 1f;
+
+    public float LocalSpeedMultiplier
     {
-        get => speedMultiplier;
+        get => localSpeedMultiplier;
         set
         {
-            if (Mathf.Approximately(speedMultiplier, value)) return;
-            speedMultiplier = value;
+            if (Mathf.Approximately(localSpeedMultiplier, value)) return;
+            localSpeedMultiplier = value;
             UpdateMovementSpeed();
         }
     }
-    public float WalkSpeed => walkSpeed * speedMultiplier;
-    public float RunSpeed => runSpeed * speedMultiplier;
+    public float WalkSpeed => walkSpeed * localSpeedMultiplier;
+    public float RunSpeed => runSpeed * localSpeedMultiplier;
 
     [SerializeField] private Transform[] patrolPoints;
     private Vector3[] patrolPointsPosition;
     private int currentPatrolIndex;
 
-    [SerializeField] private float attackSpeedMultiplier = 1f;
+    //-------------------------------------------------------------- Attack Speed -----------------------------------------
+    [Header("Attack Speed")]
+    [SerializeField] private float _cachedAttackSpeedMultiplier = 1f;
+    [SerializeField] private float localAttackSpeedMultiplier = 1f;
+    [SerializeField] private float globalAttackSpeedMultiplier = 1f;
+
+    private bool isAttackSpeedDirty = true;
+
     public float AttackSpeedMultiplier
     {
-        get => attackSpeedMultiplier;
-        set => attackSpeedMultiplier = value;
+        get
+        {
+            if (isAttackSpeedDirty)
+            {
+                _cachedAttackSpeedMultiplier = Mathf.Clamp(localAttackSpeedMultiplier * globalAttackSpeedMultiplier, minSpeedMultiplier, maxSpeedMultiplier);
+                isAttackSpeedDirty = false;
+            }
+
+            return _cachedAttackSpeedMultiplier;
+        }
     }
 
+    public float LocalAttackSpeedMultiplier
+    {
+        get => localAttackSpeedMultiplier;
+        set
+        {
+            isAttackSpeedDirty = true;
+            localAttackSpeedMultiplier = value;
+        }
+    }
+    
     public bool inBattleMode { get; private set; }
     protected bool isMeleeAttackReady;
 
+    [Header("Refrences")]
     public Transform player {  get; private set; }
     public Animator anim { get; private set; }
     public NavMeshAgent agent { get; private set; }
@@ -78,11 +113,12 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
+        GameEvents.OnGloabalMovementSpeedChange += HandleGlobalMovementSpeedChange;
+        GameEvents.OnGloablAttackSpeedChange += HandleGlobalAttackSpeedChange;
         player = PlayerManager.instance.PlayerOrigin.GetComponent<Transform>();
         InitializePatrolPoints();
+        currentBaseSpeed = agent.speed;
     }
-
-  
 
     protected virtual void Update()
     {
@@ -134,7 +170,23 @@ public class Enemy : MonoBehaviour
 
     public void UpdateMovementSpeed()
     {
-        agent.speed = currentBaseSpeed * speedMultiplier;
+        float finalMultiplier = localSpeedMultiplier * globalSpeedMultiplier;
+
+        finalMultiplier = Mathf.Clamp(finalMultiplier, minSpeedMultiplier, maxSpeedMultiplier);
+
+        agent.speed = currentBaseSpeed * finalMultiplier;
+    }
+
+    private void HandleGlobalMovementSpeedChange(float newGlobalMultiplier)
+    {
+        globalSpeedMultiplier = newGlobalMultiplier;
+        UpdateMovementSpeed();
+    }
+
+    private void HandleGlobalAttackSpeedChange(float newGlobalMultiplier)
+    {
+        globalSpeedMultiplier = newGlobalMultiplier;
+        isAttackSpeedDirty = true;
     }
 
     public virtual void MeleeAttackCheck(Transform[] damagePoints, float attackCheckRadius,GameObject fx,AttackData damage)
@@ -248,6 +300,11 @@ public class Enemy : MonoBehaviour
     public bool IsPlayerReachable() => Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
                                                         new Vector3(player.position.x, 0, player.position.z)) < aggresionRange;
     public bool IsPlayerHeightRechable() => (Mathf.Abs(transform.position.y - player.position.y) < playerYLevel);
+
+    private void OnDestroy()
+    {
+        GameEvents.OnGloabalMovementSpeedChange -= HandleGlobalMovementSpeedChange;
+    }
 
     protected virtual void OnDrawGizmos()
     {

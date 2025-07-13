@@ -49,24 +49,24 @@ MonoBehaviour:
   - radius: 200
     centerOffset: {x: 0, y: 0, z: 0}
     centerElement: {fileID: 4739613752448104849, guid: 1f71ccfd2585c294db9c50b635140529, type: 3}
-    centralElementRadius: 2
+    centralElementRadius: 50
     prefabs:
-    - prefab: {fileID: 6921580789432111162, guid: 7695718d06656de4586ae166db050374, type: 3}
+    - prefab: {fileID: 3366249703053718997, guid: 939b66fad84f7e8469b0073800bd0ee6, type: 3}
       weight: 1
+    - prefab: {fileID: 6921580789432111162, guid: 7695718d06656de4586ae166db050374, type: 3}
+      weight: 2
     - prefab: {fileID: 3433538684502565419, guid: 820a4e9f0aed89247a31987bdbf30c5b, type: 3}
       weight: 1
     - prefab: {fileID: 5180985487718942631, guid: 8832817fc8095b7409893c33ac792172, type: 3}
-      weight: 1
+      weight: 2
     - prefab: {fileID: 4008438186527085041, guid: 5cbbb8d4a04103e46a77ebf0c1079f6e, type: 3}
-      weight: 1
-    - prefab: {fileID: 3366249703053718997, guid: 939b66fad84f7e8469b0073800bd0ee6, type: 3}
-      weight: 1
+      weight: 2
     - prefab: {fileID: 9020908263005789703, guid: 0730f330eea140f4ea1ff561d045715b, type: 3}
       weight: 1
     - prefab: {fileID: 1015880761529596253, guid: 860a61ea5e171f641872fb54d601d93f, type: 3}
-      weight: 1
+      weight: 2
     - prefab: {fileID: 7286421891589626632, guid: d799baab4fe268b4abee9384f7ea7c60, type: 3}
-      weight: 1
+      weight: 2
   - radius: 80
     centerOffset: {x: 80, y: 0, z: 60}
     centerElement: {fileID: 0}
@@ -79,7 +79,7 @@ MonoBehaviour:
   - radius: 30
     centerOffset: {x: 80, y: 0, z: 60}
     centerElement: {fileID: 7034414583517266989, guid: ca2d5a2e61a7d8b4e8f530fae3df9477, type: 3}
-    centralElementRadius: 2
+    centralElementRadius: 15
     prefabs:
     - prefab: {fileID: 3366249703053718997, guid: 939b66fad84f7e8469b0073800bd0ee6, type: 3}
       weight: 1
@@ -101,10 +101,10 @@ MonoBehaviour:
     weight: 1
   gridWidth: 20
   gridDepth: 20
-  minSpacing: 1
-  maxSpacing: 2
-  density: 0.3
-  maxJitterXZ: 35
+  minSpacing: 5
+  maxSpacing: 5
+  density: 0.573
+  maxJitterXZ: 0
   maxJitterY: 100
   innerRadius: 100
   outerRadius: 1750
@@ -336,7 +336,7 @@ MonoBehaviour:
   gridHeightOverride: 10000
   formationSequence:
   - difficulty: 1
-    formationTypes: 
+    formationTypes: 00000000
   - difficulty: 2
     formationTypes: 02000000000000000300000001000000
   - difficulty: 3
@@ -417,7 +417,7 @@ MonoBehaviour:
   gridHeightOverride: 10000
   formationSequence:
   - difficulty: 1
-    formationTypes: 
+    formationTypes: 00000000
   - difficulty: 2
     formationTypes: 05000000000000000100000004000000
   - difficulty: 3
@@ -432,6 +432,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3992057100705294245}
   - component: {fileID: 5050528471288481238}
+  - component: {fileID: 2214716588204618147}
+  - component: {fileID: 7657573124295561562}
+  - component: {fileID: 2846256813271844568}
   m_Layer: 0
   m_Name: Formation Consequence
   m_TagString: Untagged
@@ -473,8 +476,57 @@ MonoBehaviour:
   spawnArea: {fileID: 0}
   innerRadius: 20.1
   innerRadiusPercentage: 0.758
+  angle: 5
+  oscillationSpeed: 1
   shootingForce: 100
-  bulletLifeTime: 10
+  bulletLifeTime: 7
+  attackData: {fileID: 0}
+  isActive: 0
+--- !u!114 &2214716588204618147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451302545732271688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcc2acf1fe45cd4c9dcc581268a84ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ship: {fileID: 6218986033095211842, guid: 58d3242baaa88854e97ba7026f0b8ce4, type: 3}
+  centrePoint: {fileID: 9038558215129218732}
+  radius: 73.9
+  shipsToSpawn: 3
+  shipLifeTime: 10
+  attackRate: 3
+--- !u!114 &7657573124295561562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451302545732271688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1f18e29ca2eda47aefb9b198e84342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeedModifier: 1.6
+  attackSpeedModifier: 1.5
+--- !u!114 &2846256813271844568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451302545732271688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9eeb3b3ee41ed4f81f4a38329cd2ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vulnerabilityAmount: 2
 --- !u!1 &5113952432440170073
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,7 +603,7 @@ MonoBehaviour:
   gridHeightOverride: 10000
   formationSequence:
   - difficulty: 1
-    formationTypes: 
+    formationTypes: 00000000
   - difficulty: 2
     formationTypes: 05000000000000000100000004000000
   - difficulty: 3
