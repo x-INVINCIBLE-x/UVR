@@ -7,6 +7,7 @@ using UnityEngine;
 public class Stat
 {
     public float BaseValue;
+    public event Action<float> OnValueChanged;
 
     protected bool isDirty = true;
     protected float lastBaseValue;
@@ -45,7 +46,7 @@ public class Stat
         if (mod.Value == 0)
             return;
 
-        isDirty = true;
+        MarkDirtyAndNotify();
         statModifiers.Add(mod);
     }
 
@@ -53,7 +54,7 @@ public class Stat
     {
         if (statModifiers.Remove(mod))
         {
-            isDirty = true;
+            MarkDirtyAndNotify();
             return true;
         }
         return false;
@@ -65,7 +66,7 @@ public class Stat
 
         if (numRemovals > 0)
         {
-            isDirty = true;
+            MarkDirtyAndNotify();
             return true;
         }
         return false;
@@ -112,6 +113,12 @@ public class Stat
         }
 
         return (float)Math.Round(finalValue, 4);
+    }
+
+    private void MarkDirtyAndNotify()
+    {
+        isDirty = true;
+        OnValueChanged?.Invoke(Value);
     }
 }
 

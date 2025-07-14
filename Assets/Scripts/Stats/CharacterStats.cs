@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public enum Stats
@@ -9,13 +10,25 @@ public enum Stats
     Stamina,
     StaminaRegain,
     PhysicalAtk,
-    FireAtk,
-    ElectricAtk,
+    IgnisAtk,
+    FrostAtk,
+    BlitzAtk,
+    HexAtk,
+    RadianceAtk,
+    GaiaAtk,
     PhysicalDef,
-    FireDef,
-    ElectricDef,
-    FireRes,
-    ElectricRes,
+    IgnisDef,
+    FrostDef,
+    BlitzDef,
+    HexDef,
+    RadianceDef,
+    GaiaDef,
+    IgnisRes,
+    FrostRes,
+    BlitzRes,
+    HexRes,
+    RadianceRes,
+    GaiaRes
 }
 
 public enum AilmentType
@@ -157,12 +170,24 @@ public class CharacterStats : MonoBehaviour, IDamagable
         statDictionary = new Dictionary<Stats, Stat>
         {
             { Stats.Health,   health },
-            { Stats.Stamina,  stamina },
-            { Stats.StaminaRegain, staminaRegain },
+            //{ Stats.Stamina,  stamina },
+            //{ Stats.StaminaRegain, staminaRegain },
             { Stats.PhysicalAtk, physicalDamage },
-            { Stats.FireAtk, ignisDamage },
-            { Stats.ElectricAtk, blitzDamage },
+            { Stats.IgnisAtk, ignisDamage },
+            { Stats.BlitzAtk, blitzDamage },
             { Stats.PhysicalDef, physicalDef },
+            { Stats.IgnisDef, ignisStatus.defence},
+            { Stats.FrostDef, frostStatus.defence},
+            { Stats.BlitzDef, blitzStatus.defence },
+            { Stats.HexDef, hexStatus.defence},
+            { Stats.RadianceDef, radianceStatus.defence},
+            { Stats.GaiaDef, gaiaStatus.defence},
+            { Stats.IgnisRes, ignisStatus.resistance},
+            { Stats.FrostRes, frostStatus.resistance},
+            { Stats.BlitzRes, blitzStatus.resistance},
+            { Stats.HexRes, hexStatus.resistance},
+            { Stats.RadianceRes, radianceStatus.resistance},
+            { Stats.GaiaRes, gaiaStatus.resistance}
             //{ Stats.FireDef, fireDef },
             //{ Stats.ElectricDef, electricDef },
             //{ Stats.FireRes, fireRes },
