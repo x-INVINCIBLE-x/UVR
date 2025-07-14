@@ -13,7 +13,7 @@ public class CharacterStatsController : MonoBehaviour
 
         view.InitializeStats(model.statDictionary);
 
-        model.UpdateHUD += RefreshStats;
+        //model.UpdateHUD += RefreshStats;
         UpdateStats();
         RefreshStats();
     }
@@ -40,6 +40,6 @@ public class CharacterStatsController : MonoBehaviour
 
     private void OnDestroy()
     {
-        model.UpdateHUD -= RefreshStats;
+        //model.UpdateHUD -= RefreshStats;
     }
 }

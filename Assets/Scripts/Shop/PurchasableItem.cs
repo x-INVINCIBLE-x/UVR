@@ -52,7 +52,7 @@ public class PurchasableItem : MonoBehaviour
     {   
         if(AffordableMaterial != null && UnaffordableMaterial != null && hasPurchased == false )
         {
-            if (MoneyManager.Instance.Gold >= itemData.ItemCost)
+            if (CurrencyManager.Instance.Gold >= itemData.ItemCost)
             {
                 // Change to affordable material
                 foreach (MeshRenderer renderer in meshes)
@@ -61,7 +61,7 @@ public class PurchasableItem : MonoBehaviour
                 }
 
             }
-            else if (MoneyManager.Instance.Gold < itemData.ItemCost)
+            else if (CurrencyManager.Instance.Gold < itemData.ItemCost)
             {
                 // Change to Unaffordable material
                 foreach (MeshRenderer renderer in meshes)
@@ -101,7 +101,7 @@ public class PurchasableItem : MonoBehaviour
         if (hasPurchased)
             return;
 
-        var moneyManager = MoneyManager.Instance;
+        var moneyManager = CurrencyManager.Instance;
 
         if (moneyManager == null)
         {   
@@ -112,7 +112,7 @@ public class PurchasableItem : MonoBehaviour
 
         if (moneyManager.Gold >= itemData.ItemCost)
         {   
-            moneyManager.SpendMoney(itemData.ItemCost);
+            moneyManager.SpendGold(itemData.ItemCost);
             hasPurchased = true;
             Debug.Log($"{itemData.Name} purchased for {itemData.ItemCost}");
         }

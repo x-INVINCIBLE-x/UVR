@@ -151,7 +151,11 @@ public class Enemy_Melee : Enemy
     {
         base.Die();
 
-        if(stateMachine.currentState != deadState)
+        currentWeapon.transform.parent = null;
+        if (currentWeapon.TryGetComponent(out Rigidbody rigidbody))
+            rigidbody.isKinematic = false;
+
+        if (stateMachine.currentState != deadState)
             stateMachine.ChangeState(deadState);
     }
 

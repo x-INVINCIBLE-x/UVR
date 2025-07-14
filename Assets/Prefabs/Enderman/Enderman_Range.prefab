@@ -909,6 +909,8 @@ GameObject:
   - component: {fileID: 8597175781890558180}
   - component: {fileID: 5215070759441971754}
   - component: {fileID: 1314019504906143180}
+  - component: {fileID: 2007837273226857822}
+  - component: {fileID: 4333879069980140839}
   m_Layer: 14
   m_Name: weap_pistol
   m_TagString: Untagged
@@ -1006,6 +1008,54 @@ MonoBehaviour:
   weaponHoldType: 0
   leftHandTarget: {fileID: 1065724087520361047}
   leftElbowTarget: {fileID: 4314094300043710470}
+--- !u!54 &2007837273226857822
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610869250652441062}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &4333879069980140839
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610869250652441062}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.59304786, y: 0.22549266, z: 0.07146407}
+  m_Center: {x: 0.05787918, y: -0.049993247, z: -0.0006341164}
 --- !u!1 &1627427822749864967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1748,6 +1798,7 @@ GameObject:
   - component: {fileID: 3253237235766371712}
   - component: {fileID: 141337864220505620}
   - component: {fileID: 7285334618796580282}
+  - component: {fileID: 2602540654381486046}
   m_Layer: 14
   m_Name: weap_shotgun
   m_TagString: Untagged
@@ -1844,6 +1895,33 @@ MonoBehaviour:
   weaponHoldType: 1
   leftHandTarget: {fileID: 464289908818486351}
   leftElbowTarget: {fileID: 3309635645181933371}
+--- !u!54 &2602540654381486046
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427112503288778923}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2509985412205305562
 GameObject:
   m_ObjectHideFlags: 0
@@ -3349,6 +3427,8 @@ GameObject:
   - component: {fileID: 7439428416094333637}
   - component: {fileID: 2563733678766163444}
   - component: {fileID: 251519901072768876}
+  - component: {fileID: 4047492432483451219}
+  - component: {fileID: 7615538009518470316}
   m_Layer: 14
   m_Name: weap_sniper_rifle
   m_TagString: Untagged
@@ -3446,6 +3526,54 @@ MonoBehaviour:
   weaponHoldType: 2
   leftHandTarget: {fileID: 5750217055368451799}
   leftElbowTarget: {fileID: 999169101024728200}
+--- !u!54 &4047492432483451219
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4858615048356161977}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &7615538009518470316
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4858615048356161977}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.07762397, y: 0.21256927, z: 1.1138587}
+  m_Center: {x: -0.0009530679, y: 0.004036481, z: 0.12727751}
 --- !u!1 &4935596307688424132
 GameObject:
   m_ObjectHideFlags: 0
@@ -3489,6 +3617,7 @@ GameObject:
   - component: {fileID: 8912073950510199965}
   - component: {fileID: 6282576844269057239}
   - component: {fileID: 9189005811716498344}
+  - component: {fileID: 1201612191428298653}
   m_Layer: 14
   m_Name: weap_revolver
   m_TagString: Untagged
@@ -3585,6 +3714,33 @@ MonoBehaviour:
   weaponHoldType: 0
   leftHandTarget: {fileID: 6894086456535817893}
   leftElbowTarget: {fileID: 6109998428966382648}
+--- !u!54 &1201612191428298653
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5069919082010971788}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5085480978243702900
 GameObject:
   m_ObjectHideFlags: 0
@@ -3630,7 +3786,7 @@ GameObject:
   - component: {fileID: 3590532141145562011}
   m_Layer: 14
   m_Name: mixamorig:Hips
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4179,6 +4335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fbd54d3330df2549b4d92dd30bfe22b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rewardProfile: {fileID: 0}
   whatIsAlly:
     serializedVersion: 2
     m_Bits: 16384
@@ -4193,10 +4350,15 @@ MonoBehaviour:
   walkSpeed: 1.5
   runSpeed: 3
   turnSpeed: 5
+  minSpeedMultiplier: 0.1
+  maxSpeedMultiplier: 3
   patrolPoints:
   - {fileID: 7125235687123693995}
   - {fileID: 4858454534691372935}
   - {fileID: 2982192891828151310}
+  _cachedAttackSpeedMultiplier: 1
+  localAttackSpeedMultiplier: 1
+  globalAttackSpeedMultiplier: 1
   coverPerk: 0
   unstoppablePerk: 0
   grenadePerk: 0
@@ -4218,7 +4380,7 @@ MonoBehaviour:
   gunPoint: {fileID: 0}
   weaponHolder: {fileID: 1008915598871134367}
   bulletPrefab: {fileID: 709851603379088992, guid: 5d6f9576cecc23b428a0b635b90998be, type: 3}
-  slowAim: 4
+  slowAim: 20
   fastAim: 20
   aim: {fileID: 7437458361127658668}
   playersBody: {fileID: 0}
@@ -4296,7 +4458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyProfile: {fileID: 0}
   health:
-    BaseValue: 0
+    BaseValue: 100
     statModifiers: []
   stamina:
     BaseValue: 0
@@ -4308,7 +4470,7 @@ MonoBehaviour:
     BaseValue: 40
     statModifiers: []
   ignisDamage:
-    BaseValue: 0
+    BaseValue: 5
     statModifiers: []
   frostDamage:
     BaseValue: 0
@@ -4811,6 +4973,7 @@ GameObject:
   - component: {fileID: 8289623661605058028}
   - component: {fileID: 6936570349872194511}
   - component: {fileID: 7586645895629123055}
+  - component: {fileID: 7434841050819776212}
   m_Layer: 14
   m_Name: weap_auto-rifle
   m_TagString: Untagged
@@ -4907,6 +5070,33 @@ MonoBehaviour:
   weaponHoldType: 0
   leftHandTarget: {fileID: 162340131229213583}
   leftElbowTarget: {fileID: 1157147595780518734}
+--- !u!54 &7434841050819776212
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7395840945172945176}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7535578863774742902
 GameObject:
   m_ObjectHideFlags: 0

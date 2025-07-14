@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -102,6 +103,18 @@ public class Enemy_Range : Enemy
     public override void Die()
     {
         base.Die();
+
+        for (int i = 0; i < weaponHolder.childCount; i++)
+        {
+            if (weaponHolder.GetChild(i).gameObject.activeSelf)
+            {
+                Transform child = weaponHolder.GetChild(i);
+                child.parent = null;
+                if (child.TryGetComponent(out Rigidbody rigidbody))
+                    rigidbody.isKinematic = false;
+                break;
+            }
+        }
 
         if (stateMachine.currentState != deadState)
             stateMachine.ChangeState(deadState);

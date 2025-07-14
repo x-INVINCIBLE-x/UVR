@@ -94,6 +94,7 @@ public class Enemy_Visuals : MonoBehaviour
             avalibleIndexs.RemoveAt(randomIndex);
         }
     }
+
     private void SetupRandomWeapon()
     {
         bool thisEnemyIsMelee = GetComponent<Enemy_Melee>() != null;
@@ -109,6 +110,7 @@ public class Enemy_Visuals : MonoBehaviour
 
         OverrideAnimatorControllerIfCan();
     }
+
     private void SetupRandomColor()
     {
         if (colorTextures.Length == 0) return;
@@ -197,7 +199,6 @@ public class Enemy_Visuals : MonoBehaviour
         }
     }
 
-
     private void SwitchAnimationLayer(int layerIndex)
     {
         Animator anim = GetComponentInChildren<Animator>();
@@ -239,5 +240,4 @@ public class Enemy_Visuals : MonoBehaviour
         else
             return targetWeight;
     }
-
 }

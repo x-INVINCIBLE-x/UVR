@@ -5,8 +5,10 @@ using Unity.VisualScripting;
 using System;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IRewardProvider
 {
+    [SerializeField] private RewardProfile rewardProfile;
+
     public LayerMask whatIsAlly;
     public LayerMask whatIsPlayer;
     [Space]
@@ -113,8 +115,10 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
+        stats.OnDeath += Die;
         GameEvents.OnGloabalMovementSpeedChange += HandleGlobalMovementSpeedChange;
         GameEvents.OnGloablAttackSpeedChange += HandleGlobalAttackSpeedChange;
+
         player = PlayerManager.instance.PlayerOrigin.GetComponent<Transform>();
         InitializePatrolPoints();
         currentBaseSpeed = agent.speed;
@@ -153,7 +157,8 @@ public class Enemy : MonoBehaviour
 
     public virtual void Die()
     {
-
+        GameEvents.RaiseReward(this);
+        visuals.EnableIK(false, false, 1000);
     }
 
     public void SetToWalkSpeed()
@@ -221,7 +226,6 @@ public class Enemy : MonoBehaviour
     }
 
     public void EnableMeleeAttackCheck(bool enable) => isMeleeAttackReady = enable;
-
 
     public virtual void BulletImpact( Vector3 force,Vector3 hitPoint,Rigidbody rb)
     {
@@ -300,6 +304,11 @@ public class Enemy : MonoBehaviour
     public bool IsPlayerReachable() => Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
                                                         new Vector3(player.position.x, 0, player.position.z)) < aggresionRange;
     public bool IsPlayerHeightRechable() => (Mathf.Abs(transform.position.y - player.position.y) < playerYLevel);
+
+    public (int, int) GetCurrencyReward()
+    {
+        return rewardProfile ? (rewardProfile.GetGold(), rewardProfile.GetMagika()) : (0, 0);
+    }
 
     private void OnDestroy()
     {

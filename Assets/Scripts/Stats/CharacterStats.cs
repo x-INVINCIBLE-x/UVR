@@ -98,9 +98,9 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     private bool isDead = false;
 
+    public event System.Action OnDeath;
     public event System.Action<float, float> OnDamageTaken;
-    public event System.Action OnPlayerDeath;
-    public event System.Action UpdateHUD;
+    //public event System.Action UpdateHUD;
 
     [System.Serializable]
     public class AilmentStatus
@@ -153,7 +153,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
     private void Start()
     {
         InitializeStatDictionary();
-        if (difficultyProfile != null)
+        if (difficultyProfile != null && DungeonManager.Instance != null)
         {
             difficultyProfile.ApplyModifiers(statDictionary, DungeonManager.Instance.DifficultyLevel, this);
         }
@@ -188,21 +188,18 @@ public class CharacterStats : MonoBehaviour, IDamagable
             { Stats.HexRes, hexStatus.resistance},
             { Stats.RadianceRes, radianceStatus.resistance},
             { Stats.GaiaRes, gaiaStatus.resistance}
-            //{ Stats.FireDef, fireDef },
-            //{ Stats.ElectricDef, electricDef },
-            //{ Stats.FireRes, fireRes },
-            //{ Stats.ElectricRes, electricRes }
+
         };
     }
 
-    private void Update()
-    {
-        if (!IsConsumingStamina && currentStamina < stamina.Value)
-        {
-            currentStamina += staminaRegain.Value * Time.deltaTime;
-            UpdateHUD?.Invoke();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (!IsConsumingStamina && currentStamina < stamina.Value)
+    //    {
+    //        currentStamina += staminaRegain.Value * Time.deltaTime;
+    //        UpdateHUD?.Invoke();
+    //    }
+    //}
 
     public void TakeDamage(AttackData attackData)
     {
@@ -351,13 +348,13 @@ public class CharacterStats : MonoBehaviour, IDamagable
         OnDamageTaken?.Invoke(currentHealth, health.Value);
 
         if (currentHealth == 0f)
-            KillPlayer();
+            KillCharacter();
     }
 
-    private void KillPlayer()
+    protected virtual void KillCharacter()
     {
         isDead = true;
-        OnPlayerDeath?.Invoke();
+        OnDeath?.Invoke();
     }
 
     public void SetInvincibleFor(float time) => StartCoroutine(MakeInvincibleFor(time));
@@ -379,17 +376,17 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     public void SetConsumingStamina(bool status) => IsConsumingStamina = status;
 
-    public bool HasEnoughStamina(float staminaAmount)
-    {
-        if (currentStamina > staminaAmount)
-        {
-            currentStamina -= staminaAmount;
-            UpdateHUD?.Invoke();
-            return true;
-        }
+    //public bool HasEnoughStamina(float staminaAmount)
+    //{
+    //    if (currentStamina > staminaAmount)
+    //    {
+    //        currentStamina -= staminaAmount;
+    //        UpdateHUD?.Invoke();
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
     public (float, float) GetHealth() => (currentHealth, health.Value);
     public float GetCurrentStamina() => currentStamina;
