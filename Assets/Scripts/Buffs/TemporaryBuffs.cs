@@ -43,7 +43,7 @@ public class TemporaryBuffs : MonoBehaviour
         stats.OnDamageTaken += HandleHit;
     }
 
-    private void ActivateAllBuffs(string challengeName)
+    private void ActivateAllBuffs(ChallengeType type)
     {
         StartTimerBuff();
         onDamageBuffs.AddRange(disabledDamageBuffs);

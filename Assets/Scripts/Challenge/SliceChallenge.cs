@@ -10,7 +10,7 @@ public class SliceChallenge : Challenge
 
     private void Awake()
     {
-        ChallengeName = "Slice";
+        technicalDetails = $"Destroy the 3 CRYSTALS and finally the STATUE to complete the challenge.";
     }
 
     public override void InitializeChallenge()
@@ -34,7 +34,6 @@ public class SliceChallenge : Challenge
 
         status = ChallengeStatus.Success;
 
-        Debug.Log(ChallengeName + " Completed");
         GameEvents.OnElimination -= HandleElimination;
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
 
@@ -48,7 +47,6 @@ public class SliceChallenge : Challenge
 
         status = ChallengeStatus.Failed;
 
-        Debug.Log(ChallengeName + " Completed");
         GameEvents.OnElimination -= HandleElimination;
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
 

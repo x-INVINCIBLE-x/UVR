@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7024393211805570668}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: StartSlicePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1261201467638641196}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &391266787098356202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7898879233869461551}
+  m_Layer: 10
+  m_Name: Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7898879233869461551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391266787098356202}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.9999685, z: 0, w: -0.007941151}
+  m_LocalPosition: {x: 0, y: -0.417, z: -0.015}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1261201467638641196}
+  m_LocalEulerAnglesHint: {x: 0, y: -180.91, z: 0}
 --- !u!1 &783164829779752380
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,7 +73,7 @@ GameObject:
   - component: {fileID: 3224952246630623282}
   - component: {fileID: 3332763734830251668}
   - component: {fileID: 2349898485252124065}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Object_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2113469312107241145}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpadaDamascoRT_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +189,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3875756826567313022}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4775803631636791612}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +254,7 @@ GameObject:
   - component: {fileID: 4497330580424624567}
   - component: {fileID: 31952853436439278}
   - component: {fileID: 2119856758060185558}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +340,7 @@ GameObject:
   - component: {fileID: 2753207369396299605}
   - component: {fileID: 6125631020896301249}
   - component: {fileID: 7874146154317771975}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Object_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6080965649155980951}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EMITRT.001_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +464,7 @@ GameObject:
   - component: {fileID: -7990726471931531637}
   - component: {fileID: 3250015579806562967}
   - component: {fileID: -3857306765392386297}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: steampunksword_damasco
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,6 +488,7 @@ Transform:
   - {fileID: 3875756826567313022}
   - {fileID: 7024393211805570668}
   - {fileID: 2954143213367246748}
+  - {fileID: 7898879233869461551}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!54 &6311178053115810529
@@ -499,7 +531,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 2953849442003981070}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -566,13 +599,13 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 0
+  m_SmoothPosition: 1
   m_SmoothPositionAmount: 8
   m_TightenPosition: 0.1
   m_TrackRotation: 1
@@ -627,8 +660,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.05019468, y: 0.2664044, z: 0.05397604}
-  m_Center: {x: 0, y: 0.15914547, z: 0.0000005566022}
+  m_Size: {x: 0.05019468, y: 0.21143526, z: 0.09495184}
+  m_Center: {x: 0, y: 0.029014256, z: -0.014317833}
 --- !u!114 &5182774789261133899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,9 +719,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityEstimator: {fileID: 42399286086907574}
-  AbilityEnable: 0
+  AbilityEnable: 1
   WeaponSFX: {fileID: 8300000, guid: a67651248ffb6f34ba00012715572b8c, type: 3}
   SlashVFX: {fileID: 1400255665468144947, guid: 6c21e7a6e514dd9499418cbbb66211cf, type: 3}
+  velovityThreshold: 18
+  slashSpawn: {fileID: 7898879233869461551}
+  force: 10
 --- !u!82 &3250015579806562967
 AudioSource:
   m_ObjectHideFlags: 0
@@ -793,13 +829,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7527873930450893537}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03588f75fe9d75e41b612292741f40ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 47cc6bde2b18c4d45963c52029187762, type: 2}
-  isShopItem: 1
+  isShopItem: 0
   meshes: []
   defaultMaterial: []
   AffordableMaterial: {fileID: 2100000, guid: 297e32e6cefda4540b52851e8ebe3bd2, type: 2}
@@ -814,7 +850,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2954143213367246748}
   - component: {fileID: 42399286086907574}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EndSlicePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -860,7 +896,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6530520504661879900}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: impugnaturaRT.001_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,7 +928,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 287380302753495358}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GLTF_SceneRootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}

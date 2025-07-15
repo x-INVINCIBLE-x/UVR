@@ -7,9 +7,10 @@ public class ChallengeManager : MonoBehaviour
     public Challenge[] challenges;
     public List<int> possibleChallenges;
 
-    private Challenge currentChallenge;
+    public Challenge CurrentChallenge { get; private set; }
 
-    public event System.Action<string> OnChallengeStart;
+    public event System.Action<Challenge> OnChallengeChoosen;
+    public event System.Action<ChallengeType> OnChallengeStart;
     public event System.Action OnChallengeSuccess;
     public event System.Action OnChallengeFail;
 
@@ -50,14 +51,14 @@ public class ChallengeManager : MonoBehaviour
     // Starting Sliceable Crystal must be marked as StartCrystal to Start Challenge
     private void StartChallenge()
     {
-        if ( currentChallenge == null)
+        if ( CurrentChallenge == null)
         {
             Debug.Log("No Current Challenge");
             return;
         }
 
-        currentChallenge.StartChallenge();
-        OnChallengeStart?.Invoke(currentChallenge.ChallengeName);
+        CurrentChallenge.StartChallenge();
+        OnChallengeStart?.Invoke(CurrentChallenge.Type);
     }
 
     public void ChooseChallenge()
@@ -65,11 +66,13 @@ public class ChallengeManager : MonoBehaviour
         int index = Random.Range(0, possibleChallenges.Count);
         int challengeIndex = possibleChallenges[index];
 
-        currentChallenge = challenges[challengeIndex];
-        currentChallenge.InitializeChallenge();
+        CurrentChallenge = challenges[challengeIndex];
+        CurrentChallenge.InitializeChallenge();
 
-        currentChallenge.OnChallengeCompleted += HandleChallengeSuccess;
-        currentChallenge.OnChallengeFailed += HandleChallengeFailure;
+        OnChallengeChoosen?.Invoke(CurrentChallenge);
+
+        CurrentChallenge.OnChallengeCompleted += HandleChallengeSuccess;
+        CurrentChallenge.OnChallengeFailed += HandleChallengeFailure;
 
         possibleChallenges.Remove(challengeIndex);
 
@@ -83,8 +86,8 @@ public class ChallengeManager : MonoBehaviour
 
         OnChallengeSuccess?.Invoke();
 
-        currentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
-        currentChallenge.OnChallengeFailed -= HandleChallengeFailure;
+        CurrentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
+        CurrentChallenge.OnChallengeFailed -= HandleChallengeFailure;
     }
 
     private void HandleChallengeFailure()
@@ -92,8 +95,8 @@ public class ChallengeManager : MonoBehaviour
         // Exit Core from dungeon
         OnChallengeFail?.Invoke();
         
-        currentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
-        currentChallenge.OnChallengeFailed -= HandleChallengeFailure;
+        CurrentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
+        CurrentChallenge.OnChallengeFailed -= HandleChallengeFailure;
     }
 
     private void ResetPossibleChallenges()

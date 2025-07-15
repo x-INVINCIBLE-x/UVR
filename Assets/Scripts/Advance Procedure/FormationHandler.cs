@@ -93,7 +93,7 @@ public class FormationHandler : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private void HandleChallengeStart(string challengeNanme)
+    private void HandleChallengeStart(ChallengeType type)
     {
         FormationActiveStatusTo(true);
 
@@ -102,7 +102,7 @@ public class FormationHandler : MonoBehaviour
             StartCoroutine(StartTimedFormationRoutine(timedForamtions[i].cubeFormationController, timedForamtions[i].duration));
         }
 
-        if (challengeNanme == "Slice")
+        if (type == ChallengeType.Slice)
         {
             GameEvents.OnElimination += HandleElimination;
         }

@@ -9,9 +9,9 @@ public class SlashLauncher : MonoBehaviour
     private void Awake()
     {
         slashBody = GetComponent<Rigidbody>();
-        LaunchSlash();
+        //LaunchSlash();
     }
-    public void LaunchSlash()
+    public void LaunchSlash(Vector3 direction)
     {
         slashBody.linearVelocity = gameObject.transform.forward * force;
     }

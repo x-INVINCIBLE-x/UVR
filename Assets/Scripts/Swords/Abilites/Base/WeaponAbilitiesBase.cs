@@ -54,22 +54,22 @@ public class WeaponAbilitiesBase : MonoBehaviour
     }
 
 
-    private void SetupInteractableWeaponEvents()
+    protected virtual void SetupInteractableWeaponEvents()
     {
         interactableWeapon.activated.AddListener(ActivateWeapon);
         interactableWeapon.deactivated.AddListener(DeactivateWeapon);
     }
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         interactableWeapon.activated.RemoveListener(ActivateWeapon);
         interactableWeapon.deactivated.RemoveListener(DeactivateWeapon);
     }
 
-    private void ActivateWeapon(ActivateEventArgs args)
+    protected virtual void ActivateWeapon(ActivateEventArgs args)
     {
         AbilityEnable = true;
     }
-    private void DeactivateWeapon(DeactivateEventArgs args)
+    protected virtual void DeactivateWeapon(DeactivateEventArgs args)
     {
         AbilityEnable = false;
     }

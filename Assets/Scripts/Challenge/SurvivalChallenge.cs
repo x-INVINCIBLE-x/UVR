@@ -12,7 +12,7 @@ public class SurvivalChallenge : Challenge
 
     private void Awake()
     {
-        ChallengeName = "Survival";
+        technicalDetails = $"SURVIVE for {survivalDuration} seconds to complete the challenge.";
     }
 
     public override void InitializeChallenge()
@@ -37,7 +37,6 @@ public class SurvivalChallenge : Challenge
 
         base.ChallengeCompleted();
 
-        Debug.Log(ChallengeName + " Completed");
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
     }
 
@@ -48,7 +47,6 @@ public class SurvivalChallenge : Challenge
 
         base.ChallengeFailed();
 
-        Debug.Log(ChallengeName + " Failed");
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
     }
 

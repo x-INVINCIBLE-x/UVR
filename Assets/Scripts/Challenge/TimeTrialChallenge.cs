@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public enum ObjectiveType
@@ -21,15 +22,28 @@ public class TimeTrialChallenge : Challenge
     [SerializeField] private float bonusTime;
     private List<int> possibleTargets = new();
 
-    private ObjectiveType currentObjective;
-    [SerializeField] private float timer;
+    [SerializeField] private ObjectiveType currentObjective;
+    private float timer;
     private const int TickTime = 1;
     private int currentAmount = 0;
     private Coroutine currentRoutine;
 
-    private void Awake()
+    private void Start()
     {
-        ChallengeName = "TimeTrial";
+        string objectiveString = currentObjective.ToString();
+        StringBuilder ob = new();
+
+        for (int i = 0; i < objectiveString.Length; i++)
+        {
+            char c = objectiveString[i];
+
+            if (i > 0 && char.IsUpper(c))
+                ob.Append(' ');
+
+            ob.Append(c);
+        }
+
+        technicalDetails = $"ELIMINATE {targetAmount} {ob} in {challengeDuration} seconds to complete the challenge. Each Elimination will add a BONUS TIME of {bonusTime} seconds";
     }
 
     public override void InitializeChallenge()
@@ -59,7 +73,6 @@ public class TimeTrialChallenge : Challenge
         status = ChallengeStatus.Success;
         GameEvents.OnElimination -= UpdateChallengeStatus;
 
-        Debug.Log(ChallengeName + " Completed");
         if (currentRoutine != null)
             StopCoroutine(currentRoutine);
 
@@ -73,7 +86,6 @@ public class TimeTrialChallenge : Challenge
         status = ChallengeStatus.Failed;
         GameEvents.OnElimination -= UpdateChallengeStatus;
 
-        Debug.Log(ChallengeName + " Failed");
         if (currentRoutine != null)
             StopCoroutine(currentRoutine);
 
