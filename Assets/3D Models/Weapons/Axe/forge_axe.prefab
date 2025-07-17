@@ -1619,7 +1619,6 @@ GameObject:
   - component: {fileID: 2468042778897328573}
   - component: {fileID: 5760116368336897588}
   - component: {fileID: 3188397401903057904}
-  - component: {fileID: 58806024850546188}
   - component: {fileID: 5332868967265013993}
   m_Layer: 0
   m_Name: forge_axe
@@ -1841,32 +1840,6 @@ MonoBehaviour:
   m_MinimumScaleRatio: 0.25
   m_MaximumScaleRatio: 2
   m_ScaleMultiplier: 0.25
---- !u!114 &58806024850546188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6075706993202606134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8e91925b51d2aa47b70877fde76cf1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocityEstimator: {fileID: 9092700567800618945}
-  SlashAttackAbility: 1
-  minVelocity: 0
-  minPitch: 1
-  maxPitch: 2
-  SlashVFX: {fileID: 1205478487176026167, guid: 8436419d5cd706242bb810378b8a8835, type: 3}
-  GroundSplitterVFX: {fileID: 1314945738539566, guid: 32c9fd11a72259d45aa26ae41c34c5aa, type: 3}
-  Hitable:
-    serializedVersion: 2
-    m_Bits: 65
-  isStillInContact: 0
-  hitBox: {fileID: 5332868967265013993}
-  SlashSFX: {fileID: 0}
-  ability: 1
 --- !u!65 &5332868967265013993
 BoxCollider:
   m_ObjectHideFlags: 0

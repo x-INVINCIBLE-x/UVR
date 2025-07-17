@@ -194,9 +194,10 @@ public class SimpleEnemyAI : MonoBehaviour
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        if(distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 1f)
         {
             walkPointSet = false;
+            Invoke(nameof(SearchWalkPoint), 2f); // Wait 1 second before searching again
         }
     }
 
@@ -212,8 +213,10 @@ public class SimpleEnemyAI : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomx,transform.position.y ,transform.position.z + randomz);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 3f, WhatIsground))
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(walkPoint, out hit, 3f, NavMesh.AllAreas))
         {
+            walkPoint = hit.position;
             walkPointSet = true;
         }
     }
@@ -223,7 +226,7 @@ public class SimpleEnemyAI : MonoBehaviour
         agent.SetDestination(Player.position);
     }
 
-    private void AttackPlayer()
+    private void AttackPlayer() // Shoot player in straight direction used by normal and sniper types 
     {
         agent.SetDestination(transform.position);
         transform.LookAt(Player);

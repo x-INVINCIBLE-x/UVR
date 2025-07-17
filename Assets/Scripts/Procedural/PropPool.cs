@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PropPool : MonoBehaviour
@@ -29,7 +30,10 @@ public class PropPool : MonoBehaviour
         }
         Instance = this;
 
-        var possibleProps = DungeonManager.Instance.DifficultyLevel;
+        var possibleProps = 1;
+        if (DungeonManager.Instance != null)
+            possibleProps = DungeonManager.Instance.DifficultyLevel;
+        
 
         foreach (var entry in propEntries)
         {

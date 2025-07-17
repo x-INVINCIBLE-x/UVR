@@ -4,13 +4,25 @@ using UnityEngine.Audio;
 using UnityEngine.UIElements;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(XRGrabInteractable))]
 public class WeaponAbilitiesBase : MonoBehaviour
 {
-    
+
+    [Space]
+    [Header("CoolDown Settings")]
+    [Space]
+    [SerializeField] protected float fireRate = 3f;
+    [SerializeField] protected float maxHeatLimit = 100f;
+    [SerializeField] protected float coolDownRate = 5f;
+    [SerializeField] protected float overheatResistance = 6f;
+    [SerializeField] protected float currentHeat = 0f;
+    [SerializeField] protected bool isOverheated = false;
+    protected Coroutine cooldownCoroutine;
+
     public VelocityEstimator velocityEstimator;
     private XRGrabInteractable interactableWeapon;
     protected Rigidbody rigidBody;
@@ -44,11 +56,24 @@ public class WeaponAbilitiesBase : MonoBehaviour
         
     }
 
+    protected virtual void Update()
+    {
+        
+    }
+
+
+    protected virtual void AllAttacks()
+    {
+        if (!CanAttack()) return;
+    }
+
+    protected virtual bool CanAttack()
+    {
+        return !isOverheated; // Return true if not overheated
+    }
+
     protected virtual void SlashAudio()
     {
-        //SlashSFXSource.Stop(); // to stop ongoing sfx sounds
-        //SlashSFXSource.clip = SlashSFX;
-        //SlashSFXSource.loop = false;
         WeaponSFXSource.pitch = Random.Range(minPitch, maxPitch);
         WeaponSFXSource.PlayOneShot(WeaponSFX);
     }
@@ -74,4 +99,66 @@ public class WeaponAbilitiesBase : MonoBehaviour
         AbilityEnable = false;
     }
 
+
+    protected virtual IEnumerator ReduceValueOverTime()
+    {
+        while (currentHeat > 0 && !isOverheated)
+        {
+            currentHeat -= overheatResistance * Time.deltaTime;
+            currentHeat = Mathf.Clamp(currentHeat, 0, maxHeatLimit);
+            yield return null;
+        }
+    }
+
+    protected virtual IEnumerator CoolDownPhase()
+    {
+        while (currentHeat > 0)
+        {
+            currentHeat -= coolDownRate * Time.deltaTime;
+            currentHeat = Mathf.Clamp(currentHeat, 0, maxHeatLimit);
+            yield return null;
+        }
+        
+        isOverheated = false;
+        cooldownCoroutine = null;
+
+        if (currentHeat > 0)
+        {
+            cooldownCoroutine = StartCoroutine(ReduceValueOverTime());
+        }
+    }
+    protected virtual void ApplyHeat()
+    {
+        currentHeat += maxHeatLimit / fireRate;
+        currentHeat = Mathf.Clamp(currentHeat, 0, maxHeatLimit);
+
+        if (currentHeat >= maxHeatLimit)
+        {
+            Overheat();
+        }
+        else if (!isOverheated)
+        {
+            cooldownCoroutine = StartCoroutine(ReduceValueOverTime());
+        }
+    }
+    protected virtual void Overheat()
+    {
+        isOverheated = true;
+
+        if (cooldownCoroutine != null)
+        {
+            StopCoroutine(cooldownCoroutine);
+        }
+
+        cooldownCoroutine = StartCoroutine(CoolDownPhase());
+    }
+
+    private void OnDisable()
+    {
+        if (cooldownCoroutine != null)
+        {
+            StopCoroutine(cooldownCoroutine);
+            cooldownCoroutine = null;
+        }
+    }
 }
