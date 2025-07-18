@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 [System.Serializable]
@@ -39,6 +40,7 @@ public class FormationContainer
     public List<FormationConfig> config;
 }
 
+[RequireComponent(typeof(NavMeshSurface))]
 public class GridFormationController : FormationProvider
 {
     [SerializeField] private bool drawGizmos;
@@ -67,6 +69,7 @@ public class GridFormationController : FormationProvider
     private float gridSpanX, gridSpanZ; private Vector3 gridCenter;
     private int currentIndex = 0; private bool isTransitioning = false; private float timer = 0f;
     private int difficultyLevel = 1;
+    private NavMeshSurface navMeshSurface;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -77,6 +80,12 @@ public class GridFormationController : FormationProvider
         }
     }
 #endif
+
+    private void Awake()
+    {
+        navMeshSurface = GetComponent<NavMeshSurface>();
+    }
+
     void Start()
     {
         if (!Application.isPlaying) return;
@@ -92,6 +101,10 @@ public class GridFormationController : FormationProvider
         //DungeonManager.Instance.OnDifficultyChange += HandleDifficultyChange;
         InitializeFormations();
         SpawnFormation(currentIndex);
+
+        float startTime = Time.realtimeSinceStartup;
+        navMeshSurface.BuildNavMesh();
+        Debug.Log("NavMesh bake time: " + (Time.realtimeSinceStartup - startTime) + " seconds");
     }
 
     //private void HandleDifficultyChange(int difficultyLevel)
@@ -295,7 +308,6 @@ public class GridFormationController : FormationProvider
         if (s.axis == WaveAxis.Both) y *= 0.5f; return y * s.amplitude;
     }
 
-    GameObject GetWeightedRandomPrefab() { float tot = 0; cuboidPrefabs.ForEach(w => tot += w.weight); float r = Random.value * tot, acc = 0f; foreach (var w in cuboidPrefabs) { acc += w.weight; if (r <= acc) return w.prefab; } return cuboidPrefabs[0].prefab; }
     GameObject GetWeightedRandomPrefabAtPosition(Vector3 pos)
     {
         //If you want a specific priority—e.g. always let

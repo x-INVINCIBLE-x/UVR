@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ccda486bc4d4ba438b1b326cf0182ac, type: 3}
   m_Name: New Buff
   m_EditorClassIdentifier: 
+  buffName: 
+  flavourText: 
+  cardDisplay: {fileID: -2394029332718135116, guid: 5e9763fea5c4de445ba2a99c872e408f, type: 3}
   ActivationType: 0
   ActivationStatus: 0
   statsToBuff:
   - stat: 0
     modType: 300
-    value: 78
-  effects: []
+    value: 0.78
+  effects:
+  - {fileID: 11400000, guid: 930c648a6522fdd4fbe27db1985c0cec, type: 2}
   timer: -10
   activeDuration: 0
   cooldownDuration: 0

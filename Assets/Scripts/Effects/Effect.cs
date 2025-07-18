@@ -5,6 +5,8 @@ using UnityEngine;
 public class Effect : ScriptableObject
 {
     protected CharacterStats stats;
+    [TextArea]
+    public string description;
     public bool isActive = true;
     
     public virtual void Apply()
@@ -17,4 +19,6 @@ public class Effect : ScriptableObject
     {
 
     }
+
+    public string GetDescription() => description;  
 }

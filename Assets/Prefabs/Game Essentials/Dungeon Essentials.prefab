@@ -60,8 +60,7 @@ MonoBehaviour:
   - sceneAsset: {fileID: 102900000, guid: b5a8993cb60f94346be59e176e0192c3, type: 3}
     scenePath: Assets/Scenes/DungeonTests/DungeonTransition.unity
     sceneName: DungeonTransition
-  buffGroups:
-  - {fileID: 11400000, guid: f7927c8ac8e998447a3059e53ed3a684, type: 2}
+  endGround: {fileID: 0}
 --- !u!114 &3417520076172352710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,7 +83,14 @@ MonoBehaviour:
   - Category: 2
     baseMaterial: {fileID: 2100000, guid: a280f6d6177168f4d875c45ccabfc295, type: 2}
     dissolveMaterial: {fileID: 2100000, guid: b57b057eba465c3498a92f17380a2ffa, type: 2}
-  <buffProviders>k__BackingField: []
+  buffProviders: []
+  difficultyScaling: 3
+  minBuff: 3
+  buffsCap: 5
+  buffHolder: {fileID: 0}
+  buffOriginOffest: {x: 0, y: 0, z: 0}
+  buffHolderOffest: {x: 0, y: 0, z: 0}
+  buffGroups: []
 --- !u!1 &5302657304476110489
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ public class FollowPlayer : MonoBehaviour
 {
     private Transform playerTransform;
     [SerializeField] private bool followY = false;
+    [SerializeField] private bool followPlayerOnce = false;
     public Vector3 offset;
     private Vector3 followPosition;
 
@@ -23,6 +24,11 @@ public class FollowPlayer : MonoBehaviour
 
     private void Update()
     {
+        if (followPlayerOnce)
+        {
+            return;
+        }
+
         if (playerTransform == null)
         {
             enabled = false;

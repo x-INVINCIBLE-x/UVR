@@ -7,7 +7,7 @@ public class ItemSocketSpawner : MonoBehaviour
 {   
     // References
     public ItemData itemData;
-    public Transform AttackPoint;
+    public Transform AttachPoint;
     
 
     // Interactors(XR)
@@ -25,7 +25,7 @@ public class ItemSocketSpawner : MonoBehaviour
 
         if (itemData != null && itemData.Model != null)
         {
-            GameObject itemInstance = Instantiate(itemData.Model , AttackPoint.position , Quaternion.identity);
+            GameObject itemInstance = Instantiate(itemData.Model , AttachPoint.position , Quaternion.identity);
             socketInteractor.StartManualInteraction(itemInstance.GetComponent<IXRSelectInteractable>()); // Manually attaches the weapon when it spawns in the socket at the start of the game
             ItemDesc.text = itemData.Name;
             ItemCost.text = itemData.ItemCost.ToString();

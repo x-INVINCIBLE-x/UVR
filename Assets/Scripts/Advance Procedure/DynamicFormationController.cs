@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 // 1) Define an enum listing all possible shapes
 public enum FormationType
@@ -172,8 +171,8 @@ public class DynamicFormationController : FormationProvider
         for (int i = 0; i < cubeCount; i++)
         {
             float angle = (float)i / cubeCount * Mathf.PI * 2f;
-            Vector3 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * startRadius;
-            pos.y = startHeight;
+            Vector3 pos = transform.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * startRadius;
+            pos.y += startHeight;
             GameObject cube = Instantiate(cubePrefab, pos, Quaternion.identity, transform);
             cubes.Add(cube);
 
@@ -229,7 +228,7 @@ public class DynamicFormationController : FormationProvider
         formationCenter = CalculateFormationCenter(finalPositions);
 
         // Start the initial formation transition
-        StartCoroutine(TransitionFormation());
+        //StartCoroutine(TransitionFormation());
     }
 
     void Update()
@@ -237,7 +236,7 @@ public class DynamicFormationController : FormationProvider
         if (Input.GetKeyDown(KeyCode.Space) && !isAnimating)
         {
             // Advance to next formation in our formations, wrap around if needed
-            NextTransition();
+            //NextTransition();
         }
 
         if (shouldRotate && !isAnimating )
@@ -248,8 +247,18 @@ public class DynamicFormationController : FormationProvider
 
     public override void NextTransition()
     {
-        currentFormationIndex = (currentFormationIndex + 1) % formationSequence[difficultyLevel].formationTypes.Count;
+        if (isAnimating)
+        {
+            Debug.Log("Trying ZReentty");
+            return; // Prevent re-entry
+        }
+            Debug.Log($"NextTransition - Current Index: {currentFormationIndex}");
+
+        Debug.Log(currentFormationIndex);
+
         StartCoroutine(FormationToVortexThenToNextFormation());
+        //currentFormationIndex = (currentFormationIndex + 1) % formationSequence[difficultyLevel].formationTypes.Count;
+
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -259,11 +268,18 @@ public class DynamicFormationController : FormationProvider
     {
         isAnimating = true;
         float now = Time.time;
-
         int count = formationSequence[difficultyLevel].formationTypes.Count;
         int prevIndex = (currentFormationIndex - 1 + count) % count;
 
-        OnUnwrapStart?.Invoke(formationSequence[difficultyLevel].formationTypes[prevIndex]);
+        try
+        {
+            OnUnwrapStart?.Invoke(formationSequence[difficultyLevel].formationTypes[prevIndex]);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("OnUnwrapStart subscriber threw an exception: " + ex);
+        }
+
 
         // Get the next‐formation positions & center
         Vector3[] nextFormationPositions = formations[currentFormationIndex]();
@@ -415,9 +431,17 @@ public class DynamicFormationController : FormationProvider
         // Update for next cycle
         formationCenter = nextCenter;
         finalPositions = nextFormationPositions;
+        try
+        {
+            OnFormationComplete?.Invoke(formationSequence[difficultyLevel].formationTypes[currentFormationIndex]);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("OnFormationComplete subscriber threw an exception: " + ex);
+        }
 
-        OnFormationComplete?.Invoke(formationSequence[difficultyLevel].formationTypes[currentFormationIndex]);
         isAnimating = false;
+        currentFormationIndex = (currentFormationIndex + 1) % formationSequence[difficultyLevel].formationTypes.Count;
     }
 
     // ─────────────────────────────────────────────────────────────────────────

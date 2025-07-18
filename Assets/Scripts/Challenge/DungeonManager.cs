@@ -29,12 +29,10 @@ public class DungeonManager : MonoBehaviour
     private int currentFailTransitionSceneIndex = 0;
     private const int Failure_Transition_Stay = 7;
 
-    [Header("Buff")]
-    public List<BuffGroup> buffGroups = new List<BuffGroup>();
-    private Dictionary<int, Dictionary<BuffCategory, List<Buff>>> buffLookup = new();
-    private Dictionary<(int, BuffCategory), HashSet<Buff>> shownBuffs = new();
-
     public event Action<int> OnDifficultyChange;
+
+    //IDK if it belongs here????
+    [SerializeField] private GameObject endGround;
     //public GameObject tempEnemy;
 
 #if UNITY_EDITOR
@@ -79,18 +77,9 @@ public class DungeonManager : MonoBehaviour
 
     private void Start()
     {
+        //endGround.SetActive(false);
+
         buffHandler.OnBuffPick += GetHandleBuffSelection;
-
-        foreach (BuffGroup group in buffGroups)
-        {
-            if (!buffLookup.ContainsKey(group.difficultyLevel))
-                buffLookup[group.difficultyLevel] = new Dictionary<BuffCategory, List<Buff>>();
-
-            foreach (var buffBind in group.buffsBind)
-            {
-                buffLookup[group.difficultyLevel][buffBind.category] = buffBind.buffs;
-            }
-        }
 
         ChallengeManager challengeManager = ChallengeManager.instance;
 
@@ -103,20 +92,8 @@ public class DungeonManager : MonoBehaviour
 
     public void HandleLevelCompletion()
     {
-        System.Random rng = new System.Random();
-        int possibleChoices = Enum.GetValues(typeof(BuffCategory)).Length;
-        List<int> numbers = Enumerable.Range(0, possibleChoices).OrderBy(x => rng.Next()).Take(3).ToList();
-
-        for (int i = 0; i < buffHandler.buffProviders.Count; i++)
-        {
-            int choice = numbers[i];
-            var availableBuffs = GetAvailableBuffs((BuffCategory)choice);
-            Buff buffToProvide = availableBuffs[UnityEngine.Random.Range(0, availableBuffs.Count)];
-
-            buffHandler.ProvideBuffs(i, buffToProvide, (BuffCategory)choice);
-
-            MarkBuffAsUsed((BuffCategory)choice, buffToProvide);
-        }
+        endGround.SetActive(true);
+        buffHandler.Setup(endGround.transform, DifficultyLevel);
 
         UpdateDifficulty();
     }
@@ -152,43 +129,6 @@ public class DungeonManager : MonoBehaviour
         transitionProvider.gameObject.SetActive(true);
     }
 
-    public List<Buff> GetAvailableBuffs(BuffCategory category)
-    {
-        if (!buffLookup.TryGetValue(DifficultyLevel, out Dictionary<BuffCategory, List<Buff>> categoryDict) ||
-            !categoryDict.TryGetValue(category, out List<Buff> allBuffs))
-        {
-            Debug.LogWarning($"No buffs found for difficulty {DifficultyLevel} and category {category}");
-            return new List<Buff>();
-        }
-
-        var key = (DifficultyLevel, category);
-
-        if (!shownBuffs.ContainsKey(key))
-            shownBuffs[key] = new HashSet<Buff>();
-
-        var used = shownBuffs[key];
-
-        var unshownBuffs = allBuffs.Where(buff => !used.Contains(buff)).ToList();
-
-        if (unshownBuffs.Count == 0)
-        {
-            used.Clear();
-            unshownBuffs = new List<Buff>(allBuffs);
-        }
-
-        return unshownBuffs;
-    }
-
-    public void MarkBuffAsUsed(BuffCategory category, Buff selectedBuff)
-    {
-        var key = (DifficultyLevel, category);
-
-        if (!shownBuffs.ContainsKey(key))
-            shownBuffs[key] = new HashSet<Buff>();
-
-        shownBuffs[key].Add(selectedBuff);
-    }
-
     private void ResetAvailbleScenes()
     {
         currentSceneIndex = 0;
@@ -203,9 +143,8 @@ public class DungeonManager : MonoBehaviour
             int j = UnityEngine.Random.Range(0, i + 1);
             (shuffledIndices[i], shuffledIndices[j]) = (shuffledIndices[j], shuffledIndices[i]);
         }
-    }
 
-    public void RegisterBuffPortal(DungeonBuffProvider buffProvider) => buffHandler.AddBuffProvider(buffProvider);
+    }
     public void RegisterSceneTransitionProvider(SceneTransitionProvider sceneTransitionProvider) =>
         transitionProvider = sceneTransitionProvider;
 

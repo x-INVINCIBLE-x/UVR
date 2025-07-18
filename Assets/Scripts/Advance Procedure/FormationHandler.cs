@@ -33,7 +33,7 @@ public class FormationHandler : MonoBehaviour
     [System.Serializable]
     public class TimedFormation
     {
-        public FormationProvider cubeFormationController;
+        public DynamicFormationController cubeFormationController;
         public int duration;
     }
 
@@ -82,6 +82,8 @@ public class FormationHandler : MonoBehaviour
                 currentDifficulty = scalingFormations.Length - 1;
             }
         }
+
+        timedForamtions[0].cubeFormationController.OnFormationComplete += UpdateFormation;
 
         //FormationActiveStatusTo(false);
         CloseAllTimedFormation();
@@ -149,21 +151,16 @@ public class FormationHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UpdateFormation();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    UpdateFormation();
+        //}
     }
 
-    public void UpdateFormation()
+    public void UpdateFormation(FormationType type)
     {
-        if (index >= scalingFormations.Length)
-        {
-            Debug.Log("Reached End of Formations");
-            return;
-        }
-
-        Formation nextFormation = scalingFormations[currentDifficulty].formations[index++];
+        Formation nextFormation = scalingFormations[currentDifficulty].formations[index];
+        index = (index + 1) % scalingFormations.Length;
 
         foreach (FormationInfo formationInfo in nextFormation.formationInfo)
         {
@@ -174,8 +171,7 @@ public class FormationHandler : MonoBehaviour
     private IEnumerator MoveToTarget(FormationInfo info)
     {
         Transform layout = info.layout;
-        Vector3 startPos = layout.position;
-        Quaternion startRot = layout.rotation;
+        layout.GetPositionAndRotation(out Vector3 startPos, out Quaternion startRot);
 
         Vector3 endPos = info.position;
         Quaternion endRot = Quaternion.Euler(info.rotation);
@@ -185,15 +181,12 @@ public class FormationHandler : MonoBehaviour
         while (elapsed < info.duration)
         {
             float t = elapsed / info.duration;
-            layout.position = Vector3.Lerp(startPos, endPos, t);
-            layout.rotation = Quaternion.Slerp(startRot, endRot, t);
-
+            layout.SetPositionAndRotation(Vector3.Lerp(startPos, endPos, t), Quaternion.Slerp(startRot, endRot, t));
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        layout.position = endPos;
-        layout.rotation = endRot;
+        layout.SetPositionAndRotation(endPos, endRot);
     }
 
     private IEnumerator StartTimedFormationRoutine(FormationProvider timedFormation, int duration)
@@ -206,5 +199,10 @@ public class FormationHandler : MonoBehaviour
             if (timedFormation.gameObject.activeSelf)
                 timedFormation.NextTransition();
         }
+    }
+
+    private void OnDestroy()
+    {
+        timedForamtions[0].cubeFormationController.OnFormationComplete -= UpdateFormation;
     }
 }

@@ -27,7 +27,8 @@ public class PurchasableItem : MonoBehaviour
 
     [Space]
 
-    int layerMask; 
+    private int layerMask; 
+
     private void Awake()
     {
         grabInteractable = GetComponent<XRGrabInteractable>();

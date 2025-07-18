@@ -29,7 +29,11 @@ public class PropPool : MonoBehaviour
             return;
         }
         Instance = this;
+    }
 
+    private void Start()
+    {
+        //var possibleProps = DungeonManager.Instance.DifficultyLevel;
         var possibleProps = 1;
         if (DungeonManager.Instance != null)
             possibleProps = DungeonManager.Instance.DifficultyLevel;

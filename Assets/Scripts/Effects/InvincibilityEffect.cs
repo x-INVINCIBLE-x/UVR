@@ -7,13 +7,13 @@ public class InvincibilityEffect : Effect
     {
         base.Apply();
 
-        //stats.SetInvincibleFor(activeDuration);    
+        stats.SetInvincible(true);    
     }
 
     public override void Remove()
     {
         base.Remove();
 
-
+        stats.SetInvincible(false);
     }
 }

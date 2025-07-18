@@ -50,13 +50,6 @@ public class SceneTransitionProvider : MonoBehaviour
 
         if (Core != null && fader == null)
             fader = Core.GetComponentInChildren<Fader>();
-
-        if (Core != null)
-        {
-            Debug.Log("Found");
-        }
-        else
-            Debug.Log("Core not found in root objects.");
     }
 
     public void Initialize(SceneReference newTargetScene, float fadeInTime = 1f, int transitionStayDuration = 5, SceneReference newTransitionReference = null)
@@ -211,7 +204,6 @@ public class SceneTransitionProvider : MonoBehaviour
         {
             if (obj.name == "Core")
             {
-                Debug.Log("oy=nd");
                 return obj;
             }
 
