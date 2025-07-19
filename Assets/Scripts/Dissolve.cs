@@ -77,4 +77,9 @@ public class Dissolve : MonoBehaviour
         dissolveMaterial.SetFloat(DissolveStrengthID, _dissolveStrength);
         
     }
+
+    private void OnDisable()
+    {
+        dissolveMaterial.SetFloat(DissolveStrengthID, 0.25f);
+    }
 }

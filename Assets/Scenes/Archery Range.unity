@@ -1364,6 +1364,7 @@ GameObject:
   - component: {fileID: 637848834}
   - component: {fileID: 637848836}
   - component: {fileID: 637848835}
+  - component: {fileID: 637848837}
   m_Layer: 0
   m_Name: Sphere_Material.001_0
   m_TagString: Untagged
@@ -1439,6 +1440,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637848833}
   m_Mesh: {fileID: -4702711206937585935, guid: 3eb0abc0d5fcabf43ab43b857d3c1f52, type: 3}
+--- !u!114 &637848837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637848833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f890e9361122a45b079c7f129b7b16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dissolveMaterial: {fileID: 2100000, guid: 46dcb0e20452e0c4f91ef3120c8d275c, type: 2}
+  dissolveSpeed: 1
+  dissolve: 1
 --- !u!1 &650244550
 GameObject:
   m_ObjectHideFlags: 0
@@ -2310,7 +2326,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &989840593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7424,6 +7440,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Feliron Turret
       objectReference: {fileID: 0}
+    - target: {fileID: 4398978249743036774, guid: ce3f9fea854887e44bb797809b380a0f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4590715511488490109, guid: ce3f9fea854887e44bb797809b380a0f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -2.0900106
@@ -7583,7 +7603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6689974547469112154, guid: e56409df6d9a9824793218a535f2dab0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8476783170485141730, guid: e56409df6d9a9824793218a535f2dab0, type: 3}
       propertyPath: m_LocalPosition.x
