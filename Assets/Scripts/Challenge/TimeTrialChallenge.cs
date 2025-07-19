@@ -27,10 +27,11 @@ public class TimeTrialChallenge : Challenge
     private const int TickTime = 1;
     private int currentAmount = 0;
     private Coroutine currentRoutine;
+    private string objectiveString ="";
 
     private void Start()
     {
-        string objectiveString = currentObjective.ToString();
+        objectiveString = currentObjective.ToString();
         StringBuilder ob = new();
 
         for (int i = 0; i < objectiveString.Length; i++)
@@ -42,6 +43,8 @@ public class TimeTrialChallenge : Challenge
 
             ob.Append(c);
         }
+
+        objectiveString = ob.ToString();
 
         technicalDetails = $"ELIMINATE {targetAmount} {ob} in {challengeDuration} seconds to complete the challenge. Each Elimination will add a BONUS TIME of {bonusTime} seconds";
     }
@@ -130,5 +133,25 @@ public class TimeTrialChallenge : Challenge
         {
             possibleTargets.Add(i);
         }
+    }
+
+    public override string GetProgressText()
+    {
+        string text = "";
+
+        if (status == ChallengeStatus.InProgress)
+        {
+            text = $"Eliminate {currentAmount} / {targetAmount} {objectiveString} \n in : {Mathf.RoundToInt(timer)} seconds";
+        }
+        else if (status == ChallengeStatus.Success)
+        {
+            text = "Challenege Completed";
+        }
+        else
+        {
+            text = "Challenge Failed";
+        }
+
+        return text;
     }
 }

@@ -15699,21 +15699,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 28918291293268495, guid: faeb91219165e2344be3d9bfcbbc1012, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 7323249735779734097, guid: faeb91219165e2344be3d9bfcbbc1012, type: 3}
       propertyPath: m_Name
       value: End Blolck
-      objectReference: {fileID: 0}
-    - target: {fileID: 7323249735779734097, guid: faeb91219165e2344be3d9bfcbbc1012, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7323249735779734097, guid: faeb91219165e2344be3d9bfcbbc1012, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7356310771865716688, guid: faeb91219165e2344be3d9bfcbbc1012, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15754,10 +15742,6 @@ PrefabInstance:
     - target: {fileID: 7356310771865716688, guid: faeb91219165e2344be3d9bfcbbc1012, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7867238549564231112, guid: faeb91219165e2344be3d9bfcbbc1012, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -39814,29 +39798,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Renderer: {fileID: 288852142}
   m_MaterialIndex: 0
---- !u!1 &919774450 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4370005438645458209, guid: 342d8c61967628541a04456b961334a1, type: 3}
-  m_PrefabInstance: {fileID: 6020626136308087142}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &919774454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919774450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed35150c190793e44a785c6cd8fdf3e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneOffBufffs: []
-  timerBuffs: []
-  onHitBuffs: []
-  onDamageBuffs: []
-  disabledHitBuffs: []
-  disabledDamageBuffs: []
 --- !u!1 &920959714
 GameObject:
   m_ObjectHideFlags: 0
@@ -57568,6 +57529,10 @@ PrefabInstance:
     - target: {fileID: 5302657304476110489, guid: 8164e108c6860c049acafc6fb4b7eecb, type: 3}
       propertyPath: m_Name
       value: Dungeon Essentials
+      objectReference: {fileID: 0}
+    - target: {fileID: 5302657304476110489, guid: 8164e108c6860c049acafc6fb4b7eecb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6517624357674343893, guid: 8164e108c6860c049acafc6fb4b7eecb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -89351,10 +89316,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4370005438645458209, guid: 342d8c61967628541a04456b961334a1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 919774454}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 342d8c61967628541a04456b961334a1, type: 3}
 --- !u!1001 &6395995714511203698
 PrefabInstance:

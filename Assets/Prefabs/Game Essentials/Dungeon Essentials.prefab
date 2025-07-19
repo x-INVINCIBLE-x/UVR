@@ -60,7 +60,7 @@ MonoBehaviour:
   - sceneAsset: {fileID: 102900000, guid: b5a8993cb60f94346be59e176e0192c3, type: 3}
     scenePath: Assets/Scenes/DungeonTests/DungeonTransition.unity
     sceneName: DungeonTransition
-  endGround: {fileID: 0}
+  endGround: {fileID: 7323249735779734097, guid: faeb91219165e2344be3d9bfcbbc1012, type: 3}
 --- !u!114 &3417520076172352710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,10 +87,11 @@ MonoBehaviour:
   difficultyScaling: 3
   minBuff: 3
   buffsCap: 5
-  buffHolder: {fileID: 0}
+  buffHolder: {fileID: 2704602825121701355, guid: b76898d13debb0747b7345d6d6d2a907, type: 3}
   buffOriginOffest: {x: 0, y: 0, z: 0}
   buffHolderOffest: {x: 0, y: 0, z: 0}
-  buffGroups: []
+  buffGroups:
+  - {fileID: 11400000, guid: f7927c8ac8e998447a3059e53ed3a684, type: 2}
 --- !u!1 &5302657304476110489
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,8 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7656869024173632173}
   - component: {fileID: 3321683624302865404}
-  - component: {fileID: 99238198834974883}
-  - component: {fileID: 8828723007722890181}
+  - component: {fileID: 3919346792676071859}
   m_Layer: 0
   m_Name: Challenge Manager
   m_TagString: Untagged
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   challenges: []
   possibleChallenges: 
---- !u!114 &99238198834974883
+--- !u!114 &3919346792676071859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,29 +183,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5414482438387155517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 427a280bd8068224a9067596071ce3c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c692bf708953134b85125e13efd2a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  challengeID: TimeTrial
-  targetAmount: 10
-  challengeDuration: 5
-  bonusTime: 5
-  currentObjective: 0
---- !u!114 &8828723007722890181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5414482438387155517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61baedb7ee2e0024187426dff511e10a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  challengeID: Slice
-  totalCrystals: 3
-  statueShield: {fileID: 0}
+  challengeID: Survival
+  survivalDuration: 5
+  timer: 0
 --- !u!1 &5682919361895473533
 GameObject:
   m_ObjectHideFlags: 0

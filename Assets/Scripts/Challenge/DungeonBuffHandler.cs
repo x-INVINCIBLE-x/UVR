@@ -105,6 +105,9 @@ public class DungeonBuffHandler : MonoBehaviour
         {
             int choice = numbers[i];
             var availableBuffs = GetAvailableBuffs((BuffCategory)choice);
+
+            if (availableBuffs == null || availableBuffs.Count == 0) continue; // TODO: Remove
+
             Buff buffToProvide = availableBuffs[UnityEngine.Random.Range(0, availableBuffs.Count)];
 
             ProvideBuffs(i, buffToProvide, (BuffCategory)choice);

@@ -69,4 +69,27 @@ public class SliceChallenge : Challenge
             ChallengeCompleted();
         }
     }
+
+    public override string GetProgressText()
+    {
+        string text = "";
+
+        if (status == ChallengeStatus.InProgress)
+        {
+            if (activeCrystals > 0)
+                text = $"Crystals Destroyed : {totalCrystals - activeCrystals}";
+            else
+                text = "Destroy Statue";
+        }
+        else if (status == ChallengeStatus.Success)
+        {
+            text = "Challenege Completed";
+        }
+        else
+        {
+            text = "Challenge Failed";
+        }
+
+        return text;
+    }
 }

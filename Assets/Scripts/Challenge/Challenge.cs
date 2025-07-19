@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
+using static UnityEngine.GraphicsBuffer;
 public enum ChallengeType
 {
     Slice,
@@ -40,7 +42,18 @@ public abstract class Challenge: MonoBehaviour
 
     public virtual void ChallengeFailed()
     {
+        StartCoroutine(RaiseChallengeFailRoutine(4f));
+    }
+
+    private IEnumerator RaiseChallengeFailRoutine(float time)
+    {
+        yield return new WaitForSeconds(time);
         OnChallengeFailed?.Invoke();
+    }
+
+    public virtual string GetProgressText()
+    {
+        return "Yet to Implement Progression Text";
     }
 
     public string GetTechnicalDetail() => technicalDetails;

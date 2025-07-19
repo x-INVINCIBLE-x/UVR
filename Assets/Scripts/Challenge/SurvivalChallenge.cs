@@ -68,6 +68,25 @@ public class SurvivalChallenge : Challenge
         currentRoutine = null;
     }
 
+    public override string GetProgressText()
+    {
+        string text = "";
+        if (status == ChallengeStatus.InProgress)
+        {
+            text = $"Survive for : {Mathf.RoundToInt(timer)}";
+        }
+        else if (status == ChallengeStatus.Success)
+        {
+            text = "Challenege Completed";
+        }
+        else
+        {
+            text = "Challenge Failed";
+        }
+
+        return text;
+    }
+
     private void OnDestroy()
     {
         if (PlayerManager.instance != null)
