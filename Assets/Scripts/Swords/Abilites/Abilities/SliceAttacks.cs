@@ -93,8 +93,8 @@ public class SliceAttacks : WeaponAbilitiesBase
 
     // Sends the slice projectile attack forward in a straight line
     private void StraightSliceAttack()
-    {   
-        
+    {
+        if (AbilityEnable == false) return;
         if(!VelocityChecker()) return; // checks the velocity of the weapon that is swung
         if (!CanAttack()) return;
         ApplyHeat();
@@ -103,8 +103,7 @@ public class SliceAttacks : WeaponAbilitiesBase
         GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX, slashSpawn);
         Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
         slashBody.linearVelocity = Camera.main.transform.forward * force;
-        ObjectPool.instance.ReturnObject(SlashVFX, 2f);
-        
+        ObjectPool.instance.ReturnObject(SlashVFX, 2f);   
     }
 
     // Sends the projectile in as a spinning attack that keeps spining for some time 

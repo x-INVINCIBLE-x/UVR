@@ -129,6 +129,7 @@ public class WeaponAbilitiesBase : MonoBehaviour
     }
     protected virtual void ApplyHeat()
     {
+      
         currentHeat += maxHeatLimit / fireRate;
         currentHeat = Mathf.Clamp(currentHeat, 0, maxHeatLimit);
 
