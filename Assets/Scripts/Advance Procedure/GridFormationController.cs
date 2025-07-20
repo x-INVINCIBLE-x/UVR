@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -69,7 +70,7 @@ public class GridFormationController : FormationProvider
     private float gridSpanX, gridSpanZ; private Vector3 gridCenter;
     private int currentIndex = 0; private bool isTransitioning = false; private float timer = 0f;
     private int difficultyLevel = 1;
-    private NavMeshSurface navMeshSurface;
+    private NavMeshSurface[] navMeshSurfaces;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -83,7 +84,7 @@ public class GridFormationController : FormationProvider
 
     private void Awake()
     {
-        navMeshSurface = GetComponent<NavMeshSurface>();
+        navMeshSurfaces = GetComponents<NavMeshSurface>();
     }
 
     void Start()
@@ -102,9 +103,7 @@ public class GridFormationController : FormationProvider
         InitializeFormations();
         SpawnFormation(currentIndex);
 
-        float startTime = Time.realtimeSinceStartup;
-        navMeshSurface.BuildNavMesh();
-        Debug.Log("NavMesh bake time: " + (Time.realtimeSinceStartup - startTime) + " seconds");
+        StartCoroutine(BuildNavMesh());
     }
 
     //private void HandleDifficultyChange(int difficultyLevel)
@@ -135,6 +134,22 @@ public class GridFormationController : FormationProvider
                 currentIndex = (currentIndex + 1) % formations[difficultyLevel].config.Count;
             }
         }
+    }
+
+    private IEnumerator BuildNavMesh()
+    {
+        yield return new WaitForEndOfFrame();
+
+        float startTime = Time.realtimeSinceStartup;
+
+        foreach (NavMeshSurface surface in navMeshSurfaces)
+        {
+            surface.BuildNavMesh();
+            yield return new WaitForEndOfFrame();
+        }
+        
+        Debug.Log("NavMesh bake time: " + (Time.realtimeSinceStartup - startTime) + " seconds");
+        //navMeshSurface.BuildNavMesh();
     }
 
     public override void NextTransition()
@@ -169,7 +184,7 @@ public class GridFormationController : FormationProvider
                 float rawZ = transform.position.z
                            + z * (sample.GetComponent<Renderer>().bounds.size.z + spZ);
 
-                basePositionsList.Add(new Vector3(rawX, 0, rawZ));
+                basePositionsList.Add(new Vector3(rawX, transform.position.y, rawZ));
 
                 float maxJ = Mathf.Min(maxJitterXZ, minSpacing * 0.5f) * (1f - density);
                 float jx = Random.Range(-maxJ, maxJ);
@@ -192,7 +207,7 @@ public class GridFormationController : FormationProvider
                 float px = jitterXZList[i].x;
                 float pz = jitterXZList[i].y;
 
-                float y = EvaluateFormation(config.type, new Vector3(px, 0, pz), f);
+                float y = EvaluateFormation(config.type, new Vector3(px, transform.position.y, pz), f);
                 if (config.jitterY)
                     y += Random.Range(-safeY, safeY);
 
@@ -267,9 +282,9 @@ public class GridFormationController : FormationProvider
             // If not a center, pick by radius
             if (prefabToSpawn == null)
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
+            Quaternion randomYRotation = Quaternion.Euler(0f, 90f * Random.Range(0, 4), 0f);
+            Transform t = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform).transform;
 
-            // Instantiate and record
-            Transform t = Instantiate(prefabToSpawn, pos, Quaternion.identity, transform).transform;
             instances.Add(t);
         }
     }

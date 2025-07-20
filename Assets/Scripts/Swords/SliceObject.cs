@@ -41,6 +41,7 @@ public class SliceObject : MonoBehaviour
 
     public void Slice(GameObject target)
     {
+        target.transform.parent = null;
         Vector3 velocity = velocityEstimator.GetVelocityEstimate();
         Vector3 planeNormal = Vector3.Cross(endSlicePoint.position - startSlicePoint.position, velocity);
         planeNormal.Normalize();

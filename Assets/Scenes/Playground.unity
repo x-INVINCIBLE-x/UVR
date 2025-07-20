@@ -10966,9 +10966,9 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
-  m_GenerateLinks: 0
+  m_GenerateLinks: 1
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
@@ -76662,6 +76662,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853522381}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1854574385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8724096254491396310, guid: 1e300072f9d21254599aa709249c88bd, type: 3}
+  m_PrefabInstance: {fileID: 244185767187249312}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1854574392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854574385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: bf36107af5d18be40b1b0d74e8d8336a, type: 2}
 --- !u!1 &1855920237
 GameObject:
   m_ObjectHideFlags: 0
@@ -89251,7 +89271,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8724096254491396310, guid: 1e300072f9d21254599aa709249c88bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1854574392}
   m_SourcePrefab: {fileID: 100100000, guid: 1e300072f9d21254599aa709249c88bd, type: 3}
 --- !u!1001 &6020626136308087142
 PrefabInstance:
@@ -89261,10 +89284,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1984580990194464940, guid: 342d8c61967628541a04456b961334a1, type: 3}
-      propertyPath: m_CurrentTrackingState
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 2953057016828120978, guid: 342d8c61967628541a04456b961334a1, type: 3}
       propertyPath: m_Name
       value: Core
@@ -89307,10 +89326,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5101802325958895577, guid: 342d8c61967628541a04456b961334a1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7932148726972707223, guid: 342d8c61967628541a04456b961334a1, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
