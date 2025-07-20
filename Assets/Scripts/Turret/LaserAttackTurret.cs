@@ -11,6 +11,12 @@ public class LaserAttackTurret : AttackTurret
     [SerializeField] private float rotationSpeed;
 
     private Coroutine currentRoutine;
+    private LayerMask playerLayer;
+
+    private void Start()
+    {
+        playerLayer = LayerMask.GetMask("Player");
+    }
 
     protected override void OnPreAttackEnter()
     {
@@ -18,7 +24,7 @@ public class LaserAttackTurret : AttackTurret
 
         for (int i = 0; i < lasers.Length; i++)
         {
-            lasers[i].Setup(attackData, damageRate);
+            lasers[i].Setup(attackData, damageRate, playerLayer);
         }
     }
 

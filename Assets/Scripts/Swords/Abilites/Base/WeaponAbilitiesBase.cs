@@ -34,10 +34,10 @@ public class WeaponAbilitiesBase : MonoBehaviour
     [Header("Activation Condition")]
     [Space]
     [SerializeField] protected bool AbilityEnable = false;
-    protected float minVelocity;
-    protected float minPitch = 1f;
-    protected float maxPitch = 2f;
-    
+    [SerializeField] protected float minPitch = 1f;
+    [SerializeField] protected float maxPitch = 2f;
+    [SerializeField] protected GameObject WeaponVFX;
+
     [Space]
     [Header("Audio")]
     public AudioClip WeaponSFX;
@@ -93,10 +93,12 @@ public class WeaponAbilitiesBase : MonoBehaviour
     protected virtual void ActivateWeapon(ActivateEventArgs args)
     {
         AbilityEnable = true;
+        
     }
     protected virtual void DeactivateWeapon(DeactivateEventArgs args)
     {
         AbilityEnable = false;
+        
     }
 
 

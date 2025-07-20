@@ -74,7 +74,7 @@ public class SkinnedMeshDissolver : MonoBehaviour
             skinnedMesh.materials = skinnedMaterials;
             StartCoroutine(DissolveSkinnedMesh());
         }
-        else ResetDissolver();
+        
         
     }
 

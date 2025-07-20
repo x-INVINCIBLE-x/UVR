@@ -6,14 +6,17 @@ public class AilmentTurret : Turret
     [SerializeField] private AttackData attackData;
     [SerializeField] private float damageRate = 0.2f;
 
+    private LayerMask playerLayer;
+
     private void Start()
     {
         damageOnTouch.gameObject.SetActive(false);
+        playerLayer = LayerMask.GetMask("Player");
     }
 
     protected override void Activate(Collider activatingCollider)
     {
-        damageOnTouch.Setup(attackData, damageRate);
+        damageOnTouch.Setup(attackData, damageRate, playerLayer);
         damageOnTouch.gameObject.SetActive(true);
     }
 

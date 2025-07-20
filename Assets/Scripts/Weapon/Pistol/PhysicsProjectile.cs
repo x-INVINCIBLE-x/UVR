@@ -56,7 +56,7 @@ public class PhysicsProjectile : Projectile
     {
         IDamagable damagable = other.GetComponentInParent<IDamagable>();
         damagable ??= other.GetComponentInChildren<IDamagable>();
-        if (damagable != null && !damaged.Contains(damagable))
+        if (damagable != null && !damaged.Contains(damagable) && attackData != null)
         {
             damagable.TakeDamage(attackData);
             damaged.Add(damagable);

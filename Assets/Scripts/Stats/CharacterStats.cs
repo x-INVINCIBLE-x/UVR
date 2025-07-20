@@ -144,7 +144,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
             { AilmentType.Ignis, ApplyFireAilment },
             { AilmentType.Frost, ApplyFrostAilment },
             { AilmentType.Blitz, ApplyBlitzAilment },
-            { AilmentType.Hex, ApplyHexStatus },
+            { AilmentType.Hex, ApplyHexAilment },
             { AilmentType.Radiance, ApplyRadianceAilment },
             { AilmentType.Gaia, ApplyGaiaStatus }
         };
@@ -175,6 +175,9 @@ public class CharacterStats : MonoBehaviour, IDamagable
             { Stats.PhysicalAtk, physicalDamage },
             { Stats.IgnisAtk, ignisDamage },
             { Stats.BlitzAtk, blitzDamage },
+            { Stats.HexAtk, hexDamage },
+            { Stats.RadianceAtk, radianceDamage },
+            { Stats.GaiaAtk, gaiaDamage },
             { Stats.PhysicalDef, physicalDef },
             { Stats.IgnisDef, ignisStatus.defence},
             { Stats.FrostDef, frostStatus.defence},
@@ -216,18 +219,27 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     private void TakeAilmentDamage(AttackData attackData)
     {
-        float _fireAtk = attackData.ignisDamage.Value;
-        float _electricAtk = attackData.blitzDamage.Value;
+        float _ignisAtk = attackData.ignisDamage.Value;
+        float _blitzAtk = attackData.blitzDamage.Value;
+        float _hexAtk = attackData.hexDamage.Value;
+        float _radianceAtk = attackData.radianceDamage.Value;
+        float _gaiaAtk = attackData.gaiaDamage.Value;
 
-        float damage = _fireAtk + _electricAtk;
+        float damage = _ignisAtk + _blitzAtk + _hexAtk + _radianceAtk + _gaiaAtk;
 
         if (damage == 0)
             return;
 
-        if (_fireAtk > 0)
-            TryApplyAilmentEffect(_fireAtk, ref ignisStatus, AilmentType.Ignis);
-        else if (_electricAtk > 0)
-            TryApplyAilmentEffect(_electricAtk, ref blitzStatus, AilmentType.Blitz);
+        if (_ignisAtk > 0)
+            TryApplyAilmentEffect(_ignisAtk, ref ignisStatus, AilmentType.Ignis);
+        else if (_blitzAtk > 0)
+            TryApplyAilmentEffect(_blitzAtk, ref blitzStatus, AilmentType.Blitz);
+        else if (_hexAtk > 0)
+            TryApplyAilmentEffect(_hexAtk, ref hexStatus, AilmentType.Hex);
+        else if (_gaiaAtk > 0)
+            TryApplyAilmentEffect(_gaiaAtk, ref gaiaStatus, AilmentType.Gaia);
+        else if (_radianceAtk > 0)
+            TryApplyAilmentEffect(_radianceAtk, ref radianceStatus, AilmentType.Radiance);
     }
 
     //public virtual void DoDamage(CharacterStats targetStats)
@@ -312,7 +324,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     }
 
-    private void ApplyHexStatus()
+    private void ApplyHexAilment()
     {
 
     }

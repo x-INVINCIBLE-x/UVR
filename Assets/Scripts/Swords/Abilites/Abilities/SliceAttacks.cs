@@ -16,8 +16,8 @@ public class SliceAttacks : WeaponAbilitiesBase
     public Vector3 movetoOffset;
     private Vector3 startPosition;
     [SerializeField] private float moveDuration;
-
-
+    [SerializeField] private float rotationSpeed;
+   
     public TypesOfSlices sliceAttackType;
     public enum TypesOfSlices
     {
@@ -103,19 +103,65 @@ public class SliceAttacks : WeaponAbilitiesBase
         GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX, slashSpawn);
         Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
         slashBody.linearVelocity = Camera.main.transform.forward * force;
-        ObjectPool.instance.ReturnObject(SlashVFX, 2f);   
+        ObjectPool.instance.ReturnObject(newSlashVFX, 2f);   
     }
 
     // Sends the projectile in as a spinning attack that keeps spining for some time 
     private void SpiningSliceAttack()
     {
-        transform.DOMove(startPosition + movetoOffset, moveDuration).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        if (AbilityEnable == false) return;
+        if (!VelocityChecker()) return; // checks the velocity of the weapon that is swung
+        if (!CanAttack()) return;
+        ApplyHeat();
+        SlashAudio();
+
+        GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX, slashSpawn);
+        Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
+
+        // Postion Estimations
+        startPosition = slashSpawn.position;
+        newSlashVFX.transform.position = startPosition;
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 targetPosition = startPosition + cameraForward * movetoOffset.magnitude;
+
+        // Dotween Implementation
+        slashBody.transform.DOMove(targetPosition, moveDuration).SetEase(Ease.InOutSine);
+        slashBody.DORotate(new Vector3(0, 360, 0), rotationSpeed , RotateMode.FastBeyond360).SetLoops(-1, LoopType.Incremental).SetRelative().SetEase(Ease.Linear);
+
+        //Object Pool
+        ObjectPool.instance.ReturnObject(newSlashVFX, moveDuration * 2f);
     }
 
     // Sends a attack that returns back to the player 
     private void BoomerangSliceAttack()
     {
+        if (AbilityEnable == false) return;
+        if (!VelocityChecker()) return; // checks the velocity of the weapon that is swung
+        if (!CanAttack())
+        {   
+            WeaponVFX.SetActive(false);
+            return; 
+        }
+        ApplyHeat();
+        SlashAudio();
+
+        WeaponVFX.SetActive(true);
+        GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX, slashSpawn);
+        Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
         
+        // Postion Estimations
+        startPosition = slashSpawn.position;
+        newSlashVFX.transform.position = startPosition;
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 targetPosition = startPosition + cameraForward * movetoOffset.magnitude;
+
+        // Dotween Implementation
+        slashBody.transform.DOMove(targetPosition, moveDuration).SetEase(Ease.InOutSine).SetLoops(2, LoopType.Yoyo);
+
+        slashBody.DORotate(new Vector3(0, 360, 0), rotationSpeed, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Incremental).SetRelative().SetEase(Ease.Linear);
+
+        //Object Pool
+        ObjectPool.instance.ReturnObject(newSlashVFX, moveDuration * 2f);
     }
     private void AoeSliceAttack()
     {

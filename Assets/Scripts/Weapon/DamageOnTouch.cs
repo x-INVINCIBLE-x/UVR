@@ -4,17 +4,11 @@ using UnityEngine;
 public class DamageOnTouch : MonoBehaviour
 {
     [Tooltip("Either Set up by other Script or give its own AttackData. If both then combines the AttackData")]
-    private AttackData attackData;
-    private float damageRate = 0.2f;
+    [SerializeField] private AttackData attackData;
+    [SerializeField] private float damageRate = 0.2f;
     private readonly HashSet<IDamagable> damagables = new();
     private float timer;
-    private bool damageOnlyPlayer = true;
-    private LayerMask playerLayer;
-
-    private void Start()
-    {
-        playerLayer = LayerMask.GetMask("Player");
-    }
+    [SerializeField] private LayerMask layerToDamage;
 
     private void Update()
     {
@@ -29,22 +23,24 @@ public class DamageOnTouch : MonoBehaviour
         }
     }
 
-    public void Setup(AttackData attackData, float damageRate, bool damageOnlyPlayer = true)
+    public void Setup(AttackData attackData, float damageRate, LayerMask mask)
     {
         this.attackData = attackData;
         this.damageRate = damageRate;
-        this.damageOnlyPlayer = damageOnlyPlayer;
+        layerToDamage = mask;
         timer = damageRate;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (damageOnlyPlayer && ((1 << other.gameObject.layer) & playerLayer) == 0) return;
+        if (((1 << other.gameObject.layer) & layerToDamage) == 0) return;
 
         IDamagable damagable = other.GetComponentInParent<IDamagable>();
         damagable ??= other.GetComponentInChildren<IDamagable>();
         if (damagable != null)
         {
+            Debug.Log("Give damage");
+            damagable.TakeDamage(attackData);
             damagables.Add(damagable);
         }
     }
@@ -56,5 +52,10 @@ public class DamageOnTouch : MonoBehaviour
         {
             damagables.Remove(damagable);
         }
+    }
+
+    private void OnDisable()
+    {
+        damagables.Clear();
     }
 }
