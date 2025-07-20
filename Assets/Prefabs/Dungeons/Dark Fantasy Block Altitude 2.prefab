@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8160648943786220789}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 3545218576312864624}
   - component: {fileID: 3186976234986076803}
   - component: {fileID: 3585950537494206276}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 5259100685126009785}
   - component: {fileID: 6211653388286996895}
   - component: {fileID: 2650158926732947562}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 2094731399858909665}
   - component: {fileID: 5758601176692324366}
   - component: {fileID: 1242917034359860426}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 5256809664488652321}
   - component: {fileID: 167231158383191530}
   - component: {fileID: 7633158276673341608}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4090545767027121224}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pole_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +452,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4195704448631921444}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Support.001_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7301022027685411251}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Support_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 2763808987144228555}
   - component: {fileID: 212260638621648265}
   - component: {fileID: 7088452231596294889}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,12 +602,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1534226080911128275}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: bridge (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1534226080911128275
 Transform:
@@ -634,12 +634,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7275518541246385802}
+  - component: {fileID: 3643821061033598139}
+  - component: {fileID: 7129514163899038131}
+  - component: {fileID: 4466987794371697165}
   m_Layer: 0
   m_Name: Dark Fantasy Block Altitude 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7275518541246385802
 Transform:
@@ -650,7 +653,7 @@ Transform:
   m_GameObject: {fileID: 814940262096534163}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 601.44037, y: -1.42, z: 51.01033}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -668,6 +671,138 @@ Transform:
   - {fileID: 7528356967252945577}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &3643821061033598139
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814940262096534163}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7129514163899038131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814940262096534163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e9e72fe1e3b49f8a1fee8aa4ed33fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_Colliders:
+  - {fileID: 4021650684788569229}
+  - {fileID: 5235473386560228753}
+  - {fileID: 5711483747554631247}
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 2
+  m_SelectMode: 1
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_ClimbProvider: {fileID: 0}
+  m_ClimbTransform: {fileID: 7275518541246385802}
+  m_FilterInteractionByDistance: 1
+  m_MaxInteractionDistance: 0.1
+  m_ClimbAssistanceTeleportVolume: {fileID: 0}
+  m_ClimbSettingsOverride:
+    m_UseConstant: 0
+    m_ConstantValue:
+      m_AllowFreeXMovement: 1
+      m_AllowFreeYMovement: 1
+      m_AllowFreeZMovement: 1
+    m_Variable: {fileID: 0}
+--- !u!114 &4466987794371697165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814940262096534163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4f8f80982d02644ac4631e16936510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entities:
+  - propPrefab: {fileID: 0}
+    prop: 5
+    position: {x: 4, y: 7, z: -12}
+    rotation: {x: 0, y: 0, z: 0}
+  strictlyCurrentDifficulty: 0
 --- !u!1 &835501018586063847
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +814,7 @@ GameObject:
   - component: {fileID: 3240164704512147635}
   - component: {fileID: 8879094029453633506}
   - component: {fileID: 7459547816334100076}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -763,12 +898,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7488615578864247921}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: e7547eae9c15470aaaa092504d0e88a2.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7488615578864247921
 Transform:
@@ -795,7 +930,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6622743803339860564}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GLTF_SceneRootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -831,7 +966,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7413626819302463454}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GLTF_SceneRootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -869,7 +1004,7 @@ GameObject:
   - component: {fileID: 3355917070025985445}
   - component: {fileID: 3737512301026195399}
   - component: {fileID: 909464354176977297}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -988,7 +1123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2821937797777395960}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1020,7 +1155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7004936448374867608}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GLTF_SceneRootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1057,7 +1192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4156638287495106180}
   - component: {fileID: 1983427155925035116}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: wall_mounted_lantern (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1111,7 +1246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5936575003899104465}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Lantern_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1144,12 +1279,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6244729177003363217}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6244729177003363217
 Transform:
@@ -1178,7 +1313,7 @@ GameObject:
   - component: {fileID: 8361800182164180518}
   - component: {fileID: 2606665239111807859}
   - component: {fileID: 5016506489285677305}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1262,7 +1397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3665442173337549030}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pole_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1296,12 +1431,12 @@ GameObject:
   - component: {fileID: 1704245643872589504}
   - component: {fileID: 306611716548052919}
   - component: {fileID: 8270397189995347107}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bridge_lambert3_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1704245643872589504
 Transform:
@@ -1382,7 +1517,7 @@ GameObject:
   - component: {fileID: 5343297568525940606}
   - component: {fileID: 901820385310447557}
   - component: {fileID: 3913797612374295042}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1468,7 +1603,7 @@ GameObject:
   - component: {fileID: 4229029429567701891}
   - component: {fileID: 89255386861432902}
   - component: {fileID: 1340555880435079155}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1552,12 +1687,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5341361178671818203}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5341361178671818203
 Transform:
@@ -1584,7 +1719,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 309928175448389343}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Lantern_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1617,7 +1752,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3700814530132840794}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Support_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1649,7 +1784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6710765154428517063}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Lantern_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1682,7 +1817,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5260031450664447539}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: WallMount_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1822,12 +1957,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5105236713609686763}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: e7547eae9c15470aaaa092504d0e88a2.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5105236713609686763
 Transform:
@@ -1856,7 +1991,7 @@ GameObject:
   - component: {fileID: 8938643561349950156}
   - component: {fileID: 6634650025345653331}
   - component: {fileID: 5645212958806265482}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1941,7 +2076,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7528356967252945577}
   - component: {fileID: 690806604208697824}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: wall_mounted_lantern (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1997,7 +2132,7 @@ GameObject:
   - component: {fileID: 287667626595327462}
   - component: {fileID: 6711750258469951539}
   - component: {fileID: 5381872244008879063}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2191,7 +2326,7 @@ GameObject:
   - component: {fileID: 3407398022893595752}
   - component: {fileID: 8667709344009909935}
   - component: {fileID: 8192659661283663228}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2275,7 +2410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6226833335743346935}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Support.001_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2307,12 +2442,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3862294598056952279}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3862294598056952279
 Transform:
@@ -2339,7 +2474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2372698860891110815}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Support_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2371,7 +2506,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3626809249664125376}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Support.001_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2403,7 +2538,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4773986302241873725}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: WallMount_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2435,12 +2570,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1522278206655986914}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: bridge (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1522278206655986914
 Transform:
@@ -2469,7 +2604,7 @@ GameObject:
   - component: {fileID: 4286010061331603596}
   - component: {fileID: 7857098515769003269}
   - component: {fileID: 4685052850928030162}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2553,7 +2688,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7311558480470119165}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: WallMount_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2585,7 +2720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 578938347737197361}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: WallMount_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2619,7 +2754,7 @@ GameObject:
   - component: {fileID: 1395237252222824845}
   - component: {fileID: 4985940064908922086}
   - component: {fileID: 9000301967047952060}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2703,7 +2838,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8564138215583094532}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pole_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2735,7 +2870,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6415200450139121620}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pole_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2769,7 +2904,7 @@ GameObject:
   - component: {fileID: 40968992379048466}
   - component: {fileID: 782013539355445088}
   - component: {fileID: 4226071363202096967}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2855,7 +2990,7 @@ GameObject:
   - component: {fileID: 3178605228735237037}
   - component: {fileID: 963821498719572771}
   - component: {fileID: 2567529769225551490}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2941,7 +3076,7 @@ GameObject:
   - component: {fileID: 5880099573270983297}
   - component: {fileID: 6806106691006870775}
   - component: {fileID: 2863530750215608903}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3027,7 +3162,7 @@ GameObject:
   - component: {fileID: 5747649334655636234}
   - component: {fileID: 1411636798382400523}
   - component: {fileID: 1037262003288586766}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3146,12 +3281,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1988651349933132348}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1988651349933132348
 Transform:
@@ -3178,7 +3313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8134429815133588172}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GLTF_SceneRootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3216,7 +3351,7 @@ GameObject:
   - component: {fileID: 3914105330519598212}
   - component: {fileID: 1096996445027842561}
   - component: {fileID: 6537605962131264363}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3302,7 +3437,7 @@ GameObject:
   - component: {fileID: 3467415723984188761}
   - component: {fileID: 1086674555549079018}
   - component: {fileID: 8092898173853136879}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3423,7 +3558,7 @@ GameObject:
   - component: {fileID: 8004243569713577782}
   - component: {fileID: 6421434853674555852}
   - component: {fileID: 6917803740042209312}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3507,7 +3642,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2876522812115365260}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Support.001_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3539,7 +3674,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4035536881968611983}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Lantern_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3574,7 +3709,7 @@ GameObject:
   - component: {fileID: 7811655300638804241}
   - component: {fileID: 7935600765771716110}
   - component: {fileID: 4286493612770963013}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3658,7 +3793,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7607266607912328653}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Support_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3800,7 +3935,7 @@ GameObject:
   - component: {fileID: 4874257926727972019}
   - component: {fileID: 5865918671029320725}
   - component: {fileID: 3024018240150811696}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3886,7 +4021,7 @@ GameObject:
   - component: {fileID: 5050780274019396414}
   - component: {fileID: 4419705710136590469}
   - component: {fileID: 4166983750898165179}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3972,7 +4107,7 @@ GameObject:
   - component: {fileID: 8272331104331186317}
   - component: {fileID: 3511172818048056526}
   - component: {fileID: 3413372656946877974}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4056,7 +4191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6901667487832319290}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4088,7 +4223,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 896406318342609363}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4122,12 +4257,12 @@ GameObject:
   - component: {fileID: 1881784287772212019}
   - component: {fileID: 1226066726158779508}
   - component: {fileID: 8247391713343617295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bridge_lambert3_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1881784287772212019
 Transform:
@@ -4208,7 +4343,7 @@ GameObject:
   - component: {fileID: 8318119795991734813}
   - component: {fileID: 2446259233081987801}
   - component: {fileID: 4941502971758534600}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4293,7 +4428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1263439555717414241}
   - component: {fileID: 6599816409624113456}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: wall_mounted_lantern (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4349,7 +4484,7 @@ GameObject:
   - component: {fileID: 7903792557805936692}
   - component: {fileID: 2403380090176422131}
   - component: {fileID: 4990242548235376692}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Object_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4434,7 +4569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7813790106385873373}
   - component: {fileID: 207736171108072714}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: wall_mounted_lantern (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4531,9 +4666,17 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4947518496698683194, guid: ac7614c91acf10f4d915ae80236bc966, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5808792925157022241, guid: ac7614c91acf10f4d915ae80236bc966, type: 3}
       propertyPath: m_Name
       value: tree3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808792925157022241, guid: ac7614c91acf10f4d915ae80236bc966, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8007597141474056313, guid: ac7614c91acf10f4d915ae80236bc966, type: 3}
       propertyPath: m_LocalScale.x
@@ -4586,6 +4729,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7275518541246385802}
     m_Modifications:
+    - target: {fileID: 2985958896006053610, guid: 1a968a70c2015334d82562107aab109b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4720650485201115343, guid: 1a968a70c2015334d82562107aab109b, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.050000004
@@ -4634,6 +4781,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tree5
       objectReference: {fileID: 0}
+    - target: {fileID: 6634719934555000521, guid: 1a968a70c2015334d82562107aab109b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8643835353937775140, guid: 1a968a70c2015334d82562107aab109b, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.05
@@ -4669,6 +4820,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7275518541246385802}
     m_Modifications:
+    - target: {fileID: 491684345095313676, guid: 7c865aef05b7ed243b5683ee751b0ede, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4756357641078224238, guid: 7c865aef05b7ed243b5683ee751b0ede, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.050000053
@@ -4748,6 +4903,10 @@ PrefabInstance:
     - target: {fileID: 8714291691246260424, guid: 7c865aef05b7ed243b5683ee751b0ede, type: 3}
       propertyPath: m_Name
       value: tree2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714291691246260424, guid: 7c865aef05b7ed243b5683ee751b0ede, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

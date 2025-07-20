@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 3916937375364348980}
   - component: {fileID: 1509000417340553439}
   - component: {fileID: 1820072909645580011}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Object236_firePlace_mat_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 1614020801106112676}
   - component: {fileID: 2305403186533359246}
   - component: {fileID: 7648331213202102535}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8522735623640700545}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Object236
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3210130196649487561}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3933816440868428335}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: brazier (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 5998234048508323580}
   - component: {fileID: 3606720423524685773}
   - component: {fileID: 1393966765262865394}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LargeFlames (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5420,7 +5420,7 @@ GameObject:
   - component: {fileID: 3380201738883740182}
   - component: {fileID: 7394321639608030834}
   - component: {fileID: 5931107572987944116}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LargeFlames (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10273,7 +10273,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6357156993418537184}
-  m_Layer: 6
+  - component: {fileID: 3687422582191291723}
+  - component: {fileID: 7526316128043325228}
+  - component: {fileID: 4531095785543229848}
+  m_Layer: 0
   m_Name: Dark Fantasy Altitude block 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10289,9 +10292,9 @@ Transform:
   m_GameObject: {fileID: 3713153278467275798}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 537.9, y: 3.74, z: 5.69}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3933816440868428335}
   - {fileID: 2940224580688010002}
@@ -10305,6 +10308,143 @@ Transform:
   - {fileID: 9104277903665899588}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &3687422582191291723
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3713153278467275798}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7526316128043325228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3713153278467275798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e9e72fe1e3b49f8a1fee8aa4ed33fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_Colliders:
+  - {fileID: 6470138773755215573}
+  - {fileID: 3106059904564759133}
+  - {fileID: 6399726700701049476}
+  - {fileID: 4152866594387320285}
+  - {fileID: 6141015303471525669}
+  - {fileID: 5938675801285313080}
+  - {fileID: 8329333515646741727}
+  - {fileID: 8965900068645859253}
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 1
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_ClimbProvider: {fileID: 0}
+  m_ClimbTransform: {fileID: 6357156993418537184}
+  m_FilterInteractionByDistance: 1
+  m_MaxInteractionDistance: 0.1
+  m_ClimbAssistanceTeleportVolume: {fileID: 0}
+  m_ClimbSettingsOverride:
+    m_UseConstant: 0
+    m_ConstantValue:
+      m_AllowFreeXMovement: 1
+      m_AllowFreeYMovement: 1
+      m_AllowFreeZMovement: 1
+    m_Variable: {fileID: 0}
+--- !u!114 &4531095785543229848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3713153278467275798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4f8f80982d02644ac4631e16936510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entities:
+  - propPrefab: {fileID: 0}
+    prop: 3
+    position: {x: 0, y: 2, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  strictlyCurrentDifficulty: 0
 --- !u!1 &4130901828132846432
 GameObject:
   m_ObjectHideFlags: 0
@@ -10316,7 +10456,7 @@ GameObject:
   - component: {fileID: 4859291679437321531}
   - component: {fileID: 5395330505137956613}
   - component: {fileID: 153768325007245480}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Object236_firePlace_mat_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10510,7 +10650,7 @@ GameObject:
   - component: {fileID: 4637008864661300413}
   - component: {fileID: 9135028154098112105}
   - component: {fileID: 7337529102319349596}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: FireEmbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15263,7 +15403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2940224580688010002}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: brazier (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15548,7 +15688,7 @@ GameObject:
   - component: {fileID: 7930334097904320369}
   - component: {fileID: 6280441674871136140}
   - component: {fileID: 646144813844073872}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15699,7 +15839,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6273363324866302130}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ccba92eb8bf148a39f06475fb9cbfa6d.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15841,7 +15981,7 @@ GameObject:
   - component: {fileID: 2331822470154057156}
   - component: {fileID: 3231487987791678428}
   - component: {fileID: 7691250713039726336}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: FireEmbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20594,7 +20734,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1051156690016435984}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20843,7 +20983,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8614789406147301360}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ccba92eb8bf148a39f06475fb9cbfa6d.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20875,7 +21015,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7082166726784210619}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Object236
   m_TagString: Untagged
   m_Icon: {fileID: 0}

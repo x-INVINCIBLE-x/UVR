@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8428837083623831138}
   - component: {fileID: 8029432678018695008}
   - component: {fileID: 2632009332650073823}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3889370790860421685}
   - component: {fileID: 4166286200104186982}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: low_poly_skeleton_in_cage (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 5988523909755137931}
   - component: {fileID: 8016305246367974205}
   - component: {fileID: 3701866263495709975}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Circle.002__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,8 +260,8 @@ GameObject:
   - component: {fileID: 5360674853821737559}
   - component: {fileID: 7868347444275350438}
   - component: {fileID: 6511864310884358695}
-  - component: {fileID: 4840006526244562359}
-  m_Layer: 6
+  - component: {fileID: 4568052301063788031}
+  m_Layer: 0
   m_Name: Dark Fantasy Medium Block 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ Transform:
   m_GameObject: {fileID: 1015880761529596253}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 480.44, y: -0.30000007, z: 21.12}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -413,7 +413,7 @@ MonoBehaviour:
       m_AllowFreeYMovement: 1
       m_AllowFreeZMovement: 1
     m_Variable: {fileID: 0}
---- !u!114 &4840006526244562359
+--- !u!114 &4568052301063788031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -422,46 +422,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015880761529596253}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49e0a5b5ff5540f5b14dd29d46faec22, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a4f8f80982d02644ac4631e16936510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransitionDuration: 0.125
-  m_InteractableSource: {fileID: 0}
-  m_IgnoreHoverEvents: 0
-  m_IgnoreHoverPriorityEvents: 1
-  m_IgnoreFocusEvents: 1
-  m_IgnoreSelectEvents: 0
-  m_IgnoreActivateEvents: 0
-  m_SelectClickAnimationMode: 1
-  m_ActivateClickAnimationMode: 1
-  m_ClickAnimationDuration: 0.25
-  m_ClickAnimationCurve:
-    m_UseConstant: 1
-    m_ConstantValue:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_Variable: {fileID: 0}
+  entities:
+  - propPrefab: {fileID: 0}
+    prop: 3
+    position: {x: 15, y: 3, z: 10}
+    rotation: {x: 0, y: 0, z: 0}
+  - propPrefab: {fileID: 0}
+    prop: 4
+    position: {x: 15, y: 3, z: 1}
+    rotation: {x: 0, y: 0, z: 0}
+  - propPrefab: {fileID: 0}
+    prop: 4
+    position: {x: 4, y: 3, z: 10}
+    rotation: {x: 0, y: 0, z: 0}
+  strictlyCurrentDifficulty: 0
 --- !u!1 &1062031264220341730
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8194668139022512317}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Walls6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5903955803931465659}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -539,7 +516,7 @@ GameObject:
   - component: {fileID: 4223491860494147643}
   - component: {fileID: 2748280531284187066}
   - component: {fileID: 6254244873664997449}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -644,7 +621,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6280938016567555209}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TextureAtlas_mergedObject.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,7 +653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1402551810234372109}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +689,7 @@ GameObject:
   - component: {fileID: 8120700569092206933}
   - component: {fileID: 4133406005174128056}
   - component: {fileID: 5672843800033061626}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -820,7 +797,7 @@ GameObject:
   - component: {fileID: 9144165226003204321}
   - component: {fileID: 593954234943352345}
   - component: {fileID: 1747710699459297270}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pillar8_Material.001_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -925,7 +902,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2650739966524504718}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Walls12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -960,7 +937,7 @@ GameObject:
   - component: {fileID: 3897014699128268283}
   - component: {fileID: 2735980112203769676}
   - component: {fileID: 2099954786246089826}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1068,7 +1045,7 @@ GameObject:
   - component: {fileID: 9219091523141515547}
   - component: {fileID: 722979439194085864}
   - component: {fileID: 6074609662748180542}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Wall9_Estructura1_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1173,7 +1150,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8228895134916296914}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Circle.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1205,7 +1182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1113831122225256960}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: f534121965c9416a9a3cbb028ef53230.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1239,7 +1216,7 @@ GameObject:
   - component: {fileID: 7033946856956565951}
   - component: {fileID: 1630409070831909164}
   - component: {fileID: 7843382499178886166}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TextureAtlas_mergedObject.005_Material.001_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1323,7 +1300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6441444328829635482}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Circle.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1355,7 +1332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5822129899548435915}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Chain_V6 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1390,7 +1367,7 @@ GameObject:
   - component: {fileID: 6313158577818139673}
   - component: {fileID: 4522726194748578644}
   - component: {fileID: 5744475710438090851}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1495,7 +1472,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7793638923066322077}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: rumble (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1533,7 +1510,7 @@ GameObject:
   - component: {fileID: 7599966089752668315}
   - component: {fileID: 224846492859539362}
   - component: {fileID: 770208007495059943}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1656,7 +1633,7 @@ GameObject:
   - component: {fileID: 6804227164144260871}
   - component: {fileID: 9158477488169304492}
   - component: {fileID: 4657547327022841953}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Walls6_Estructura1_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1782,7 +1759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1515130381905667808}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Chain_V6 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1814,7 +1791,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5124316589080656568}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: rumble (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1853,7 +1830,7 @@ GameObject:
   - component: {fileID: 8899697028034440737}
   - component: {fileID: 6766791127995911954}
   - component: {fileID: 2775701422447133163}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1959,7 +1936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 967327457990819396}
   - component: {fileID: 7663046307817614168}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: low_poly_skeleton_in_cage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2016,7 +1993,7 @@ GameObject:
   - component: {fileID: 2632217608116139923}
   - component: {fileID: 459476286045809247}
   - component: {fileID: 8428843068017562623}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2121,7 +2098,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5395727424107590249}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TextureAtlas_mergedObject.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2155,7 +2132,7 @@ GameObject:
   - component: {fileID: 635609875521514955}
   - component: {fileID: 1740573770941123446}
   - component: {fileID: 8330438082187627521}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Circle.002__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2241,7 +2218,7 @@ GameObject:
   - component: {fileID: 922503073571223604}
   - component: {fileID: 181028019077110410}
   - component: {fileID: 6074282150832310091}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2360,7 +2337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7813219737226559220}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TextureAtlas_mergedObject.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2394,7 +2371,7 @@ GameObject:
   - component: {fileID: 1606560073500063584}
   - component: {fileID: 3963621236454870690}
   - component: {fileID: 7221631688444246226}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Chain_V6_Chain_Metal5_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2478,7 +2455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6358532312421515084}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: f534121965c9416a9a3cbb028ef53230.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2513,7 +2490,7 @@ GameObject:
   - component: {fileID: 4822473801223456367}
   - component: {fileID: 4036864331359755882}
   - component: {fileID: 4151955706069529301}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2618,7 +2595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1966649011868822683}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pillar6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2652,7 +2629,7 @@ GameObject:
   - component: {fileID: 5891030095179186474}
   - component: {fileID: 7365315822014315870}
   - component: {fileID: 6126773619504260222}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2773,7 +2750,7 @@ GameObject:
   - component: {fileID: 1476398753246832637}
   - component: {fileID: 1797220962487306310}
   - component: {fileID: 447901561571176364}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2895,7 +2872,7 @@ GameObject:
   - component: {fileID: 3666977243532586106}
   - component: {fileID: 3963913163627429713}
   - component: {fileID: 7606463901313824617}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3001,7 +2978,7 @@ GameObject:
   m_Component:
   - component: {fileID: 60691547354085021}
   - component: {fileID: 2539645665706458404}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: low_poly_skeleton_in_cage (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3057,7 +3034,7 @@ GameObject:
   - component: {fileID: 4590139004749677294}
   - component: {fileID: 7570114210689071523}
   - component: {fileID: 1282883445459518743}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Circle.002__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3142,7 +3119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8015665116752660549}
   - component: {fileID: 7849317821600680031}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: low_poly_skeleton_in_cage (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3198,7 +3175,7 @@ GameObject:
   - component: {fileID: 3796366145081326021}
   - component: {fileID: 8193061425486358084}
   - component: {fileID: 9135049149435544257}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TextureAtlas_mergedObject.005_Material.001_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3284,7 +3261,7 @@ GameObject:
   - component: {fileID: 7106215783785195738}
   - component: {fileID: 8587714470865036687}
   - component: {fileID: 6063716537663523062}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TextureAtlas_mergedObject.005_Material.001_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3368,7 +3345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7940926604073430169}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: f534121965c9416a9a3cbb028ef53230.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3402,7 +3379,7 @@ GameObject:
   - component: {fileID: 1766299441156165717}
   - component: {fileID: 5072652119272918985}
   - component: {fileID: 8635742452384719767}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TextureAtlas_mergedObject.005_Material.001_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3488,7 +3465,7 @@ GameObject:
   - component: {fileID: 4603733612324702958}
   - component: {fileID: 3772530668981451343}
   - component: {fileID: 9141435987092387351}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Chain_V6_Chain_Metal5_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3575,7 +3552,7 @@ GameObject:
   - component: {fileID: 3945116499455047074}
   - component: {fileID: 241053579979355672}
   - component: {fileID: 7350594717670659700}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3683,7 +3660,7 @@ GameObject:
   - component: {fileID: 972090180152237560}
   - component: {fileID: 3170507078988836207}
   - component: {fileID: 691238565644335175}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3896,7 +3873,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7580742806034652526}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: f534121965c9416a9a3cbb028ef53230.fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3931,7 +3908,7 @@ GameObject:
   - component: {fileID: 7716091482306790919}
   - component: {fileID: 7564105307068753102}
   - component: {fileID: 877914900572009743}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4036,7 +4013,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3546620653281131887}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pillar8 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4070,7 +4047,7 @@ GameObject:
   - component: {fileID: 3682503218192888404}
   - component: {fileID: 1978183332894375987}
   - component: {fileID: 5598879856399364192}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Circle.002__0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4154,7 +4131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8269545482494227240}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4187,7 +4164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2544181399226271061}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pillar8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4221,7 +4198,7 @@ GameObject:
   - component: {fileID: 979746762702865034}
   - component: {fileID: 890168861247337296}
   - component: {fileID: 2846925461818897399}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Walls12_Estructura1_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4307,7 +4284,7 @@ GameObject:
   - component: {fileID: 2961242620839978869}
   - component: {fileID: 6580487589319050761}
   - component: {fileID: 1214749851056220076}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pillar6_Material.001_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4391,7 +4368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3533665699722557249}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TextureAtlas_mergedObject.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4426,7 +4403,7 @@ GameObject:
   - component: {fileID: 1182609371860501014}
   - component: {fileID: 3661419808784360908}
   - component: {fileID: 2260458933671995683}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4531,7 +4508,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3036549828725393067}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Chain_V6 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4563,7 +4540,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6828216831251750917}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: RootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4598,7 +4575,7 @@ GameObject:
   - component: {fileID: 5975834686070042388}
   - component: {fileID: 354114538269853838}
   - component: {fileID: 9097375784117440192}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Chain_V6_Chain_Metal5_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4682,7 +4659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2225296093270422801}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Circle.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4714,7 +4691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8943019418111676490}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Wall9 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4749,7 +4726,7 @@ GameObject:
   - component: {fileID: 6626966991496308545}
   - component: {fileID: 691742021586869772}
   - component: {fileID: 5066074634165517806}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Wall9_Estructura1_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4854,7 +4831,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4705551579003232297}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: rumble (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4890,7 +4867,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2302781187107605596}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Wall9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4922,7 +4899,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8823007294520092387}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Circle.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4957,7 +4934,7 @@ GameObject:
   - component: {fileID: 2016207140552016808}
   - component: {fileID: 6568502434920975465}
   - component: {fileID: 33094296764115059}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5065,7 +5042,7 @@ GameObject:
   - component: {fileID: 1848949175317544974}
   - component: {fileID: 8574473951245071080}
   - component: {fileID: 5832594115887410898}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5173,7 +5150,7 @@ GameObject:
   - component: {fileID: 9178080802074173923}
   - component: {fileID: 7193374048804527750}
   - component: {fileID: 6118090466619299867}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pillar8_Material.001_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
