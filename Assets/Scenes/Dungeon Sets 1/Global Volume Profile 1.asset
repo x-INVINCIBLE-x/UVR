@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb4b772797da9440885e8bd939e9560, type: 3}
   m_Name: ColorCurves
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   master:
     m_OverrideState: 1
     m_Value:
@@ -255,7 +255,6 @@ MonoBehaviour:
   - {fileID: -3348335526222794965}
   - {fileID: 4304753788015477561}
   - {fileID: 8138533568765682698}
-  - {fileID: 1983456555620609605}
   - {fileID: 2607419587180306660}
 --- !u!114 &359655651262450359
 MonoBehaviour:
@@ -307,25 +306,6 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 0
---- !u!114 &1983456555620609605
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 221518ef91623a7438a71fef23660601, type: 3}
-  m_Name: WhiteBalance
-  m_EditorClassIdentifier: 
-  active: 0
-  temperature:
-    m_OverrideState: 1
-    m_Value: 10
-  tint:
-    m_OverrideState: 1
-    m_Value: -20
 --- !u!114 &2607419587180306660
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -412,7 +392,7 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.5
   intensity:
     m_OverrideState: 1
     m_Value: 1.5
@@ -462,7 +442,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.05
+    m_Value: 0.1
   smoothness:
     m_OverrideState: 1
     m_Value: 1
