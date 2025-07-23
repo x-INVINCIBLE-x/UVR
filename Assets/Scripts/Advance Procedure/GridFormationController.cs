@@ -45,6 +45,8 @@ public class FormationContainer
 public class GridFormationController : FormationProvider
 {
     [SerializeField] private bool drawGizmos;
+    [SerializeField] private int spawnPerFrame = 5;
+
     [Header("Radius Based Prefabs")]
     public List<RadiusBasedPrefab> radiusPrefabs = new List<RadiusBasedPrefab>();
     [Header("Fallback Corner Prefabs")]
@@ -101,9 +103,20 @@ public class GridFormationController : FormationProvider
 
         //DungeonManager.Instance.OnDifficultyChange += HandleDifficultyChange;
         InitializeFormations();
-        SpawnFormation(currentIndex);
+        //SpawnFormation(currentIndex);
+        //StartCoroutine(SpawnFormationGradually(positionsPerFormation[currentIndex]));
 
-        StartCoroutine(BuildNavMesh());
+        //StartCoroutine(BuildNavMesh());
+        //StartCoroutine(BuildNavMeshGradually());
+
+        StartCoroutine(SpawnFormationGraduallyThenBuildNavMesh(positionsPerFormation[currentIndex]));
+    }
+
+
+    private IEnumerator SpawnFormationGraduallyThenBuildNavMesh(List<Vector3> positions)
+    {
+        yield return StartCoroutine(SpawnFormationGradually(positions));
+        yield return StartCoroutine(BuildNavMeshGradually());
     }
 
     //private void HandleDifficultyChange(int difficultyLevel)
@@ -136,6 +149,17 @@ public class GridFormationController : FormationProvider
         }
     }
 
+
+    private IEnumerator BuildNavMeshGradually()
+    {
+        yield return new WaitForEndOfFrame();
+        foreach (NavMeshSurface surface in navMeshSurfaces)
+        {
+            surface.BuildNavMesh();
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
     private IEnumerator BuildNavMesh()
     {
         yield return new WaitForEndOfFrame();
@@ -159,6 +183,7 @@ public class GridFormationController : FormationProvider
         int next = (currentIndex + 1) % formations[difficultyLevel].config.Count;
         transitionTarget = new List<Vector3>(positionsPerFormation[next]);
     }
+
 
     void InitializeFormations()
     {
@@ -246,6 +271,51 @@ public class GridFormationController : FormationProvider
             positionsPerFormation.Add(list);
         }
     }
+
+
+    private IEnumerator SpawnFormationGradually(List<Vector3> positions)
+    {
+        int count = 0;
+
+        foreach (var pos in positions)
+        {
+            GameObject prefabToSpawn = null;
+
+            Vector2 posXZ = new Vector2(pos.x, pos.z);
+            foreach (var rp in radiusPrefabs)
+            {
+                if (rp.centerElement == null) continue;
+
+                Vector2 ringCenterXZ = new Vector2(
+                    gridCenter.x + rp.centerOffset.x,
+                    gridCenter.z + rp.centerOffset.z
+                );
+
+                if (Vector2.Distance(posXZ, ringCenterXZ) < 0.001f)
+                {
+                    prefabToSpawn = rp.centerElement;
+                    break;
+                }
+            }
+
+            if (prefabToSpawn == null)
+                prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
+
+            Quaternion randomYRotation = Quaternion.Euler(0f, 90f * Random.Range(0, 4), 0f);
+            Transform t = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform).transform;
+            instances.Add(t);
+
+            count++;
+
+            if (count % spawnPerFrame == 0)
+                yield return null;
+        }
+
+        // Optional: yield after final batch if not a multiple
+        if (count % spawnPerFrame != 0)
+            yield return null;
+    }
+
 
     void SpawnFormation(int idx)
     {

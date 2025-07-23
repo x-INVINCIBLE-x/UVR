@@ -6,28 +6,21 @@ using UnityEngine.InputSystem;
 
 public class SliceObject : MonoBehaviour
 {
-    public SliceMode sliceMode;
     public enum SliceMode
     {
         Single,
         Multi
     }
+    public SliceMode sliceMode;
 
     public Transform startSlicePoint;
     public Transform endSlicePoint;
     public LayerMask sliceableLayer;
     public VelocityEstimator velocityEstimator;
 
-
     public Material crossSectionMaterial;
     public float cutForce = 2000f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         bool hasHit  = Physics.Linecast(startSlicePoint.position, endSlicePoint.position, out RaycastHit hit, sliceableLayer);
@@ -38,10 +31,9 @@ public class SliceObject : MonoBehaviour
         }
     }
 
-
     public void Slice(GameObject target)
     {
-        //target.transform.parent = null;
+        target.transform.parent = null;
         Vector3 velocity = velocityEstimator.GetVelocityEstimate();
         Vector3 planeNormal = Vector3.Cross(endSlicePoint.position - startSlicePoint.position, velocity);
         planeNormal.Normalize();
@@ -95,14 +87,18 @@ public class SliceObject : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// This function setups the new hulled object's properties
+    /// Can be used to implement things that happen after an object is sliced
+    /// </summary>
+    /// <param name="slicedObject"></param>
     public void SetupSlicedComponent(GameObject slicedObject)
-    {
+    {   
+
         Rigidbody rb = slicedObject.AddComponent<Rigidbody>();
         MeshCollider collider = slicedObject.AddComponent<MeshCollider>();
         collider.convex = true;
 
-        rb.AddExplosionForce(cutForce, slicedObject.transform.position, 1);
-
+        rb.AddExplosionForce(cutForce, slicedObject.transform.position, 1);        
     }
-
 }
