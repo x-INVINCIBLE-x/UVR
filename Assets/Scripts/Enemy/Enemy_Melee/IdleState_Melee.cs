@@ -23,8 +23,7 @@ public class IdleState_Melee : EnemyState
     {
         base.Update();
 
-
-        if (stateTimer < 0)
+        if (enemy.HasPatrolPoints && stateTimer < 0)
             stateMachine.ChangeState(enemy.moveState);
     }
 }

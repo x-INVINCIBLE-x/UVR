@@ -25,7 +25,6 @@ public class Rifle : RangedWeapon
     }
     protected override void ActivateWeapon(ActivateEventArgs args)
     {
-        Debug.Log("rbt");
         base.ActivateWeapon(args);
         Shoot();
 

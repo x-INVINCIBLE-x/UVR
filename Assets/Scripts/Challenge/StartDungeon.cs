@@ -10,7 +10,6 @@ public class StartDungeon : MonoBehaviour
         GameObject core = FindRootCore();
         if (core != null)
         {
-            Debug.Log("Found");
             Instantiate(dungeonEssentials, core.transform);
         }
         else

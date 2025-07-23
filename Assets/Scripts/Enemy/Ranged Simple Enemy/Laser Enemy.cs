@@ -27,13 +27,22 @@ public class LaserEnemy : SimpleEnemyBase
 
         if (!playerInSightRange && !playerInAttackRange)
         {
-            agent.SetDestination(transform.position);
+            try
+            {
+                agent.SetDestination(transform.position);
+            }
+            catch
+            {
+                Debug.Log(gameObject.name + "has destination errors");
+            }
+            if (laserRoutine != null) StopCoroutine(laserRoutine);
             DestroyLaser();
             Patrol();
         }
         else if (playerInSightRange && !playerInAttackRange)
         {
             Chase();
+            if (laserRoutine != null) StopCoroutine(laserRoutine);
             DestroyLaser();
         }
         else if (playerInAttackRange)

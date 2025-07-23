@@ -18,7 +18,6 @@ public class HighlightObject : MonoBehaviour
         for (int i = 0; i < Meshes.Length; i++)
         {
             defaultMaterial[i] = Meshes[i].material;
-            Debug.Log("Mat" + Meshes[i].material.name);
         }
         //defaultMaterial = GetComponentsInChildren<Material>();
         //m_MeshRenderer = GetComponent<MeshRenderer>();

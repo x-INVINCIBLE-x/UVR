@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using System.Collections;
 using Unity.VisualScripting;
 using System;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour, IRewardProvider
@@ -50,7 +51,7 @@ public class Enemy : MonoBehaviour, IRewardProvider
     public float WalkSpeed => walkSpeed * localSpeedMultiplier;
     public float RunSpeed => runSpeed * localSpeedMultiplier;
 
-    [SerializeField] private Transform[] patrolPoints;
+    [SerializeField] private List<Transform> patrolPoints = new();
     private Vector3[] patrolPointsPosition;
     private int currentPatrolIndex;
 
@@ -86,7 +87,8 @@ public class Enemy : MonoBehaviour, IRewardProvider
         }
     }
     
-    public bool inBattleMode { get; private set; }
+    public bool InBattleMode { get; private set; }
+    public bool HasPatrolPoints { get; private set; }  = true;
     protected bool isMeleeAttackReady;
 
     [Header("Refrences")]
@@ -113,6 +115,12 @@ public class Enemy : MonoBehaviour, IRewardProvider
         anim = GetComponentInChildren<Animator>();
     }
 
+    private void OnEnable()
+    {
+        // TODO: Create interface on spawn
+        currentPatrolIndex = 0;
+    }
+
     protected virtual void Start()
     {
         stats.OnDeath += Die;
@@ -120,7 +128,6 @@ public class Enemy : MonoBehaviour, IRewardProvider
         GameEvents.OnGloablAttackSpeedChange += HandleGlobalAttackSpeedChange;
 
         player = PlayerManager.instance.PlayerOrigin.GetComponent<Transform>();
-        InitializePatrolPoints();
         currentBaseSpeed = agent.speed;
     }
 
@@ -137,7 +144,7 @@ public class Enemy : MonoBehaviour, IRewardProvider
 
     protected bool ShouldEnterBattleMode()
     {
-        if (IsPlayerInAgrresionRange() && !inBattleMode)
+        if (IsPlayerInAgrresionRange() && !InBattleMode)
         {
             EnterBattleMode();
             return true;
@@ -146,9 +153,9 @@ public class Enemy : MonoBehaviour, IRewardProvider
         return false;
     }
 
-    public virtual void EnterBattleMode() => inBattleMode = true;
+    public virtual void EnterBattleMode() => InBattleMode = true;
 
-    public virtual void ExitBattleMode() => inBattleMode = false;
+    public virtual void ExitBattleMode() => InBattleMode = false;
 
     public virtual void GetHit(AttackData attackData)
     {
@@ -274,24 +281,39 @@ public class Enemy : MonoBehaviour, IRewardProvider
     #region Patrol logic
     public Vector3 GetPatrolDestination()
     {
+        if (!HasPatrolPoints) return transform.position;
+        if (patrolPointsPosition == null || patrolPointsPosition.Length == 0) 
+            InitializePatrolPoints();
+
+        if (patrolPointsPosition == null || patrolPointsPosition.Length == 0) return transform.position;
         Vector3 destination = patrolPointsPosition[currentPatrolIndex];
 
         currentPatrolIndex++;
 
-        if (currentPatrolIndex >= patrolPoints.Length)
+        if (currentPatrolIndex >= patrolPoints.Count)
             currentPatrolIndex = 0;
 
         return destination;
     }
+
     private void InitializePatrolPoints()
     {
-        patrolPointsPosition = new Vector3[patrolPoints.Length];
+        patrolPoints.Clear();
+        Spawner spawner = transform.root.GetComponentInParent<Spawner>();
+        if (spawner != null)
+        {
+            patrolPoints = spawner.GetPatrolPoints(gameObject);
+        }
 
-        for (int i = 0; i < patrolPoints.Length; i++)
+        patrolPointsPosition = new Vector3[patrolPoints.Count];
+
+        for (int i = 0; i < patrolPoints.Count; i++)
         {
             patrolPointsPosition[i] = patrolPoints[i].position;
             patrolPoints[i].gameObject.SetActive(false);
         }
+
+        HasPatrolPoints = patrolPointsPosition != null && patrolPointsPosition.Length > 0;
     }
 
     #endregion

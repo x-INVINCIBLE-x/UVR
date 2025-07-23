@@ -16,7 +16,7 @@ public class PropPool : MonoBehaviour
 
     [SerializeField] private List<PropEntry> propEntries;
 
-    private Dictionary<int ,Dictionary<Prop, List<GameObject>>> pool = new();
+    private Dictionary<int ,Dictionary<Prop, List<GameObject>>> pool;
     private const int Window_Size = 3;
     private int highestDifficulty = 1;
 
@@ -37,7 +37,13 @@ public class PropPool : MonoBehaviour
         var possibleProps = 1;
         if (DungeonManager.Instance != null)
             possibleProps = DungeonManager.Instance.DifficultyLevel;
-        
+
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        pool = new();
 
         foreach (var entry in propEntries)
         {
@@ -61,6 +67,9 @@ public class PropPool : MonoBehaviour
 
         int difficultyLevel = currentDifficultyOnly ? currentDifficulty
             : Random.Range(Mathf.Max(currentDifficulty - Window_Size, 1), currentDifficulty);
+        
+        if (pool == null)
+            Initialize();
 
         if (pool[difficultyLevel].TryGetValue(prop, out var list) && list.Count > 0)
         {

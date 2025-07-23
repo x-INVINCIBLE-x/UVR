@@ -162,7 +162,7 @@ public class Enemy_Range : Enemy
 
     public override void EnterBattleMode()
     {
-        if (inBattleMode)
+        if (InBattleMode)
             return;
 
         base.EnterBattleMode();

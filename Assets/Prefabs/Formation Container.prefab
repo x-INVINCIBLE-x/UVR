@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7653185549274153574}
   - component: {fileID: 5737115565858695821}
+  - component: {fileID: 528733422225346097}
+  - component: {fileID: 1711372132454167400}
   m_Layer: 0
   m_Name: Grid Generator
   m_TagString: Untagged
@@ -46,44 +48,120 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drawGizmos: 1
   radiusPrefabs:
-  - radius: 200
+  - radius: 1000
     centerOffset: {x: 0, y: 0, z: 0}
     centerElement: {fileID: 4739613752448104849, guid: 1f71ccfd2585c294db9c50b635140529, type: 3}
-    centralElementRadius: 50
+    centralElementRadius: 100
     prefabs:
+    - prefab: {fileID: 6921580789432111162, guid: 7695718d06656de4586ae166db050374, type: 3}
+      weight: 1
+    - prefab: {fileID: 0}
+      weight: 0
+    - prefab: {fileID: 0}
+      weight: 0
+    - prefab: {fileID: 0}
+      weight: 0
+    - prefab: {fileID: 0}
+      weight: 0
+    - prefab: {fileID: 0}
+      weight: 0
+    - prefab: {fileID: 0}
+      weight: 0
+    - prefab: {fileID: 0}
+      weight: 0
+    - prefab: {fileID: 814940262096534163, guid: 5bff52f3a80ccdd4b9f77a746779fcf4, type: 3}
+      weight: 1
+    - prefab: {fileID: 5724318968660417543, guid: 7f1b345dc4d9ee7418f71e571baceda1, type: 3}
+      weight: 1
     - prefab: {fileID: 3366249703053718997, guid: 939b66fad84f7e8469b0073800bd0ee6, type: 3}
       weight: 1
-    - prefab: {fileID: 6921580789432111162, guid: 7695718d06656de4586ae166db050374, type: 3}
-      weight: 2
-    - prefab: {fileID: 3433538684502565419, guid: 820a4e9f0aed89247a31987bdbf30c5b, type: 3}
+    - prefab: {fileID: 4522929108762439770, guid: 1d951aa62f317334793b70080f9bab6e, type: 3}
       weight: 1
-    - prefab: {fileID: 5180985487718942631, guid: 8832817fc8095b7409893c33ac792172, type: 3}
-      weight: 2
-    - prefab: {fileID: 4008438186527085041, guid: 5cbbb8d4a04103e46a77ebf0c1079f6e, type: 3}
-      weight: 2
+    - prefab: {fileID: 4099164642820924921, guid: f3ad11a16be563445992ddbf48a7a5fb, type: 3}
+      weight: 1
     - prefab: {fileID: 9020908263005789703, guid: 0730f330eea140f4ea1ff561d045715b, type: 3}
       weight: 1
     - prefab: {fileID: 1015880761529596253, guid: 860a61ea5e171f641872fb54d601d93f, type: 3}
-      weight: 2
+      weight: 1
     - prefab: {fileID: 7286421891589626632, guid: d799baab4fe268b4abee9384f7ea7c60, type: 3}
-      weight: 2
-  - radius: 80
-    centerOffset: {x: 80, y: 0, z: 60}
+      weight: 1
+    - prefab: {fileID: 9176573989414481643, guid: 32e437cf8e246024ab76efef7c397998, type: 3}
+      weight: 1
+    - prefab: {fileID: 3145162145372824633, guid: 63e65da04c37a0b4abcea21ccc141276, type: 3}
+      weight: 1
+    - prefab: {fileID: 3132706665113342400, guid: 1df98318775c2854bab1f658f6ede4d1, type: 3}
+      weight: 1
+  - radius: 220
+    centerOffset: {x: 400, y: 0, z: 550}
     centerElement: {fileID: 0}
     centralElementRadius: 0
     prefabs:
+    - prefab: {fileID: 1015880761529596253, guid: 860a61ea5e171f641872fb54d601d93f, type: 3}
+      weight: 1
     - prefab: {fileID: 3132706665113342400, guid: 1df98318775c2854bab1f658f6ede4d1, type: 3}
       weight: 1
-    - prefab: {fileID: 4008438186527085041, guid: 5cbbb8d4a04103e46a77ebf0c1079f6e, type: 3}
+    - prefab: {fileID: 5877245236996260391, guid: 58e3ac2691cdf8c4dacda6ebb43d97e5, type: 3}
       weight: 1
-  - radius: 30
-    centerOffset: {x: 80, y: 0, z: 60}
+    - prefab: {fileID: 3713153278467275798, guid: 210a87d1166ba1148bccab3d0e7b4722, type: 3}
+      weight: 1
+  - radius: 100
+    centerOffset: {x: 400, y: 0, z: 550}
     centerElement: {fileID: 7034414583517266989, guid: ca2d5a2e61a7d8b4e8f530fae3df9477, type: 3}
-    centralElementRadius: 15
+    centralElementRadius: 100
+    prefabs:
+    - prefab: {fileID: 3312342478167346258, guid: 7f78d72f56321144ab3d7b35adfb4bf8, type: 3}
+      weight: 1
+    - prefab: {fileID: 6921580789432111162, guid: 7695718d06656de4586ae166db050374, type: 3}
+      weight: 1
+    - prefab: {fileID: 3366249703053718997, guid: 939b66fad84f7e8469b0073800bd0ee6, type: 3}
+      weight: 1
+  - radius: 100
+    centerOffset: {x: -600, y: 0, z: 0}
+    centerElement: {fileID: 7034414583517266989, guid: ca2d5a2e61a7d8b4e8f530fae3df9477, type: 3}
+    centralElementRadius: 100
     prefabs:
     - prefab: {fileID: 3366249703053718997, guid: 939b66fad84f7e8469b0073800bd0ee6, type: 3}
       weight: 1
-    - prefab: {fileID: 6921580789432111162, guid: 7695718d06656de4586ae166db050374, type: 3}
+    - prefab: {fileID: 5877245236996260391, guid: 58e3ac2691cdf8c4dacda6ebb43d97e5, type: 3}
+      weight: 1
+    - prefab: {fileID: 3145162145372824633, guid: 63e65da04c37a0b4abcea21ccc141276, type: 3}
+      weight: 1
+  - radius: 220
+    centerOffset: {x: -600, y: 0, z: 0}
+    centerElement: {fileID: 7034414583517266989, guid: ca2d5a2e61a7d8b4e8f530fae3df9477, type: 3}
+    centralElementRadius: 100
+    prefabs:
+    - prefab: {fileID: 3713153278467275798, guid: 210a87d1166ba1148bccab3d0e7b4722, type: 3}
+      weight: 1
+    - prefab: {fileID: 1015880761529596253, guid: 860a61ea5e171f641872fb54d601d93f, type: 3}
+      weight: 1
+    - prefab: {fileID: 9176573989414481643, guid: 32e437cf8e246024ab76efef7c397998, type: 3}
+      weight: 1
+  - radius: 220
+    centerOffset: {x: 450, y: 0, z: -550}
+    centerElement: {fileID: 7034414583517266989, guid: ca2d5a2e61a7d8b4e8f530fae3df9477, type: 3}
+    centralElementRadius: 100
+    prefabs:
+    - prefab: {fileID: 9176573989414481643, guid: 32e437cf8e246024ab76efef7c397998, type: 3}
+      weight: 1
+    - prefab: {fileID: 3713153278467275798, guid: 210a87d1166ba1148bccab3d0e7b4722, type: 3}
+      weight: 1
+    - prefab: {fileID: 5180985487718942631, guid: 8832817fc8095b7409893c33ac792172, type: 3}
+      weight: 1
+    - prefab: {fileID: 4008438186527085041, guid: 5cbbb8d4a04103e46a77ebf0c1079f6e, type: 3}
+      weight: 1
+  - radius: 100
+    centerOffset: {x: 450, y: 0, z: -550}
+    centerElement: {fileID: 7034414583517266989, guid: ca2d5a2e61a7d8b4e8f530fae3df9477, type: 3}
+    centralElementRadius: 100
+    prefabs:
+    - prefab: {fileID: 5877245236996260391, guid: 58e3ac2691cdf8c4dacda6ebb43d97e5, type: 3}
+      weight: 1
+    - prefab: {fileID: 4008438186527085041, guid: 5cbbb8d4a04103e46a77ebf0c1079f6e, type: 3}
+      weight: 1
+    - prefab: {fileID: 4522929108762439770, guid: 1d951aa62f317334793b70080f9bab6e, type: 3}
+      weight: 1
+    - prefab: {fileID: 9176573989414481643, guid: 32e437cf8e246024ab76efef7c397998, type: 3}
       weight: 1
   cornerPrefabs:
   - prefab: {fileID: 5068854031626633136, guid: 369de00258a0e48418db33d8fb099c48, type: 3}
@@ -99,11 +177,11 @@ MonoBehaviour:
   cuboidPrefabs:
   - prefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
     weight: 1
-  gridWidth: 20
-  gridDepth: 20
-  minSpacing: 5
-  maxSpacing: 5
-  density: 0.573
+  gridWidth: 70
+  gridDepth: 70
+  minSpacing: 15
+  maxSpacing: 15
+  density: 0.3
   maxJitterXZ: 0
   maxJitterY: 100
   innerRadius: 100
@@ -214,6 +292,9 @@ MonoBehaviour:
     - type: 0
       jitterX: 0
       jitterY: 0
+    - type: 1
+      jitterX: 0
+      jitterY: 0
   - difficultyLevel: 3
     config:
     - type: 2
@@ -222,7 +303,71 @@ MonoBehaviour:
     - type: 1
       jitterX: 0
       jitterY: 0
-  transitionDuration: 3
+  transitionDuration: 2
+--- !u!114 &528733422225346097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051083214338052952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
+--- !u!114 &1711372132454167400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051083214338052952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: -334000983
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.083333336
+  m_MinRegionArea: 10
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1 &1989842126734611794
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +398,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7653185549274153574}
+  - {fileID: 3809739018732419379}
   - {fileID: 9038558215129218732}
   - {fileID: 5937283248708782360}
   - {fileID: 982593799265618386}
@@ -260,6 +406,233 @@ Transform:
   - {fileID: 3992057100705294245}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2928328193571432953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3809739018732419379}
+  - component: {fileID: 6268240835334529299}
+  - component: {fileID: 531580367138396281}
+  m_Layer: 0
+  m_Name: Swingable Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3809739018732419379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2928328193571432953}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2788827863494473733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6268240835334529299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2928328193571432953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1638144539450f344b0139b9890a92d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawGizmos: 1
+  radiusPrefabs:
+  - radius: 1000
+    centerOffset: {x: 0, y: 0, z: 0}
+    centerElement: {fileID: 0}
+    centralElementRadius: 100
+    prefabs:
+    - prefab: {fileID: 8036748130436375255, guid: 9840b1929c30b88419d4b1f8fde5fef9, type: 3}
+      weight: 1
+  cornerPrefabs:
+  - prefab: {fileID: 5068854031626633136, guid: 369de00258a0e48418db33d8fb099c48, type: 3}
+    weight: 1
+  - prefab: {fileID: 7609915391036661921, guid: 85f223bbcdfa0534d83645d12b041f5b, type: 3}
+    weight: 1
+  - prefab: {fileID: 1785732444385638350, guid: ae0f3ca6387300a4a903e5a7c1eb8fe0, type: 3}
+    weight: 1
+  - prefab: {fileID: 5324778295045588374, guid: 1b5939f5eb6316d41b38725474fa190e, type: 3}
+    weight: 1
+  - prefab: {fileID: 1738201253236683952, guid: fa7a971d7de935648beda83af834f7d1, type: 3}
+    weight: 1
+  cuboidPrefabs:
+  - prefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
+    weight: 1
+  gridWidth: 70
+  gridDepth: 70
+  minSpacing: 15
+  maxSpacing: 15
+  density: 0.04
+  maxJitterXZ: 0
+  maxJitterY: 0
+  innerRadius: 100
+  outerRadius: 1750
+  maxDepth: 400
+  sineAmplitude: 250
+  sineFrequency: 1
+  customWaveSettings:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1.837885
+        outSlope: 1.837885
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.27464274
+        value: 0.50476176
+        inSlope: 1.9835911
+        outSlope: 1.9835911
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5083333
+        value: 1.0023584
+        inSlope: -0.2655121
+        outSlope: -0.2655121
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.697109
+        value: 0.50015455
+        inSlope: -2.155795
+        outSlope: -2.155795
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1.6512691
+        outSlope: -1.6512691
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    amplitude: 10
+    axis: 2
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.31980205
+        value: 0.620556
+        inSlope: -0.9842058
+        outSlope: -0.9842058
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.17303486
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    amplitude: 2
+    axis: 1
+  formations:
+  - difficultyLevel: 1
+    config:
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+  - difficultyLevel: 2
+    config:
+    - type: 0
+      jitterX: 0
+      jitterY: 0
+    - type: 1
+      jitterX: 0
+      jitterY: 0
+  - difficultyLevel: 3
+    config:
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+    - type: 1
+      jitterX: 0
+      jitterY: 0
+  transitionDuration: 2
+--- !u!114 &531580367138396281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2928328193571432953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1 &3184507041761567514
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,8 +658,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3184507041761567514}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1400, y: 600, z: 1400}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -305,38 +678,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
-  cubeCount: 750
+  cubeCount: 90
   shouldRotate: 0
   inverseRotation: 0
   rotationSpeed: 20
   jitterAmount: 10
   formationLerpTime: 2
   delayPerCube: 0.01
-  startRadius: 1000
-  startHeight: 1000
-  vortexRadius: 1000
-  vortexHeight: 0
+  startRadius: 450
+  startHeight: 0
+  vortexRadius: 450
+  vortexHeight: 200
   vortexSpeed: 100
   verticalOscillation: 500
-  tornadoInnerRadius: 1100
+  tornadoInnerRadius: 550
   tornadoWallOffset: 5
   tickCount: 8
-  tickLength: 200
+  tickLength: 2
   tickAngularWidth: 5
-  formationRadius: 1500
+  formationRadius: 300
   umbrellaSpanDegrees: 35.8
-  canopyRatio: 0.716
-  ribCount: 12
+  canopyRatio: 0.92
+  ribCount: 50
   ribStrength: 0.168
-  umbrellaRadius: 1500
-  handleLength: 900
+  umbrellaRadius: 650
+  handleLength: 350
   shaftRatio: 0.742
   headWidthStep: 10000
   gridWidthOverride: 12000
   gridHeightOverride: 10000
   formationSequence:
   - difficulty: 1
-    formationTypes: 00000000
+    formationTypes: 000000000300000004000000020000000500000005000000
   - difficulty: 2
     formationTypes: 02000000000000000300000001000000
   - difficulty: 3
@@ -366,8 +739,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3303866009924219234}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1400, y: 600, z: 1400}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -386,38 +759,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 1749108633849772715, guid: 58f97256eb1d70840874dc36766b148b, type: 3}
-  cubeCount: 500
+  cubeCount: 120
   shouldRotate: 1
   inverseRotation: 0
   rotationSpeed: 5
   jitterAmount: 200
   formationLerpTime: 2
   delayPerCube: 0.01
-  startRadius: 1000
-  startHeight: 1000
-  vortexRadius: 1000
+  startRadius: 700
+  startHeight: 0
+  vortexRadius: 750
   vortexHeight: 0
   vortexSpeed: 100
   verticalOscillation: 500
-  tornadoInnerRadius: 1100
+  tornadoInnerRadius: 750
   tornadoWallOffset: 5
   tickCount: 8
   tickLength: 2
   tickAngularWidth: 5
-  formationRadius: 1000
+  formationRadius: 350
   umbrellaSpanDegrees: 35.8
-  canopyRatio: 0.716
-  ribCount: 12
+  canopyRatio: 0.92
+  ribCount: 50
   ribStrength: 0.168
-  umbrellaRadius: 1500
-  handleLength: 900
+  umbrellaRadius: 750
+  handleLength: 400
   shaftRatio: 0.742
   headWidthStep: 10000
   gridWidthOverride: 12000
   gridHeightOverride: 10000
   formationSequence:
   - difficulty: 1
-    formationTypes: 00000000
+    formationTypes: 000000000200000004000000
   - difficulty: 2
     formationTypes: 05000000000000000100000004000000
   - difficulty: 3
@@ -552,8 +925,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5113952432440170073}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1400, y: 250, z: 1400}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -578,7 +951,7 @@ MonoBehaviour:
   rotationSpeed: 25
   jitterAmount: 150
   formationLerpTime: 2
-  delayPerCube: 0.01
+  delayPerCube: 0.001
   startRadius: 1000
   startHeight: 1000
   vortexRadius: 1000
@@ -657,11 +1030,11 @@ MonoBehaviour:
   gridChangeDuration: 5
   timedForamtions:
   - cubeFormationController: {fileID: 5748234482282748767}
-    duration: 60
+    duration: 10
   - cubeFormationController: {fileID: 3526463747834264901}
-    duration: 60
+    duration: 10
   - cubeFormationController: {fileID: 6885477660519354693}
-    duration: 60
+    duration: 10
   scalingFormations:
   - difficultyLevel: 1
     formations:
@@ -669,14 +1042,18 @@ MonoBehaviour:
       formationNumber: 1
       formationInfo:
       - layout: {fileID: 9038558215129218732}
-        position: {x: 1000, y: 1000, z: 0}
+        position: {x: 1400, y: 450, z: 1400}
         rotation: {x: 0, y: 0, z: 0}
-        duration: 0
+        duration: 1
+      - layout: {fileID: 6495539339580959240}
+        position: {x: 1400, y: 450, z: 1400}
+        rotation: {x: 0, y: 0, z: 0}
+        duration: 1
     - formationName: Umbrella + ring
       formationNumber: 2
       formationInfo:
-      - layout: {fileID: 6495539339580959240}
-        position: {x: 1000, y: 1000, z: 0}
+      - layout: {fileID: 9038558215129218732}
+        position: {x: 1400, y: 250, z: 1400}
         rotation: {x: 0, y: 0, z: 0}
         duration: 0
   - difficultyLevel: 2
@@ -684,6 +1061,10 @@ MonoBehaviour:
     - formationName: 
       formationNumber: 1
       formationInfo:
+      - layout: {fileID: 9038558215129218732}
+        position: {x: 1000, y: 1000, z: 0}
+        rotation: {x: 10, y: 10, z: 10}
+        duration: 0
       - layout: {fileID: 9038558215129218732}
         position: {x: 1000, y: 1000, z: 0}
         rotation: {x: 10, y: 10, z: 10}

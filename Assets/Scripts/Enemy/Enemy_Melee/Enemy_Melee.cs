@@ -78,7 +78,7 @@ public class Enemy_Melee : Enemy
         base.Start();
         stateMachine.Initialize(idleState);
         ResetCooldown();
-
+        
         InitializePerk();
         visuals.SetupLook();
         UpdateAttackData();
@@ -98,7 +98,7 @@ public class Enemy_Melee : Enemy
 
     public override void EnterBattleMode()
     {
-        if (inBattleMode)
+        if (InBattleMode)
             return;
 
         base.EnterBattleMode();

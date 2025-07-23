@@ -21,7 +21,6 @@ public class MoveState_Melee : EnemyState
 
         destination = enemy.GetPatrolDestination();
         enemy.agent.SetDestination(destination);
-
     }
 
     public override void Update()

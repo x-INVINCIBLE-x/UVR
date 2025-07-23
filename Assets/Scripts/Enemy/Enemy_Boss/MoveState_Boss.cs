@@ -42,7 +42,7 @@ public class MoveState_Boss : EnemyState
         actionTimer -= Time.deltaTime;
         enemy.FaceTarget(GetNextPathPoint());
 
-        if (enemy.inBattleMode)
+        if (enemy.InBattleMode)
         {
             if (ShouldSpeedUp())
                 SpeedUp();

@@ -140,7 +140,7 @@ public class GridFormationController : FormationProvider
     {
         yield return new WaitForEndOfFrame();
 
-        float startTime = Time.realtimeSinceStartup;
+        //float startTime = Time.realtimeSinceStartup;
 
         foreach (NavMeshSurface surface in navMeshSurfaces)
         {
@@ -148,7 +148,7 @@ public class GridFormationController : FormationProvider
             yield return new WaitForEndOfFrame();
         }
         
-        Debug.Log("NavMesh bake time: " + (Time.realtimeSinceStartup - startTime) + " seconds");
+        //Debug.Log("NavMesh bake time: " + (Time.realtimeSinceStartup - startTime) + " seconds");
         //navMeshSurface.BuildNavMesh();
     }
 

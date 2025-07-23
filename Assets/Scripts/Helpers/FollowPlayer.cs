@@ -5,7 +5,11 @@ public class FollowPlayer : MonoBehaviour
 {
     private Transform playerTransform;
 
+    [Header("Lazy Follow")]
     [SerializeField] private bool useLazyFollow = false;
+    [SerializeField] private bool rotateWithPlayer = false;
+
+    [Header("Settings")]
     [SerializeField] private bool followY = false;
     [SerializeField] private bool followPlayerOnce = false;
     public Vector3 offset;
@@ -22,7 +26,7 @@ public class FollowPlayer : MonoBehaviour
 
             lazyFollow.target = Camera.main.transform;
             lazyFollow.targetOffset = offset;
-            gameObject.SetActive(false);
+            lazyFollow.rotationFollowMode = LazyFollow.RotationFollowMode.Follow;
 
             return;
         }

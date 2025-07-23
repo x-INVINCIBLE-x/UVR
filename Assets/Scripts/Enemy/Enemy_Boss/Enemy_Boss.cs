@@ -102,7 +102,7 @@ public class Enemy_Boss : Enemy
 
     public override void EnterBattleMode()
     {
-        if (inBattleMode)
+        if (InBattleMode)
             return;
 
         base.EnterBattleMode();

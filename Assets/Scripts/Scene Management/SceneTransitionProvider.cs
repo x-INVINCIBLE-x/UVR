@@ -143,31 +143,30 @@ public class SceneTransitionProvider : MonoBehaviour
         AsyncOperation loadTarget = SceneManager.LoadSceneAsync(targetScene.SceneName, LoadSceneMode.Additive);
         loadTarget.allowSceneActivation = false;
 
-        // Wait until loading is *almost* done
+        // Wait until loading is *almost* done (Unity stalls at 0.9f)
         yield return new WaitUntil(() => loadTarget.progress >= 0.9f);
 
-        // Optional delay (e.g., play animation)
+        // Optional delay (e.g., play animation in transition scene)
         yield return new WaitForSeconds(stayDuraion);
 
-        // Optional: fade, animation, input, etc.
+        // Fade out BEFORE activating the target scene
         if (fader != null)
             yield return fader.FadeOut(1f);
 
-        // Allow activation now
+        // Now allow activation
         loadTarget.allowSceneActivation = true;
 
-        // Wait until scene fully activates
+        // Wait for scene activation to complete
         yield return new WaitUntil(() => loadTarget.isDone);
 
-        // --- Fade out to load target scene ---
-        if (fader != null)
-            yield return fader.FadeOut(1f);
+        // (No fade-out again here — you already faded before activation)
 
+        // Move Core to the new scene
         Scene targetLoadedScene = SceneManager.GetSceneByName(targetScene.SceneName);
         SceneManager.MoveGameObjectToScene(Core, targetLoadedScene);
         SceneManager.SetActiveScene(targetLoadedScene);
 
-        // --- Set Core spawn in target scene ---
+        // Set player spawn
         LevelManager targetLevelManager = null;
         foreach (GameObject root in targetLoadedScene.GetRootGameObjects())
         {
@@ -185,9 +184,10 @@ public class SceneTransitionProvider : MonoBehaviour
             Debug.LogWarning("LevelManager or spawnPoint not found in target scene.");
         }
 
-        // --- Final fade-in ---
+        // Final fade-in AFTER scene activation
         if (fader != null)
             yield return fader.FadeIn(1f);
+
 
         // --- Unload other scenes ---
         SceneManager.UnloadSceneAsync(currentTransitionScene.SceneName);
