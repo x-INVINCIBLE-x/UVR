@@ -718,13 +718,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7f7ea6bcdf143418b3a878536b549f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireRate: 3
+  maxHeatLimit: 100
+  coolDownRate: 5
+  overheatResistance: 6
+  currentHeat: 0
+  isOverheated: 0
   velocityEstimator: {fileID: 42399286086907574}
   AbilityEnable: 1
+  minPitch: 1
+  maxPitch: 2
+  WeaponVFX: {fileID: 0}
   WeaponSFX: {fileID: 8300000, guid: a67651248ffb6f34ba00012715572b8c, type: 3}
   SlashVFX: {fileID: 1400255665468144947, guid: 6c21e7a6e514dd9499418cbbb66211cf, type: 3}
   velovityThreshold: 18
   slashSpawn: {fileID: 7898879233869461551}
   force: 10
+  movetoOffset: {x: 0, y: 0, z: 0}
+  moveDuration: 0
+  rotationSpeed: 0
+  sliceAttackType: 0
 --- !u!82 &3250015579806562967
 AudioSource:
   m_ObjectHideFlags: 0

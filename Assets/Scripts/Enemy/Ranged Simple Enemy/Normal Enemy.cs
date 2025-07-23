@@ -50,12 +50,8 @@ public class NormalEnemy : SimpleEnemyBase
     private void TryAttack()
     {
         agent.SetDestination(transform.position);
-        if (ShouldLookAtPlayer)
-        {
-            transform.LookAt(Player.position + PlayerBodyOffset);
-        }
+        transform.LookAt(Player.position + PlayerBodyOffset);
         
-
         if (!isChargingAttack && !hasAttacked)
         {
             isChargingAttack = true;
