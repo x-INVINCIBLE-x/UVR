@@ -185,8 +185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolSize: 10
-  weaponPickup: {fileID: 0}
-  ammoPickup: {fileID: 0}
 --- !u!4 &57246628
 Transform:
   m_ObjectHideFlags: 0
@@ -880,7 +878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &296191670
 Transform:
   m_ObjectHideFlags: 0
@@ -1686,6 +1684,8 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0, z: 0}
+  lifeTime: 3
+  attackData: {fileID: 0}
   selfDestructTime: 0.5
 --- !u!95 &754690804
 Animator:
@@ -2358,7 +2358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &989840593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2390,12 +2390,12 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0.6, z: 0}
+  lifeTime: 3
+  attackData: {fileID: 11400000, guid: ad2e2ce431c2659468e5e979029899bc, type: 2}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
   shootForce: 20
   projectileSpawn: {fileID: 1938889000}
   ShouldLookAtPlayer: 0
-  lifeTime: 3
-  attackData: {fileID: 11400000, guid: ad2e2ce431c2659468e5e979029899bc, type: 2}
 --- !u!114 &989840595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2879,7 +2879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1047897976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2930,6 +2930,8 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0.65, z: 0}
+  lifeTime: 3
+  attackData: {fileID: 0}
   volleyProjectile: {fileID: 5916890302093399832, guid: de5b1b6a91a278f468d797063a5c3249, type: 3}
   projectileSpawnPosition: {fileID: 1249541793}
 --- !u!195 &1047897978
@@ -3428,6 +3430,8 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0.5, z: 0}
+  lifeTime: 3
+  attackData: {fileID: 0}
   LaserVFX: {fileID: 8476203572993528117, guid: b17767be6c49bff438d30e7290943d94, type: 3}
   projectileSpawnPosition: {fileID: 1848429663}
   LaserStartOffset: {x: 0, y: 0, z: 0}
@@ -3858,6 +3862,8 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0, z: 0}
+  lifeTime: 3
+  attackData: {fileID: 0}
   volleyProjectile: {fileID: 8378503196372639160, guid: 6b37c4747ef9db9479daad9e3b04577a, type: 3}
   projectileSpawnPosition: {fileID: 360953207}
 --- !u!95 &1137888475
@@ -4338,6 +4344,24 @@ MonoBehaviour:
   currentHealth: 0
   currentStamina: 0
   <isInvincible>k__BackingField: 0
+--- !u!114 &1164765755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164765746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  DissolveMaterial: {fileID: 2100000, guid: ced7755f8a79eb84c8d6e2459a30e572, type: 2}
+  Dissolve: 0
+  defaultMaterials: []
+  dissolveRate: 0.0125
+  RefreshRate: 0.025
 --- !u!1 &1202564111
 GameObject:
   m_ObjectHideFlags: 0
@@ -7839,6 +7863,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jack O Gool
       objectReference: {fileID: 0}
+    - target: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2183390681962238781, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.7313973
@@ -7866,9 +7894,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1164765754}
-    - targetCorrespondingSourceObject: {fileID: 6878501904541522759, guid: 39b9448778082804eada18c86642fb64, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7239585133187377816}
+      addedObject: {fileID: 1164765755}
   m_SourcePrefab: {fileID: 100100000, guid: 39b9448778082804eada18c86642fb64, type: 3}
 --- !u!4 &559778888359040810
 Transform:
@@ -8247,11 +8275,6 @@ Transform:
   - {fileID: 3101834800805991738}
   m_Father: {fileID: 1242141726854378921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1740442723622790944 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6878501904541522759, guid: 39b9448778082804eada18c86642fb64, type: 3}
-  m_PrefabInstance: {fileID: 414683600495627887}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1767163490163631252
 Transform:
   m_ObjectHideFlags: 0
@@ -8315,11 +8338,6 @@ Transform:
   - {fileID: 7204863737782545627}
   m_Father: {fileID: 1740109272979448510}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &2073224164006624961 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5461746624555319265, guid: 39b9448778082804eada18c86642fb64, type: 3}
-  m_PrefabInstance: {fileID: 414683600495627887}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &2328603150035880698
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8947,25 +8965,6 @@ Transform:
   - {fileID: 1767163490163631252}
   m_Father: {fileID: 2063112695087070031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7239585133187377816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740442723622790944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mesh: {fileID: 2073224164006624961}
-  DissolveMaterial: {fileID: 2100000, guid: ced7755f8a79eb84c8d6e2459a30e572, type: 2}
-  Dissolve: 0
-  defaultMaterials: []
-  meshMaterials: []
-  dissolveRate: 0.0125
-  RefreshRate: 0.025
 --- !u!1 &7341353466616073928
 GameObject:
   m_ObjectHideFlags: 0

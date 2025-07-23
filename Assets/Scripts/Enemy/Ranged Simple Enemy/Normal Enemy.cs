@@ -8,10 +8,6 @@ public class NormalEnemy : SimpleEnemyBase
     public Transform projectileSpawn;
     public bool ShouldLookAtPlayer;
   
-
-    public float lifeTime = 3f;
-    public AttackData attackData;
-
     protected override void Start()
     {
         base.Start();   

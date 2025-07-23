@@ -4,15 +4,13 @@ using UnityEngine;
 public class MeshDissolver : MonoBehaviour
 {
     [Header("References")]
-    public MeshRenderer mesh;
+    public MeshRenderer [] Meshes;
     public Material DissolveMaterial;
     public bool Dissolve;
     private bool isDissolving;
 
     [SerializeField] private Material[] defaultMaterials;
-    [SerializeField] private Material[] meshMaterials;
-
-
+   
     [SerializeField] private float dissolveRate = 0.0125f;
     [SerializeField] private float RefreshRate = 0.025f;
 
@@ -25,21 +23,14 @@ public class MeshDissolver : MonoBehaviour
             Debug.Log("Dissolve Material not Assigned");
         }
 
-        if (mesh != null)
-        {
-            defaultMaterials = mesh.sharedMaterials;
-            meshMaterials = new Material [defaultMaterials.Length];
-
-
-            for (int i = 0; i < defaultMaterials.Length; i++)
-            {
-                meshMaterials[i] = new Material(DissolveMaterial);
-            }
-        }
-
+        Meshes = GetComponentsInChildren<MeshRenderer>();
+        defaultMaterials = new Material[Meshes.Length];
         
 
-
+        for (int i = 0; i < Meshes.Length; i++)
+        {
+            defaultMaterials[i] = Meshes[i].material;
+        }
     }
 
     private void Update()
@@ -55,40 +46,17 @@ public class MeshDissolver : MonoBehaviour
             ResetDissolver();
         }
     }
-
-    private void StartDissolver()
+    
+    public void ResetDissolver()
     {
-        if (!isDissolving)
+        StopAllCoroutines();
+        isDissolving = false;
+
+        // Restore original material to  Meshrenderers
+        for (int i = 0; i < Meshes.Length; i++)
         {
-            isDissolving = true;
-            mesh.materials = meshMaterials;
-            StartCoroutine(DissolveMesh());
+            Meshes[i].material = defaultMaterials[i];
         }
-
-
-    }
-
-    private IEnumerator DissolveMesh()
-    {
-        if (meshMaterials.Length > 0)
-        {
-            float currentDissolve = 0;
-
-            while (currentDissolve < 1f)
-            {
-                currentDissolve += dissolveRate;
-                currentDissolve = Mathf.Clamp01(currentDissolve);
-
-                for (int i = 0; i < meshMaterials.Length; i++)
-                {
-                    meshMaterials[i].SetFloat(DissolveAmountID, currentDissolve);
-                }
-
-                yield return new WaitForSeconds(RefreshRate);
-            }
-
-        }
-
 
     }
 
@@ -101,38 +69,46 @@ public class MeshDissolver : MonoBehaviour
             StartDissolver();
         }
     }
-    public void ResetDissolver()
+    private void StartDissolver()
     {
-        StopAllCoroutines();
-        isDissolving = false;
-
-        // Reset dissolve amount on all instances
-        foreach (var material in meshMaterials)
-        {
-            material.SetFloat(DissolveAmountID, 0f);
+        if (!isDissolving)
+        {   
+            isDissolving = true;
+            foreach (MeshRenderer renderer in Meshes)
+            {
+                renderer.material = DissolveMaterial;
+            }
+            StartCoroutine(DissolveMesh());
         }
 
-        // Restore original materials
-        mesh.materials = defaultMaterials;
+
     }
 
+    private IEnumerator DissolveMesh()
+    {
+        if (Meshes.Length > 0)
+        {
+            float currentDissolve = 0;
+
+            while (currentDissolve < 1f)
+            {
+                currentDissolve += dissolveRate;
+                currentDissolve = Mathf.Clamp01(currentDissolve);
+
+                for (int i = 0; i < Meshes.Length; i++)
+                {
+                    Meshes[i].material.SetFloat(DissolveAmountID, currentDissolve);
+                }
+
+                yield return new WaitForSeconds(RefreshRate);
+            }
+
+        }
+
+
+    }
     private void OnDisable()
     {
         ResetDissolver();
-    }
-
-    private void OnDestroy()
-    {
-
-        if (meshMaterials != null)
-        {
-            foreach (var material in meshMaterials)
-            {
-                if (material != null)
-                {
-                    Destroy(material);
-                }
-            }
-        }
     }
 }

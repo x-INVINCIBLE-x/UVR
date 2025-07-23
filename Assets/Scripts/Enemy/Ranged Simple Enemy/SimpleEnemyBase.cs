@@ -4,6 +4,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class SimpleEnemyBase : MonoBehaviour
 { // Base class for all simple enemy types
     [SerializeField] protected NavMeshAgent agent;
@@ -25,6 +26,9 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected bool walkPointSet;// bool to check that the walkpoint vector is set or not
 
     [SerializeField] protected Vector3 PlayerBodyOffset;
+
+    [SerializeField] protected float lifeTime = 3f;
+    [SerializeField] protected AttackData attackData;
     protected virtual void Start()
     {
         Player = PlayerManager.instance.PlayerOrigin.transform;
