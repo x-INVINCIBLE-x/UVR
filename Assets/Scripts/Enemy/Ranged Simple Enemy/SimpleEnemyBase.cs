@@ -29,12 +29,28 @@ public class SimpleEnemyBase : MonoBehaviour
 
     [SerializeField] protected float lifeTime = 3f;
     [SerializeField] protected AttackData attackData;
+    [SerializeField] protected EnemyStats enemyStats;
+    [SerializeField] protected MeshDissolver dissolver;
+    
     protected virtual void Start()
     {
         Player = PlayerManager.instance.PlayerOrigin.transform;
         animator = GetComponent<Animator>();
+        dissolver = GetComponent<MeshDissolver>();
+        enemyStats = GetComponent<EnemyStats>();
+        enemyStats.OnDeath += HandleDeath;
     }
 
+    private void HandleDeath()
+    {
+        dissolver.ActivateDissolver(true);
+    }
+
+    private void OnDisable()
+    {
+        dissolver.ActivateDissolver(false);
+        enemyStats.OnDeath -= HandleDeath;
+    }
     protected virtual void Update()
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, LayerMask.GetMask("Player"));
@@ -98,4 +114,7 @@ public class SimpleEnemyBase : MonoBehaviour
 
 
     }
+
+    
+    
 }

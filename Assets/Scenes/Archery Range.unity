@@ -878,7 +878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &296191670
 Transform:
   m_ObjectHideFlags: 0
@@ -1686,6 +1686,8 @@ MonoBehaviour:
   PlayerBodyOffset: {x: 0, y: 0, z: 0}
   lifeTime: 3
   attackData: {fileID: 0}
+  enemyStats: {fileID: 0}
+  dissolver: {fileID: 0}
   selfDestructTime: 0.5
 --- !u!95 &754690804
 Animator:
@@ -2352,13 +2354,14 @@ GameObject:
   - component: {fileID: 989840600}
   - component: {fileID: 989840602}
   - component: {fileID: 989840601}
+  - component: {fileID: 989840603}
   m_Layer: 0
   m_Name: Jack O Ghoul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &989840593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2366,7 +2369,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989840592}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bc42a5252d164c4ab2882a6026dce93, type: 3}
   m_Name: 
@@ -2392,6 +2395,8 @@ MonoBehaviour:
   PlayerBodyOffset: {x: 0, y: 0.6, z: 0}
   lifeTime: 3
   attackData: {fileID: 11400000, guid: ad2e2ce431c2659468e5e979029899bc, type: 2}
+  enemyStats: {fileID: 0}
+  dissolver: {fileID: 0}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
   shootForce: 20
   projectileSpawn: {fileID: 1938889000}
@@ -2403,7 +2408,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989840592}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39f26202abce79840a0fc1a5f2b2ea99, type: 3}
   m_Name: 
@@ -2422,7 +2427,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989840592}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: -334000983
   m_Radius: 0.98
   m_Speed: 2
@@ -2510,7 +2515,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989840592}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e268f02b12da422498f77b07c61ab5c5, type: 3}
   m_Name: 
@@ -2732,6 +2737,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &989840603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989840592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  DissolveMaterial: {fileID: 2100000, guid: 91c5b17cef9e54b49a72cb58ac5957cb, type: 2}
+  Dissolve: 0
+  defaultMaterials: []
+  dissolveRate: 0.0125
+  RefreshRate: 0.025
+  impactDissolveRate: 0.0125
+  impactDissolveThreshold: 0.5
+  currentDissolve: 0
 --- !u!1 &995895416
 GameObject:
   m_ObjectHideFlags: 0
@@ -2879,7 +2905,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1047897976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2920,7 +2946,7 @@ MonoBehaviour:
   attackCooldownTime: 5
   magicChargeTime: 3
   walkpointRange: 4
-  patrollwaitTime: 5
+  patrollwaitTime: 1
   walkPoint: {x: 0, y: 0, z: 0}
   searchingWalkPoint: 0
   playerInSightRange: 0
@@ -2932,6 +2958,8 @@ MonoBehaviour:
   PlayerBodyOffset: {x: 0, y: 0.65, z: 0}
   lifeTime: 3
   attackData: {fileID: 0}
+  enemyStats: {fileID: 0}
+  dissolver: {fileID: 0}
   volleyProjectile: {fileID: 5916890302093399832, guid: de5b1b6a91a278f468d797063a5c3249, type: 3}
   projectileSpawnPosition: {fileID: 1249541793}
 --- !u!195 &1047897978
@@ -3432,6 +3460,8 @@ MonoBehaviour:
   PlayerBodyOffset: {x: 0, y: 0.5, z: 0}
   lifeTime: 3
   attackData: {fileID: 0}
+  enemyStats: {fileID: 0}
+  dissolver: {fileID: 0}
   LaserVFX: {fileID: 8476203572993528117, guid: b17767be6c49bff438d30e7290943d94, type: 3}
   projectileSpawnPosition: {fileID: 1848429663}
   LaserStartOffset: {x: 0, y: 0, z: 0}
@@ -3864,6 +3894,8 @@ MonoBehaviour:
   PlayerBodyOffset: {x: 0, y: 0, z: 0}
   lifeTime: 3
   attackData: {fileID: 0}
+  enemyStats: {fileID: 0}
+  dissolver: {fileID: 0}
   volleyProjectile: {fileID: 8378503196372639160, guid: 6b37c4747ef9db9479daad9e3b04577a, type: 3}
   projectileSpawnPosition: {fileID: 360953207}
 --- !u!95 &1137888475
@@ -4362,6 +4394,9 @@ MonoBehaviour:
   defaultMaterials: []
   dissolveRate: 0.0125
   RefreshRate: 0.025
+  impactDissolveRate: 0.1
+  impactDissolveThreshold: 0.3
+  currentDissolve: 0
 --- !u!1 &1202564111
 GameObject:
   m_ObjectHideFlags: 0
@@ -7852,6 +7887,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: attackData
       value: 
       objectReference: {fileID: 11400000, guid: f76e0a884a55c3d4db36a73781dc8632, type: 2}
@@ -7886,6 +7925,14 @@ PrefabInstance:
     - target: {fileID: 2183390681962238781, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -85.993
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025851156519144306, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7477886356816740692, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
