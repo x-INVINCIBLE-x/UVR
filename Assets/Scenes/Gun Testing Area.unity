@@ -5302,8 +5302,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolSize: 10
-  weaponPickup: {fileID: 0}
-  ammoPickup: {fileID: 0}
 --- !u!4 &1256597549
 Transform:
   m_ObjectHideFlags: 0
@@ -12606,6 +12604,9 @@ MonoBehaviour:
   skinnedMaterials: []
   dissolveRate: 0.0125
   RefreshRate: 0.025
+  impactDissolveRate: 0.1
+  impactDissolveThreshold: 0.5
+  currentDissolve: 0
 --- !u!4 &5748197186269666588
 Transform:
   m_ObjectHideFlags: 0

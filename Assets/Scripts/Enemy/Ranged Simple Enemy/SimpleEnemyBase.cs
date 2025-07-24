@@ -1,6 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+
+
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Animator))]
@@ -31,7 +33,8 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected AttackData attackData;
     [SerializeField] protected EnemyStats enemyStats;
     [SerializeField] protected MeshDissolver dissolver;
-    
+
+
     protected virtual void Start()
     {
         Player = PlayerManager.instance.PlayerOrigin.transform;
@@ -43,12 +46,12 @@ public class SimpleEnemyBase : MonoBehaviour
 
     private void HandleDeath()
     {
-        dissolver.ActivateDissolver(true);
+        
     }
 
     private void OnDisable()
     {
-        dissolver.ActivateDissolver(false);
+       
         enemyStats.OnDeath -= HandleDeath;
     }
     protected virtual void Update()
@@ -71,7 +74,8 @@ public class SimpleEnemyBase : MonoBehaviour
             agent.SetDestination(walkPoint);
 
             Vector3 distanceToWalkPoint = transform.position - walkPoint;
-            if (distanceToWalkPoint.magnitude < 1f)
+            distanceToWalkPoint.y = 0;
+            if (distanceToWalkPoint.sqrMagnitude < 1f)
             {
                 walkPointSet = false;
             }
@@ -86,7 +90,7 @@ public class SimpleEnemyBase : MonoBehaviour
         walkPoint = new Vector3(transform.position.x + randomx, transform.position.y, transform.position.z + randomz);
 
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(walkPoint, out hit, 3f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(walkPoint, out hit, 5f, NavMesh.AllAreas))
         {
             walkPoint = hit.position;
             walkPointSet = true;
@@ -111,10 +115,6 @@ public class SimpleEnemyBase : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-
-
     }
 
-    
-    
 }

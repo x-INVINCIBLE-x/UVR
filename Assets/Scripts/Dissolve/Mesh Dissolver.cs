@@ -72,7 +72,7 @@ public class MeshDissolver : MonoBehaviour
     }
     
 
-    public void ActivateDissolver(bool dissolveStatus)
+/*    public void ActivateDissolver(bool dissolveStatus)
     {
         Dissolve = dissolveStatus;
 
@@ -84,7 +84,7 @@ public class MeshDissolver : MonoBehaviour
         {
             ImpactPartialRedissolve();
         }
-    }
+    }*/
     private void StartDissolver()
     {
         if (!isDissolving)
@@ -167,9 +167,7 @@ public class MeshDissolver : MonoBehaviour
 
             // reset isDissolving for next calls
             isDissolving = false;
-        }
-
-        
+        }    
     }
 
     // Redissolves the Mesh renderers to 0 dissolve rate
@@ -201,6 +199,7 @@ public class MeshDissolver : MonoBehaviour
     private void OnDisable()
     {
         ResetDissolver();
+        StopAllCoroutines();
     }
 
 }

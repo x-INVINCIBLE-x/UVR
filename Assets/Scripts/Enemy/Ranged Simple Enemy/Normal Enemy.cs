@@ -6,7 +6,7 @@ public class NormalEnemy : SimpleEnemyBase
     public GameObject bullet;
     public float shootForce;
     public Transform projectileSpawn;
-    public bool ShouldLookAtPlayer;
+    
   
     protected override void Start()
     {

@@ -1,6 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class LaserEnemy : SimpleEnemyBase
 {
@@ -11,15 +11,7 @@ public class LaserEnemy : SimpleEnemyBase
     private LineRenderer laserRenderer;
     private GameObject currentLaser;
     private Coroutine laserRoutine;
-
-
-
-
-    protected override void Start()
-    {
-        base.Start();
-        
-    }
+    private bool isCharging = false;
 
     protected override void Update()
     {
@@ -27,14 +19,7 @@ public class LaserEnemy : SimpleEnemyBase
 
         if (!playerInSightRange && !playerInAttackRange)
         {
-            try
-            {
-                agent.SetDestination(transform.position);
-            }
-            catch
-            {
-                Debug.Log(gameObject.name + "has destination errors");
-            }
+            agent.SetDestination(transform.position);
             if (laserRoutine != null) StopCoroutine(laserRoutine);
             DestroyLaser();
             Patrol();
@@ -49,24 +34,42 @@ public class LaserEnemy : SimpleEnemyBase
         {
             agent.SetDestination(transform.position);
             transform.LookAt(Player.position + PlayerBodyOffset);
-            PerformLaserAttack();
+
+            // Only start charging if not already attacking
+            if (currentLaser == null && !isCharging)
+            {
+                StartCoroutine(ChargeAndFireLaser());
+            }
         }
 
         UpdateLaser();
     }
 
-    private void PerformLaserAttack()
+    private IEnumerator ChargeAndFireLaser()
     {
-        if (currentLaser != null) return;
+        isCharging = true;
 
-        VFXManager.ActivateMagicCircle();
+        // Spawning the magic circle VFX
+        if (!vfxSpawned)
+        {
+            VFXManager.SpawnMagicCircleVFX(magicChargeTime);
+            vfxSpawned = true;
+        }
+
+        yield return new WaitForSeconds(magicChargeTime);
+
+        // Spawn laser after charging
         currentLaser = Instantiate(LaserVFX, projectileSpawnPosition);
         laserRenderer = currentLaser.GetComponent<LineRenderer>();
-        laserRenderer.SetPosition(0, transform.position);
-        laserRenderer.SetPosition(1, Player.position);
+        laserRenderer.SetPosition(0, projectileSpawnPosition.position);
+        laserRenderer.SetPosition(1, Player.position + PlayerBodyOffset);
 
+        // Laser Coroutine for tracking the laser to player
         if (laserRoutine != null) StopCoroutine(laserRoutine);
         laserRoutine = StartCoroutine(UpdateLaserPosition());
+
+        isCharging = false;
+        vfxSpawned = false;
     }
 
     private void DestroyLaser()
@@ -75,8 +78,10 @@ public class LaserEnemy : SimpleEnemyBase
         {
             Destroy(currentLaser);
             currentLaser = null;
-            VFXManager.DestroyMagicCircle();
+            VFXManager.DestroyMagicCircleVFX();
         }
+        isCharging = false;
+        vfxSpawned = false;
     }
 
     private void UpdateLaser()
@@ -88,11 +93,11 @@ public class LaserEnemy : SimpleEnemyBase
         }
     }
 
-    private System.Collections.IEnumerator UpdateLaserPosition()
+    private IEnumerator UpdateLaserPosition()
     {
-        Vector3 startOffset = (Player.position) + LaserStartOffset;
-        float duration = 2f;
-        float time = 0f;
+        Vector3 startOffset = Player.position + LaserStartOffset;
+        float duration = 2f; // can be used to increase the duration for laser to lerp and reach the player
+        float time = 0f; //  timer intialization
 
         while (time < duration)
         {
@@ -103,23 +108,5 @@ public class LaserEnemy : SimpleEnemyBase
         }
     }
 
-    protected override void Patrol()
-    {
-        base.Patrol();
-    }
-
-    protected override void SearchWalkPoint()
-    {
-        base.SearchWalkPoint();
-    }
-
-    protected override void Chase()
-    {
-        base.Chase();
-    }
-
-    protected override void OnDrawGizmosSelected()
-    {
-        base.OnDrawGizmosSelected();
-    }
+   
 }

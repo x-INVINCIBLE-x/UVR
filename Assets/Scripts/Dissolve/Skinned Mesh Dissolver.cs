@@ -7,7 +7,7 @@ public class SkinnedMeshDissolver : MonoBehaviour
     [Header("References")]
     public SkinnedMeshRenderer skinnedMesh;
     public Material DissolveMaterial;
-    public bool Dissolve;
+    public bool Dissolve; // remove this only for testing
     private bool isDissolving;
 
     [SerializeField] private Material[] defaultMaterials;
@@ -16,6 +16,10 @@ public class SkinnedMeshDissolver : MonoBehaviour
    
     [SerializeField] private float dissolveRate = 0.0125f;
     [SerializeField] private float RefreshRate = 0.025f;
+
+    [SerializeField] private float impactDissolveRate = 0.0125f;
+    [SerializeField] private float impactDissolveThreshold = 0.5f;
+    [SerializeField] private float currentDissolve;
 
     private static readonly int DissolveAmountID = Shader.PropertyToID("_Dissolve_Amount");
     private void Awake()
@@ -40,21 +44,38 @@ public class SkinnedMeshDissolver : MonoBehaviour
     }
 
     private void Update()
-    {   
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ResetDissolver();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            ImpactSkinnedPartialDissolve();
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            ImpactSkinnedPartialRedissolve();
+        }
+
+
+
 
         // to remove this update statements(important)
         if (Dissolve)
         {
-            StartDissolver();
+            //StartDissolver();
         }
         else
         {
-            ResetDissolver();
+            //ResetDissolver();
         }
     }
 
     // Public for external use
-    public void ActivateSkinnedDissolver(bool dissolveStatus)
+    public void ActivateSkinnedDissolver(bool dissolveStatus) // remove this only for testing
     {
         Dissolve = dissolveStatus;
 
@@ -76,15 +97,41 @@ public class SkinnedMeshDissolver : MonoBehaviour
         
     }
 
-    private IEnumerator DissolveSkinnedMesh()
+    public void ImpactSkinnedPartialDissolve()
+    {
+        if (!isDissolving)
+        {
+            isDissolving = true;
+            skinnedMesh.materials = skinnedMaterials;
+            StartCoroutine(DissolveSkinnedMesh(impactDissolveThreshold, false));
+        }
+
+    }
+
+    public void ImpactSkinnedPartialRedissolve()
+    {
+        if (!isDissolving)
+        {
+            isDissolving = true;
+            skinnedMesh.materials = skinnedMaterials;
+            StartCoroutine(RedissolveSkinnedMesh());
+        }
+
+    }
+
+    // Important disclaimer if the parameter dissolve is true ,then normal disolve
+    // if dissolve is false then we do a specified threshold dissolve
+    private IEnumerator DissolveSkinnedMesh(float dissolveThreshold = 1f, bool dissolve = true)
     {   
         if(skinnedMaterials.Length > 0)
         {
-            float currentDissolve = 0;
-            
-            while (currentDissolve < 1f)
+            currentDissolve = 0;
+
+            float currentDissolveRate = dissolve ? dissolveRate : impactDissolveRate;
+
+            while (currentDissolve < dissolveThreshold)
             {
-                currentDissolve += dissolveRate;
+                currentDissolve += currentDissolveRate;
                 currentDissolve = Mathf.Clamp01(currentDissolve);
 
                 for (int i = 0 ; i < skinnedMaterials.Length; i++)
@@ -95,20 +142,20 @@ public class SkinnedMeshDissolver : MonoBehaviour
                 yield return new WaitForSeconds(RefreshRate);
             }
 
+            // Reset isDissolving for next calls
+            isDissolving = false;
         }
-
-        
     }
 
-    private IEnumerator RedissolveSkinnedMesh()
+    // Redissolves the skinned mesh renderers to 0 dissolve rate
+    private IEnumerator RedissolveSkinnedMesh(float dissolveThreshold = 0.0f)
     {
         if (skinnedMaterials.Length > 0)
         {
-            float currentDissolve = 1;
-
-            while (currentDissolve > 0f)
+           
+            while (currentDissolve > dissolveThreshold)
             {
-                currentDissolve -= dissolveRate;
+                currentDissolve -= impactDissolveRate;
                 currentDissolve = Mathf.Clamp01(currentDissolve);
 
                 for (int i = 0; i < skinnedMaterials.Length; i++)
@@ -119,8 +166,12 @@ public class SkinnedMeshDissolver : MonoBehaviour
                 yield return new WaitForSeconds(RefreshRate);
             }
 
+            // Reset isDissolving for next calls
+            isDissolving = false;
         }
     }
+
+    
 
     public void ResetDissolver()
     {
@@ -140,6 +191,7 @@ public class SkinnedMeshDissolver : MonoBehaviour
     private void OnDisable()
     {
         ResetDissolver();
+        StopAllCoroutines();
     }
 
     private void OnDestroy()
