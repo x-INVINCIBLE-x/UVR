@@ -59,6 +59,9 @@ public class LaserEnemy : SimpleEnemyBase
         yield return new WaitForSeconds(magicChargeTime);
 
         // Spawn laser after charging
+        if (currentLaser != null)
+            Destroy(currentLaser);
+
         currentLaser = Instantiate(LaserVFX, projectileSpawnPosition);
         laserRenderer = currentLaser.GetComponent<LineRenderer>();
         laserRenderer.SetPosition(0, projectileSpawnPosition.position);
