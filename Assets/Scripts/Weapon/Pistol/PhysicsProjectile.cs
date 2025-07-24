@@ -18,12 +18,13 @@ public class PhysicsProjectile : Projectile
     private ParticleSystem VFXparticleSystem;
 
     private HashSet<IDamagable> damaged = new();
+    private Collider col;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        
+        col = GetComponent<Collider>();
     }
 
     private void OnEnable()
@@ -41,6 +42,7 @@ public class PhysicsProjectile : Projectile
         base.Init(_lifeTime, _attackData);
         lifeTime = _lifeTime;
         attackData = _attackData;
+        col.enabled = true;
         ObjectPool.instance.ReturnObject(gameObject, lifeTime);
     }
 
@@ -61,7 +63,9 @@ public class PhysicsProjectile : Projectile
             damagable.TakeDamage(attackData);
             damaged.Add(damagable);
         }
-        
+
+        col.enabled = false;
+
         ObjectPool.instance.ReturnObject(gameObject, 1f);
 
         
