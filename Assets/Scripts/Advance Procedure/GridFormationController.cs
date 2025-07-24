@@ -45,6 +45,7 @@ public class FormationContainer
 public class GridFormationController : FormationProvider
 {
     [SerializeField] private bool drawGizmos;
+    [SerializeField] private bool deactivateOnSpawn = false;
     [SerializeField] private int spawnPerFrame = 5;
 
     [Header("Radius Based Prefabs")]
@@ -302,8 +303,10 @@ public class GridFormationController : FormationProvider
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
 
             Quaternion randomYRotation = Quaternion.Euler(0f, 90f * Random.Range(0, 4), 0f);
-            Transform t = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform).transform;
-            instances.Add(t);
+            GameObject newBlock = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform);
+            if (deactivateOnSpawn)
+                newBlock.transform.GetChild(0).gameObject.SetActive(false);
+            instances.Add(newBlock.transform);
 
             count++;
 

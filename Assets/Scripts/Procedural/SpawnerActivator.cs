@@ -15,7 +15,9 @@ public class SpawnerActivator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         Spawner spawner = other.GetComponentInParent<Spawner>();
+        spawner.transform.GetChild(0).gameObject.SetActive(true);
         if (spawner == null) return;
 
         // Cancel pending despawn
@@ -41,6 +43,7 @@ public class SpawnerActivator : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         Spawner spawner = other.GetComponentInParent<Spawner>();
+        
         if (spawner == null || !spawnerColliderCounts.ContainsKey(spawner)) return;
 
         spawnerColliderCounts[spawner]--;
@@ -62,6 +65,7 @@ public class SpawnerActivator : MonoBehaviour
             spawner.DespawnEntities();
             spawnerColliderCounts.Remove(spawner);
             despawnCoroutines.Remove(spawner);
+            spawner.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }
