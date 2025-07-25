@@ -15,10 +15,9 @@ public class SpawnerActivator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         Spawner spawner = other.GetComponentInParent<Spawner>();
-        spawner.transform.GetChild(0).gameObject.SetActive(true);
         if (spawner == null) return;
+        spawner.transform.GetChild(0).gameObject.SetActive(true);
 
         // Cancel pending despawn
         if (despawnCoroutines.TryGetValue(spawner, out var runningCoroutine))

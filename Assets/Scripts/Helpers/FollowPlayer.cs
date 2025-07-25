@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI;
+using UnityEngine.XR.Interaction.Toolkit.Utilities;
+using UnityEngine.XR.Interaction.Toolkit.Utilities.Tweenables.Primitives;
+using static UnityEngine.GraphicsBuffer;
 
 public class FollowPlayer : MonoBehaviour
 {
@@ -14,6 +17,15 @@ public class FollowPlayer : MonoBehaviour
     [SerializeField] private bool followPlayerOnce = false;
     public Vector3 offset;
     private Vector3 followPosition;
+
+    private void OnEnable()
+    {
+        if (PlayerManager.instance != null)
+        {
+            followPosition = PlayerManager.instance.Player.playerBody.position + offset;
+            LookAt();
+        }
+    }
 
     private void Start()
     {
@@ -41,6 +53,7 @@ public class FollowPlayer : MonoBehaviour
 
         followPosition = playerTransform.position + offset;
         Follow();
+        LookAt();
     }
 
     private void Update()
@@ -56,7 +69,10 @@ public class FollowPlayer : MonoBehaviour
             return;
         }
 
-        followPosition = playerTransform.position + offset;
+        followPosition = playerTransform.position
+                         + playerTransform.right * offset.x
+                         + playerTransform.up * offset.y
+                         + playerTransform.forward * offset.z;
 
         if (!followY)
         {
@@ -64,10 +80,29 @@ public class FollowPlayer : MonoBehaviour
         }
 
         Follow();
+        LookAt();
     }
 
     private void Follow()
     {
         transform.position = followPosition;
+    }
+
+    private void LookAt()
+    {
+        if (rotateWithPlayer)
+        {
+            transform.rotation = playerTransform.rotation;
+        }
+        else
+        {
+            Vector3 lookDirection = playerTransform.position - transform.position;
+            lookDirection.y = 0; // Keep the Y component zero to avoid tilting
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            }
+        }
     }
 }

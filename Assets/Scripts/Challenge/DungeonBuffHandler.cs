@@ -84,7 +84,7 @@ public class DungeonBuffHandler : MonoBehaviour
 
         for (int i = 0; i < buffsToProvide; i++)
         {
-            GameObject newHolder = Instantiate(buffHolder.gameObject, spawnPosition + (j * posModifier * buffHolderOffest), Quaternion.identity);
+            GameObject newHolder = Instantiate(buffHolder.gameObject, spawnPosition + (j * posModifier * buffHolderOffest), Quaternion.identity, originTransform);
             holderInteractors[i] = newHolder.GetComponent<XRSocketInteractor>();
             posModifier *= -1;
 
@@ -124,7 +124,6 @@ public class DungeonBuffHandler : MonoBehaviour
     public void ProvideBuffs(int index, Buff buffToProvide, BuffCategory buffCategory)
     {
         DungeonBuffProvider newCard = Instantiate(buffToProvide.cardDisplay, holderInteractors[index].transform.position, Quaternion.identity);
-        //holderInteractors[index].StartManualInteraction(newCard.GetComponent<IXRSelectInteractable>());
         newCard.Initialize(this, buffToProvide, holderInteractors[index]);
         buffProviders.Add(newCard);
     }
