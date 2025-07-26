@@ -1,3 +1,4 @@
+using MasterStylizedProjectile;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,7 +18,7 @@ public class VolleyEnemy : SimpleEnemyBase
         if (!playerInSightRange && !playerInAttackRange)
             Patrol();
         else if (playerInAttackRange)
-            TryVolleyAttack();
+            Attack();
         else if (playerInSightRange)
             Chase();
         
@@ -28,12 +29,15 @@ public class VolleyEnemy : SimpleEnemyBase
         agent.SetDestination(transform.position);
         transform.LookAt(Player.position + PlayerBodyOffset);
 
+       
+
+
         if (!isChargingAttack && !hasAttacked)
         {
             isChargingAttack = true;
             if (!vfxSpawned)
             {
-                VFXManager.SpawnMagicCircleVFX(magicChargeTime);
+                FXManager.SpawnMagicCircleVFX(magicChargeTime);
                 vfxSpawned = true;
             }
             Invoke(nameof(VolleyAttack), magicChargeTime);
@@ -42,13 +46,16 @@ public class VolleyEnemy : SimpleEnemyBase
 
     private void VolleyAttack()
     {
-        GameObject volleySpawn = Instantiate(volleyProjectile, projectileSpawnPosition);
+        GameObject volleySpawn = ObjectPool.instance.GetObject(volleyProjectile.gameObject, projectileSpawnPosition.position + PlayerBodyOffset);
+        PhysicsProjectile projectileInstance = volleySpawn.GetComponent<PhysicsProjectile>();
+
+        projectileInstance.Init(lifeTime, attackData);
         LaunchVolley(volleySpawn.transform, Player.position, 2f);
 
         hasAttacked = true;
         isChargingAttack = false;
         vfxSpawned = false;
-        VFXManager.DestroyMagicCircleVFX();
+        FXManager.DestroyMagicCircleVFX();
 
         Invoke(nameof(ResetAttack), attackCooldownTime);
     }
@@ -72,8 +79,14 @@ public class VolleyEnemy : SimpleEnemyBase
     protected override void ResetAttack()
     {
         base.ResetAttack();
-    } 
+    }
 
+    protected override void Attack()
+    {
+        base.Attack();
+        TryVolleyAttack();
+
+    }
     protected override void Patrol()
     {
         base.Patrol();

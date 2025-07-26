@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,15 +17,12 @@ public class NormalEnemy : SimpleEnemyBase
     {   
         base.Update();
 
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, LayerMask.GetMask("Player"));
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
-
         if (!playerInSightRange && !playerInAttackRange)
             Patrol();
         else if (playerInSightRange && !playerInAttackRange)
             Chase();
         else if (playerInAttackRange)
-            TryAttack();
+            Attack();
     }
 
 
@@ -43,6 +41,14 @@ public class NormalEnemy : SimpleEnemyBase
         base.Chase();
     }
 
+
+    protected override void Attack()
+    {
+        base.Attack();
+        TryAttack();
+    }
+
+
     private void TryAttack()
     {
         agent.SetDestination(transform.position);
@@ -53,14 +59,16 @@ public class NormalEnemy : SimpleEnemyBase
             isChargingAttack = true;
             if (!vfxSpawned)
             {
-                VFXManager.SpawnMagicCircleVFX(magicChargeTime);
+                FXManager.SpawnMagicCircleVFX(magicChargeTime);
                 vfxSpawned = true;
             }
-            Invoke(nameof(Attack), magicChargeTime);
+            Invoke(nameof(NormalAttack), magicChargeTime);
         }
+
+        walkPoint = transform.position;
     }
 
-    private void Attack()
+    private void NormalAttack()
     {
         //Rigidbody rb = Instantiate(bullet, projectileSpawn).GetComponent<Rigidbody>();
         //rb.AddForce(transform.forward * shootForce, ForceMode.Impulse);
@@ -74,7 +82,7 @@ public class NormalEnemy : SimpleEnemyBase
         hasAttacked = true;
         isChargingAttack = false;
         vfxSpawned = false;
-        VFXManager.DestroyMagicCircleVFX();
+        FXManager.DestroyMagicCircleVFX();
 
         Invoke(nameof(ResetAttack), attackCooldownTime);
     }

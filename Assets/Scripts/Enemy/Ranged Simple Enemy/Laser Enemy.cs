@@ -1,6 +1,5 @@
-using UnityEngine;
-using UnityEngine.AI;
 using System.Collections;
+using UnityEngine;
 
 public class LaserEnemy : SimpleEnemyBase
 {
@@ -38,13 +37,20 @@ public class LaserEnemy : SimpleEnemyBase
             // Only start charging if not already attacking
             if (currentLaser == null && !isCharging)
             {
-                StartCoroutine(ChargeAndFireLaser());
+                Attack();
             }
         }
 
         UpdateLaser();
     }
 
+
+    protected override void Attack()
+    {
+        base.Attack();
+        StartCoroutine(ChargeAndFireLaser());
+
+    }
     private IEnumerator ChargeAndFireLaser()
     {
         isCharging = true;
@@ -52,7 +58,7 @@ public class LaserEnemy : SimpleEnemyBase
         // Spawning the magic circle VFX
         if (!vfxSpawned)
         {
-            VFXManager.SpawnMagicCircleVFX(magicChargeTime);
+            FXManager.SpawnMagicCircleVFX(magicChargeTime);
             vfxSpawned = true;
         }
 
@@ -60,7 +66,7 @@ public class LaserEnemy : SimpleEnemyBase
 
         // Spawn laser after charging
         if (currentLaser != null)
-            Destroy(currentLaser);
+            DestroyLaser();
 
         currentLaser = Instantiate(LaserVFX, projectileSpawnPosition);
         laserRenderer = currentLaser.GetComponent<LineRenderer>();
@@ -81,8 +87,8 @@ public class LaserEnemy : SimpleEnemyBase
         {
             Destroy(currentLaser);
             currentLaser = null;
-            VFXManager.DestroyMagicCircleVFX();
         }
+        FXManager.DestroyMagicCircleVFX();
         isCharging = false;
         vfxSpawned = false;
     }
@@ -111,5 +117,5 @@ public class LaserEnemy : SimpleEnemyBase
         }
     }
 
-   
+
 }

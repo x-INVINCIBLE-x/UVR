@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,7 +12,7 @@ public class SimpleEnemyBase : MonoBehaviour
 { // Base class for all simple enemy types
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected Transform Player;
-    [SerializeField] protected EnemyVFXManager VFXManager;
+    [SerializeField] protected EnemyFXHandler FXManager;
     [SerializeField] protected Animator animator;
 
     [SerializeField] protected float sightRange, attackRange;
@@ -20,11 +21,12 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected float walkpointRange;
     [SerializeField] protected float patrollwaitTime;
 
+
     [SerializeField] protected Vector3 walkPoint;
 
     [SerializeField] protected bool searchingWalkPoint = false;
     [SerializeField] protected bool playerInSightRange, playerInAttackRange;
-    [SerializeField] protected bool hasAttacked, isChargingAttack, vfxSpawned;
+    [SerializeField] protected bool hasAttacked, wasPlayerInSight, isChargingAttack, vfxSpawned;
     [SerializeField] protected bool walkPointSet;// bool to check that the walkpoint vector is set or not
 
     [SerializeField] protected Vector3 PlayerBodyOffset;
@@ -34,6 +36,7 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected EnemyStats enemyStats;
     [SerializeField] protected MeshDissolver dissolver;
 
+    private Coroutine currentCheckRoutine = null;
 
     protected virtual void Start()
     {
@@ -46,28 +49,41 @@ public class SimpleEnemyBase : MonoBehaviour
 
     private void HandleDeath()
     {
-        
+
+    }
+
+    private void OnEnable()
+    {
+        currentCheckRoutine = StartCoroutine(CheckRoutine());
     }
 
     private void OnDisable()
     {
-       
         enemyStats.OnDeath -= HandleDeath;
+        if (currentCheckRoutine != null)
+        {
+            StopCoroutine(currentCheckRoutine);
+            currentCheckRoutine = null;
+        }
     }
     protected virtual void Update()
     {
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, LayerMask.GetMask("Player"));
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
+
+    }
+
+    private IEnumerator CheckRoutine()
+    {
+        while (true)
+        {
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, LayerMask.GetMask("Player"));
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     protected virtual void Patrol()
     {
-        if (!walkPointSet && !searchingWalkPoint)
-        {
-            searchingWalkPoint = true;
-            Invoke(nameof(SearchWalkPoint), patrollwaitTime);
-            return;
-        }
+        FXManager.SpawnExclamationMark(false); // turning off exclamation mark
 
         if (walkPointSet)
         {
@@ -80,7 +96,27 @@ public class SimpleEnemyBase : MonoBehaviour
                 walkPointSet = false;
             }
         }
+
+        if (wasPlayerInSight)
+        {
+            FXManager.SpawnQuestionMark(); // turn on question mark ui for patrolling
+            wasPlayerInSight = false;
+            Invoke(nameof(DisableQuestionmark), 4f);
+        }
+
+        if (walkPointSet) return;
+
+
+        if (!walkPointSet && !searchingWalkPoint)
+        {
+            searchingWalkPoint = true;
+            Invoke(nameof(SearchWalkPoint), patrollwaitTime);
+            return;
+        }
+
     }
+
+    private void DisableQuestionmark() =>  FXManager.SpawnQuestionMark(false);
 
     protected virtual void SearchWalkPoint()
     {
@@ -101,12 +137,25 @@ public class SimpleEnemyBase : MonoBehaviour
 
     protected virtual void Chase()
     {
+        wasPlayerInSight = true;
+        walkPoint = transform.position;
         agent.SetDestination(Player.position);
+        FXManager.SpawnQuestionMark(false);
+        FXManager.SpawnExclamationMark();// turning on exclamation mark
     }
+
+    protected virtual void Attack()
+    {
+        wasPlayerInSight = true;
+        FXManager.SpawnQuestionMark(false);
+        FXManager.SpawnExclamationMark(false); // turning off exclamation mark
+    }
+
     protected virtual void ResetAttack()
     {
         hasAttacked = false;
-    } 
+    }
+
 
     protected virtual void OnDrawGizmosSelected()
     {
@@ -116,5 +165,6 @@ public class SimpleEnemyBase : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
+
 
 }

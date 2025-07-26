@@ -969,7 +969,6 @@ GameObject:
   - component: {fileID: 5915081457803517722}
   - component: {fileID: 6506299652879600263}
   - component: {fileID: 7698032638805063490}
-  - component: {fileID: 7374496015505872873}
   m_Layer: 0
   m_Name: goblin_shredder_shield_-_animated (1)
   m_TagString: Untagged
@@ -1098,56 +1097,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f26202abce79840a0fc1a5f2b2ea99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyIntiateAttackVfx: {fileID: 654805830734500129, guid: 498aa3303af628040bb48f3f9d93acf4, type: 3}
+  MagicCircleAttackVfx: {fileID: 0}
+  ExclamationUI: {fileID: 0}
   selfDestructVFX: {fileID: 1329845292236604, guid: 7d2a64cb3767cfe4589a800a5f0cc399, type: 3}
-  MagicCircleSpawnPosition: {fileID: 6616652905390851323}
+  MagicCircleSpawn: {fileID: 0}
+  ExclamationSpawn: {fileID: 0}
   vfxOffset: {x: -0.05, y: 0.15, z: 0.5}
   minScale: {x: 0.1, y: 0.1, z: 0.1}
   midScale: {x: 20, y: 20, z: 20}
   maxScale: {x: 90, y: 90, z: 90}
---- !u!114 &7374496015505872873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233152753191114053}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e125ed741b69744af8835c6876b743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyTypes: 5
-  agent: {fileID: 5915081457803517722}
-  Player: {fileID: 0}
-  bullet: {fileID: 6433934524998870675, guid: 6804f53ccd9b68840b9f2a1b2987ca5d, type: 3}
-  volley: {fileID: 6433934524998870675, guid: 1ecb7aece2461c64290409cbfb6c9d0a, type: 3}
-  WhatIsground:
-    serializedVersion: 2
-    m_Bits: 1
-  WhatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 256
-  Destination: {fileID: 0}
-  projectileSpawnPosition: {fileID: 6616652905390851323}
-  HomingMissile: {fileID: 1844458965182505935, guid: ba8b7d09e046a7044bfcf47e24033b2d, type: 3}
-  LaserVFX: {fileID: 8476203572993528117, guid: de7de5d503e069b4287b8b0e121702a7, type: 3}
-  goToDestination: 1
-  hasSeenPlayer: 0
-  hasAttacked: 0
-  playerInSightRange: 0
-  playerInAttackRange: 0
-  walkPoint: {x: 0, y: 0, z: 0}
-  LaserOffset: {x: 0, y: -2, z: 0}
-  walkpointRange: 0
-  attackCooldownTime: 3
-  sightRange: 15
-  attackRange: 4.69
-  VFXManager: {fileID: 7698032638805063490}
-  magicChargeTime: 5
-  isChargingAttack: 0
-  vfxSpawned: 0
-  selfDestructTime: 0.9
 --- !u!1 &4455939791180127119
 GameObject:
   m_ObjectHideFlags: 0

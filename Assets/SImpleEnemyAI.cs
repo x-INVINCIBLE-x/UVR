@@ -79,7 +79,7 @@ public class SimpleEnemyAI : MonoBehaviour
     [Space]
     [Header("VFX Settings")]
     [Space]
-    public EnemyVFXManager VFXManager;
+    public EnemyFXHandler VFXManager;
     public float magicChargeTime = 3f; // The magic circle determines for how long the attack will charge with it
 
     [SerializeField] private bool isChargingAttack = false;
@@ -97,7 +97,7 @@ public class SimpleEnemyAI : MonoBehaviour
         laserRenderer = LaserVFX.GetComponent<LineRenderer>();
         //Player = PlayerManager.instance.Core.transform;
         agent = GetComponent<NavMeshAgent>();
-        VFXManager = GetComponent<EnemyVFXManager>();
+        VFXManager = GetComponent<EnemyFXHandler>();
     
     }
 
