@@ -72,7 +72,8 @@ public class SpawnerActivator : MonoBehaviour
                 despawnCoroutines.Clear();
             }
 
-            spawner.transform.GetChild(0).gameObject.SetActive(false);
+            if (spawner != null)
+                spawner.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }
