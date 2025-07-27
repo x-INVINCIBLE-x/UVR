@@ -24,13 +24,14 @@ public class DungeonBuffProvider : MonoBehaviour
         layerMask = LayerMask.GetMask("Player");
     }
 
-    public void Initialize(DungeonBuffHandler _handler, Buff _buff, XRSocketInteractor socket)
+    public void Initialize(DungeonBuffHandler _handler, Buff _buff, XRSocketInteractor _socket, TemporaryBuffs _temporaryBuff)
     {
-        this.socket = socket;
+        socket = _socket;
         socket.StartManualInteraction(GetComponent<IXRSelectInteractable>());
 
         handler = _handler;
         buffToApply = _buff;
+        temporaryBuff = _temporaryBuff;
 
         grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.hoverEntered.AddListener(OnHoverAttempt);
@@ -79,7 +80,6 @@ public class DungeonBuffProvider : MonoBehaviour
 
         Debug.Log("Grab Enter");
 
-        temporaryBuff = args.interactorObject.transform.GetComponentInParent<TemporaryBuffs>();
         handler.DisableCardInteraction(this);
     }
 
@@ -112,11 +112,9 @@ public class DungeonBuffProvider : MonoBehaviour
 
     private void OnActivationAttempt(ActivateEventArgs arg0)
     {
-        if (temporaryBuff == null)
-            temporaryBuff = arg0.interactorObject.transform.GetComponentInParent<TemporaryBuffs>();
-
         if (temporaryBuff != null)
         {
+            Debug.Log("Buff Activated");
             temporaryBuff.AddBuff(buffToApply);
             handler.BuffPicked();
         }

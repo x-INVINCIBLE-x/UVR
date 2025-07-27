@@ -35,6 +35,7 @@ public class DungeonBuffHandler : MonoBehaviour
     private XRSocketInteractor[] holderInteractors;
 
     [Header("Buff")]
+    [SerializeField] private TemporaryBuffs temporaryBuffs;
     public List<BuffGroup> buffGroups = new List<BuffGroup>();
     private Dictionary<int, Dictionary<BuffCategory, List<Buff>>> buffLookup = new();
     private Dictionary<(int, BuffCategory), HashSet<Buff>> shownBuffs = new();
@@ -124,7 +125,7 @@ public class DungeonBuffHandler : MonoBehaviour
     public void ProvideBuffs(int index, Buff buffToProvide, BuffCategory buffCategory)
     {
         DungeonBuffProvider newCard = Instantiate(buffToProvide.cardDisplay, holderInteractors[index].transform.position, Quaternion.identity);
-        newCard.Initialize(this, buffToProvide, holderInteractors[index]);
+        newCard.Initialize(this, buffToProvide, holderInteractors[index], temporaryBuffs);
         buffProviders.Add(newCard);
     }
 

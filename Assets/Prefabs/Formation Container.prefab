@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1638144539450f344b0139b9890a92d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawGizmos: 1
+  drawGizmos: 0
+  deactivateOnSpawn: 1
+  spawnPerFrame: 2
   radiusPrefabs:
   - radius: 1000
     centerOffset: {x: 0, y: 0, z: 0}
@@ -397,10 +399,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7653185549274153574}
-  - {fileID: 3809739018732419379}
   - {fileID: 9038558215129218732}
   - {fileID: 5937283248708782360}
+  - {fileID: 7653185549274153574}
+  - {fileID: 3809739018732419379}
   - {fileID: 982593799265618386}
   - {fileID: 5089432909367516813}
   - {fileID: 3992057100705294245}
@@ -451,7 +453,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1638144539450f344b0139b9890a92d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawGizmos: 1
+  drawGizmos: 0
+  deactivateOnSpawn: 0
+  spawnPerFrame: 5
   radiusPrefabs:
   - radius: 1000
     centerOffset: {x: 0, y: 0, z: 0}
@@ -1041,18 +1045,21 @@ MonoBehaviour:
     - formationName: Spheres
       formationNumber: 1
       formationInfo:
-      - layout: {fileID: 9038558215129218732}
+      - layoutName: Formation Generator
+        layout: {fileID: 9038558215129218732}
         position: {x: 1400, y: 450, z: 1400}
         rotation: {x: 0, y: 0, z: 0}
         duration: 1
-      - layout: {fileID: 6495539339580959240}
+      - layoutName: Formation Aesthetics Inner
+        layout: {fileID: 6495539339580959240}
         position: {x: 1400, y: 450, z: 1400}
         rotation: {x: 0, y: 0, z: 0}
         duration: 1
     - formationName: Umbrella + ring
       formationNumber: 2
       formationInfo:
-      - layout: {fileID: 9038558215129218732}
+      - layoutName: Formation Generator
+        layout: {fileID: 9038558215129218732}
         position: {x: 1400, y: 250, z: 1400}
         rotation: {x: 0, y: 0, z: 0}
         duration: 0
@@ -1061,18 +1068,21 @@ MonoBehaviour:
     - formationName: 
       formationNumber: 1
       formationInfo:
-      - layout: {fileID: 9038558215129218732}
+      - layoutName: Formation Generator
+        layout: {fileID: 9038558215129218732}
         position: {x: 1000, y: 1000, z: 0}
         rotation: {x: 10, y: 10, z: 10}
         duration: 0
-      - layout: {fileID: 9038558215129218732}
+      - layoutName: Formation Generator
+        layout: {fileID: 9038558215129218732}
         position: {x: 1000, y: 1000, z: 0}
         rotation: {x: 10, y: 10, z: 10}
         duration: 0
     - formationName: 
       formationNumber: 2
       formationInfo:
-      - layout: {fileID: 6495539339580959240}
+      - layoutName: Formation Aesthetics Inner
+        layout: {fileID: 6495539339580959240}
         position: {x: 2000, y: 2000, z: 0}
         rotation: {x: 50, y: 40, z: 50}
         duration: 0

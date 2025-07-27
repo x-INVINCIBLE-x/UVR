@@ -13,18 +13,23 @@ public class DungeonManager : MonoBehaviour
     public static DungeonManager Instance { get; private set; }
     private DungeonBuffHandler buffHandler;
 
+    [Header("Difficulty Scaling")]
     [field: SerializeField] public int DifficultyLevel { get; private set; } = 1;
     [Tooltip("Levels to Complete before Difficultry Level Increase")]
     [field: SerializeField] private int levelsToComplete = 2;
     private int levelsTillScale = 0;
 
+    [Header("Scene Transition")]
     [SerializeField] private SceneReference cityScene;
-    [SerializeField] private SceneTransitionProvider transitionProvider;
-
-    [SerializeField] private SceneReference[] dungeonScenes;
+    [SerializeField] private DungeonDifficultyDatabase dungeonDifficultyDatabase;
+    private SceneTransitionProvider transitionProvider;
+    private List<SceneReference> currentDifficultyScenes;
+    //[SerializeField] private SceneReference[] dungeonScenes;
     private int[] shuffledIndices;
     private int currentSceneIndex = 0;
 
+    [SerializeField] private SceneReference[] dungeonSuccessTransitionScene;
+    private int currentSuccessTransitionSceneIndex = 0;
     [SerializeField] private SceneReference[] dungeonFailTransitionScene;
     private int currentFailTransitionSceneIndex = 0;
     private const int Failure_Transition_Stay = 7;
@@ -32,19 +37,19 @@ public class DungeonManager : MonoBehaviour
     public event Action<int> OnDifficultyChange;
 
     //IDK if it belongs here????
-    [SerializeField] private GameObject endGround;
+    //[SerializeField] private GameObject endGround;
     //public GameObject tempEnemy;
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        for (int i = 0; i < dungeonScenes.Length; i++)
-        {
-            dungeonScenes[i].UpdateFields();
-        }
         for (int i = 0; i < dungeonFailTransitionScene.Length; i++)
         {
             dungeonFailTransitionScene[i].UpdateFields();
+        }
+        for (int i = 0; i < dungeonSuccessTransitionScene.Length; i++)
+        {
+            dungeonSuccessTransitionScene[i].UpdateFields();
         }
         cityScene.UpdateFields();
         EditorUtility.SetDirty(this);
@@ -58,11 +63,14 @@ public class DungeonManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        shuffledIndices = new int[dungeonScenes.Count()];
+        levelsTillScale = levelsToComplete;
+
+        currentDifficultyScenes = dungeonDifficultyDatabase.GetScenesForDifficulty(DifficultyLevel);
+        shuffledIndices = new int[currentDifficultyScenes.Count()];
 
         buffHandler = GetComponent<DungeonBuffHandler>();
         ResetAvailbleScenes();
-        //DifficultyLevel = 1;
+        DifficultyLevel = 1;
     }
 
     private void Update()
@@ -77,8 +85,6 @@ public class DungeonManager : MonoBehaviour
 
     private void Start()
     {
-        //endGround.SetActive(false);
-
         buffHandler.OnBuffPick += GetHandleBuffSelection;
 
         ChallengeManager challengeManager = ChallengeManager.instance;
@@ -92,9 +98,10 @@ public class DungeonManager : MonoBehaviour
 
     public void HandleLevelCompletion()
     {
-        endGround.SetActive(true);
-        buffHandler.Setup(endGround.transform, DifficultyLevel);
+        transitionProvider.transform.root.gameObject.SetActive(true);
+        buffHandler.Setup(transitionProvider.transform.root.transform, DifficultyLevel);
 
+        currentSuccessTransitionSceneIndex = (currentSuccessTransitionSceneIndex + 1) % dungeonSuccessTransitionScene.Length;
         UpdateDifficulty();
     }
 
@@ -115,6 +122,8 @@ public class DungeonManager : MonoBehaviour
             DifficultyLevel++;
             levelsTillScale = levelsToComplete;
             OnDifficultyChange?.Invoke(DifficultyLevel);
+            currentDifficultyScenes = dungeonDifficultyDatabase.GetScenesForDifficulty(DifficultyLevel);
+            ResetAvailbleScenes();
         }
     }
 
@@ -124,16 +133,16 @@ public class DungeonManager : MonoBehaviour
             ResetAvailbleScenes();
 
         int sceneIndex = shuffledIndices[currentSceneIndex++];
-
-        transitionProvider.Initialize(dungeonScenes[sceneIndex]);
-        transitionProvider.gameObject.SetActive(true);
+        Debug.Log("buff Selectin handled");
+        transitionProvider.Initialize(currentDifficultyScenes[sceneIndex], 1 , 5, dungeonSuccessTransitionScene[currentSuccessTransitionSceneIndex]);
+        transitionProvider.transform.gameObject.SetActive(true);
     }
 
     private void ResetAvailbleScenes()
     {
         currentSceneIndex = 0;
 
-        for (int i = 0; i < dungeonScenes.Length; i++)
+        for (int i = 0; i < currentDifficultyScenes.Count; i++)
         {
             shuffledIndices[i] = i;
         }
@@ -145,8 +154,12 @@ public class DungeonManager : MonoBehaviour
         }
 
     }
-    public void RegisterSceneTransitionProvider(SceneTransitionProvider sceneTransitionProvider) =>
+
+    public void RegisterSceneTransitionProvider(SceneTransitionProvider sceneTransitionProvider)
+    {
         transitionProvider = sceneTransitionProvider;
+        transitionProvider.transform.root.gameObject.SetActive(false);
+    }
 
     private void OnDestroy()
     {

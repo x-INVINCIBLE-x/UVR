@@ -145,7 +145,8 @@ public class TemporaryBuffs : MonoBehaviour
 
     private void ActivateBuff(Buff buff)
     {
-        if (buff.activeDuration > 0 && buff.ActivationType != ActivationType.Timer)
+        if (buff.activeDuration > 0 && buff.ActivationType != ActivationType.Timer 
+            && buff.ActivationType != ActivationType.OneOff)
         {
             if (activeBuffs.Contains(buff))
             {
@@ -217,7 +218,7 @@ public class TemporaryBuffs : MonoBehaviour
 
     private void RemoveBuffFrom(IEnumerable<Buff> buffs)
     {
-        foreach (Buff buff in buffs)
+        foreach (Buff buff in new List<Buff>(buffs))
         {
             RemoveBuff(buff);
         }

@@ -100,7 +100,8 @@ public class SceneTransitionProvider : MonoBehaviour
         // --- Load transition scene ---
         // --- Remember the currently active scene ---
         Scene previousScene = SceneManager.GetActiveScene();
-        SceneReference currentTransitionScene = providedTransitionScene.HasSceneAsset ? providedTransitionScene : transitionScene;
+        SceneReference currentTransitionScene =  providedTransitionScene != null && providedTransitionScene.IsValid ? 
+                providedTransitionScene : transitionScene;
 
         // --- Load transition scene ---
         AsyncOperation loadTransition = SceneManager.LoadSceneAsync(currentTransitionScene.SceneName, LoadSceneMode.Additive);
@@ -191,8 +192,6 @@ public class SceneTransitionProvider : MonoBehaviour
 
         // --- Unload other scenes ---
         SceneManager.UnloadSceneAsync(currentTransitionScene.SceneName);
-
-        Destroy(gameObject);
     }
 
     GameObject FindRootCore()

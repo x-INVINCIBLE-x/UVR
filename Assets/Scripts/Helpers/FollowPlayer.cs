@@ -1,29 +1,25 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI;
-using UnityEngine.XR.Interaction.Toolkit.Utilities;
-using UnityEngine.XR.Interaction.Toolkit.Utilities.Tweenables.Primitives;
-using static UnityEngine.GraphicsBuffer;
 
 public class FollowPlayer : MonoBehaviour
 {
     private Transform playerTransform;
 
-    [Header("Lazy Follow")]
+    [Header("Follow Settings")]
     [SerializeField] private bool useLazyFollow = false;
     [SerializeField] private bool rotateWithPlayer = false;
-
-    [Header("Settings")]
     [SerializeField] private bool followY = false;
     [SerializeField] private bool followPlayerOnce = false;
-    public Vector3 offset;
+    [SerializeField] private Vector3 offset;
+
     private Vector3 followPosition;
+    private bool hasFollowedOnce = false;
 
     private void OnEnable()
     {
         if (PlayerManager.instance != null)
         {
-            followPosition = PlayerManager.instance.Player.playerBody.position + offset;
-            LookAt();
+            playerTransform = PlayerManager.instance.Player.playerBody;
         }
     }
 
@@ -31,35 +27,7 @@ public class FollowPlayer : MonoBehaviour
     {
         if (useLazyFollow)
         {
-            if (!TryGetComponent<LazyFollow>(out var lazyFollow))
-            {
-                lazyFollow = gameObject.AddComponent<LazyFollow>();
-            }
-
-            lazyFollow.target = Camera.main.transform;
-            lazyFollow.targetOffset = offset;
-            lazyFollow.rotationFollowMode = LazyFollow.RotationFollowMode.Follow;
-
-            return;
-        }
-
-        if (PlayerManager.instance != null)
-            playerTransform = PlayerManager.instance.Player.playerBody; // --- Possible hazard ---- //
-        else
-        {
-            Debug.Log("PlayerManager instance not found by " + gameObject.name);
-            return;
-        }
-
-        followPosition = playerTransform.position + offset;
-        Follow();
-        LookAt();
-    }
-
-    private void Update()
-    {
-        if (followPlayerOnce)
-        {
+            SetupLazyFollow();
             return;
         }
 
@@ -68,19 +36,36 @@ public class FollowPlayer : MonoBehaviour
             enabled = false;
             return;
         }
+    }
 
+    private void Update()
+    {
+        if (useLazyFollow) return;
+
+        if (followPlayerOnce && hasFollowedOnce) return;
+
+        if (playerTransform == null)
+        {
+            playerTransform = PlayerManager.instance.Player.playerBody;
+        }
+
+        UpdateFollowPosition();
+        Follow();
+        LookAt();
+
+        if (followPlayerOnce)
+            hasFollowedOnce = true;
+    }
+
+    private void UpdateFollowPosition()
+    {
         followPosition = playerTransform.position
                          + playerTransform.right * offset.x
                          + playerTransform.up * offset.y
                          + playerTransform.forward * offset.z;
 
         if (!followY)
-        {
             followPosition.y = transform.position.y;
-        }
-
-        Follow();
-        LookAt();
     }
 
     private void Follow()
@@ -96,13 +81,26 @@ public class FollowPlayer : MonoBehaviour
         }
         else
         {
-            Vector3 lookDirection = playerTransform.position - transform.position;
-            lookDirection.y = 0; // Keep the Y component zero to avoid tilting
-            if (lookDirection != Vector3.zero)
+            Vector3 direction = playerTransform.position - transform.position;
+            direction.y = 0;
+
+            if (direction.sqrMagnitude > 0.001f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
             }
         }
+    }
+
+    private void SetupLazyFollow()
+    {
+        if (!TryGetComponent(out LazyFollow lazyFollow))
+        {
+            lazyFollow = gameObject.AddComponent<LazyFollow>();
+        }
+
+        lazyFollow.target = Camera.main.transform;
+        lazyFollow.targetOffset = offset;
+        lazyFollow.rotationFollowMode = LazyFollow.RotationFollowMode.Follow;
     }
 }

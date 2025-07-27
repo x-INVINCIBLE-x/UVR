@@ -152,6 +152,6 @@ public class ChallengeUI : MonoBehaviour
     {
         ChallengeManager.instance.OnChallengeChoosen -= ChallengeStartUI;
         ChallengeManager.instance.OnChallengeSuccess -= ChallengeSuccessUI;
-        ChallengeManager.instance.OnChallengeFail += ChallengeFailureUI;
+        ChallengeManager.instance.OnChallengeFail -= ChallengeFailureUI;
     }
 }

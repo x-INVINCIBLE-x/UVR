@@ -64,6 +64,14 @@ public class SpawnerActivator : MonoBehaviour
             spawner.DespawnEntities();
             spawnerColliderCounts.Remove(spawner);
             despawnCoroutines.Remove(spawner);
+
+            if (spawner == null)
+            {
+                StopAllCoroutines();
+                spawnerColliderCounts.Clear();
+                despawnCoroutines.Clear();
+            }
+
             spawner.transform.GetChild(0).gameObject.SetActive(false);
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 public class FormationHandler : MonoBehaviour
@@ -7,6 +8,7 @@ public class FormationHandler : MonoBehaviour
     [System.Serializable]
     public class FormationInfo
     {
+        [HideInInspector] public string layoutName;
         public Transform layout;
         public Vector3 position;
         public Vector3 rotation;
@@ -56,10 +58,43 @@ public class FormationHandler : MonoBehaviour
             for (int j = 0; j < scalingFormations[i].formations.Length; j++)
             {
                 scalingFormations[i].formations[j].formationNumber = j + 1;
+
+                for (int k = 0; k < scalingFormations[i].formations[j].formationInfo.Length; k++)
+                {
+                    scalingFormations[i].formations[j].formationInfo[k].layoutName = scalingFormations[i].formations[j].formationInfo[k].layout.name;
+                }
             }
         }
     }
 #endif
+
+    //private void Awake()
+    //{
+    //    Debug.Log("finding layouts for formations");
+    //    foreach (ScalingFormation scalingFormation in scalingFormations)
+    //    {
+    //        foreach (Formation formation in scalingFormation.formations)
+    //        {
+    //            foreach (FormationInfo info in formation.formationInfo)
+    //            {
+    //                if (!string.IsNullOrEmpty(info.layoutName))
+    //                {
+    //                    info.layout = null;
+    //                    GameObject obj = FindChildByNameRecursive(transform.root, info.layoutName);
+    //                    if (obj == null)
+    //                    {
+    //                        Debug.LogWarning($"Layout '{info.layoutName}' not found in the hierarchy. Please ensure it exists.");
+    //                    }
+    //                    else
+    //                    {
+    //                        Debug.Log($"Found layout: {obj.name}");
+    //                        info.layout = obj.transform;
+    //                    }                            
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     private void Start()
     {
@@ -136,6 +171,11 @@ public class FormationHandler : MonoBehaviour
         {
             for (int j = 0; j < formation.formationInfo.Length; j++)
             {
+                if (formation.formationInfo[j].layout == null)
+                {
+                    Debug.LogWarning($"Layout for formation '{formation.formationName}' is not set. Please check the setup.");
+                    continue;
+                }
                 formation.formationInfo[j].layout.gameObject.SetActive(status);
             }
         }
@@ -143,6 +183,7 @@ public class FormationHandler : MonoBehaviour
 
     private void CloseAllTimedFormation()
     {
+        Debug.Log("Closing All Timed Formations");
         for (int i = 0; i < timedForamtions.Length; i++)
         {
             timedForamtions[i].cubeFormationController.gameObject.SetActive(false);
@@ -203,6 +244,23 @@ public class FormationHandler : MonoBehaviour
 
     private void OnDestroy()
     {
+        ChallengeManager.instance.OnChallengeStart -= HandleChallengeStart;
+        ChallengeManager.instance.OnChallengeSuccess -= HandleLevelEnd;
+        ChallengeManager.instance.OnChallengeFail -= HandleLevelEnd;
         timedForamtions[0].cubeFormationController.OnFormationComplete -= UpdateFormation;
+    }
+
+    public GameObject FindChildByNameRecursive(Transform parent, string childName)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == childName)
+                return child.gameObject;
+
+            GameObject result = FindChildByNameRecursive(child, childName);
+            if (result != null)
+                return result;
+        }
+        return null;
     }
 }

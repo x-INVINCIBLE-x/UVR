@@ -56,7 +56,7 @@ public class ChallengeManager : MonoBehaviour
             Debug.Log("No Current Challenge");
             return;
         }
-
+        
         CurrentChallenge.StartChallenge();
         OnChallengeStart?.Invoke(CurrentChallenge.Type);
     }
@@ -86,6 +86,7 @@ public class ChallengeManager : MonoBehaviour
 
         OnChallengeSuccess?.Invoke();
 
+        ChooseChallenge();
         CurrentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
         CurrentChallenge.OnChallengeFailed -= HandleChallengeFailure;
     }
