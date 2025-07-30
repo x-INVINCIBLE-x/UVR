@@ -16,8 +16,16 @@ public class SpawnerActivator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Spawner spawner = other.GetComponentInParent<Spawner>();
-        if (spawner == null) return;
-        spawner.transform.GetChild(0).gameObject.SetActive(true);
+        if (spawner == null)
+        {
+            other.transform.GetChild(0).gameObject.SetActive(true);
+            return;
+        }
+
+        if (!spawnerColliderCounts.ContainsKey(spawner))
+            spawnerColliderCounts[spawner] = 0;
+
+        spawnerColliderCounts[spawner]++;
 
         // Cancel pending despawn
         if (despawnCoroutines.TryGetValue(spawner, out var runningCoroutine))
@@ -26,30 +34,29 @@ public class SpawnerActivator : MonoBehaviour
             despawnCoroutines.Remove(spawner);
         }
 
-        // Increase collider count
-        if (!spawnerColliderCounts.ContainsKey(spawner))
-            spawnerColliderCounts[spawner] = 0;
-
-        spawnerColliderCounts[spawner]++;
-
-        // Spawn entities if not already spawned
+        // Activate and spawn if needed
         if (!spawner.HasSpawned)
         {
             spawner.SpawnEntities();
         }
+
+        spawner.transform.GetChild(0).gameObject.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
         Spawner spawner = other.GetComponentInParent<Spawner>();
-        
-        if (spawner == null || !spawnerColliderCounts.ContainsKey(spawner)) return;
+        if (spawner == null)
+        {
+            other.transform.GetChild(0).gameObject.SetActive(false);
+            return;
+        }
+        if (!spawnerColliderCounts.ContainsKey(spawner)) return;
 
         spawnerColliderCounts[spawner]--;
 
         if (spawnerColliderCounts[spawner] <= 0)
         {
-            // Start delayed despawn
             despawnCoroutines[spawner] = StartCoroutine(DelayedDespawn(spawner));
         }
     }
@@ -58,22 +65,14 @@ public class SpawnerActivator : MonoBehaviour
     {
         yield return new WaitForSeconds(despawnDelay);
 
-        // If still no colliders inside, despawn
-        if (!spawnerColliderCounts.ContainsKey(spawner) || spawnerColliderCounts[spawner] <= 0)
+        if (spawner != null &&
+            spawnerColliderCounts.TryGetValue(spawner, out int count) &&
+            count <= 0)
         {
             spawner.DespawnEntities();
+            spawner.transform.GetChild(0).gameObject.SetActive(false);
             spawnerColliderCounts.Remove(spawner);
             despawnCoroutines.Remove(spawner);
-
-            if (spawner == null)
-            {
-                StopAllCoroutines();
-                spawnerColliderCounts.Clear();
-                despawnCoroutines.Clear();
-            }
-
-            if (spawner != null)
-                spawner.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

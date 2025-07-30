@@ -788,6 +788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 385904934205131994}
+  - component: {fileID: 7496605555188033060}
   m_Layer: 7
   m_Name: Rock Block 1
   m_TagString: Untagged
@@ -811,6 +812,27 @@ Transform:
   - {fileID: 3290561688412786136}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7496605555188033060
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2924987843690484499}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2948697109014464014
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,7 +1047,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3290561688412786136}
   m_Layer: 7
-  m_Name: 1
+  m_Name: Block Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

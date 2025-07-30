@@ -136,10 +136,28 @@ public class ActionMediator : MonoBehaviour
 
     public void ResetMovementSpeed() => moveProvider.moveSpeed = defaultSpeed;
 
+    public void EnableControl()
+    {
+        EnableMovement();
+        EnableRotationt();
+    }
+
+    public void DisableControl()
+    {
+        DisableMovement();
+        DisableRotation();
+    }
+
     public void EnableMovement()
     {
         moveProvider.leftHandMoveInput.bypass = null;
         moveProvider.rightHandMoveInput.bypass = null;
+    }
+
+    public void EnableRotationt()
+    {
+        turnProvider.leftHandTurnInput.bypass = null;
+        turnProvider.rightHandTurnInput.bypass = null;
     }
 
     public void DisableMovement()
@@ -149,6 +167,14 @@ public class ActionMediator : MonoBehaviour
 
         moveProvider.leftHandMoveInput.bypass = new ConstantVector2InputReader(Vector2.zero);
         moveProvider.rightHandMoveInput.bypass = new ConstantVector2InputReader(Vector2.zero);
+    }
+    public void DisableRotation()
+    {
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        turnProvider.leftHandTurnInput.bypass = new ConstantVector2InputReader(Vector2.zero);
+        turnProvider.rightHandTurnInput.bypass = new ConstantVector2InputReader(Vector2.zero);
     }
     #endregion
 

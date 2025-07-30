@@ -20,30 +20,23 @@ public class Fader : MonoBehaviour
     public IEnumerator FadeOut(float time)
     {
         group.blocksRaycasts = true;
-        return Fade(1, time);
+        yield return FadeRoutine(1, time);
     }
 
     public IEnumerator FadeIn(float time)
     {
-        group.blocksRaycasts = false;   
-        return Fade(0, time);
-    }
-
-    private IEnumerator Fade(float target, float time)
-    {
-        if (currentCoroutine != null)
-        {
-            StopCoroutine(currentCoroutine);
-        }
-        currentCoroutine = StartCoroutine(FadeRoutine(target, time));
-        yield return currentCoroutine;
+        group.blocksRaycasts = false;
+        yield return FadeRoutine(0, time);
     }
 
     private IEnumerator FadeRoutine(float target, float time)
     {
+        if (Mathf.Approximately(group.alpha, target))
+            yield break;
+
         while (!Mathf.Approximately(group.alpha, target))
         {
-            group.alpha = Mathf.MoveTowards(group.alpha, target, Time.deltaTime / time);
+            group.alpha = Mathf.MoveTowards(group.alpha, target, Time.unscaledDeltaTime / time);
             yield return null;
         }
     }

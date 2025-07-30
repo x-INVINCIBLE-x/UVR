@@ -30,12 +30,6 @@ public class FollowPlayer : MonoBehaviour
             SetupLazyFollow();
             return;
         }
-
-        if (playerTransform == null)
-        {
-            enabled = false;
-            return;
-        }
     }
 
     private void Update()
@@ -47,6 +41,11 @@ public class FollowPlayer : MonoBehaviour
         if (playerTransform == null)
         {
             playerTransform = PlayerManager.instance.Player.playerBody;
+
+            if (playerTransform == null)
+            {
+                return;
+            }
         }
 
         UpdateFollowPosition();

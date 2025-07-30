@@ -28,7 +28,10 @@ public class Player : MonoBehaviour
 
     public void SetPlayerToSafePosition()
     {
+        PlayerManager.instance.ActionMediator.DisableControl();
+        Debug.Log("Setting player to last safe position: " + lastSafePosition);
         PlayerManager.instance.SetPlayerPosition(lastSafePosition + safePositionOffset);
+        PlayerManager.instance.ActionMediator.EnableControl();
     }
 
     private IEnumerator SafePositionRoutine()
