@@ -5875,7 +5875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dungeonTheme: {fileID: 8300000, guid: 412733ba6bc4a864f82097552f2a79c6, type: 3}
-  battleTheme: {fileID: 8300000, guid: ccba8e8b0a0efbe44b9f42b9fc3ff86d, type: 3}
+  battleTheme: {fileID: 8300000, guid: b33bbff6aeddf1245b1e6b59c59b276a, type: 3}
 --- !u!114 &347583843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26082,10 +26082,9 @@ MonoBehaviour:
     sceneAsset: {fileID: 0}
     scenePath: 
     sceneName: 
-  transitionProvider: {fileID: 0}
-  dungeonScenes: []
+  dungeonDifficultyDatabase: {fileID: 0}
+  dungeonSuccessTransitionScene: []
   dungeonFailTransitionScene: []
-  endGround: {fileID: 0}
 --- !u!114 &1507943893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26106,6 +26105,7 @@ MonoBehaviour:
   buffHolder: {fileID: 0}
   buffOriginOffest: {x: 0, y: 0, z: 0}
   buffHolderOffest: {x: 0, y: 0, z: 0}
+  temporaryBuffs: {fileID: 0}
   buffGroups: []
 --- !u!4 &1507943894
 Transform:
@@ -52084,6 +52084,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card pedestal
       objectReference: {fileID: 0}
+    - target: {fileID: 3242093173590533566, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242093173590533566, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242093173590533566, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242093173590533566, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242093173590533566, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7442049988872730285, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
       propertyPath: m_LocalPosition.x
       value: 448.44666
@@ -52122,6 +52142,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7442049988872730285, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8413022397460673099, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8413022397460673099, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8413022397460673099, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8413022397460673099, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583288112298187079, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583288112298187079, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583288112298187079, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583288112298187079, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583288112298187079, guid: 3f8170003b4510a43bb9b49f7e49f553, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

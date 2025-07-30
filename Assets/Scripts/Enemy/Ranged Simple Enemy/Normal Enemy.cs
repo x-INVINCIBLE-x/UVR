@@ -70,9 +70,7 @@ public class NormalEnemy : SimpleEnemyBase
 
     private void NormalAttack()
     {
-        //Rigidbody rb = Instantiate(bullet, projectileSpawn).GetComponent<Rigidbody>();
-        //rb.AddForce(transform.forward * shootForce, ForceMode.Impulse);
-
+       
         GameObject enemyProjectile = ObjectPool.instance.GetObject(bullet.gameObject, projectileSpawn.position + PlayerBodyOffset);
         PhysicsProjectile projectileInstance = enemyProjectile.GetComponent<PhysicsProjectile>();
 
