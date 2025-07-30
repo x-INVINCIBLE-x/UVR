@@ -1,5 +1,6 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-
 
 
 public class DungeonMusic : MonoBehaviour
@@ -7,19 +8,38 @@ public class DungeonMusic : MonoBehaviour
     public AudioClip dungeonTheme;
     public AudioClip battleTheme;
 
-    
+    private bool inCombat = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
+    {   
+        AudioManager.Instance.PlayMusic(dungeonTheme);
+        EnemyEventManager.Instance.OnEnemySeePlayer  += OnEngageCombat;
+        EnemyEventManager.Instance.OnEnemyLostPlayer += OnDisengageCombat;
+    }
+    private void OnDestroy()
     {
-        AudioManager.Instance.PlayMusic(dungeonTheme);   
+        EnemyEventManager.Instance.OnEnemySeePlayer -= OnEngageCombat;
+        EnemyEventManager.Instance.OnEnemyLostPlayer -= OnDisengageCombat;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEngageCombat(int enemyId)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!inCombat)
         {
-            AudioManager.Instance.PlayMusicWithCrossFade(battleTheme,1f);
+            inCombat = true;
+            AudioManager.Instance.PlayMusicWithCrossFade(battleTheme, 1f);
         }
     }
+    
+    private void OnDisengageCombat(int enemyID)
+    {
+        if(inCombat && EnemyEventManager.Instance.ActiveEnemies.Count == 0)
+        {
+            inCombat = false;
+            AudioManager.Instance.PlayMusicWithCrossFade(dungeonTheme, 1f);
+        }
+    }
+
+  
 }

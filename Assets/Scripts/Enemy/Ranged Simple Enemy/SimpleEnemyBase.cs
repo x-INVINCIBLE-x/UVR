@@ -15,6 +15,7 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected EnemyFXHandler FXManager;
     [SerializeField] protected Animator animator;
 
+
     [SerializeField] protected float sightRange, attackRange;
     [SerializeField] protected float attackCooldownTime = 2f;
     [SerializeField] protected float magicChargeTime = 2f;
@@ -36,13 +37,16 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected EnemyStats enemyStats;
     [SerializeField] protected MeshDissolver dissolver;
 
+
     private Coroutine currentCheckRoutine = null;
+    private int enemyID;
 
     protected virtual void Start()
     {
         Player = PlayerManager.instance.PlayerOrigin.transform;
         animator = GetComponent<Animator>();
         dissolver = GetComponent<MeshDissolver>();
+        enemyID = EnemyEventManager.Instance.GetNewEnemyID();
         enemyStats = GetComponent<EnemyStats>();
         enemyStats.OnDeath += HandleDeath;
     }
@@ -83,6 +87,8 @@ public class SimpleEnemyBase : MonoBehaviour
 
     protected virtual void Patrol()
     {
+        EnemyEventManager.Instance.LostPlayer(enemyID);
+
         FXManager.SpawnExclamationMark(false); // turning off exclamation mark
 
         if (walkPointSet)
@@ -137,6 +143,8 @@ public class SimpleEnemyBase : MonoBehaviour
 
     protected virtual void Chase()
     {
+        EnemyEventManager.Instance.SeePlayer(enemyID);
+
         wasPlayerInSight = true;
         walkPoint = transform.position;
         agent.SetDestination(Player.position);
@@ -146,6 +154,8 @@ public class SimpleEnemyBase : MonoBehaviour
 
     protected virtual void Attack()
     {
+        EnemyEventManager.Instance.SeePlayer(enemyID);
+
         wasPlayerInSight = true;
         FXManager.SpawnQuestionMark(false);
         FXManager.SpawnExclamationMark(false); // turning off exclamation mark
