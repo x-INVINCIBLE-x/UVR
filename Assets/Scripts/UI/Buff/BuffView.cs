@@ -1,29 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using Unity.VisualScripting;
 
 public class BuffView : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI buffNameText;
-    [SerializeField] private TextMeshProUGUI buffFlavourText;
-    [SerializeField] private TextMeshProUGUI buffModifierText;
-    [SerializeField] private TextMeshProUGUI buffEffectorText;
-    [SerializeField] private TextMeshProUGUI buffActivationText;
+    [SerializeField] private Transform cardContainer;
+    [SerializeField] private CardView cardPrefab;
 
-    [SerializeField] private Image buffIcon;
-
-    public void Setup(Buff buff)
+    public void CreateCard(string _title, Sprite _icon, Material _frontMaterial, Material _backMaterial, string _description = "")
     {
-        if (buff == null) return;
-
-        buffNameText.text = buff.GetName();
-        buffFlavourText.text = buff.GetFlavourText();
-        buffModifierText.text = buff.GetModifierInfo();
-        buffEffectorText.text = buff.GetEffectorInfo();
-        buffActivationText.text = buff.GetActivationInfo();
-
-        //buffDescriptionText.text = buff.;
-        //buffIcon.sprite = buff.icon;
+        CardView newCardView = Instantiate(cardPrefab, cardContainer);
+        newCardView.Setup(_title, _icon, _frontMaterial, _backMaterial, _description);
     }
 }

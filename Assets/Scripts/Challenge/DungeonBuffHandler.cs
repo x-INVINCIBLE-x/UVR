@@ -18,7 +18,7 @@ public class DungeonBuffHandler : MonoBehaviour
 {
     [SerializeField] private BuffMaterialInfo[] materialsInfo;
 
-    [SerializeField] private List<DungeonBuffProvider> buffProviders;
+    [SerializeField] private List<BuffProvider> buffProviders;
     public readonly float Dissolve_Duration = 4f;
     private Dictionary<BuffCategory, BuffMaterialInfo> materialInfoDic = new();
 
@@ -112,7 +112,7 @@ public class DungeonBuffHandler : MonoBehaviour
             Buff buffToProvide = availableBuffs[UnityEngine.Random.Range(0, availableBuffs.Count)];
 
             ProvideBuffs(i, buffToProvide, (BuffCategory)choice);
-            BuffView view = holderInteractors[i].GetComponentInChildren<BuffView>();
+            BuffStatsUI view = holderInteractors[i].GetComponentInChildren<BuffStatsUI>();
             if (view != null)
             {
                 view.Setup(buffToProvide);
@@ -124,7 +124,7 @@ public class DungeonBuffHandler : MonoBehaviour
 
     public void ProvideBuffs(int index, Buff buffToProvide, BuffCategory buffCategory)
     {
-        DungeonBuffProvider newCard = Instantiate(buffToProvide.cardDisplay, holderInteractors[index].transform.position, Quaternion.identity);
+        BuffProvider newCard = Instantiate(buffToProvide.cardDisplay, holderInteractors[index].transform.position, Quaternion.identity);
         newCard.Initialize(this, buffToProvide, holderInteractors[index], temporaryBuffs);
         buffProviders.Add(newCard);
     }
@@ -174,7 +174,7 @@ public class DungeonBuffHandler : MonoBehaviour
         }
     }
 
-    public void DisableCardInteraction(DungeonBuffProvider pickProvider)
+    public void DisableCardInteraction(BuffProvider pickProvider)
     {
         for (int i = 0; i < buffProviders.Count; i++)
         {
@@ -187,7 +187,7 @@ public class DungeonBuffHandler : MonoBehaviour
 
     public void BuffPicked()
     {
-        foreach (DungeonBuffProvider buffProvider in buffProviders)
+        foreach (BuffProvider buffProvider in buffProviders)
         {
             DisableCardInteraction(null);
             buffProvider.Close();

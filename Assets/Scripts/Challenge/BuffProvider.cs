@@ -3,10 +3,9 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
-using static UnityEngine.Rendering.GPUSort;
 
 [RequireComponent(typeof(BoxCollider))]
-public class DungeonBuffProvider : MonoBehaviour
+public class BuffProvider : MonoBehaviour
 {
     private XRGrabInteractable grabInteractable;
     private Buff buffToApply;
@@ -15,7 +14,7 @@ public class DungeonBuffProvider : MonoBehaviour
 
     private XRSocketInteractor socket;
     private TemporaryBuffs temporaryBuff;
-    private BuffView buffView;
+    private BuffStatsUI buffView;
 
     private int layerMask;
 

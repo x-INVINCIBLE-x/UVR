@@ -42,6 +42,8 @@ public class ActionMediator : MonoBehaviour
     [field: SerializeField] public ActionStatus LastActionStatus { get; private set; } = ActionStatus.None;
 
     private float defaultSpeed;
+    [SerializeField] private float rotationFixDuration = 1f;
+    private Coroutine rotationFixRoutine = null;
 
     public class ConstantVector2InputReader : IXRInputValueReader<Vector2>
     {
@@ -94,6 +96,14 @@ public class ActionMediator : MonoBehaviour
                 EnableMovement();
                 rb.isKinematic = defaultKinematicStatus;
                 //DisablePhysicalMotionOnLand();
+            }
+        }
+
+        if (!grabStatus.IsSwinging())
+        {
+            if (LastActionStatus == ActionStatus.Swing && rotationFixRoutine == null)
+            {
+                rotationFixRoutine = StartCoroutine(RotateTo(rb.transform, Vector3.zero, rotationFixDuration));
             }
         }
 
@@ -216,6 +226,35 @@ public class ActionMediator : MonoBehaviour
     public void TimeScaleUpdated(float timeModifier) => OnTimeModified?.Invoke(timeModifier);
 
     #endregion
+
+    private IEnumerator RotateTo(Transform transform, Vector3 targetEulerAngles, float duration)
+    {
+        Quaternion startRotation = transform.rotation;
+
+        Vector3 currentEuler = transform.eulerAngles;
+        Vector3 targetEuler = new Vector3(0f, currentEuler.y, 0f);
+        Quaternion endRotation = Quaternion.Euler(targetEuler);
+
+        float timeElapsed = 0f;
+
+        while (timeElapsed < duration)
+        {
+            float t = timeElapsed / duration;
+
+            // You can use Quaternion.Slerp here too for cleaner rotation
+            float x = Mathf.LerpAngle(currentEuler.x, 0f, t);
+            float y = currentEuler.y;
+            float z = Mathf.LerpAngle(currentEuler.z, 0f, t);
+            transform.rotation = Quaternion.Euler(x, y, z);
+
+            timeElapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        transform.rotation = Quaternion.Euler(0f, currentEuler.y, 0f);
+        rotationFixRoutine = null;
+    }
+
 
     public bool IsGrounded()
     {

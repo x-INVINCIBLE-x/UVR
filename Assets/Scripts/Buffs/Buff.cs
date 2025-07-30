@@ -22,7 +22,10 @@ public class Buff : ScriptableObject
     public string buffName;
     [TextArea]
     public string flavourText;
-    public DungeonBuffProvider cardDisplay;
+    public Sprite icon;
+    public Material frontMaterial;
+    public Material backMaterial;
+    public BuffProvider cardDisplay;
 
     [Header("Activation Property")]
     public ActivationType ActivationType;

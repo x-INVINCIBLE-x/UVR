@@ -252,6 +252,21 @@ public class TemporaryBuffs : MonoBehaviour
     private void AddHitBuff(Buff buff) => onHitBuffs.Add(new BuffInfo(buff, -10f));
     private void AddDamageBuff(Buff buff) => onDamageBuffs.Add(new BuffInfo(buff, -10f));
 
+    public IEnumerable<Buff> GetCurrentBuffs()
+    {
+        foreach (var buff in oneOffBufffs)
+            yield return buff;
+
+        foreach (var buff in timerBuffs)
+            yield return buff;
+
+        foreach (BuffInfo buffInfo in onHitBuffs)
+            yield return buffInfo.buff;
+
+        foreach (BuffInfo buffInfo in onDamageBuffs)
+            yield return buffInfo.buff;
+    }
+
     private void OnDestroy()
     {
         ChallengeManager.instance.OnChallengeStart -= ActivateAllBuffs;

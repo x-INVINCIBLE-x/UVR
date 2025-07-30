@@ -304,8 +304,16 @@ public class GridFormationController : FormationProvider
 
             Quaternion randomYRotation = Quaternion.Euler(0f, 90f * Random.Range(0, 4), 0f);
             GameObject newBlock = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform);
-            if (deactivateOnSpawn)
-                newBlock.transform.GetChild(0).gameObject.SetActive(false);
+            try
+            {
+                if (deactivateOnSpawn)
+                    newBlock.transform.GetChild(0).gameObject.SetActive(false);
+
+            }
+            catch
+            {
+                Debug.LogWarning("Prefab " + prefabToSpawn.name + " does not have a child to deactivate.");
+            }
             instances.Add(newBlock.transform);
 
             count++;
