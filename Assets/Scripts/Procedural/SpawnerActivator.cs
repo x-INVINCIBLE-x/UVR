@@ -18,7 +18,8 @@ public class SpawnerActivator : MonoBehaviour
         Spawner spawner = other.GetComponentInParent<Spawner>();
         if (spawner == null)
         {
-            other.transform.GetChild(0).gameObject.SetActive(true);
+            if (other.transform.childCount > 0) 
+                other.transform.GetChild(0).gameObject.SetActive(true);
             return;
         }
 
@@ -48,7 +49,8 @@ public class SpawnerActivator : MonoBehaviour
         Spawner spawner = other.GetComponentInParent<Spawner>();
         if (spawner == null)
         {
-            other.transform.GetChild(0).gameObject.SetActive(false);
+            if (other.transform.childCount > 0)
+                other.transform.GetChild(0).gameObject.SetActive(false);
             return;
         }
         if (!spawnerColliderCounts.ContainsKey(spawner)) return;

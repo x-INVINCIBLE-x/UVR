@@ -93,105 +93,125 @@ public class SceneTransitionProvider : MonoBehaviour
 
     private IEnumerator TransitionRoutine()
     {
-        // --- Fade out from current scene ---
-        if (fader != null)
-            yield return fader.FadeOut(fadeInTime);
+        yield return HandleFadeOut();
 
-        // --- Load transition scene ---
-        // --- Remember the currently active scene ---
         Scene previousScene = SceneManager.GetActiveScene();
-        SceneReference currentTransitionScene =  providedTransitionScene != null && providedTransitionScene.IsValid ? 
-                providedTransitionScene : transitionScene;
+        SceneReference currentTransitionScene = (providedTransitionScene != null && providedTransitionScene.IsValid)
+            ? providedTransitionScene
+            : (transitionScene != null && transitionScene.IsValid ? transitionScene : null);
 
-        // --- Load transition scene ---
-        AsyncOperation loadTransition = SceneManager.LoadSceneAsync(currentTransitionScene.SceneName, LoadSceneMode.Additive);
-        yield return new WaitUntil(() => loadTransition.isDone);
-
-        Scene transitionLoadedScene = SceneManager.GetSceneByName(currentTransitionScene.SceneName);
-
-        SceneManager.MoveGameObjectToScene(Core, transitionLoadedScene);
-        SceneManager.SetActiveScene(transitionLoadedScene);
-
-        // --- Unload the previous scene now that transition is ready ---
-        if (previousScene.name != currentTransitionScene.SceneName)
+        if (currentTransitionScene != null)
         {
-            SceneManager.UnloadSceneAsync(previousScene);
-        }
-
-        // --- Set Core spawn in transition scene ---
-        LevelManager transitionLevelManager = null;
-        foreach (GameObject root in transitionLoadedScene.GetRootGameObjects())
-        {
-            transitionLevelManager = root.GetComponentInChildren<LevelManager>();
-            if (transitionLevelManager != null)
-                break;
-        }
-
-        if (transitionLevelManager != null)
-        {
-            transitionLevelManager.SetPlayerToSpawnPosition();
+            yield return TransitionWithIntermediate(previousScene, currentTransitionScene);
         }
         else
         {
-            Debug.LogWarning("LevelManager or spawnPoint not found in transition scene.");
+            yield return TransitionDirectly(previousScene);
         }
+    }
 
-        // Fade in to reveal transition scene (optional)
-        if (fader != null)
-            yield return fader.FadeIn(1f);
+    private IEnumerator TransitionWithIntermediate(Scene previousScene, SceneReference transitionSceneRef)
+    {
+        yield return LoadAndEnterScene(transitionSceneRef);
 
-        // --- Load target scene ---
+        if (previousScene.name != transitionSceneRef.SceneName)
+            yield return UnloadScene(previousScene.name);
+
+        yield return HandleFadeIn();
+
         AsyncOperation loadTarget = SceneManager.LoadSceneAsync(targetScene.SceneName, LoadSceneMode.Additive);
         loadTarget.allowSceneActivation = false;
-
-        // Wait until loading is *almost* done (Unity stalls at 0.9f)
         yield return new WaitUntil(() => loadTarget.progress >= 0.9f);
 
-        // Optional delay (e.g., play animation in transition scene)
         yield return new WaitForSeconds(stayDuraion);
+        yield return HandleFadeOut();
 
-        // Fade out BEFORE activating the target scene
-        if (fader != null)
-            yield return fader.FadeOut(1f);
-
-        // Now allow activation
         loadTarget.allowSceneActivation = true;
-
-        // Wait for scene activation to complete
         yield return new WaitUntil(() => loadTarget.isDone);
 
-        // (No fade-out again here — you already faded before activation)
+        Scene targetSceneObj = SceneManager.GetSceneByName(targetScene.SceneName);
+        SceneManager.MoveGameObjectToScene(Core, targetSceneObj);
+        SceneManager.SetActiveScene(targetSceneObj);
 
-        // Move Core to the new scene
-        Scene targetLoadedScene = SceneManager.GetSceneByName(targetScene.SceneName);
-        SceneManager.MoveGameObjectToScene(Core, targetLoadedScene);
-        SceneManager.SetActiveScene(targetLoadedScene);
+        LevelManager lm = GetLevelManagerFromScene(targetSceneObj);
+        if (lm != null)
+            lm.SetPlayerToSpawnPosition();
 
-        // Set player spawn
-        LevelManager targetLevelManager = null;
-        foreach (GameObject root in targetLoadedScene.GetRootGameObjects())
-        {
-            targetLevelManager = root.GetComponentInChildren<LevelManager>();
-            if (targetLevelManager != null)
-                break;
-        }
+        yield return HandleFadeIn();
 
-        if (targetLevelManager != null)
-        {
-            targetLevelManager.SetPlayerToSpawnPosition();
-        }
+        yield return UnloadScene(transitionSceneRef.SceneName);
+    }
+
+    private IEnumerator TransitionDirectly(Scene previousScene)
+    {
+        AsyncOperation loadTarget = SceneManager.LoadSceneAsync(targetScene.SceneName, LoadSceneMode.Additive);
+        loadTarget.allowSceneActivation = false;
+        yield return new WaitUntil(() => loadTarget.progress >= 0.9f);
+
+        yield return new WaitForSeconds(0.1f);
+        yield return HandleFadeOut();
+
+        loadTarget.allowSceneActivation = true;
+        yield return new WaitUntil(() => loadTarget.isDone);
+
+        Scene targetSceneObj = SceneManager.GetSceneByName(targetScene.SceneName);
+        SceneManager.MoveGameObjectToScene(Core, targetSceneObj);
+        SceneManager.SetActiveScene(targetSceneObj);
+
+        LevelManager lm = GetLevelManagerFromScene(targetSceneObj);
+        if (lm != null)
+            lm.SetPlayerToSpawnPosition();
+
+        yield return HandleFadeIn();
+
+        yield return UnloadScene(previousScene.name);
+    }
+
+    private IEnumerator LoadAndEnterScene(SceneReference sceneRef)
+    {
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneRef.SceneName, LoadSceneMode.Additive);
+        yield return new WaitUntil(() => loadOp.isDone);
+
+        Scene loadedScene = SceneManager.GetSceneByName(sceneRef.SceneName);
+        SceneManager.MoveGameObjectToScene(Core, loadedScene);
+        SceneManager.SetActiveScene(loadedScene);
+
+        LevelManager lm = GetLevelManagerFromScene(loadedScene);
+        if (lm != null)
+            lm.SetPlayerToSpawnPosition();
         else
-        {
-            Debug.LogWarning("LevelManager or spawnPoint not found in target scene.");
-        }
+            Debug.LogWarning($"LevelManager or spawnPoint not found in scene: {sceneRef.SceneName}");
+    }
 
-        // Final fade-in AFTER scene activation
+    private IEnumerator UnloadScene(string sceneName)
+    {
+        if (SceneManager.GetSceneByName(sceneName).isLoaded)
+            SceneManager.UnloadSceneAsync(sceneName);
+        yield return null;
+    }
+
+
+    private LevelManager GetLevelManagerFromScene(Scene scene)
+    {
+        foreach (GameObject root in scene.GetRootGameObjects())
+        {
+            LevelManager lm = root.GetComponentInChildren<LevelManager>();
+            if (lm != null)
+                return lm;
+        }
+        return null;
+    }
+
+    private IEnumerator HandleFadeOut()
+    {
+        if (fader != null)
+            yield return fader.FadeOut(fadeInTime);
+    }
+
+    private IEnumerator HandleFadeIn()
+    {
         if (fader != null)
             yield return fader.FadeIn(1f);
-
-
-        // --- Unload other scenes ---
-        SceneManager.UnloadSceneAsync(currentTransitionScene.SceneName);
     }
 
     GameObject FindRootCore()

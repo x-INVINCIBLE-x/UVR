@@ -295,6 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useLazyFollow: 0
+  rotateWithPlayer: 0
   followY: 0
   followPlayerOnce: 0
   offset: {x: 0, y: 0, z: 0}
@@ -630,6 +631,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -158.75702
       objectReference: {fileID: 0}
+    - target: {fileID: 4328809727279665460, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328809727279665460, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328809727279665460, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328809727279665460, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4904581765190275641, guid: 342d8c61967628541a04456b961334a1, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.9900036
@@ -956,10 +973,9 @@ MonoBehaviour:
     sceneAsset: {fileID: 0}
     scenePath: 
     sceneName: 
-  transitionProvider: {fileID: 0}
-  dungeonScenes: []
+  dungeonDifficultyDatabase: {fileID: 0}
+  dungeonSuccessTransitionScene: []
   dungeonFailTransitionScene: []
-  endGround: {fileID: 0}
 --- !u!114 &813717919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,6 +996,7 @@ MonoBehaviour:
   buffHolder: {fileID: 0}
   buffOriginOffest: {x: 0, y: 0, z: 0}
   buffHolderOffest: {x: 0, y: 0, z: 0}
+  temporaryBuffs: {fileID: 0}
   buffGroups: []
 --- !u!4 &813717920
 Transform:
@@ -1026,8 +1043,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolSize: 10
-  weaponPickup: {fileID: 0}
-  ammoPickup: {fileID: 0}
 --- !u!4 &942624014
 Transform:
   m_ObjectHideFlags: 0
@@ -1206,7 +1221,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

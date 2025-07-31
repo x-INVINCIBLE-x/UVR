@@ -48,11 +48,12 @@ public class DashAction : Action
 
     private IEnumerator DashRoutine()
     {
-        //isActive = true;
         actionMediator.immuneInterpolation = true;
         actionMediator.SetPhysicalMotion(true, true);
+
         float timer = 0f;
 
+        // Compute direction once
         direction = headTransform.right * input.x + headTransform.forward * input.y;
         direction.y = 0f;
         direction.Normalize();
@@ -61,25 +62,27 @@ public class DashAction : Action
 
         while (timer < dashDuration)
         {
-            rb.linearVelocity = dashVelocity * (1/Time.timeScale);
+            Vector3 moveDelta = dashVelocity * Time.unscaledDeltaTime;
+            rb.MovePosition(rb.position + moveDelta);
+
             timer += Time.unscaledDeltaTime;
             yield return null;
         }
 
-        //isActive = false;
         actionMediator.immuneInterpolation = false;
-        rb.linearVelocity = Vector3.zero;
 
         if (actionMediator.IsGrounded())
             actionMediator.DisablePhysicalMotion(0f, true);
         else
             actionMediator.DisablePhysicalMotionOnLand(true);
+
+        dashCoroutine = null;
     }
 
     //private void HandleTimeModification(float modifier)
     //{
-    //    if (isActive)
-    //        actionMediator.rb.interpolation = RigidbodyInterpolation.Interpolate;
+    //    if (dashCoroutine != null)
+    //        actionMediator.rb.interpolation = RigidbodyInterpolation.None;
     //}
 
     protected override void OnDestroy()

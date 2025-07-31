@@ -54,7 +54,7 @@ public class Action : MonoBehaviour
 
     protected virtual bool CanUseAbility()
     {
-        if (!isPermitted || lastTimeSkillUsed + skillCooldown > Time.time)
+        if (!isPermitted || lastTimeSkillUsed + skillCooldown > Time.unscaledTime)
         {
             return false;
         }
