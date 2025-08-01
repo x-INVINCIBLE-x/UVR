@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using DG.Tweening;
+using System.Collections.Generic;
 
 public class EnemyFXHandler : MonoBehaviour
 {
@@ -124,75 +124,91 @@ public class EnemyFXHandler : MonoBehaviour
 
     public void SpawnExclamationMark(bool Activate = true)
     {
-       
         if (Activate)
         {
             if (currentExclamationMark != null)
-                return; 
-
-            // Spawn new exclamation mark
-            currentExclamationMark = Instantiate(ExclamationUI, ExclamationSpawn.position, Quaternion.identity,ExclamationSpawn);
-            currentExclamationMark.transform.localScale = new Vector3(1f * ExclamationScale, 1f * ExclamationScale, 1f * ExclamationScale);
-            CanvasGroup exclamationCanvasGroup = currentExclamationMark.GetComponentInChildren<CanvasGroup>();
-
-            exclamationCanvasGroup.alpha = 0.0f;
-            exclamationCanvasGroup.DOFade(1, 0.7f); // Fade in
-        }
-
-       
-        else
-        {
-            if (currentExclamationMark == null)
             {
-               
+                CanvasGroup group = currentExclamationMark.GetComponentInChildren<CanvasGroup>();
+                if (group != null)
+                    StartCoroutine(FadeOutThenIn(group, 0.3f, 0.7f));
+
                 return;
             }
 
-            CanvasGroup exclamationCanvasGroup = currentExclamationMark.GetComponentInChildren<CanvasGroup>();
-            if (exclamationCanvasGroup != null)
+            currentExclamationMark = Instantiate(ExclamationUI, ExclamationSpawn.position, Quaternion.identity, ExclamationSpawn);
+            currentExclamationMark.transform.localScale = Vector3.one * ExclamationScale;
+
+            CanvasGroup groupNew = currentExclamationMark.GetComponentInChildren<CanvasGroup>();
+            if (groupNew != null)
             {
-               
-                exclamationCanvasGroup.DOFade(0, 0.7f).OnComplete(() =>
-                {
-                    Destroy(currentExclamationMark); 
-                    currentExclamationMark = null;   
-                });
+                groupNew.alpha = 0f;
+                StartCoroutine(FadeCanvasGroup(groupNew, 0f, 1f, 0.7f));
             }
+        }
+        else
+        {
+            if (currentExclamationMark == null) return;
+
+            CanvasGroup group = currentExclamationMark.GetComponentInChildren<CanvasGroup>();
+            if (group != null)
+                StartCoroutine(FadeCanvasGroup(group, group.alpha, 0f, 0.5f));
         }
     }
 
+
     public void SpawnQuestionMark(bool Activate = true)
     {
-
         if (Activate)
         {
             if (currentQuestionMark != null)
+            {
+                CanvasGroup group = currentQuestionMark.GetComponentInChildren<CanvasGroup>();
+                if (group != null)
+                    StartCoroutine(FadeOutThenIn(group, 0.3f, 0.7f));
+
                 return;
+            }
 
-            // Spawn new Question mark
-            currentQuestionMark = Instantiate(QuestionMarkUI,QuestionMarkSpawn.position, Quaternion.identity, QuestionMarkSpawn);
-            currentQuestionMark.transform.localScale = new Vector3(1f * QuestionMarkScale, 1f * QuestionMarkScale, 1f * QuestionMarkScale);
-            CanvasGroup questionCanvasGroup = currentQuestionMark.GetComponentInChildren<CanvasGroup>();
+            currentQuestionMark = Instantiate(QuestionMarkUI, QuestionMarkSpawn.position, Quaternion.identity, QuestionMarkSpawn);
+            currentQuestionMark.transform.localScale = Vector3.one * QuestionMarkScale;
 
-            questionCanvasGroup.alpha = 0.0f;
-            questionCanvasGroup.DOFade(1, 0.7f); // Fade in
+            CanvasGroup groupNew = currentQuestionMark.GetComponentInChildren<CanvasGroup>();
+            if (groupNew != null)
+            {
+                groupNew.alpha = 0f;
+                StartCoroutine(FadeCanvasGroup(groupNew, 0f, 1f, 0.7f));
+            }
         }
-
-
         else
         {
             if (currentQuestionMark == null) return;
-            
-            CanvasGroup questionCanvasGroup = currentQuestionMark.GetComponentInChildren<CanvasGroup>();
-            if (questionCanvasGroup != null)
-            {
-                questionCanvasGroup.DOFade(0, 0.7f).OnComplete(() =>
-                {
-                    Destroy(currentQuestionMark);
-                    currentQuestionMark = null;
-                });
-            }
+
+            CanvasGroup group = currentQuestionMark.GetComponentInChildren<CanvasGroup>();
+            if (group != null)
+                StartCoroutine(FadeCanvasGroup(group, group.alpha, 0f, 0.5f));
         }
+    }
+
+    private IEnumerator FadeCanvasGroup(CanvasGroup group, float startAlpha, float endAlpha, float duration)
+    {
+        float elapsed = 0f;
+        group.alpha = startAlpha;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            group.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsed / duration);
+            yield return null;
+        }
+
+        group.alpha = endAlpha;
+    }
+
+    private IEnumerator FadeOutThenIn(CanvasGroup group, float fadeOutDuration, float fadeInDuration)
+    {
+        float currentAlpha = group.alpha;
+        yield return StartCoroutine(FadeCanvasGroup(group, currentAlpha, 0f, fadeOutDuration));
+        yield return StartCoroutine(FadeCanvasGroup(group, 0f, 1f, fadeInDuration));
     }
 
 }
