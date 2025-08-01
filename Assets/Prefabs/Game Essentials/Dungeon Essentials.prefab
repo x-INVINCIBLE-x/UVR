@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <DifficultyLevel>k__BackingField: 1
-  levelsToComplete: 2
+  levelsToComplete: 5
   cityScene:
     sceneAsset: {fileID: 102900000, guid: 72c96a6fe86774c44afdb5ea69ea8cb4, type: 3}
     scenePath: Assets/Scenes/--- Build Scenes ---/Gothic City.unity
@@ -138,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7656869024173632173}
   - component: {fileID: 3321683624302865404}
-  - component: {fileID: 429152537077773088}
+  - component: {fileID: 6902093694761818149}
   m_Layer: 0
   m_Name: Challenge Manager
   m_TagString: Untagged
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   challenges: []
   possibleChallenges: 
---- !u!114 &429152537077773088
+--- !u!114 &6902093694761818149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,14 +184,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5414482438387155517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 427a280bd8068224a9067596071ce3c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c692bf708953134b85125e13efd2a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  challengeID: TimeTrial
-  targetAmount: 10
-  challengeDuration: 3
-  bonusTime: 2
-  currentObjective: 0
+  challengeID: Survival
+  survivalDuration: 5
+  timer: 0
 --- !u!1 &5943628886930519494
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,15 +320,43 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
       propertyPath: propEntries.Array.size
-      value: 0
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
+      propertyPath: propEntries.Array.data[0].propType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
+      propertyPath: propEntries.Array.data[1].propType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
+      propertyPath: propEntries.Array.data[2].propType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
+      propertyPath: propEntries.Array.data[0].difficultyLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
+      propertyPath: propEntries.Array.data[1].difficultyLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
+      propertyPath: propEntries.Array.data[2].difficultyLevel
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
       propertyPath: propEntries.Array.data[0].prefabs.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
       propertyPath: propEntries.Array.data[1].prefabs.Array.size
-      value: 3
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
+      propertyPath: propEntries.Array.data[2].prefabs.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
       propertyPath: 'propEntries.Array.data[0].prefabs.Array.data[0]'
@@ -347,7 +373,7 @@ PrefabInstance:
     - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
       propertyPath: 'propEntries.Array.data[1].prefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 8630107434738895474, guid: 8bb230420c0b76e46ba4ba5c0b71265f, type: 3}
+      objectReference: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
     - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
       propertyPath: 'propEntries.Array.data[1].prefabs.Array.data[1]'
       value: 
@@ -356,6 +382,10 @@ PrefabInstance:
       propertyPath: 'propEntries.Array.data[1].prefabs.Array.data[2]'
       value: 
       objectReference: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
+    - target: {fileID: 1256092208276129089, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
+      propertyPath: 'propEntries.Array.data[2].prefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4278819633340082520, guid: 44c02b5c6387da84b80db1fbf371926a, type: 3}
     - target: {fileID: 1690784495678649234, guid: edd9ecc2e0108d24db6c3de5afe5edb7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

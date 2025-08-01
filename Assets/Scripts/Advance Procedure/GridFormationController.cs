@@ -47,6 +47,10 @@ public class GridFormationController : FormationProvider
     [SerializeField] private bool drawGizmos;
     [SerializeField] private bool deactivateOnSpawn = false;
     [SerializeField] private int spawnPerFrame = 5;
+    [SerializeField] private GridFormationData saveToSO;
+
+    [SerializeField] private GridFormationDatabase gridDatabase;
+    [SerializeField] private string groupKey = "default"; 
 
     [Header("Radius Based Prefabs")]
     public List<RadiusBasedPrefab> radiusPrefabs = new List<RadiusBasedPrefab>();
@@ -84,13 +88,98 @@ public class GridFormationController : FormationProvider
         }
     }
 #endif
+#if UNITY_EDITOR
+    [ContextMenu("Editor: Generate Initial Grid and Spawn")]
+    private void Editor_GenerateInitialGridAndSpawn()
+    {
+        if (Application.isPlaying)
+        {
+            Debug.LogWarning("Use this only in Edit Mode.");
+            return;
+        }
+
+        InitializeFormations();
+
+        if (positionsPerFormation.Count == 0 || positionsPerFormation[0].Count == 0)
+        {
+            Debug.LogError("Failed to initialize base formation.");
+            return;
+        }
+
+        SpawnFormation(0); // Use the 0 index for spawn formation
+        Debug.Log("Initial formation spawned. You may now reposition the blocks.");
+    }
+
+    [ContextMenu("Editor: Save Current Positions to Formation[0]")]
+    private void Editor_SaveCurrentPositionsAsBaseFormation()
+    {
+        if (Application.isPlaying)
+        {
+            Debug.LogWarning("Use this only in Edit Mode.");
+            return;
+        }
+
+        if (instances == null || instances.Count == 0)
+        {
+            Debug.LogError("No instances found in scene to save.");
+            return;
+        }
+
+        if (positionsPerFormation.Count == 0)
+            positionsPerFormation.Add(new List<Vector3>());
+
+        positionsPerFormation[0] = new List<Vector3>();
+        foreach (var inst in instances)
+        {
+            positionsPerFormation[0].Add(inst.localPosition);
+        }
+
+        Debug.Log("Saved current positions as base spawn formation at index 0.");
+    }
+
+    [ContextMenu("Editor: Delete Spawned Grid")]
+    private void Editor_DeleteSpawnedGrid()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            GameObject.DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+        instances.Clear();
+        positionsPerFormation.Clear();
+        Debug.Log("Cleared grid.");
+    }
+
+    [ContextMenu("Editor: Export Formation[0] to ScriptableObject")]
+    private void Editor_ExportToScriptableObject()
+    {
+        if (saveToSO == null)
+        {
+            Debug.LogError("No ScriptableObject assigned to saveToSO.");
+            return;
+        }
+
+        if (positionsPerFormation.Count == 0 || positionsPerFormation[0].Count == 0)
+        {
+            Debug.LogError("No formation data to save.");
+            return;
+        }
+
+        saveToSO.positions = new List<Vector3>(positionsPerFormation[0]);
+
+        UnityEditor.EditorUtility.SetDirty(saveToSO);
+        UnityEditor.AssetDatabase.SaveAssets();
+
+        Debug.Log("Exported Formation[0] to ScriptableObject.");
+    }
+
+#endif
 
     private void Awake()
     {
         navMeshSurfaces = GetComponents<NavMeshSurface>();
     }
 
-    void Start()
+    private void Start()
     {
         if (!Application.isPlaying) return;
 
@@ -98,19 +187,11 @@ public class GridFormationController : FormationProvider
 
         if (difficultyLevel >= formations.Count)
         {
-            Debug.Log("<color=cyan>  " + gameObject.name + "</color> <color=green>has no data for CURRENT DIFFICULTY. Reverting to LAST DIFFICULTY DATA </color>");
+            Debug.LogWarning($"{gameObject.name} has no config for this difficulty level, using last available.");
             difficultyLevel = formations.Count - 1;
         }
 
-        //DungeonManager.Instance.OnDifficultyChange += HandleDifficultyChange;
-        InitializeFormations();
-        //SpawnFormation(currentIndex);
-        //StartCoroutine(SpawnFormationGradually(positionsPerFormation[currentIndex]));
-
-        //StartCoroutine(BuildNavMesh());
-        //StartCoroutine(BuildNavMeshGradually());
-
-        StartCoroutine(SpawnFormationGraduallyThenBuildNavMesh(positionsPerFormation[currentIndex]));
+        SetupFormationFromDatabaseAtRuntime();
     }
 
 
@@ -118,16 +199,11 @@ public class GridFormationController : FormationProvider
     {
         yield return StartCoroutine(SpawnFormationGradually(positions));
         yield return StartCoroutine(BuildNavMeshGradually());
+        if (PrioritySceneGate.Instance != null)
+        {
+            PrioritySceneGate.Instance.MarkReady();
+        }
     }
-
-    //private void HandleDifficultyChange(int difficultyLevel)
-    //{
-    //    this.difficultyLevel = difficultyLevel;
-    //    currentIndex = 0;
-    //    InitializeFormations();
-    //}
-
-    //public void StartFormation() => SpawnFormation(currentIndex);
 
     void Update()
     {
@@ -141,13 +217,46 @@ public class GridFormationController : FormationProvider
             timer += Time.deltaTime;
             float t = Mathf.Clamp01(timer / transitionDuration);
             for (int i = 0; i < instances.Count; i++)
-                instances[i].localPosition = Vector3.Lerp(transitionStart[i], transitionTarget[i], t);
+            {
+                Vector3 currentPos = transitionStart[i];
+                Vector3 targetPos = transitionTarget[i];
+                instances[i].localPosition = new Vector3(
+                    currentPos.x,
+                    Mathf.Lerp(currentPos.y, targetPos.y, t),
+                    currentPos.z
+                );
+
+            }
+            //instances[i].localPosition = Vector3.Lerp(transitionStart[i], transitionTarget[i], t); // Update X and Z also
             if (timer >= transitionDuration)
             {
                 isTransitioning = false;
                 currentIndex = (currentIndex + 1) % formations[difficultyLevel].config.Count;
             }
         }
+    }
+
+    private void SetupFormationFromDatabaseAtRuntime()
+    {
+        if (gridDatabase == null)
+        {
+            Debug.LogError("Grid database is not assigned.");
+            return;
+        }
+        Debug.Log($"Loading random formation for group '{groupKey}' from database...");
+        var data = gridDatabase.GetRandomUniqueFormation(groupKey);
+        if (data == null || data.positions == null || data.positions.Count == 0)
+        {
+            Debug.LogError("Grid formation data is missing or empty.");
+            return;
+        }
+
+        // Use this base to compute all formations
+        RecomputeFormationsFromBase(data.positions);
+        currentIndex = 0;
+
+        // Gradual spawn with navmesh bake
+        StartCoroutine(SpawnFormationGraduallyThenBuildNavMesh(positionsPerFormation[currentIndex]));
     }
 
 
@@ -161,20 +270,144 @@ public class GridFormationController : FormationProvider
         }
     }
 
-    private IEnumerator BuildNavMesh()
+    [ContextMenu("Load Random Formation From Database")]
+    public void LoadRandomFormationFromDatabase()
     {
-        yield return new WaitForEndOfFrame();
-
-        //float startTime = Time.realtimeSinceStartup;
-
-        foreach (NavMeshSurface surface in navMeshSurfaces)
+        if (gridDatabase == null)
         {
-            surface.BuildNavMesh();
-            yield return new WaitForEndOfFrame();
+            Debug.LogError("Grid database not assigned.");
+            return;
         }
-        
-        //Debug.Log("NavMesh bake time: " + (Time.realtimeSinceStartup - startTime) + " seconds");
-        //navMeshSurface.BuildNavMesh();
+
+        var data = gridDatabase.GetRandomUniqueFormation(groupKey);
+        if (data == null || data.positions == null || data.positions.Count == 0)
+        {
+            Debug.LogError("No grid data returned.");
+            return;
+        }
+
+        // Convert to basePositionsList and recompute all formations
+        RecomputeFormationsFromBase(data.positions);
+
+        currentIndex = 0;
+
+        if (instances.Count == 0)
+        {
+            SpawnFormation(0);
+        }
+        else
+        {
+            RepositionInstances(positionsPerFormation[0]);
+        }
+    }
+
+    private void RepositionInstances(List<Vector3> positions)
+    {
+        if (instances.Count != positions.Count)
+        {
+            Debug.LogWarning("Instance count mismatch. Destroying and respawning.");
+            SpawnFormation(0);
+            return;
+        }
+
+        for (int i = 0; i < instances.Count; i++)
+        {
+            instances[i].localPosition = positions[i];
+        }
+    }
+
+    [ContextMenu("Reload Random Formation")]
+    public void ReloadRandomFormation()
+    {
+        // Clean up existing instances
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+        instances.Clear();
+        positionsPerFormation.Clear();
+
+        // Get new formation from DB
+        var data = gridDatabase.GetRandomUniqueFormation(groupKey);
+        if (data == null || data.positions == null || data.positions.Count == 0)
+        {
+            Debug.LogError("Failed to reload formation: no valid data.");
+            return;
+        }
+
+        // Recompute positions and spawn
+        RecomputeFormationsFromBase(data.positions);
+        currentIndex = 0;
+
+        StartCoroutine(SpawnFormationGraduallyThenBuildNavMesh(positionsPerFormation[currentIndex]));
+        Debug.Log("Reloaded new formation from group: " + groupKey);
+    }
+
+    private void RecomputeFormationsFromBase(List<Vector3> basePositions)
+    {
+        // Update grid span based on loaded data
+        if (cuboidPrefabs.Count > 0)
+        {
+            var sample = cuboidPrefabs[0].prefab;
+            gridSpanX = EstimateTotalSpan(sample, gridWidth, minSpacing, maxSpacing);
+            gridSpanZ = EstimateTotalSpan(sample, gridDepth, minSpacing, maxSpacing);
+        }
+        gridCenter = transform.position + new Vector3(gridSpanX / 2f, 0, gridSpanZ / 2f);
+
+        positionsPerFormation.Clear();
+
+        var baseXZ = new List<Vector2>();
+        foreach (var p in basePositions)
+            baseXZ.Add(new Vector2(p.x, p.z));
+
+        for (int f = 0; f < formations[difficultyLevel].config.Count; f++)
+        {
+            var config = formations[difficultyLevel].config[f];
+            float safeY = maxJitterY * (1f - density);
+            var list = new List<Vector3>();
+
+            for (int i = 0; i < baseXZ.Count; i++)
+            {
+                float px = baseXZ[i].x;
+                float pz = baseXZ[i].y;
+                float y = EvaluateFormation(config.type, new Vector3(px, transform.position.y, pz), f);
+                if (config.jitterY)
+                    y += Random.Range(-safeY, safeY);
+                list.Add(new Vector3(px, y, pz));
+            }
+
+            // Clear central radius areas
+            foreach (var rp in radiusPrefabs)
+            {
+                if (rp.centerElement != null && rp.centralElementRadius > 0f)
+                {
+                    Vector2 cXZ = new Vector2(
+                        gridCenter.x + rp.centerOffset.x,
+                        gridCenter.z + rp.centerOffset.z
+                    );
+
+                    list.RemoveAll(p =>
+                        Vector2.Distance(new Vector2(p.x, p.z), cXZ)
+                        <= rp.centralElementRadius
+                    );
+                }
+            }
+
+            // Add ring centers last
+            foreach (var rp in radiusPrefabs)
+            {
+                if (rp.centerElement != null)
+                {
+                    Vector3 centerXZ = gridCenter + rp.centerOffset;
+                    float y = EvaluateFormation(config.type, centerXZ, f);
+                    list.Add(new Vector3(centerXZ.x, y, centerXZ.z));
+                }
+            }
+
+            positionsPerFormation.Add(list);
+        }
+
+        Debug.Log("Computed positionsPerFormation from database base grid.");
     }
 
     public override void NextTransition()

@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using Unity.XR.CoreUtils;
-using NUnit.Framework.Internal.Builders;
 
 public class SceneTransitionProvider : MonoBehaviour
 {
@@ -16,6 +15,10 @@ public class SceneTransitionProvider : MonoBehaviour
     public SceneReference transitionScene;
     public SceneReference targetScene;
     public SceneReference providedTransitionScene = null;
+
+    [Header("Priority Scene")]
+    public SceneReference priorityScene;
+    private bool isPrioritySceneLoaded = false;
 
     [Header("Player")]
     public GameObject Core;
@@ -32,9 +35,9 @@ public class SceneTransitionProvider : MonoBehaviour
     {
         transitionScene?.UpdateFields();
         targetScene?.UpdateFields();
+        priorityScene?.UpdateFields();
         EditorUtility.SetDirty(this);
     }
-
 #endif
 
     private void Start()
@@ -79,8 +82,6 @@ public class SceneTransitionProvider : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         currentTransitionRoutine ??= CoroutineManager.instance.StartCoroutine(TransitionRoutine());
-
-        //StartCoroutine(TransitionRoutine());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -119,6 +120,24 @@ public class SceneTransitionProvider : MonoBehaviour
 
         yield return HandleFadeIn();
 
+        // Load priority scene AFTER transition scene is active
+        if (priorityScene != null && priorityScene.IsValid && !isPrioritySceneLoaded)
+        {
+            AsyncOperation loadPriority = SceneManager.LoadSceneAsync(priorityScene.SceneName, LoadSceneMode.Additive);
+            loadPriority.allowSceneActivation = true;
+            yield return new WaitUntil(() => loadPriority.isDone);
+            isPrioritySceneLoaded = true;
+            Debug.Log("Priority Scene Loaded (after transition)");
+        }
+
+        // Wait for priority scene to be ready
+        if (isPrioritySceneLoaded)
+        {
+            yield return new WaitUntil(() =>
+                PrioritySceneGate.Instance != null && PrioritySceneGate.Instance.IsReady);
+            Debug.Log("Priority Scene Ready");
+        }
+
         AsyncOperation loadTarget = SceneManager.LoadSceneAsync(targetScene.SceneName, LoadSceneMode.Additive);
         loadTarget.allowSceneActivation = false;
         yield return new WaitUntil(() => loadTarget.progress >= 0.9f);
@@ -130,7 +149,18 @@ public class SceneTransitionProvider : MonoBehaviour
         yield return new WaitUntil(() => loadTarget.isDone);
 
         Scene targetSceneObj = SceneManager.GetSceneByName(targetScene.SceneName);
-        SceneManager.MoveGameObjectToScene(Core, targetSceneObj);
+
+        // Move Core to priority if available
+        if (isPrioritySceneLoaded)
+        {
+            Scene prioScene = SceneManager.GetSceneByName(priorityScene.SceneName);
+            SceneManager.MoveGameObjectToScene(Core, prioScene);
+        }
+        else
+        {
+            SceneManager.MoveGameObjectToScene(Core, targetSceneObj);
+        }
+
         SceneManager.SetActiveScene(targetSceneObj);
 
         LevelManager lm = GetLevelManagerFromScene(targetSceneObj);
@@ -139,8 +169,9 @@ public class SceneTransitionProvider : MonoBehaviour
 
         yield return HandleFadeIn();
 
-        yield return UnloadScene(transitionSceneRef.SceneName);
+        yield return UnloadScene(transitionSceneRef.SceneName); // Not unloading priority
     }
+
 
     private IEnumerator TransitionDirectly(Scene previousScene)
     {
@@ -155,7 +186,18 @@ public class SceneTransitionProvider : MonoBehaviour
         yield return new WaitUntil(() => loadTarget.isDone);
 
         Scene targetSceneObj = SceneManager.GetSceneByName(targetScene.SceneName);
-        SceneManager.MoveGameObjectToScene(Core, targetSceneObj);
+
+        // Move Core to priority if loaded, else target
+        if (isPrioritySceneLoaded)
+        {
+            Scene prioScene = SceneManager.GetSceneByName(priorityScene.SceneName);
+            SceneManager.MoveGameObjectToScene(Core, prioScene);
+        }
+        else
+        {
+            SceneManager.MoveGameObjectToScene(Core, targetSceneObj);
+        }
+
         SceneManager.SetActiveScene(targetSceneObj);
 
         LevelManager lm = GetLevelManagerFromScene(targetSceneObj);
@@ -189,7 +231,6 @@ public class SceneTransitionProvider : MonoBehaviour
             SceneManager.UnloadSceneAsync(sceneName);
         yield return null;
     }
-
 
     private LevelManager GetLevelManagerFromScene(Scene scene)
     {
@@ -225,10 +266,18 @@ public class SceneTransitionProvider : MonoBehaviour
             {
                 return obj;
             }
-
         }
 
         Debug.Log("Cant find core in " + currentScene.name);
         return null;
+    }
+
+    public void UnloadPriorityScene()
+    {
+        if (isPrioritySceneLoaded)
+        {
+            SceneManager.UnloadSceneAsync(priorityScene.SceneName);
+            isPrioritySceneLoaded = false;
+        }
     }
 }
