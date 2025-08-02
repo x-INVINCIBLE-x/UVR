@@ -190,7 +190,7 @@ public class GridFormationController : FormationProvider
             Debug.LogWarning($"{gameObject.name} has no config for this difficulty level, using last available.");
             difficultyLevel = formations.Count - 1;
         }
-
+        Debug.Log("Start Grid ZForma");
         SetupFormationFromDatabaseAtRuntime();
     }
 
@@ -202,6 +202,9 @@ public class GridFormationController : FormationProvider
         if (PrioritySceneGate.Instance != null)
         {
             PrioritySceneGate.Instance.MarkReady();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.1f);
+            PrioritySceneGate.Instance.MarkUnready();
         }
     }
 

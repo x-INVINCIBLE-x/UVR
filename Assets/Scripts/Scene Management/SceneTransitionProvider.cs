@@ -18,7 +18,8 @@ public class SceneTransitionProvider : MonoBehaviour
 
     [Header("Priority Scene")]
     public SceneReference priorityScene;
-    private bool isPrioritySceneLoaded = false;
+    private static bool isPrioritySceneLoaded = false;
+    public static string prioritySceneName;
 
     [Header("Player")]
     public GameObject Core;
@@ -55,7 +56,7 @@ public class SceneTransitionProvider : MonoBehaviour
             fader = Core.GetComponentInChildren<Fader>();
     }
 
-    public void Initialize(SceneReference newTargetScene, float fadeInTime = 1f, int transitionStayDuration = 5, SceneReference newTransitionReference = null)
+    public void Initialize(SceneReference newTargetScene, float fadeInTime = 1f, int transitionStayDuration = 5, SceneReference newTransitionReference = null, bool removePriorityScene = false)
     {
         targetScene = newTargetScene;
 
@@ -76,7 +77,17 @@ public class SceneTransitionProvider : MonoBehaviour
 
         if (fader == null)
             fader = Core.GetComponentInChildren<Fader>();
-    }
+
+        if (removePriorityScene)
+        {
+            if (isPrioritySceneLoaded)
+            {
+                SceneManager.UnloadSceneAsync(priorityScene.SceneName);
+                isPrioritySceneLoaded = false;
+                Debug.Log("Priority Scene Unloaded");
+            }
+        }
+        }
 
     public void StartTransition()
     {
@@ -127,6 +138,7 @@ public class SceneTransitionProvider : MonoBehaviour
             loadPriority.allowSceneActivation = true;
             yield return new WaitUntil(() => loadPriority.isDone);
             isPrioritySceneLoaded = true;
+            prioritySceneName = priorityScene.SceneName;
             Debug.Log("Priority Scene Loaded (after transition)");
         }
 
@@ -153,8 +165,10 @@ public class SceneTransitionProvider : MonoBehaviour
         // Move Core to priority if available
         if (isPrioritySceneLoaded)
         {
-            Scene prioScene = SceneManager.GetSceneByName(priorityScene.SceneName);
-            SceneManager.MoveGameObjectToScene(Core, prioScene);
+            Scene prioScene = SceneManager.GetSceneByName(prioritySceneName);
+            //Debug.Log($"Moving Core to priority scene: {prioScene.name}");
+            //if (prioScene != null && prioScene != default)
+                SceneManager.MoveGameObjectToScene(Core, prioScene);
         }
         else
         {
@@ -168,8 +182,8 @@ public class SceneTransitionProvider : MonoBehaviour
             lm.SetPlayerToSpawnPosition();
 
         yield return HandleFadeIn();
-
-        yield return UnloadScene(transitionSceneRef.SceneName); // Not unloading priority
+        
+        yield return UnloadScene(transitionSceneRef.SceneName);
     }
 
 
@@ -278,6 +292,7 @@ public class SceneTransitionProvider : MonoBehaviour
         {
             SceneManager.UnloadSceneAsync(priorityScene.SceneName);
             isPrioritySceneLoaded = false;
+            prioritySceneName = string.Empty;
         }
     }
 }

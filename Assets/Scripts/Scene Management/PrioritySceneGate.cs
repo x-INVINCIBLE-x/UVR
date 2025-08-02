@@ -12,6 +12,11 @@ public class PrioritySceneGate : MonoBehaviour
         Instance = this;
     }
 
+    public void MarkUnready()
+    {
+        ready = false;
+    }
+
     public void MarkReady()
     {
         ready = true;

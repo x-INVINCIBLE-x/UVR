@@ -15,7 +15,7 @@ public class GridFormationDatabase : ScriptableObject
 
     private readonly Dictionary<string, List<GridFormationData>> groupedFormations = new();
     private readonly Dictionary<string, List<int>> unusedIndicesPerGroup = new();
-    private bool isInitialized = false;
+    [System.NonSerialized] private bool isInitialized = false;
 
     public GridFormationData GetRandomUniqueFormation(string groupKey)
     {

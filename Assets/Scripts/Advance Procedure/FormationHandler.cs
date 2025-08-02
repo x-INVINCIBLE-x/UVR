@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class FormationHandler : MonoBehaviour
 {
+    public static FormationHandler Instance { get; private set; }
     [System.Serializable]
     public class FormationInfo
     {
@@ -95,6 +96,19 @@ public class FormationHandler : MonoBehaviour
     //        }
     //    }
     //}
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }   
+    }
 
     private void Start()
     {
