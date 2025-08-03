@@ -46,7 +46,7 @@ public class TimeTrialChallenge : Challenge
 
         objectiveString = ob.ToString();
 
-        technicalDetails = $"ELIMINATE {targetAmount} {ob} in {challengeDuration} seconds to complete the challenge. Each Elimination will add a BONUS TIME of {bonusTime} seconds";
+        technicalDetails = $"ELIMINATE {targetAmount} {ob} in {challengeDuration} seconds to complete the challenge. \n\n Each Elimination will add a BONUS TIME of {bonusTime} seconds";
     }
 
     public override void InitializeChallenge()

@@ -26,6 +26,9 @@ public class ChallengeUI : MonoBehaviour
     [SerializeField] private GameObject challengeFailUI;
     [SerializeField] private TextMeshProUGUI failureText;
 
+    [Header("Challenge Statue")]
+    [SerializeField] private Transform statueSpawnTransform;
+
     private ChallengeUIData data;
     private readonly float uiCloseTime = 2f;
     private StringBuilder sb = new();
@@ -112,6 +115,8 @@ public class ChallengeUI : MonoBehaviour
     {
         data = uiRegistry.GetUIData(challenge.GetID());
 
+        Instantiate(data.slicaeableStatue, statueSpawnTransform.position, statueSpawnTransform.rotation, statueSpawnTransform);
+
         if (data == null)
         {
             Debug.LogWarning($"No UI data found for challenge ID: {challenge.GetID()}");
@@ -121,13 +126,16 @@ public class ChallengeUI : MonoBehaviour
         nameText.text = data.displayName;
 
         sb.AppendLine(data.description);
+        sb.AppendLine();
 
         if (data.flavourText != null && data.flavourText.Length > 0)
         {
             sb.AppendLine(data.flavourText);
+            sb.AppendLine();
         }
-        sb.AppendLine(challenge.GetTechnicalDetail());
 
+        sb.AppendLine(challenge.GetTechnicalDetail());
+        sb.AppendLine();
 
         descriptionText.text = sb.ToString();
         iconImage.sprite = data.icon;

@@ -10,7 +10,7 @@ public class SliceChallenge : Challenge
 
     private void Awake()
     {
-        technicalDetails = $"Destroy the 3 CRYSTALS and finally the STATUE to complete the challenge.";
+        technicalDetails = $"Destroy the {totalCrystals} CRYSTALS and finally THE STATUE to complete the challenge.";
     }
 
     public override void InitializeChallenge()
