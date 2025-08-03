@@ -198,7 +198,7 @@ public class GridFormationController : FormationProvider
     private IEnumerator SpawnFormationGraduallyThenBuildNavMesh(List<Vector3> positions)
     {
         yield return StartCoroutine(SpawnFormationGradually(positions));
-        yield return StartCoroutine(BuildNavMeshGradually());
+        //yield return StartCoroutine(BuildNavMeshGradually());
         if (PrioritySceneGate.Instance != null)
         {
             PrioritySceneGate.Instance.MarkReady();

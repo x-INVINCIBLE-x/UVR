@@ -29,6 +29,7 @@ public class SceneTransitionProvider : MonoBehaviour
 
     private float fadeInTime = 1f;
     private int stayDuraion = 5;
+    private bool unloadPriorityScene = false;
     private Coroutine currentTransitionRoutine = null;
 
 #if UNITY_EDITOR
@@ -78,16 +79,8 @@ public class SceneTransitionProvider : MonoBehaviour
         if (fader == null)
             fader = Core.GetComponentInChildren<Fader>();
 
-        if (removePriorityScene)
-        {
-            if (isPrioritySceneLoaded)
-            {
-                SceneManager.UnloadSceneAsync(priorityScene.SceneName);
-                isPrioritySceneLoaded = false;
-                Debug.Log("Priority Scene Unloaded");
-            }
-        }
-        }
+        unloadPriorityScene = removePriorityScene;
+    }
 
     public void StartTransition()
     {
@@ -143,7 +136,7 @@ public class SceneTransitionProvider : MonoBehaviour
         }
 
         // Wait for priority scene to be ready
-        if (isPrioritySceneLoaded)
+        if (isPrioritySceneLoaded && !unloadPriorityScene)
         {
             yield return new WaitUntil(() =>
                 PrioritySceneGate.Instance != null && PrioritySceneGate.Instance.IsReady);
@@ -162,13 +155,17 @@ public class SceneTransitionProvider : MonoBehaviour
 
         Scene targetSceneObj = SceneManager.GetSceneByName(targetScene.SceneName);
 
+        if (unloadPriorityScene)
+        {
+            UnloadPriorityScene();
+        }
+
         // Move Core to priority if available
         if (isPrioritySceneLoaded)
         {
             Scene prioScene = SceneManager.GetSceneByName(prioritySceneName);
-            //Debug.Log($"Moving Core to priority scene: {prioScene.name}");
-            //if (prioScene != null && prioScene != default)
-                SceneManager.MoveGameObjectToScene(Core, prioScene);
+            Debug.Log($"Moving Core to priority scene: {prioScene.name}");
+            SceneManager.MoveGameObjectToScene(Core, prioScene);
         }
         else
         {
@@ -290,7 +287,7 @@ public class SceneTransitionProvider : MonoBehaviour
     {
         if (isPrioritySceneLoaded)
         {
-            SceneManager.UnloadSceneAsync(priorityScene.SceneName);
+            SceneManager.UnloadSceneAsync(prioritySceneName);
             isPrioritySceneLoaded = false;
             prioritySceneName = string.Empty;
         }

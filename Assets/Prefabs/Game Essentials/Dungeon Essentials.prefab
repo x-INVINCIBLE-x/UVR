@@ -138,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7656869024173632173}
   - component: {fileID: 3321683624302865404}
-  - component: {fileID: 6902093694761818149}
+  - component: {fileID: 424034783326359032}
   m_Layer: 0
   m_Name: Challenge Manager
   m_TagString: Untagged
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   challenges: []
   possibleChallenges: 
---- !u!114 &6902093694761818149
+--- !u!114 &424034783326359032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,12 +184,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5414482438387155517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c692bf708953134b85125e13efd2a6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 427a280bd8068224a9067596071ce3c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  challengeID: Survival
-  survivalDuration: 5
-  timer: 0
+  challengeID: TimeTrial
+  targetAmount: 5
+  challengeDuration: 3
+  bonusTime: 0
+  currentObjective: 0
 --- !u!1 &5943628886930519494
 GameObject:
   m_ObjectHideFlags: 0
