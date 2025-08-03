@@ -8,7 +8,8 @@ public class RecreateDungeon : MonoBehaviour
         {
             if (grid != null)
             {
-                grid.ReloadRandomFormation();
+                string ChallengeID = ChallengeManager.instance.CurrentChallenge.GetID();
+                grid.ReloadRandomFormation(ChallengeID);
             }
         }
     }

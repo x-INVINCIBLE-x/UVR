@@ -50,7 +50,7 @@ public class GridFormationController : FormationProvider
     [SerializeField] private GridFormationData saveToSO;
 
     [SerializeField] private GridFormationDatabase gridDatabase;
-    [SerializeField] private string groupKey = "default"; 
+    [SerializeField] private string groupKey = "Default"; 
 
     [Header("Radius Based Prefabs")]
     public List<RadiusBasedPrefab> radiusPrefabs = new List<RadiusBasedPrefab>();
@@ -245,6 +245,7 @@ public class GridFormationController : FormationProvider
             Debug.LogError("Grid database is not assigned.");
             return;
         }
+        groupKey = ChallengeManager.instance.CurrentChallenge.GetID();
         var data = gridDatabase.GetRandomUniqueFormation(groupKey);
         if (data == null || data.positions == null || data.positions.Count == 0)
         {
@@ -318,7 +319,7 @@ public class GridFormationController : FormationProvider
     }
 
     [ContextMenu("Reload Random Formation")]
-    public void ReloadRandomFormation()
+    public void ReloadRandomFormation(string ID)
     {
         // Clean up existing instances
         for (int i = transform.childCount - 1; i >= 0; i--)
@@ -329,7 +330,7 @@ public class GridFormationController : FormationProvider
         positionsPerFormation.Clear();
 
         // Get new formation from DB
-        var data = gridDatabase.GetRandomUniqueFormation(groupKey);
+        var data = gridDatabase.GetRandomUniqueFormation(ID);
         if (data == null || data.positions == null || data.positions.Count == 0)
         {
             Debug.LogError("Failed to reload formation: no valid data.");
