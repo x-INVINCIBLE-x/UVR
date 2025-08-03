@@ -132,7 +132,6 @@ public class SceneTransitionProvider : MonoBehaviour
             yield return new WaitUntil(() => loadPriority.isDone);
             isPrioritySceneLoaded = true;
             prioritySceneName = priorityScene.SceneName;
-            Debug.Log("Priority Scene Loaded (after transition)");
         }
 
         // Wait for priority scene to be ready
@@ -140,7 +139,6 @@ public class SceneTransitionProvider : MonoBehaviour
         {
             yield return new WaitUntil(() =>
                 PrioritySceneGate.Instance != null && PrioritySceneGate.Instance.IsReady);
-            Debug.Log("Priority Scene Ready");
         }
 
         AsyncOperation loadTarget = SceneManager.LoadSceneAsync(targetScene.SceneName, LoadSceneMode.Additive);
@@ -164,7 +162,6 @@ public class SceneTransitionProvider : MonoBehaviour
         if (isPrioritySceneLoaded)
         {
             Scene prioScene = SceneManager.GetSceneByName(prioritySceneName);
-            Debug.Log($"Moving Core to priority scene: {prioScene.name}");
             SceneManager.MoveGameObjectToScene(Core, prioScene);
         }
         else

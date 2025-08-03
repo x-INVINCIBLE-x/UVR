@@ -16582,6 +16582,7 @@ GameObject:
   - component: {fileID: 2327822540105259744}
   - component: {fileID: 3713291137219739059}
   - component: {fileID: 2203725517439791930}
+  - component: {fileID: 7790275533431473296}
   - component: {fileID: -717989111607519835}
   m_Layer: 0
   m_Name: Dark Fantasy Medium Block 4
@@ -16861,7 +16862,39 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 794c10c3cea75e64fabd7411bd0cc94a, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!114 &7790275533431473296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3145162145372824633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: -334000983
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.083333336
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 1cee8dd82068d1b47a7095791e454cf1, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &-717989111607519835
 MonoBehaviour:
@@ -16875,8 +16908,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e62e278e30ea054693be1e632b86098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshData: {fileID: 0}
-  surface: {fileID: 0}
+  navMeshData:
+  - {fileID: 23800000, guid: 794c10c3cea75e64fabd7411bd0cc94a, type: 2}
+  - {fileID: 23800000, guid: 1cee8dd82068d1b47a7095791e454cf1, type: 2}
 --- !u!1 &3201333092454889097
 GameObject:
   m_ObjectHideFlags: 0

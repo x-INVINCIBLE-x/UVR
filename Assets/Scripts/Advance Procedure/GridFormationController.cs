@@ -190,7 +190,6 @@ public class GridFormationController : FormationProvider
             Debug.LogWarning($"{gameObject.name} has no config for this difficulty level, using last available.");
             difficultyLevel = formations.Count - 1;
         }
-        Debug.Log("Start Grid ZForma");
         SetupFormationFromDatabaseAtRuntime();
     }
 
@@ -246,7 +245,6 @@ public class GridFormationController : FormationProvider
             Debug.LogError("Grid database is not assigned.");
             return;
         }
-        Debug.Log($"Loading random formation for group '{groupKey}' from database...");
         var data = gridDatabase.GetRandomUniqueFormation(groupKey);
         if (data == null || data.positions == null || data.positions.Count == 0)
         {
@@ -410,7 +408,6 @@ public class GridFormationController : FormationProvider
             positionsPerFormation.Add(list);
         }
 
-        Debug.Log("Computed positionsPerFormation from database base grid.");
     }
 
     public override void NextTransition()

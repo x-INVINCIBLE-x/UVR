@@ -10168,6 +10168,7 @@ GameObject:
   - component: {fileID: 2946958355064664454}
   - component: {fileID: -2197818353467739605}
   - component: {fileID: -6347753660229531246}
+  - component: {fileID: 1731052307985281091}
   - component: {fileID: 4585205542337298343}
   m_Layer: 0
   m_Name: Dark Fantasy Cross BLock 4
@@ -10186,8 +10187,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.75384617}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 724813848039268362}
   m_Father: {fileID: 0}
@@ -10393,7 +10394,39 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: fd1ba1fc559443b4eac65b15a5c77771, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!114 &1731052307985281091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4099164642820924921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: -334000983
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.083333336
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: b7a3fb873baeae24c8e860def8e71947, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &4585205542337298343
 MonoBehaviour:
@@ -10407,8 +10440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e62e278e30ea054693be1e632b86098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshData: {fileID: 0}
-  surface: {fileID: 0}
+  navMeshData:
+  - {fileID: 23800000, guid: fd1ba1fc559443b4eac65b15a5c77771, type: 2}
+  - {fileID: 23800000, guid: b7a3fb873baeae24c8e860def8e71947, type: 2}
 --- !u!1 &4119419685018480848
 GameObject:
   m_ObjectHideFlags: 0

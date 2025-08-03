@@ -197,7 +197,6 @@ public class FormationHandler : MonoBehaviour
 
     private void CloseAllTimedFormation()
     {
-        Debug.Log("Closing All Timed Formations");
         for (int i = 0; i < timedForamtions.Length; i++)
         {
             timedForamtions[i].cubeFormationController.gameObject.SetActive(false);

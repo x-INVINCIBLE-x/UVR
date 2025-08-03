@@ -6323,6 +6323,7 @@ GameObject:
   - component: {fileID: 3064826706389937300}
   - component: {fileID: -789922262976655798}
   - component: {fileID: -2059213552419838525}
+  - component: {fileID: -6050422510517665528}
   - component: {fileID: -6455789702068146620}
   m_Layer: 0
   m_Name: Dark Fantasy Cross Block 3
@@ -6540,7 +6541,39 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 485dbeabe249b3240ab8640c9784a4fa, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!114 &-6050422510517665528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4522929108762439770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: -334000983
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.083333336
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: dfd2054955e513c4792cf13d52ebc3c7, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &-6455789702068146620
 MonoBehaviour:
@@ -6554,8 +6587,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e62e278e30ea054693be1e632b86098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshData: {fileID: 0}
-  surface: {fileID: 0}
+  navMeshData:
+  - {fileID: 23800000, guid: 485dbeabe249b3240ab8640c9784a4fa, type: 2}
+  - {fileID: 23800000, guid: dfd2054955e513c4792cf13d52ebc3c7, type: 2}
 --- !u!1 &4639593797638742812
 GameObject:
   m_ObjectHideFlags: 0
