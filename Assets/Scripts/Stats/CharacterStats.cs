@@ -102,6 +102,8 @@ public class CharacterStats : MonoBehaviour, IDamagable
     public event System.Action<float, float> OnDamageTaken;
     private float damageTakenBuffer = 0.1f;
     private float lastDamageTakenTime = 0f;
+
+    private bool hasAilment = false;
     //public event System.Action UpdateHUD;
 
     [System.Serializable]
@@ -134,6 +136,12 @@ public class CharacterStats : MonoBehaviour, IDamagable
                 }
                 yield return null;
             }
+        }
+
+        public void Reset()
+        {
+            Value = 0;
+            isMaxed = false;
         }
     }
 
@@ -300,12 +308,17 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     private void ApplyAilment(AilmentType ailmentType)
     {
+        if (hasAilment)
+            return;
+
+        hasAilment = true;
         if (ailmentActions.TryGetValue(ailmentType, out var ailmentEffect))
             ailmentEffect();
     }
 
     protected virtual void AilmentEffectEnded(AilmentStatus ailmentStatus)
     {
+        hasAilment = false;
         ailmentStatus.ailmentEffectEnded -= AilmentEffectEnded;
     }
 
@@ -413,4 +426,16 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     public (float, float) GetHealth() => (currentHealth, health.Value);
     public float GetCurrentStamina() => currentStamina;
+
+    public void Reset()
+    {
+        isDead = false;
+        currentHealth = health.Value;
+        ignisStatus.Reset();
+        frostStatus.Reset();
+        blitzStatus.Reset();
+        hexStatus.Reset();
+        gaiaStatus.Reset();
+        radianceStatus.Reset();
+    }
 }

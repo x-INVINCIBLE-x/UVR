@@ -77,7 +77,7 @@ public class NormalEnemy : SimpleEnemyBase
         GameObject enemyProjectile = ObjectPool.instance.GetObject(bullet.gameObject, projectileSpawn.position + PlayerBodyOffset);
         PhysicsProjectile projectileInstance = enemyProjectile.GetComponent<PhysicsProjectile>();
 
-        projectileInstance.Init(lifeTime, attackData);
+        projectileInstance.Init(projectileLifeTime, attackData);
         projectileInstance.Launch(projectileSpawn, shootForce);
 
         hasAttacked = true;

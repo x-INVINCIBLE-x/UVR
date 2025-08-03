@@ -210,7 +210,7 @@ public class GridFormationController : FormationProvider
     void Update()
     {
         if (!Application.isPlaying || instances.Count == 0 || formations.Count < 2) return;
-        if (!isTransitioning && Input.GetKeyDown(KeyCode.Space))
+        if (!isTransitioning && Input.GetKeyDown(KeyCode.G))
         {
             NextTransition();
         }

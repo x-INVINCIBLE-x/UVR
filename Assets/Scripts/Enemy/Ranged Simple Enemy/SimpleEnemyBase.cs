@@ -33,7 +33,7 @@ public class SimpleEnemyBase : MonoBehaviour
 
     [SerializeField] protected Vector3 PlayerBodyOffset;
 
-    [SerializeField] protected float lifeTime = 3f;
+    [SerializeField] protected float projectileLifeTime = 3f;
     [SerializeField] protected AttackData attackData;
     [SerializeField] protected EnemyStats enemyStats;
     [SerializeField] protected MeshDissolver dissolver;
@@ -68,10 +68,23 @@ public class SimpleEnemyBase : MonoBehaviour
         agent.SetDestination(transform.position);
         Debug.Log("Dissolve");
         dissolver.StartDissolver();
+        if (currentCheckRoutine != null)
+        {
+            StopCoroutine(currentCheckRoutine);
+            currentCheckRoutine = null;
+        }
+
+        Invoke(nameof(Despawn), 2);
     }
 
     private void OnEnable()
     {
+        isDead = false;
+        enemyStats.Reset();
+        FXManager.SpawnQuestionMark(false);
+        FXManager.SpawnExclamationMark(false);
+        wasPlayerInSight = false;
+        walkPoint = transform.position;
         currentCheckRoutine = StartCoroutine(CheckRoutine());
     }
 
@@ -84,6 +97,13 @@ public class SimpleEnemyBase : MonoBehaviour
             currentCheckRoutine = null;
         }
     }
+
+    private void Despawn()
+    {
+        if (ObjectPool.instance != null)
+            ObjectPool.instance.ReturnObject(gameObject);
+    }
+
     protected virtual void Update()
     {
         if (isDead) return;
@@ -192,6 +212,5 @@ public class SimpleEnemyBase : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-
 
 }

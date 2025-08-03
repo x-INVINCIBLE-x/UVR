@@ -79,7 +79,13 @@ public class ObjectPool : MonoBehaviour
 
     private void ReturnToPool(GameObject objectToReturn)
     {
-        GameObject originalPrefab = objectToReturn.GetComponent<PooledObject>().originalPrefab;
+        if (!objectToReturn.TryGetComponent<PooledObject>(out var pooledObject))
+        {
+            Destroy(objectToReturn);
+            return;
+        }
+
+        GameObject originalPrefab = pooledObject.originalPrefab;
 
         objectToReturn.SetActive(false);
         objectToReturn.transform.parent = transform;

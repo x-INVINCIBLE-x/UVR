@@ -49,7 +49,7 @@ public class VolleyEnemy : SimpleEnemyBase
         GameObject volleySpawn = ObjectPool.instance.GetObject(volleyProjectile.gameObject, projectileSpawnPosition.position + PlayerBodyOffset);
         PhysicsProjectile projectileInstance = volleySpawn.GetComponent<PhysicsProjectile>();
 
-        projectileInstance.Init(lifeTime, attackData);
+        projectileInstance.Init(projectileLifeTime, attackData);
         LaunchVolley(volleySpawn.transform, Player.position, 2f);
 
         hasAttacked = true;
