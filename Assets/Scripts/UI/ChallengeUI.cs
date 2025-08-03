@@ -115,7 +115,7 @@ public class ChallengeUI : MonoBehaviour
     {
         data = uiRegistry.GetUIData(challenge.GetID());
 
-        Instantiate(data.slicaeableStatue, statueSpawnTransform.position, statueSpawnTransform.rotation, statueSpawnTransform);
+        Instantiate(data.slicaeableStatue, statueSpawnTransform.position, Quaternion.identity, statueSpawnTransform);
 
         if (data == null)
         {

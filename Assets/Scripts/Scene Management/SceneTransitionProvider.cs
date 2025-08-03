@@ -171,7 +171,11 @@ public class SceneTransitionProvider : MonoBehaviour
 
         SceneManager.SetActiveScene(targetSceneObj);
 
-        LevelManager lm = GetLevelManagerFromScene(targetSceneObj);
+        Scene lmScene = targetSceneObj;
+        if (isPrioritySceneLoaded)
+            lmScene = SceneManager.GetSceneByName(prioritySceneName);
+
+        LevelManager lm = GetLevelManagerFromScene(lmScene);
         if (lm != null)
             lm.SetPlayerToSpawnPosition();
 

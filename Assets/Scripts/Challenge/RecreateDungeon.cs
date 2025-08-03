@@ -9,6 +9,7 @@ public class RecreateDungeon : MonoBehaviour
             if (grid != null)
             {
                 string ChallengeID = ChallengeManager.instance.CurrentChallenge.GetID();
+                Debug.Log($"Recreating dungeon for Challenge ID: {ChallengeID}");
                 grid.ReloadRandomFormation(ChallengeID);
             }
         }
