@@ -1,3 +1,4 @@
+using Autodesk.Fbx;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,23 +38,36 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected EnemyStats enemyStats;
     [SerializeField] protected MeshDissolver dissolver;
 
-
     private Coroutine currentCheckRoutine = null;
     private int enemyID;
+    protected bool isDead;
 
     protected virtual void Start()
     {
         Player = PlayerManager.instance.PlayerOrigin.transform;
         animator = GetComponent<Animator>();
         dissolver = GetComponent<MeshDissolver>();
-        enemyID = EnemyEventManager.Instance.GetNewEnemyID();
+
+        if (EnemyEventManager.Instance != null)
+            enemyID = EnemyEventManager.Instance.GetNewEnemyID();
         enemyStats = GetComponent<EnemyStats>();
+        enemyStats.OnDamageTaken += HandleHit;
         enemyStats.OnDeath += HandleDeath;
+    }
+
+    private void HandleHit(float arg1, float arg2)
+    {
+        if (isDead) return;
+        Debug.Log("hity");
+        dissolver.StartImpactDissolve(0.1f);
     }
 
     private void HandleDeath()
     {
-
+        isDead = true;
+        agent.SetDestination(transform.position);
+        Debug.Log("Dissolve");
+        dissolver.StartDissolver();
     }
 
     private void OnEnable()
@@ -72,7 +86,7 @@ public class SimpleEnemyBase : MonoBehaviour
     }
     protected virtual void Update()
     {
-
+        if (isDead) return;
     }
 
     private IEnumerator CheckRoutine()
@@ -87,6 +101,7 @@ public class SimpleEnemyBase : MonoBehaviour
 
     protected virtual void Patrol()
     {
+        if (EnemyEventManager.Instance != null) 
         EnemyEventManager.Instance.LostPlayer(enemyID);
 
         FXManager.SpawnExclamationMark(false); // turning off exclamation mark
@@ -143,7 +158,8 @@ public class SimpleEnemyBase : MonoBehaviour
 
     protected virtual void Chase()
     {
-        EnemyEventManager.Instance.SeePlayer(enemyID);
+        if (EnemyEventManager.Instance != null)
+            EnemyEventManager.Instance.SeePlayer(enemyID);
 
         wasPlayerInSight = true;
         walkPoint = transform.position;
@@ -154,7 +170,8 @@ public class SimpleEnemyBase : MonoBehaviour
 
     protected virtual void Attack()
     {
-        EnemyEventManager.Instance.SeePlayer(enemyID);
+        if (EnemyEventManager.Instance != null)
+            EnemyEventManager.Instance.SeePlayer(enemyID);
 
         wasPlayerInSight = true;
         FXManager.SpawnQuestionMark(false);

@@ -17,6 +17,9 @@ public class NormalEnemy : SimpleEnemyBase
     {   
         base.Update();
 
+        if (isDead)
+            return;
+
         if (!playerInSightRange && !playerInAttackRange)
             Patrol();
         else if (playerInSightRange && !playerInAttackRange)

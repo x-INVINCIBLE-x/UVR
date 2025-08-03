@@ -100,6 +100,8 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     public event System.Action OnDeath;
     public event System.Action<float, float> OnDamageTaken;
+    private float damageTakenBuffer = 0.1f;
+    private float lastDamageTakenTime = 0f;
     //public event System.Action UpdateHUD;
 
     [System.Serializable]
@@ -357,10 +359,19 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
 
-        OnDamageTaken?.Invoke(currentHealth, health.Value);
-
         if (currentHealth == 0f)
+        {
             KillCharacter();
+            return;
+        }
+
+        // If the character is not dead, invoke the damage taken event
+        if (damageTakenBuffer + lastDamageTakenTime > Time.time)
+            return;
+        // If the damage taken is too close to the last damage taken, ignore it
+        
+        lastDamageTakenTime = Time.time;
+        OnDamageTaken?.Invoke(currentHealth, health.Value);
     }
 
     protected virtual void KillCharacter()
