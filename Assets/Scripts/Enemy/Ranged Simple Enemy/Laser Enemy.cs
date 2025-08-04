@@ -119,5 +119,13 @@ public class LaserEnemy : SimpleEnemyBase
         }
     }
 
+    protected override void HandleDeath()
+    {
+        base.HandleDeath();
 
+        if (currentLaser != null)
+        {
+            DestroyLaser();
+        }
+    }
 }

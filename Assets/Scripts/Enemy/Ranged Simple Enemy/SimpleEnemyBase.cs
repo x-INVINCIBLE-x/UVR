@@ -55,14 +55,14 @@ public class SimpleEnemyBase : MonoBehaviour
         enemyStats.OnDeath += HandleDeath;
     }
 
-    private void HandleHit(float arg1, float arg2)
+    protected virtual void HandleHit(float arg1, float arg2)
     {
         if (isDead) return;
         
         dissolver.StartImpactDissolve(0.1f);
     }
 
-    private void HandleDeath()
+    protected virtual void HandleDeath()
     {
         isDead = true;
         agent.SetDestination(transform.position);
@@ -96,6 +96,12 @@ public class SimpleEnemyBase : MonoBehaviour
             StopCoroutine(currentCheckRoutine);
             currentCheckRoutine = null;
         }
+    }
+
+    private void OnDestroy()
+    {
+        enemyStats.OnDamageTaken -= HandleHit;
+        enemyStats.OnDeath -= HandleDeath;
     }
 
     private void Despawn()
