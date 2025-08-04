@@ -214,7 +214,7 @@ public class Enemy : MonoBehaviour, IRewardProvider
 
             for (int i = 0; i < detectedHits.Length; i++)
             {
-                IDamagable damagable = detectedHits[i].GetComponent<IDamagable>();
+                IDamageable damagable = detectedHits[i].GetComponent<IDamageable>();
 
                 if (damagable != null)
                 {

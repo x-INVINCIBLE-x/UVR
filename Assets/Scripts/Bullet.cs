@@ -89,8 +89,8 @@ public class Bullet : MonoBehaviour
         CreateImpactFx();
         ReturnBulletToPool();
 
-        IDamagable damagable = collision.transform.GetComponentInParent<IDamagable>();
-        damagable ??= collision.transform.GetComponentInChildren<IDamagable>();
+        IDamageable damagable = collision.transform.GetComponentInParent<IDamageable>();
+        damagable ??= collision.transform.GetComponentInChildren<IDamageable>();
         damagable?.TakeDamage(attackData);
 
         ApplyBulletImpactToEnemy(collision);

@@ -1,6 +1,6 @@
-using Autodesk.Fbx;
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +15,8 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected Transform Player;
     [SerializeField] protected EnemyFXHandler FXManager;
     [SerializeField] protected Animator animator;
-
+    [SerializeField] private LayerMask allyLayer;
+    [SerializeField] private Transform spawnPosition;
 
     [SerializeField] protected float sightRange, attackRange;
     [SerializeField] protected float attackCooldownTime = 2f;
@@ -26,6 +27,7 @@ public class SimpleEnemyBase : MonoBehaviour
 
     [SerializeField] protected Vector3 walkPoint;
 
+    [SerializeField] protected float speed = 3f;
     [SerializeField] protected bool searchingWalkPoint = false;
     [SerializeField] protected bool playerInSightRange, playerInAttackRange;
     [SerializeField] protected bool hasAttacked, wasPlayerInSight, isChargingAttack, vfxSpawned;
@@ -38,36 +40,118 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected EnemyStats enemyStats;
     [SerializeField] protected MeshDissolver dissolver;
 
+    [SerializeField] private float surroundingHitRadius;
+    [SerializeField] protected HomingMissile blitzProjectile;
+    [SerializeField] protected HomingMissile healProjectile;
+
+    private WaitForSeconds attackCheckCooldown = new WaitForSeconds(0.2f);
+    private LayerMask playerLayer;
     private Coroutine currentCheckRoutine = null;
+    private Collider m_Collider;
+
+    private float defaultMagicChargeTime;
+
+    private bool hitSurroundingEnemies = false;
+    private bool healPlayer = false;
     private int enemyID;
     protected bool isDead;
-    private WaitForSeconds attackCheckCooldown = new WaitForSeconds(0.2f);
+
+    private AttackData ailmentData;
 
     protected virtual void Start()
     {
+        playerLayer = LayerMask.GetMask("Player");
         Player = PlayerManager.instance.PlayerOrigin.transform;
         animator = GetComponent<Animator>();
         dissolver = GetComponent<MeshDissolver>();
+        m_Collider = GetComponent<Collider>();
 
         if (EnemyEventManager.Instance != null)
             enemyID = EnemyEventManager.Instance.GetNewEnemyID();
+
         enemyStats = GetComponent<EnemyStats>();
         enemyStats.OnDamageTaken += HandleHit;
         enemyStats.OnDeath += HandleDeath;
+        enemyStats.OnAilmentStatusChange += HandleAilment;
+
+        defaultMagicChargeTime = magicChargeTime;
+        InitializeAilmentData();
+    }
+
+    private void InitializeAilmentData()
+    {
+        ailmentData = ScriptableObject.CreateInstance<AttackData>();
+        ailmentData.physicalDamage = new Stat(0);
+        ailmentData.ignisDamage = new Stat(0);
+        ailmentData.frostDamage = new Stat(0);
+        ailmentData.blitzDamage = new Stat(0);
+        ailmentData.hexDamage = new Stat(0);
+        ailmentData.radianceDamage = new Stat(0);
+        ailmentData.gaiaDamage = new Stat(0);
+    }
+
+    private void HandleAilment(AilmentType type, bool isActivated, float effectAmount)
+    {
+        if (type == AilmentType.Blitz)
+        {
+            hitSurroundingEnemies = isActivated;
+            ailmentData.physicalDamage.BaseValue = effectAmount;
+            ailmentData.blitzDamage.BaseValue = effectAmount;
+        }
+        else if (type == AilmentType.Gaia)
+        {
+            healPlayer = isActivated;
+            ailmentData.physicalDamage.BaseValue = -effectAmount;
+            ailmentData.blitzDamage.BaseValue = 0;
+        }
+        else if (type == AilmentType.Frost)
+        {
+            agent.speed = isActivated ? speed * 0.5f : speed;
+            magicChargeTime = isActivated ? magicChargeTime * 1.5f : defaultMagicChargeTime;
+        }
     }
 
     protected virtual void HandleHit(float arg1, float arg2)
     {
         if (isDead) return;
-        
+
+        if (hitSurroundingEnemies)
+        {
+            HashSet<Transform> hitTransforms = new HashSet<Transform>();
+            Collider[] colliders = Physics.OverlapSphere(transform.position, surroundingHitRadius, allyLayer);
+
+            foreach (var col in colliders)
+            {
+                if (hitTransforms.Contains(col.transform.root)) continue;
+                if (col.transform.root == transform.root) continue;
+
+                hitTransforms.Add(col.transform.root);
+                Debug.Log($"Hit Surrounding Enemy: {col.name}");
+                IDamageable damageable = col.GetComponentInParent<IDamageable>();
+                if (damageable != null)
+                {
+                    HomingMissile newMissile = ObjectPool.instance.GetObject(blitzProjectile.gameObject, spawnPosition.position).GetComponent<HomingMissile>();
+                    newMissile.Setup(col.GetComponent<Rigidbody>(), ailmentData, 10, 4, projectileLifeTime, 100);
+                }
+            }
+        }
+
+        if (healPlayer)
+        {
+            Debug.Log("Healing Player");
+            HomingMissile newMissile = ObjectPool.instance.GetObject(healProjectile.gameObject, transform.position).GetComponent<HomingMissile>();
+            newMissile.Setup(PlayerManager.instance.Rb, ailmentData, 10, 4, projectileLifeTime, 100, playerLayer);
+        }
+
         dissolver.StartImpactDissolve(0.1f);
     }
 
     protected virtual void HandleDeath()
     {
         isDead = true;
-        agent.SetDestination(transform.position);
-        
+        if (agent.enabled)
+            agent.SetDestination(transform.position);
+
         dissolver.StartDissolver();
         if (currentCheckRoutine != null)
         {
@@ -128,8 +212,8 @@ public class SimpleEnemyBase : MonoBehaviour
 
     protected virtual void Patrol()
     {
-        if (EnemyEventManager.Instance != null) 
-        EnemyEventManager.Instance.LostPlayer(enemyID);
+        if (EnemyEventManager.Instance != null)
+            EnemyEventManager.Instance.LostPlayer(enemyID);
 
         FXManager.SpawnExclamationMark(false); // turning off exclamation mark
 
@@ -164,7 +248,7 @@ public class SimpleEnemyBase : MonoBehaviour
 
     }
 
-    private void DisableQuestionmark() =>  FXManager.SpawnQuestionMark(false);
+    private void DisableQuestionmark() => FXManager.SpawnQuestionMark(false);
 
     protected virtual void SearchWalkPoint()
     {
@@ -218,6 +302,9 @@ public class SimpleEnemyBase : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, surroundingHitRadius);
     }
 
 }

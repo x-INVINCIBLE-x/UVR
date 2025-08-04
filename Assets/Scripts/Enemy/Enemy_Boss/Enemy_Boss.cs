@@ -174,7 +174,7 @@ public class Enemy_Boss : Enemy
 
         foreach (Collider hit in colliders)
         {
-            IDamagable damagable = hit.GetComponent<IDamagable>();
+            IDamageable damagable = hit.GetComponent<IDamageable>();
 
             if (damagable != null)
             {

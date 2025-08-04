@@ -26,7 +26,7 @@ public class Flamethrow_DamageArea : MonoBehaviour
             return;
 
 
-        IDamagable damagable = other.GetComponent<IDamagable>();
+        IDamageable damagable = other.GetComponent<IDamageable>();
 
         if (damagable != null)
         {

@@ -10,4 +10,9 @@ public class AttackData : ScriptableObject
     public Stat hexDamage;
     public Stat radianceDamage;
     public Stat gaiaDamage;
+
+    public float burnDamage;
+    public float frostSpeedReduction;
+    public int blitzSurroundingDamage;
+    public float gaiaHealAmount;
 }

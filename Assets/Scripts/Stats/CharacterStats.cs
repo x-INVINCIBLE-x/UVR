@@ -41,7 +41,7 @@ public enum AilmentType
     Gaia
 }
 
-public class CharacterStats : MonoBehaviour, IDamagable
+public class CharacterStats : MonoBehaviour, IDamageable
 {
     [SerializeField] private DifficultyProfile difficultyProfile;
 
@@ -88,24 +88,27 @@ public class CharacterStats : MonoBehaviour, IDamagable
     public float currentHealth;
     public float currentStamina;
 
-    [field: SerializeField] public bool isInvincible { get; private set; } = false;
+    [field: SerializeField] public bool IsInvincible { get; private set; } = false;
     public bool IsBlocking { get; private set; } = false;
     public bool IsPerfectBlock { get; private set; } = false;
     public bool IsConsumingStamina { get; private set; } = false;
 
-    protected Dictionary<AilmentType, System.Action> ailmentActions;
+    protected Dictionary<AilmentType, System.Action<float>> ailmentActions;
     public Dictionary<Stats, Stat> statDictionary;
 
     private bool isDead = false;
 
     public event System.Action OnDeath;
+    public event Action<float> OnHealthChanged;
     public event Action<float, float> OnDamageTaken;
-    public event Action<AilmentType> OnAilmentApplied;
+    public event Action<AilmentType, bool, float> OnAilmentStatusChange;
 
     private float damageTakenBuffer = 0.1f;
     private float lastDamageTakenTime = 0f;
 
     private bool hasAilment = false;
+    private WaitForSeconds burnDelay = new WaitForSeconds(0.5f);
+
     //public event System.Action UpdateHUD;
 
     [System.Serializable]
@@ -116,7 +119,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
         public Stat defence;
         public bool isMaxed = false;
         public float ailmentLimit = 100;
-        public event Action<AilmentStatus> ailmentEffectEnded;
+        public event Action<AilmentStatus> AilmentEffectEnded;
         public IEnumerator ReduceValueOverTime()
         {
             while (Value > 0)
@@ -128,7 +131,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
                     if (Value <= 0)
                     {
                         if (isMaxed)
-                            ailmentEffectEnded?.Invoke(this);
+                            AilmentEffectEnded?.Invoke(this);
 
                         Value = 0;
                         isMaxed = false;
@@ -151,14 +154,14 @@ public class CharacterStats : MonoBehaviour, IDamagable
     {
         InitializeValues();
 
-        ailmentActions = new Dictionary<AilmentType, System.Action>
+        ailmentActions = new Dictionary<AilmentType, System.Action<float>>
         {
             { AilmentType.Ignis, ApplyFireAilment },
             { AilmentType.Frost, ApplyFrostAilment },
             { AilmentType.Blitz, ApplyBlitzAilment },
             { AilmentType.Hex, ApplyHexAilment },
             { AilmentType.Radiance, ApplyRadianceAilment },
-            { AilmentType.Gaia, ApplyGaiaStatus }
+            { AilmentType.Gaia, ApplyGaiaAilment }
         };
     }
 
@@ -169,6 +172,8 @@ public class CharacterStats : MonoBehaviour, IDamagable
         {
             difficultyProfile.ApplyModifiers(statDictionary, DungeonManager.Instance.DifficultyLevel, this);
         }
+
+        OnHealthChanged?.Invoke(currentHealth / health.Value);
     }
 
     private void InitializeValues()
@@ -207,15 +212,6 @@ public class CharacterStats : MonoBehaviour, IDamagable
         };
     }
 
-    //private void Update()
-    //{
-    //    if (!IsConsumingStamina && currentStamina < stamina.Value)
-    //    {
-    //        currentStamina += staminaRegain.Value * Time.deltaTime;
-    //        UpdateHUD?.Invoke();
-    //    }
-    //}
-
     public void TakeDamage(AttackData attackData)
     {
         TakePhysicalDamage(attackData);
@@ -224,6 +220,12 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     private void TakePhysicalDamage(AttackData attackData)
     {
+        if (attackData.physicalDamage.Value < 0)
+        {
+            IncreaseHealthBy(-attackData.physicalDamage.Value);
+            return;
+        }
+
         float reducedDamage = Mathf.Max(0, attackData.physicalDamage.Value - physicalDef.Value);
 
         ReduceHealthBy(reducedDamage);
@@ -232,125 +234,114 @@ public class CharacterStats : MonoBehaviour, IDamagable
     private void TakeAilmentDamage(AttackData attackData)
     {
         float _ignisAtk = attackData.ignisDamage.Value;
+        float _frostAtk = attackData.frostDamage.Value;
         float _blitzAtk = attackData.blitzDamage.Value;
         float _hexAtk = attackData.hexDamage.Value;
         float _radianceAtk = attackData.radianceDamage.Value;
         float _gaiaAtk = attackData.gaiaDamage.Value;
 
-        float damage = _ignisAtk + _blitzAtk + _hexAtk + _radianceAtk + _gaiaAtk;
+        float damage = _ignisAtk + _frostAtk + _blitzAtk + _hexAtk + _radianceAtk + _gaiaAtk;
 
         if (damage == 0)
             return;
 
         if (_ignisAtk > 0)
-            TryApplyAilmentEffect(_ignisAtk, ref ignisStatus, AilmentType.Ignis);
+            TryApplyAilmentEffect(_ignisAtk, attackData.burnDamage, ref ignisStatus, AilmentType.Ignis);
+        else if (_frostAtk > 0)
+            TryApplyAilmentEffect(_frostAtk, attackData.frostSpeedReduction, ref frostStatus, AilmentType.Frost);
         else if (_blitzAtk > 0)
-            TryApplyAilmentEffect(_blitzAtk, ref blitzStatus, AilmentType.Blitz);
+            TryApplyAilmentEffect(_blitzAtk, attackData.blitzSurroundingDamage, ref blitzStatus, AilmentType.Blitz);
         else if (_hexAtk > 0)
-            TryApplyAilmentEffect(_hexAtk, ref hexStatus, AilmentType.Hex);
+            TryApplyAilmentEffect(_hexAtk, 0f, ref hexStatus, AilmentType.Hex);
         else if (_gaiaAtk > 0)
-            TryApplyAilmentEffect(_gaiaAtk, ref gaiaStatus, AilmentType.Gaia);
+            TryApplyAilmentEffect(_gaiaAtk, attackData.gaiaHealAmount, ref gaiaStatus, AilmentType.Gaia);
         else if (_radianceAtk > 0)
-            TryApplyAilmentEffect(_radianceAtk, ref radianceStatus, AilmentType.Radiance);
+            TryApplyAilmentEffect(_radianceAtk, 0f, ref radianceStatus, AilmentType.Radiance);
     }
 
-    //public virtual void DoDamage(CharacterStats targetStats)
-    //{
-    //    if (isPerfectBlock)
-    //    {
-    //        Debug.Log("Perfect Block Successful!");
-    //        return;
-    //    }
-
-    //    TakePhysicalDamage(physicalAtk.Value);
-
-    //    DoAilmentDamage(targetStats);
-    //    UpdateHUD?.Invoke();
-    //}
-
-    //public void DoAilmentDamage(CharacterStats targetStats)
-    //{
-    //    float _fireAtk = fireAtk.Value;
-    //    float _electricAtk = electricAtk.Value;
-
-    //    float damage = _fireAtk + _electricAtk;
-
-    //    if (damage == 0)
-    //        return;
-
-    //    if (_fireAtk > 0)
-    //        TryApplyAilmentEffect(_fireAtk, ref fireStatus, AilmentType.Fire);
-    //    else if (_electricAtk > 0)
-    //        TryApplyAilmentEffect(_electricAtk, ref electricStatus, AilmentType.Electric);
-    //}
-
-    protected virtual void TryApplyAilmentEffect(float ailmentAtk, ref AilmentStatus ailmentStatus, AilmentType ailmentType)
+    protected virtual void TryApplyAilmentEffect(float ailmentAtk, float ailmentEffect, ref AilmentStatus ailmentStatus, AilmentType ailmentType)
     {
         if (ailmentStatus.isMaxed)
             return;
 
         float ailmentDefence = ailmentStatus.defence.Value;
         float effectAmount = ailmentAtk - ailmentDefence;
-        ReduceHealthBy(effectAmount);
+        //ReduceHealthBy(effectAmount); // This line is commented out to prevent direct health reduction from ailment effects
 
         ailmentStatus.Value = Mathf.Min(ailmentStatus.ailmentLimit + ailmentLimitOffset, ailmentStatus.Value + effectAmount);
         StartCoroutine(ailmentStatus.ReduceValueOverTime());
 
-        // ------------------------ update UI -----------------------------------
-        //UI.instance.ailmentSlider[((int)ailmentType)].gameObject.SetActive(true);
-        //StartCoroutine(UI.instance.ailmentSlider[((int)ailmentType)].UpdateUI());
-
         if (hasAilment || ailmentStatus.Value < ailmentStatus.ailmentLimit)
             return;
 
-        ApplyAilment(ailmentType);
+        ApplyAilment(ailmentType, ailmentEffect);
         ailmentStatus.isMaxed = true;
-        ailmentStatus.ailmentEffectEnded += AilmentEffectEnded;
+        ailmentStatus.AilmentEffectEnded += AilmentEffectEnded;
     }
 
-    private void ApplyAilment(AilmentType ailmentType)
+    private void ApplyAilment(AilmentType ailmentType, float amount)
     {
         hasAilment = true;
         if (ailmentActions.TryGetValue(ailmentType, out var ailmentEffect))
-            ailmentEffect();
+            ailmentEffect(amount);
     }
 
     protected virtual void AilmentEffectEnded(AilmentStatus ailmentStatus)
     {
         hasAilment = false;
-        ailmentStatus.ailmentEffectEnded -= AilmentEffectEnded;
+        ailmentStatus.AilmentEffectEnded -= AilmentEffectEnded;
     }
 
     #region Ailment Specific functions
 
-    private void ApplyFireAilment()
+    private void ApplyFireAilment(float amount)
     {
-        OnAilmentApplied?.Invoke(AilmentType.Ignis);
+        OnAilmentStatusChange?.Invoke(AilmentType.Ignis, true, amount);
+        StartCoroutine(ContinousDamage(amount));
     }
 
-    private void ApplyFrostAilment()
+    private IEnumerator ContinousDamage(float amount)
     {
-        OnAilmentApplied?.Invoke(AilmentType.Frost);
+        while (ignisStatus.Value > 0)
+        {
+            ReduceHealthBy(amount);
+            yield return burnDelay;
+        }
     }
 
-    private void ApplyBlitzAilment()
+    private void ApplyFrostAilment(float amount)
     {
-        OnAilmentApplied?.Invoke(AilmentType.Blitz);
+        OnAilmentStatusChange?.Invoke(AilmentType.Frost, true, amount);
+
+        // Listen to frost event and slow down the character
     }
 
-    private void ApplyHexAilment()
+    private void ApplyBlitzAilment(float amount)
     {
-        OnAilmentApplied?.Invoke(AilmentType.Hex);
+        OnAilmentStatusChange?.Invoke(AilmentType.Blitz, true, amount);
+
+        // Check if blitz event applied and damage is taken in character -> shoot lightning homing projectilee
     }
 
-    private void ApplyRadianceAilment()
+    private void ApplyHexAilment(float amount)
     {
-        OnAilmentApplied?.Invoke(AilmentType.Radiance);
+        OnAilmentStatusChange?.Invoke(AilmentType.Hex, true, amount);
+
+        KillCharacter();
     }
 
-    private void ApplyGaiaStatus()
+    private void ApplyRadianceAilment(float amount)
     {
-        OnAilmentApplied?.Invoke(AilmentType.Gaia);
+        OnAilmentStatusChange?.Invoke(AilmentType.Radiance, true, amount);
+
+        KillCharacter();
+    }
+
+    private void ApplyGaiaAilment(float amount)
+    {
+        OnAilmentStatusChange?.Invoke(AilmentType.Gaia, true, amount);
+
+        // Check if gaia event applied and shooting healing projectile to player
     }
 
     #endregion
@@ -364,12 +355,14 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     public void ReduceHealthBy(float damage)
     {
-        if (isInvincible || isDead)
+        if (IsInvincible || isDead)
             return;
 
         damage *= vulnerability;
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
+
+        OnHealthChanged?.Invoke(currentHealth/health.Value);
 
         if (currentHealth == 0f)
         {
@@ -386,9 +379,21 @@ public class CharacterStats : MonoBehaviour, IDamagable
         OnDamageTaken?.Invoke(currentHealth, health.Value);
     }
 
+    private void IncreaseHealthBy(float amount)
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        currentHealth = Mathf.Min(health.Value, currentHealth + amount);
+        OnHealthChanged?.Invoke(currentHealth / health.Value);
+    }
+
     protected virtual void KillCharacter()
     {
         isDead = true;
+        currentHealth = 0f;
         OnDeath?.Invoke();
     }
 
@@ -396,32 +401,20 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     private IEnumerator MakeInvincibleFor(float time)
     {
-        isInvincible = true;
+        IsInvincible = true;
 
         yield return new WaitForSeconds(time);
 
-        isInvincible = false;
+        IsInvincible = false;
     }
 
-    public void SetInvincible(bool invincible) => isInvincible = invincible;
+    public void SetInvincible(bool invincible) => IsInvincible = invincible;
 
     public void SetBlocking(bool blocking) => IsBlocking = blocking;
 
     public void SetPerfectBlock(bool perfectBlock) => IsPerfectBlock = perfectBlock;
 
     public void SetConsumingStamina(bool status) => IsConsumingStamina = status;
-
-    //public bool HasEnoughStamina(float staminaAmount)
-    //{
-    //    if (currentStamina > staminaAmount)
-    //    {
-    //        currentStamina -= staminaAmount;
-    //        UpdateHUD?.Invoke();
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
 
     public (float, float) GetHealth() => (currentHealth, health.Value);
     public float GetCurrentStamina() => currentStamina;
@@ -438,4 +431,6 @@ public class CharacterStats : MonoBehaviour, IDamagable
         radianceStatus.Reset();
         // TODO: Stop Ailment
     }
+
+    public void Heal(float amount) => IncreaseHealthBy(amount);
 }

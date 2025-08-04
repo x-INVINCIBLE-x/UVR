@@ -45,7 +45,7 @@ public class Enemy_Axe : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+        IDamageable damagable = collision.gameObject.GetComponent<IDamageable>();
         damagable?.TakeDamage(attackData);
 
 

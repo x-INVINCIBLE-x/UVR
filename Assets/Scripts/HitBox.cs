@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitBox : MonoBehaviour, IDamagable
+public class HitBox : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float damageMultiplier = 1f;
 
@@ -14,5 +14,9 @@ public class HitBox : MonoBehaviour, IDamagable
     public virtual void TakeDamage(AttackData attackData)
     {
         
+    }
+
+    public void Heal(float amount)
+    {
     }
 }

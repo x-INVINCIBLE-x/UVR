@@ -813,6 +813,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Renderer: {fileID: 28417434}
   m_MaterialIndex: 0
+--- !u!4 &11796493 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+  m_PrefabInstance: {fileID: 953315686}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &17929856
 GameObject:
   m_ObjectHideFlags: 0
@@ -34467,7 +34472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &831855827
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39495,13 +39500,44 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1712369105}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: spawnPosition
+      value: 
+      objectReference: {fileID: 1014929135}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: healProjectile
+      value: 
+      objectReference: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: blitzProjectile
+      value: 
+      objectReference: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: patrollwaitTime
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: allyLayer.m_Bits
+      value: 16384
+      objectReference: {fileID: 0}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: surroundingHitRadius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_Name
       value: Jack O Gool
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1014929135}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39b9448778082804eada18c86642fb64, type: 3}
 --- !u!1 &954799520
@@ -41637,6 +41673,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Renderer: {fileID: 63814031}
   m_MaterialIndex: 0
+--- !u!1 &1014929134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1014929135}
+  m_Layer: 14
+  m_Name: Ailment Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1014929135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014929134}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 11796493}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1017330603
 GameObject:
   m_ObjectHideFlags: 0
@@ -62059,6 +62126,79 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Renderer: {fileID: 1054880797}
   m_MaterialIndex: 0
+--- !u!1001 &1543890449
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: healProjectile
+      value: 
+      objectReference: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: blitzProjectile
+      value: 
+      objectReference: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: patrollwaitTime
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_Name
+      value: Jack O Gool (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025851156519144306, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 39b9448778082804eada18c86642fb64, type: 3}
 --- !u!1 &1545490865
 GameObject:
   m_ObjectHideFlags: 0
@@ -68098,6 +68238,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1712369105 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4247280855487520295, guid: 39b9448778082804eada18c86642fb64, type: 3}
+  m_PrefabInstance: {fileID: 953315686}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1712627336
 GameObject:
   m_ObjectHideFlags: 0
@@ -71583,6 +71728,79 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Renderer: {fileID: 138063268}
   m_MaterialIndex: 0
+--- !u!1001 &1792783923
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 48596461268294645, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: healProjectile
+      value: 
+      objectReference: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: blitzProjectile
+      value: 
+      objectReference: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: patrollwaitTime
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_Name
+      value: Jack O Gool (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025851156519144306, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 39b9448778082804eada18c86642fb64, type: 3}
 --- !u!1 &1794529889
 GameObject:
   m_ObjectHideFlags: 0
@@ -87526,3 +87744,5 @@ SceneRoots:
   - {fileID: 1151385152}
   - {fileID: 775616024}
   - {fileID: 953315686}
+  - {fileID: 1792783923}
+  - {fileID: 1543890449}

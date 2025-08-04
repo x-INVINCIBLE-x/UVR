@@ -6,7 +6,7 @@ public class DamageOnTouch : MonoBehaviour
     [Tooltip("Either Set up by other Script or give its own AttackData. If both then combines the AttackData")]
     [SerializeField] private AttackData attackData;
     [SerializeField] private float damageRate = 0.2f;
-    private readonly HashSet<IDamagable> damagables = new();
+    private readonly HashSet<IDamageable> damagables = new();
     private float timer;
     [SerializeField] private LayerMask layerToDamage;
 
@@ -16,7 +16,7 @@ public class DamageOnTouch : MonoBehaviour
         if (timer < 0)
         {
             timer = damageRate;
-            foreach (IDamagable damagable in damagables)
+            foreach (IDamageable damagable in damagables)
             {
                 damagable.TakeDamage(attackData);
             }
@@ -35,8 +35,8 @@ public class DamageOnTouch : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & layerToDamage) == 0) return;
 
-        IDamagable damagable = other.GetComponentInParent<IDamagable>();
-        damagable ??= other.GetComponentInChildren<IDamagable>();
+        IDamageable damagable = other.GetComponentInParent<IDamageable>();
+        damagable ??= other.GetComponentInChildren<IDamageable>();
         if (damagable != null)
         {
             Debug.Log("Give damage");
@@ -47,7 +47,7 @@ public class DamageOnTouch : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        IDamagable damagable = other.GetComponent<IDamagable>();
+        IDamageable damagable = other.GetComponent<IDamageable>();
         if (damagables.Contains(damagable))
         {
             damagables.Remove(damagable);

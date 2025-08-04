@@ -17,7 +17,7 @@ public class PhysicsProjectile : Projectile
     public AudioClip impactSFX;
     private ParticleSystem VFXparticleSystem;
 
-    private HashSet<IDamagable> damaged = new();
+    private HashSet<IDamageable> damaged = new();
     private Collider col;
 
     private void Awake()
@@ -56,8 +56,8 @@ public class PhysicsProjectile : Projectile
 
     private void OnTriggerEnter(Collider other)
     {
-        IDamagable damagable = other.GetComponentInParent<IDamagable>();
-        damagable ??= other.GetComponentInChildren<IDamagable>();
+        IDamageable damagable = other.GetComponentInParent<IDamageable>();
+        damagable ??= other.GetComponentInChildren<IDamageable>();
         if (damagable != null && !damaged.Contains(damagable) && attackData != null)
         {
             damagable.TakeDamage(attackData);

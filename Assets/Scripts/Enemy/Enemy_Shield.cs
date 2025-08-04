@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Shield : MonoBehaviour, IDamagable
+public class Enemy_Shield : MonoBehaviour, IDamageable
 {
     private Enemy_Melee enemy;
     [SerializeField] private int durability;   
@@ -27,5 +27,10 @@ public class Enemy_Shield : MonoBehaviour, IDamagable
     public void TakeDamage(AttackData attackData)
     {
         ReduceDurability(((int)attackData.physicalDamage.Value));
+    }
+
+    public void Heal(float amount)
+    {
+        
     }
 }
