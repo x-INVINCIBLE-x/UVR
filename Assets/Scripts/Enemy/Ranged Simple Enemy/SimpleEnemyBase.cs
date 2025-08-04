@@ -80,7 +80,7 @@ public class SimpleEnemyBase : MonoBehaviour
     private void OnEnable()
     {
         isDead = false;
-        enemyStats.Reset();
+        enemyStats.RestoreStats();
         FXManager.SpawnQuestionMark(false);
         FXManager.SpawnExclamationMark(false);
         wasPlayerInSight = false;

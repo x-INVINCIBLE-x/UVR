@@ -427,7 +427,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
     public (float, float) GetHealth() => (currentHealth, health.Value);
     public float GetCurrentStamina() => currentStamina;
 
-    public void Reset()
+    public void RestoreStats()
     {
         isDead = false;
         currentHealth = health.Value;
@@ -437,5 +437,6 @@ public class CharacterStats : MonoBehaviour, IDamagable
         hexStatus.Reset();
         gaiaStatus.Reset();
         radianceStatus.Reset();
+        // TODO: Stop Ailment
     }
 }
