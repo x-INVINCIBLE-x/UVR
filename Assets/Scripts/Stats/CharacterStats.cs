@@ -99,7 +99,9 @@ public class CharacterStats : MonoBehaviour, IDamagable
     private bool isDead = false;
 
     public event System.Action OnDeath;
-    public event System.Action<float, float> OnDamageTaken;
+    public event Action<float, float> OnDamageTaken;
+    public event Action<AilmentType> OnAilmentApplied;
+
     private float damageTakenBuffer = 0.1f;
     private float lastDamageTakenTime = 0f;
 
@@ -298,7 +300,7 @@ public class CharacterStats : MonoBehaviour, IDamagable
         //UI.instance.ailmentSlider[((int)ailmentType)].gameObject.SetActive(true);
         //StartCoroutine(UI.instance.ailmentSlider[((int)ailmentType)].UpdateUI());
 
-        if (ailmentStatus.Value < ailmentStatus.ailmentLimit)
+        if (hasAilment || ailmentStatus.Value < ailmentStatus.ailmentLimit)
             return;
 
         ApplyAilment(ailmentType);
@@ -308,9 +310,6 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     private void ApplyAilment(AilmentType ailmentType)
     {
-        if (hasAilment)
-            return;
-
         hasAilment = true;
         if (ailmentActions.TryGetValue(ailmentType, out var ailmentEffect))
             ailmentEffect();
@@ -326,32 +325,32 @@ public class CharacterStats : MonoBehaviour, IDamagable
 
     private void ApplyFireAilment()
     {
-
+        OnAilmentApplied?.Invoke(AilmentType.Ignis);
     }
 
     private void ApplyFrostAilment()
     {
-
+        OnAilmentApplied?.Invoke(AilmentType.Frost);
     }
 
     private void ApplyBlitzAilment()
     {
-
+        OnAilmentApplied?.Invoke(AilmentType.Blitz);
     }
 
     private void ApplyHexAilment()
     {
-
+        OnAilmentApplied?.Invoke(AilmentType.Hex);
     }
 
     private void ApplyRadianceAilment()
     {
-
+        OnAilmentApplied?.Invoke(AilmentType.Radiance);
     }
 
     private void ApplyGaiaStatus()
     {
-
+        OnAilmentApplied?.Invoke(AilmentType.Gaia);
     }
 
     #endregion

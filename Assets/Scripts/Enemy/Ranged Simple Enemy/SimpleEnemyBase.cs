@@ -41,6 +41,7 @@ public class SimpleEnemyBase : MonoBehaviour
     private Coroutine currentCheckRoutine = null;
     private int enemyID;
     protected bool isDead;
+    private WaitForSeconds attackCheckCooldown = new WaitForSeconds(0.2f);
 
     protected virtual void Start()
     {
@@ -121,7 +122,7 @@ public class SimpleEnemyBase : MonoBehaviour
         {
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, LayerMask.GetMask("Player"));
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
-            yield return new WaitForSeconds(0.2f);
+            yield return attackCheckCooldown;
         }
     }
 
