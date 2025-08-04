@@ -11,9 +11,12 @@ public class VolleyEnemy : SimpleEnemyBase
     {
         base.Start();
     }
+
     protected override void Update()
     {   
         base.Update();
+
+        if (isDead) return;
 
         if (!playerInSightRange && !playerInAttackRange)
             Patrol();

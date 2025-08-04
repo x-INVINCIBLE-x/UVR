@@ -14,6 +14,8 @@ public class BomberEnemy : SimpleEnemyBase
     {
         base.Update();
 
+        if (isDead) return;
+
         if (!playerInSightRange && !playerInAttackRange)
             Patrol();
         else if (playerInSightRange && playerInAttackRange)

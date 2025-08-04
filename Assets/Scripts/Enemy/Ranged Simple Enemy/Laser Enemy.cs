@@ -16,6 +16,8 @@ public class LaserEnemy : SimpleEnemyBase
     {
         base.Update();
 
+        if (isDead) return;
+
         if (!playerInSightRange && !playerInAttackRange)
         {
             agent.SetDestination(transform.position);

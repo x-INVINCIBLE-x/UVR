@@ -58,7 +58,7 @@ public class SimpleEnemyBase : MonoBehaviour
     private void HandleHit(float arg1, float arg2)
     {
         if (isDead) return;
-        Debug.Log("hity");
+        
         dissolver.StartImpactDissolve(0.1f);
     }
 
@@ -66,7 +66,7 @@ public class SimpleEnemyBase : MonoBehaviour
     {
         isDead = true;
         agent.SetDestination(transform.position);
-        Debug.Log("Dissolve");
+        
         dissolver.StartDissolver();
         if (currentCheckRoutine != null)
         {
@@ -115,7 +115,7 @@ public class SimpleEnemyBase : MonoBehaviour
         {
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, LayerMask.GetMask("Player"));
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
