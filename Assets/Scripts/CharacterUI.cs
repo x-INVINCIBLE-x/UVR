@@ -5,34 +5,29 @@ using UnityEngine.UI;
 
 public class CharacterUI : MonoBehaviour
 {
-    [SerializeField] private CharacterStats characterStats;
     [SerializeField] private Image healthSlider;
     [SerializeField] private float tempMaxHealth;
     [SerializeField] private float tempCurrentHealth;
     [SerializeField] private float sliderSmoothness;
 
     
-    
-    private void Start()
+    public void ChangeHealthUI(float healthvalue)
     {
-        characterStats.OnDamageTaken += UpdateHealthSlider;
+        healthvalue = 1 - healthvalue; // health to how much damage taken
+        StartCoroutine(HealthLerpRoutine(healthvalue));
     }
-
+ 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            tempCurrentHealth -= 50f;
-            UpdateHealthSlider(tempMaxHealth, tempCurrentHealth);
-        }
+        
     }
 
-    private void UpdateHealthSlider(float maxHealth, float currentHealth)
+   /* private void UpdateHealthSlider(float maxHealth, float currentHealth)
     {   
         float healthRatio = (currentHealth /maxHealth);
 
         StartCoroutine(HealthLerpRoutine(healthRatio));
-    }
+    }*/
 
     private IEnumerator HealthLerpRoutine(float targetHealthValue)
     {

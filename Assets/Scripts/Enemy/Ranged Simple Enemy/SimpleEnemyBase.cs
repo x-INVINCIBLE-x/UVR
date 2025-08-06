@@ -58,6 +58,11 @@ public class SimpleEnemyBase : MonoBehaviour
 
     private AttackData ailmentData;
 
+
+    // Health UI
+    private bool HealthUIActive = false;
+    private Coroutine healthTimerCoroutine;
+
     protected virtual void Start()
     {
         playerLayer = LayerMask.GetMask("Player");
@@ -73,9 +78,14 @@ public class SimpleEnemyBase : MonoBehaviour
         enemyStats.OnDamageTaken += HandleHit;
         enemyStats.OnDeath += HandleDeath;
         enemyStats.OnAilmentStatusChange += HandleAilment;
-
+        enemyStats.OnHealthChanged += HandleHealthChange;
         defaultMagicChargeTime = magicChargeTime;
         InitializeAilmentData();
+    }
+
+    private void HandleHealthChange(float health)
+    {
+                
     }
 
     private void InitializeAilmentData()
@@ -143,7 +153,32 @@ public class SimpleEnemyBase : MonoBehaviour
             newMissile.Setup(PlayerManager.instance.Rb, ailmentData, 10, 4, projectileLifeTime, 100, playerLayer);
         }
 
+        // Impact Dissolve Effect
         dissolver.StartImpactDissolve(0.1f);
+
+        // Health UI Updation
+        if (!HealthUIActive)
+        {
+            FXManager.SpawnHealthUI(true);
+            HealthUIActive = true;
+        }
+        // Reset the timer if already running
+        if (healthTimerCoroutine != null)
+            StopCoroutine(healthTimerCoroutine);
+
+        healthTimerCoroutine = StartCoroutine(HealthTimer(3f));
+
+    }
+
+    private IEnumerator HealthTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        DespawnHealthUI();
+    }
+    private void DespawnHealthUI()
+    {
+        FXManager.SpawnHealthUI(false);
+        HealthUIActive = false;
     }
 
     protected virtual void HandleDeath()

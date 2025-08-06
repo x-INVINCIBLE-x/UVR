@@ -1350,6 +1350,63 @@ Transform:
   - {fileID: 336651348}
   m_Father: {fileID: 1753640897}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &596350608
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2412443629678744172, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_Name
+      value: Blightspitter Rifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 128.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 114.183556
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6974642
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.11173961
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.69907784
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.111122414
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.029
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90.137
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618967296764141271, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 18.134
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b8b2d9565c8c9ac469868560fc634638, type: 3}
 --- !u!1 &596665703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1668,6 +1725,10 @@ MonoBehaviour:
   Player: {fileID: 0}
   FXManager: {fileID: 0}
   animator: {fileID: 0}
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spawnPosition: {fileID: 0}
   sightRange: 15
   attackRange: 1
   attackCooldownTime: 2
@@ -1675,6 +1736,7 @@ MonoBehaviour:
   walkpointRange: 5
   patrollwaitTime: 4
   walkPoint: {x: 0, y: 0, z: 0}
+  speed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -1684,10 +1746,13 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0, z: 0}
-  lifeTime: 3
+  projectileLifeTime: 3
   attackData: {fileID: 0}
   enemyStats: {fileID: 0}
   dissolver: {fileID: 0}
+  surroundingHitRadius: 0
+  blitzProjectile: {fileID: 0}
+  healProjectile: {fileID: 0}
   selfDestructTime: 0.5
 --- !u!95 &754690804
 Animator:
@@ -1773,10 +1838,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754690802}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2370,6 +2435,10 @@ MonoBehaviour:
   Player: {fileID: 0}
   FXManager: {fileID: 0}
   animator: {fileID: 0}
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spawnPosition: {fileID: 0}
   sightRange: 12
   attackRange: 6
   attackCooldownTime: 2
@@ -2377,6 +2446,7 @@ MonoBehaviour:
   walkpointRange: 5
   patrollwaitTime: 3
   walkPoint: {x: 0, y: 0, z: 0}
+  speed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -2386,10 +2456,13 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0.6, z: 0}
-  lifeTime: 3
+  projectileLifeTime: 3
   attackData: {fileID: 11400000, guid: ad2e2ce431c2659468e5e979029899bc, type: 2}
   enemyStats: {fileID: 0}
   dissolver: {fileID: 0}
+  surroundingHitRadius: 0
+  blitzProjectile: {fileID: 0}
+  healProjectile: {fileID: 0}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
   shootForce: 20
   projectileSpawn: {fileID: 1938889000}
@@ -2443,10 +2516,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989840592}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2590,7 +2663,7 @@ MonoBehaviour:
   ailmentLimitOffset: 10
   currentHealth: 0
   currentStamina: 0
-  <isInvincible>k__BackingField: 0
+  <IsInvincible>k__BackingField: 0
 --- !u!95 &989840601
 Animator:
   serializedVersion: 7
@@ -2993,7 +3066,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9029826077346289740, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8732588779077376581}
   m_SourcePrefab: {fileID: 100100000, guid: 39b9448778082804eada18c86642fb64, type: 3}
 --- !u!1001 &1091469785
 PrefabInstance:
@@ -3211,6 +3287,10 @@ MonoBehaviour:
   Player: {fileID: 0}
   FXManager: {fileID: 0}
   animator: {fileID: 0}
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spawnPosition: {fileID: 0}
   sightRange: 15
   attackRange: 7
   attackCooldownTime: 2
@@ -3218,6 +3298,7 @@ MonoBehaviour:
   walkpointRange: 5
   patrollwaitTime: 3
   walkPoint: {x: 0, y: 0, z: 0}
+  speed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -3227,10 +3308,13 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0.5, z: 0}
-  lifeTime: 3
+  projectileLifeTime: 3
   attackData: {fileID: 0}
   enemyStats: {fileID: 0}
   dissolver: {fileID: 0}
+  surroundingHitRadius: 0
+  blitzProjectile: {fileID: 0}
+  healProjectile: {fileID: 0}
   LaserVFX: {fileID: 8476203572993528117, guid: b17767be6c49bff438d30e7290943d94, type: 3}
   projectileSpawnPosition: {fileID: 1848429663}
   LaserStartOffset: {x: 0, y: -2, z: 0}
@@ -3318,10 +3402,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126732832}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -3562,7 +3646,7 @@ MonoBehaviour:
   ailmentLimitOffset: 10
   currentHealth: 0
   currentStamina: 0
-  <isInvincible>k__BackingField: 0
+  <IsInvincible>k__BackingField: 0
 --- !u!1 &1130588478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3750,6 +3834,10 @@ MonoBehaviour:
   Player: {fileID: 0}
   FXManager: {fileID: 0}
   animator: {fileID: 0}
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spawnPosition: {fileID: 0}
   sightRange: 12
   attackRange: 6
   attackCooldownTime: 3
@@ -3757,6 +3845,7 @@ MonoBehaviour:
   walkpointRange: 5
   patrollwaitTime: 4
   walkPoint: {x: 0, y: 0, z: 0}
+  speed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -3766,10 +3855,13 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0, z: 0}
-  lifeTime: 3
+  projectileLifeTime: 3
   attackData: {fileID: 0}
   enemyStats: {fileID: 0}
   dissolver: {fileID: 0}
+  surroundingHitRadius: 0
+  blitzProjectile: {fileID: 0}
+  healProjectile: {fileID: 0}
   volleyProjectile: {fileID: 5916890302093399832, guid: de5b1b6a91a278f468d797063a5c3249, type: 3}
   projectileSpawnPosition: {fileID: 360953207}
 --- !u!95 &1137888475
@@ -3856,10 +3948,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137888473}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4100,7 +4192,7 @@ MonoBehaviour:
   ailmentLimitOffset: 10
   currentHealth: 0
   currentStamina: 0
-  <isInvincible>k__BackingField: 0
+  <IsInvincible>k__BackingField: 0
 --- !u!1 &1146576568
 GameObject:
   m_ObjectHideFlags: 0
@@ -5308,10 +5400,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449354134}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -5765,6 +5857,10 @@ MonoBehaviour:
   Player: {fileID: 0}
   FXManager: {fileID: 6397636939777746064}
   animator: {fileID: 3723046145733939940}
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spawnPosition: {fileID: 0}
   sightRange: 10
   attackRange: 3
   attackCooldownTime: 2
@@ -5772,6 +5868,7 @@ MonoBehaviour:
   walkpointRange: 5
   patrollwaitTime: 6
   walkPoint: {x: 0, y: 0, z: 0}
+  speed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -5781,10 +5878,13 @@ MonoBehaviour:
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0.35, z: 0}
-  lifeTime: 3
+  projectileLifeTime: 3
   attackData: {fileID: 0}
   enemyStats: {fileID: 0}
   dissolver: {fileID: 0}
+  surroundingHitRadius: 0
+  blitzProjectile: {fileID: 0}
+  healProjectile: {fileID: 0}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
   shootForce: 25
   projectileSpawn: {fileID: 5840461848085708654}
@@ -6022,10 +6122,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638845479}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -9951,10 +10051,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3486139989733027536}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 2
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -10303,6 +10403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f0b92473bf17a4893e74de4b400afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HealthUI: {fileID: 0}
   selfDestructVFX: {fileID: 0}
   MagicCircleAttackVfx: {fileID: 654805830734500129, guid: 408634c04d23d974093f22cae0f9b420, type: 3}
   MagicCircleSpawn: {fileID: 5840461848085708654}
@@ -10752,6 +10853,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jack 0 Volley
       objectReference: {fileID: 0}
+    - target: {fileID: 8630107434738895474, guid: 8bb230420c0b76e46ba4ba5c0b71265f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11067,6 +11172,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &8041431163819171599 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9029826077346289740, guid: 39b9448778082804eada18c86642fb64, type: 3}
+  m_PrefabInstance: {fileID: 1064242563}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8060992053168106680
 GameObject:
   m_ObjectHideFlags: 0
@@ -11270,6 +11380,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &8732588779077376581
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8041431163819171599}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!4 &8746274636540729994
 Transform:
   m_ObjectHideFlags: 0
@@ -11383,10 +11505,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8275089328505815555}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -11500,6 +11622,10 @@ PrefabInstance:
     - target: {fileID: 233415640818865595, guid: c3675b05750eb784880c9104d511e001, type: 3}
       propertyPath: m_Name
       value: Jack O Laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 233415640818865595, guid: c3675b05750eb784880c9104d511e001, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5062570164803732484, guid: c3675b05750eb784880c9104d511e001, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11641,7 +11767,8 @@ SceneRoots:
   - {fileID: 7187137488506763627}
   - {fileID: 1640578782140818329}
   - {fileID: 2268924092617199763}
-  - {fileID: 1064242563}
   - {fileID: 6092967264902778964}
   - {fileID: 2210085697187374024}
   - {fileID: 4317925935848769569}
+  - {fileID: 596350608}
+  - {fileID: 1064242563}

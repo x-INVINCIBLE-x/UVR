@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class EnemyFXHandler : MonoBehaviour
 {
+    [Header("Health UI")]
+    [SerializeField] private GameObject HealthUI;
+    private CanvasGroup healthUICanvasGroup;
+
     [Header("VFX")]
     public GameObject selfDestructVFX;
     
@@ -32,7 +36,23 @@ public class EnemyFXHandler : MonoBehaviour
     private GameObject currentQuestionMark;
 
     private GameObject spawnedVFX;
-    
+
+    private void Awake()
+    {
+        if (HealthUI != null)
+        {
+            healthUICanvasGroup = HealthUI.GetComponentInChildren<CanvasGroup>(); // reference to health ui's canvas group
+        }
+    }
+
+    private void Start()
+    {
+        HealthUI.SetActive(false);     
+    }
+    public void UpdatehealthUI()
+    {
+
+    }
 
     public void SpawnMagicCircleVFX(float chargeTime)
     {
@@ -186,6 +206,24 @@ public class EnemyFXHandler : MonoBehaviour
             CanvasGroup group = currentQuestionMark.GetComponentInChildren<CanvasGroup>();
             if (group != null)
                 StartCoroutine(FadeCanvasGroup(group, group.alpha, 0f, 0.5f));
+        }
+    }
+
+
+    public void SpawnHealthUI(bool Activate = true)
+    {   
+        if(healthUICanvasGroup != null)
+        {
+            if (Activate)
+            {
+                HealthUI.SetActive(true);
+                healthUICanvasGroup.alpha = 0f;
+                StartCoroutine(FadeCanvasGroup(healthUICanvasGroup, 0f, 1f, 0.7f));
+            }
+            else
+            {
+                StartCoroutine(FadeCanvasGroup(healthUICanvasGroup, healthUICanvasGroup.alpha, 0f, 0.5f));
+            }
         }
     }
 
