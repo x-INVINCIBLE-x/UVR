@@ -6,23 +6,35 @@ using UnityEngine.UI;
 public class CharacterUI : MonoBehaviour
 {
     [Header("Health UI")]
+    [Space]
     [SerializeField] private GameObject HealthUI;
-    private CanvasGroup healthUICanvasGroup;
-
     [SerializeField] private Image healthSlider;
     [SerializeField] private float sliderSmoothness;
+    private CanvasGroup healthUICanvasGroup;
+
+    [Header("Exclamation Mark UI")]
+    [Space]
+    [SerializeField] private GameObject ExclamtionUI;
+    private CanvasGroup exclamationUICanvasGroup;
+
+    [Header("Question Mark UI")]
+    [Space]
+    [SerializeField] private GameObject QuestionUI;
+    private CanvasGroup questionUICanvasGroup;
+
 
     private void Awake()
     {
-        if (HealthUI != null)
-        {
-            healthUICanvasGroup = HealthUI.GetComponentInChildren<CanvasGroup>(); // reference to health ui's canvas group
-        }
+        healthUICanvasGroup = HealthUI.GetComponentInChildren<CanvasGroup>(); // reference to health ui's canvas group
+        exclamationUICanvasGroup = ExclamtionUI.GetComponentInChildren<CanvasGroup>(); // reference to exclamation mark ui's canvas group
+        questionUICanvasGroup = QuestionUI.GetComponentInChildren<CanvasGroup>(); // reference to question mark ui's canvas group
     }
 
     private void Start()
     {
         HealthUI.SetActive(false);
+        ExclamtionUI.SetActive(false);
+        QuestionUI.SetActive(false);
     }
 
     public void ChangeHealthUI(float healthvalue)
@@ -55,6 +67,40 @@ public class CharacterUI : MonoBehaviour
             else
             {
                 StartCoroutine(FadeCanvasGroup(healthUICanvasGroup, healthUICanvasGroup.alpha, 0f, 0.5f));
+            }
+        }
+    }
+
+    public void SpawnExclamationUI(bool Activate = true)
+    {
+        if (exclamationUICanvasGroup != null)
+        {
+            if (Activate)
+            {
+                ExclamtionUI.SetActive(true);
+                exclamationUICanvasGroup.alpha = 0f;
+                StartCoroutine(FadeCanvasGroup(exclamationUICanvasGroup, 0f, 1f, 0.7f));
+            }
+            else
+            {
+                StartCoroutine(FadeCanvasGroup(exclamationUICanvasGroup, exclamationUICanvasGroup.alpha, 0f, 0.7f));
+            }
+        }
+    }
+
+    public void SpawnQuestionUI(bool Activate = true)
+    {
+        if (questionUICanvasGroup != null)
+        {
+            if (Activate)
+            {
+                QuestionUI.SetActive(true);
+                questionUICanvasGroup.alpha = 0f;
+                StartCoroutine(FadeCanvasGroup(questionUICanvasGroup, 0f, 1f, 0.7f));
+            }
+            else
+            {
+                StartCoroutine(FadeCanvasGroup(questionUICanvasGroup, questionUICanvasGroup.alpha, 0f, 0.7f));
             }
         }
     }

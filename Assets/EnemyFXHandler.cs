@@ -20,12 +20,7 @@ public class EnemyFXHandler : MonoBehaviour
     public Vector3 midScale = new Vector3(1f, 1f, 1f);
     public Vector3 maxScale = new Vector3(2f, 2f, 2f);
 
-    [Header("Exclamation Mark UI")]
-    [Space]
-    public GameObject ExclamationUI;
-    public Transform ExclamationSpawn;
-    public float ExclamationScale = 250f;
-    private GameObject currentExclamationMark;
+    
 
     [Header("Question Mark UI")]
     [Space]
@@ -131,69 +126,13 @@ public class EnemyFXHandler : MonoBehaviour
 
     public void SpawnExclamationMark(bool Activate = true)
     {
-        if (Activate)
-        {
-            if (currentExclamationMark != null)
-            {
-                CanvasGroup group = currentExclamationMark.GetComponentInChildren<CanvasGroup>();
-                if (group != null)
-                    StartCoroutine(FadeOutThenIn(group, 0.3f, 0.7f));
-
-                return;
-            }
-
-            currentExclamationMark = Instantiate(ExclamationUI, ExclamationSpawn.position, Quaternion.identity, ExclamationSpawn);
-            currentExclamationMark.transform.localScale = Vector3.one * ExclamationScale;
-
-            CanvasGroup groupNew = currentExclamationMark.GetComponentInChildren<CanvasGroup>();
-            if (groupNew != null)
-            {
-                groupNew.alpha = 0f;
-                StartCoroutine(FadeCanvasGroup(groupNew, 0f, 1f, 0.7f));
-            }
-        }
-        else
-        {
-            if (currentExclamationMark == null) return;
-
-            CanvasGroup group = currentExclamationMark.GetComponentInChildren<CanvasGroup>();
-            if (group != null)
-                StartCoroutine(FadeCanvasGroup(group, group.alpha, 0f, 0.5f));
-        }
+        characterUI.SpawnExclamationUI(Activate);
     }
 
 
     public void SpawnQuestionMark(bool Activate = true)
     {
-        if (Activate)
-        {
-            if (currentQuestionMark != null)
-            {
-                CanvasGroup group = currentQuestionMark.GetComponentInChildren<CanvasGroup>();
-                if (group != null)
-                    StartCoroutine(FadeOutThenIn(group, 0.3f, 0.7f));
-
-                return;
-            }
-
-            currentQuestionMark = Instantiate(QuestionMarkUI, QuestionMarkSpawn.position, Quaternion.identity, QuestionMarkSpawn);
-            currentQuestionMark.transform.localScale = Vector3.one * QuestionMarkScale;
-
-            CanvasGroup groupNew = currentQuestionMark.GetComponentInChildren<CanvasGroup>();
-            if (groupNew != null)
-            {
-                groupNew.alpha = 0f;
-                StartCoroutine(FadeCanvasGroup(groupNew, 0f, 1f, 0.7f));
-            }
-        }
-        else
-        {
-            if (currentQuestionMark == null) return;
-
-            CanvasGroup group = currentQuestionMark.GetComponentInChildren<CanvasGroup>();
-            if (group != null)
-                StartCoroutine(FadeCanvasGroup(group, group.alpha, 0f, 0.5f));
-        }
+        characterUI.SpawnQuestionUI(Activate);
     }
 
 
@@ -205,28 +144,6 @@ public class EnemyFXHandler : MonoBehaviour
     public void UpdateHealthValue(float value)
     {
         characterUI.ChangeHealthUI(value);
-    }
-
-    private IEnumerator FadeCanvasGroup(CanvasGroup group, float startAlpha, float endAlpha, float duration)
-    {
-        float elapsed = 0f;
-        group.alpha = startAlpha;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            group.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsed / duration);
-            yield return null;
-        }
-
-        group.alpha = endAlpha;
-    }
-
-    private IEnumerator FadeOutThenIn(CanvasGroup group, float fadeOutDuration, float fadeInDuration)
-    {
-        float currentAlpha = group.alpha;
-        yield return StartCoroutine(FadeCanvasGroup(group, currentAlpha, 0f, fadeOutDuration));
-        yield return StartCoroutine(FadeCanvasGroup(group, 0f, 1f, fadeInDuration));
     }
 
 }
