@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 public class EnemyFXHandler : MonoBehaviour
 {
-    [Header("Health UI")]
-    [SerializeField] private GameObject HealthUI;
-    private CanvasGroup healthUICanvasGroup;
+    [Header("Character UI")]
+    [SerializeField] private CharacterUI characterUI;
 
     [Header("VFX")]
     public GameObject selfDestructVFX;
@@ -37,23 +36,11 @@ public class EnemyFXHandler : MonoBehaviour
 
     private GameObject spawnedVFX;
 
-    private void Awake()
-    {
-        if (HealthUI != null)
-        {
-            healthUICanvasGroup = HealthUI.GetComponentInChildren<CanvasGroup>(); // reference to health ui's canvas group
-        }
-    }
-
     private void Start()
     {
-        HealthUI.SetActive(false);     
+    
     }
-    public void UpdatehealthUI()
-    {
-
-    }
-
+   
     public void SpawnMagicCircleVFX(float chargeTime)
     {
         if (MagicCircleAttackVfx == null)
@@ -212,19 +199,12 @@ public class EnemyFXHandler : MonoBehaviour
 
     public void SpawnHealthUI(bool Activate = true)
     {   
-        if(healthUICanvasGroup != null)
-        {
-            if (Activate)
-            {
-                HealthUI.SetActive(true);
-                healthUICanvasGroup.alpha = 0f;
-                StartCoroutine(FadeCanvasGroup(healthUICanvasGroup, 0f, 1f, 0.7f));
-            }
-            else
-            {
-                StartCoroutine(FadeCanvasGroup(healthUICanvasGroup, healthUICanvasGroup.alpha, 0f, 0.5f));
-            }
-        }
+        characterUI.SpawnHealthUI(Activate);
+    }
+
+    public void UpdateHealthValue(float value)
+    {
+        characterUI.ChangeHealthUI(value);
     }
 
     private IEnumerator FadeCanvasGroup(CanvasGroup group, float startAlpha, float endAlpha, float duration)

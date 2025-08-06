@@ -5,15 +5,28 @@ using UnityEngine.UI;
 
 public class CharacterUI : MonoBehaviour
 {
+    [Header("Health UI")]
+    [SerializeField] private GameObject HealthUI;
+    private CanvasGroup healthUICanvasGroup;
+
     [SerializeField] private Image healthSlider;
-    [SerializeField] private float tempMaxHealth;
-    [SerializeField] private float tempCurrentHealth;
     [SerializeField] private float sliderSmoothness;
 
-    
+    private void Awake()
+    {
+        if (HealthUI != null)
+        {
+            healthUICanvasGroup = HealthUI.GetComponentInChildren<CanvasGroup>(); // reference to health ui's canvas group
+        }
+    }
+
+    private void Start()
+    {
+        HealthUI.SetActive(false);
+    }
+
     public void ChangeHealthUI(float healthvalue)
     {
-        healthvalue = 1 - healthvalue; // health to how much damage taken
         StartCoroutine(HealthLerpRoutine(healthvalue));
     }
  
@@ -28,6 +41,39 @@ public class CharacterUI : MonoBehaviour
 
         StartCoroutine(HealthLerpRoutine(healthRatio));
     }*/
+
+    public void SpawnHealthUI(bool Activate = true)
+    {
+        if (healthUICanvasGroup != null)
+        {
+            if (Activate)
+            {
+                HealthUI.SetActive(true);
+                healthUICanvasGroup.alpha = 0f;
+                StartCoroutine(FadeCanvasGroup(healthUICanvasGroup, 0f, 1f, 0.7f));
+            }
+            else
+            {
+                StartCoroutine(FadeCanvasGroup(healthUICanvasGroup, healthUICanvasGroup.alpha, 0f, 0.5f));
+            }
+        }
+    }
+
+    private IEnumerator FadeCanvasGroup(CanvasGroup group, float startAlpha, float endAlpha, float duration)
+    {
+        float elapsed = 0f;
+        group.alpha = startAlpha;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            group.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsed / duration);
+            yield return null;
+        }
+
+        group.alpha = endAlpha;
+    }
+
 
     private IEnumerator HealthLerpRoutine(float targetHealthValue)
     {

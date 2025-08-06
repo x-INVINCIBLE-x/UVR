@@ -53,15 +53,12 @@ public class SimpleEnemyBase : MonoBehaviour
 
     private bool hitSurroundingEnemies = false;
     private bool healPlayer = false;
+    private Coroutine healthTimerCoroutine;
     private int enemyID;
     protected bool isDead;
+    private bool HealthUIActive = false;
 
     private AttackData ailmentData;
-
-
-    // Health UI
-    private bool HealthUIActive = false;
-    private Coroutine healthTimerCoroutine;
 
     protected virtual void Start()
     {
@@ -78,14 +75,14 @@ public class SimpleEnemyBase : MonoBehaviour
         enemyStats.OnDamageTaken += HandleHit;
         enemyStats.OnDeath += HandleDeath;
         enemyStats.OnAilmentStatusChange += HandleAilment;
-        enemyStats.OnHealthChanged += HandleHealthChange;
+        enemyStats.OnHealthChanged += HandleHealthChange; //Event called when healthchange (gives normalized health value)
         defaultMagicChargeTime = magicChargeTime;
         InitializeAilmentData();
     }
 
     private void HandleHealthChange(float health)
     {
-                
+        FXManager.UpdateHealthValue(health);            
     }
 
     private void InitializeAilmentData()

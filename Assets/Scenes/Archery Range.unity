@@ -3059,17 +3059,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: patrollwaitTime
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_Name
       value: Jack O Gool
       objectReference: {fileID: 0}
+    - target: {fileID: 6525117224224477189, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: health.BaseValue
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9029826077346289740, guid: 39b9448778082804eada18c86642fb64, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8732588779077376581}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39b9448778082804eada18c86642fb64, type: 3}
 --- !u!1001 &1091469785
 PrefabInstance:
@@ -10403,7 +10408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f0b92473bf17a4893e74de4b400afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthUI: {fileID: 0}
+  characterUI: {fileID: 0}
   selfDestructVFX: {fileID: 0}
   MagicCircleAttackVfx: {fileID: 654805830734500129, guid: 408634c04d23d974093f22cae0f9b420, type: 3}
   MagicCircleSpawn: {fileID: 5840461848085708654}
@@ -11172,11 +11177,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &8041431163819171599 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9029826077346289740, guid: 39b9448778082804eada18c86642fb64, type: 3}
-  m_PrefabInstance: {fileID: 1064242563}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8060992053168106680
 GameObject:
   m_ObjectHideFlags: 0
@@ -11380,18 +11380,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!225 &8732588779077376581
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8041431163819171599}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!4 &8746274636540729994
 Transform:
   m_ObjectHideFlags: 0
