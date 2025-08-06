@@ -1,4 +1,4 @@
-public interface IRewardProvider
+public interface IRewardProvider<T>
 {
-    public (int, int) GetCurrencyReward();
+    T GetReward();
 }

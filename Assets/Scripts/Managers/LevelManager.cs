@@ -7,6 +7,6 @@ public class LevelManager : MonoBehaviour
 
     public void SetPlayerToSpawnPosition()
     {
-        PlayerManager.instance.SetPlayerPosition(spawnTransform);
+        PlayerManager.instance.SetPlayerPosition(spawnTransform.position);
     }
 }

@@ -6,9 +6,12 @@ using System;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour, IRewardProvider
+public class Enemy : MonoBehaviour, IRewardProvider<GameReward>
 {
     [SerializeField] private RewardProfile rewardProfile;
+    [SerializeField] private GameReward eliminationReward;
+
+    [Space]
 
     public LayerMask whatIsAlly;
     public LayerMask whatIsPlayer;
@@ -340,5 +343,10 @@ public class Enemy : MonoBehaviour, IRewardProvider
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, aggresionRange);
+    }
+
+    public GameReward GetReward()
+    {
+        return eliminationReward;
     }
 }

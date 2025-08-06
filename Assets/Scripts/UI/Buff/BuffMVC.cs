@@ -25,7 +25,7 @@ public class BuffMVC : MonoBehaviour
 
         foreach (Buff buff in model.GetCurrentBuffs())
         {
-            view.CreateCard(buff.buffName, buff.icon, buff.frontMaterial, buff.backMaterial, buff.flavourText);
+            view.CreateBuffUI(buff.buffName, buff.icon, buff.iconColor ,buff.flavourText);
         }
     }
 }

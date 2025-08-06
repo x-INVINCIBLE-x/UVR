@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 safePositionOffset = Vector3.zero;
     [SerializeField] private Vector3 lastSafePosition;
 
+    private Coroutine positionResetRoutine = null;
+
     private void Awake()
     {
         stats = GetComponentInChildren<PlayerStats>();
@@ -28,9 +30,22 @@ public class Player : MonoBehaviour
 
     public void SetPlayerToSafePosition()
     {
+        if (positionResetRoutine != null) 
+            return;
+        
+        positionResetRoutine = StartCoroutine(SetToSafePosition());
+    }
+
+    private IEnumerator SetToSafePosition()
+    {
         PlayerManager.instance.ActionMediator.DisableControl();
+        yield return new WaitForSeconds(0.1f); // Small delay to ensure control is disabled
         Debug.Log("Setting player to last safe position: " + lastSafePosition);
         PlayerManager.instance.SetPlayerPosition(lastSafePosition + safePositionOffset);
+        yield return new WaitForSeconds(0.1f); // Small delay to ensure position is set
+
+        // Recurse this function if still giving problems
+
         PlayerManager.instance.ActionMediator.EnableControl();
     }
 
@@ -55,5 +70,10 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(lastSafePosition, 0.2f);
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

@@ -5,9 +5,9 @@ public class BuffView : MonoBehaviour
     [SerializeField] private Transform cardContainer;
     [SerializeField] private CardView cardPrefab;
 
-    public void CreateCard(string _title, Sprite _icon, Material _frontMaterial, Material _backMaterial, string _description = "")
+    public void CreateBuffUI(string _title, Sprite _icon, Color _iconColor, string _description = "")
     {
         CardView newCardView = Instantiate(cardPrefab, cardContainer);
-        newCardView.Setup(_title, _icon, _frontMaterial, _backMaterial, _description);
+        newCardView.Setup(_title, _icon, _iconColor, _description);
     }
 }

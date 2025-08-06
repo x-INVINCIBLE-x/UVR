@@ -6,6 +6,8 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
     [field: SerializeField]public int Gold { get; private set; } = 10000;
     [field: SerializeField]public int Magika { get; private set; } = 10000;
 
+    public event System.Action<int, int> OnCurrencyChanged;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,24 +22,25 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
 
     private void OnEnable()
     {
-        GameEvents.OnCurrencyGiven += HandleCurrencyGiven;
+        GameEvents.OnRewardProvided += HandleCurrencyGiven;
     }
 
     private void OnDisable()
     {
-        GameEvents.OnCurrencyGiven -= HandleCurrencyGiven;
+        GameEvents.OnRewardProvided -= HandleCurrencyGiven;
     }
 
-    private void HandleCurrencyGiven(IRewardProvider provider)
+    private void HandleCurrencyGiven(IRewardProvider<GameReward> provider)
     {
-        (int _gold, int _magika) = provider.GetCurrencyReward();
-        AddCurrency(_gold, _magika);
+        GameReward reward = provider.GetReward();
+        AddCurrency(reward.Gold, reward.Magika);
     }
 
     private void AddCurrency(int gold, int magika)
     {
         Gold += gold;
         Magika += magika;
+        OnCurrencyChanged?.Invoke(Gold, Magika);
         // Trigger UI update or audio feedback if needed
     }
 
@@ -46,8 +49,10 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
         if(Gold >= amount)
         {
             Gold -= amount;
+            OnCurrencyChanged?.Invoke(Gold, Magika);
             return true;
         }
+
         return false;
     }
 
@@ -56,6 +61,7 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
         if (Magika >= amount)
         {
             Magika -= amount;
+            OnCurrencyChanged?.Invoke(Gold, Magika);
             return true;
         }
         return false;

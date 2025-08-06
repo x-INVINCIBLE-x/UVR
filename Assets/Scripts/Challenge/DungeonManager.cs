@@ -15,6 +15,7 @@ public class DungeonManager : MonoBehaviour
 
     [Header("Difficulty Scaling")]
     [field: SerializeField] public int DifficultyLevel { get; private set; } = 1;
+    [field: SerializeField] public int Level { get; private set; } = 1;
     [Tooltip("Levels to Complete before Difficultry Level Increase")]
     [field: SerializeField] private int levelsToComplete = 2;
     private int levelsTillScale = 0;
@@ -71,16 +72,7 @@ public class DungeonManager : MonoBehaviour
         buffHandler = GetComponent<DungeonBuffHandler>();
         ResetAvailbleScenes();
         DifficultyLevel = 1;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            DifficultyLevel++;
-            //Instantiate(tempEnemy, transform.position, Quaternion.identity);
-            OnDifficultyChange?.Invoke(DifficultyLevel);
-        }
+        Level = 1;
     }
 
     private void Start()
@@ -115,6 +107,7 @@ public class DungeonManager : MonoBehaviour
 
     private void UpdateDifficulty()
     {
+        Level++;
         levelsTillScale--;
 
         if (levelsTillScale == 0)

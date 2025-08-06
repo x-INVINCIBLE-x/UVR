@@ -43,7 +43,7 @@ public enum AilmentType
 
 public class CharacterStats : MonoBehaviour, IDamageable
 {
-    [SerializeField] private DifficultyProfile difficultyProfile;
+    [SerializeField] protected DifficultyProfile difficultyProfile;
 
     [Header("Common Abilities")]
     public Stat health;
@@ -165,13 +165,9 @@ public class CharacterStats : MonoBehaviour, IDamageable
         };
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         InitializeStatDictionary();
-        if (difficultyProfile != null && DungeonManager.Instance != null)
-        {
-            difficultyProfile.ApplyModifiers(statDictionary, DungeonManager.Instance.DifficultyLevel, this);
-        }
 
         OnHealthChanged?.Invoke(currentHealth / health.Value);
     }

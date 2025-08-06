@@ -20,52 +20,40 @@ public class TimeTrialChallenge : Challenge
     [SerializeField] private int challengeDuration;
     [Tooltip("Added Extra Time for getting closrt to objective")]
     [SerializeField] private float bonusTime;
-    private List<int> possibleTargets = new();
 
     [SerializeField] private ObjectiveType currentObjective;
+    [SerializeField] private List<ObjectiveType> targetObjectives;
+    private List<ObjectiveType> possibleTargets = new();
+
     private float timer;
     private const int TickTime = 1;
     private int currentAmount = 0;
     private Coroutine currentRoutine;
     private string objectiveString ="";
 
-    private void Start()
-    {
-        objectiveString = currentObjective.ToString();
-        StringBuilder ob = new();
-
-        for (int i = 0; i < objectiveString.Length; i++)
-        {
-            char c = objectiveString[i];
-
-            if (i > 0 && char.IsUpper(c))
-                ob.Append(' ');
-
-            ob.Append(c);
-        }
-
-        objectiveString = ob.ToString();
-
-        technicalDetails = $"ELIMINATE {targetAmount} {ob} in {challengeDuration} seconds to complete the challenge. \n\n Each Elimination will add a BONUS TIME of {bonusTime} seconds";
-    }
-
     public override void InitializeChallenge()
     {
         status = ChallengeStatus.InProgress;
         timer = challengeDuration;
-
-        if (possibleTargets.Count != 0) { return; }
         currentAmount = 0;
-        ResetTargets();
+
+        if (possibleTargets.Count == 0)
+        {
+            ResetTargets();
+        }
+
+        int targetIndex = UnityEngine.Random.Range(0, possibleTargets.Count);
+        currentObjective = possibleTargets[targetIndex];
+
+        UpdateConditionText();
+
+        possibleTargets.Remove(currentObjective);
     }
 
     public override void StartChallenge()
     {
         GameEvents.OnElimination += UpdateChallengeStatus;
-        int targetIndex = UnityEngine.Random.Range(0, possibleTargets.Count);
-        currentObjective = (ObjectiveType)possibleTargets[targetIndex];
 
-        possibleTargets.RemoveAt(targetIndex);
         currentRoutine = StartCoroutine(StartChallengeRoutine());
     }
 
@@ -129,10 +117,30 @@ public class TimeTrialChallenge : Challenge
 
     private void ResetTargets()
     {
-        for (int i = 0; i < Enum.GetValues(typeof(ObjectiveType)).Length; i++)
+        for (int i = 0; i < targetObjectives.Count; i++)
         {
-            possibleTargets.Add(i);
+            possibleTargets.Add(targetObjectives[i]);
         }
+    }
+
+    private void UpdateConditionText()
+    {
+        objectiveString = currentObjective.ToString();
+        StringBuilder ob = new();
+
+        for (int i = 0; i < objectiveString.Length; i++)
+        {
+            char c = objectiveString[i];
+
+            if (i > 0 && char.IsUpper(c))
+                ob.Append(' ');
+
+            ob.Append(c);
+        }
+
+        objectiveString = ob.ToString();
+        possibleTargets.Clear();
+        technicalDetails = $"ELIMINATE {targetAmount} {ob} in {challengeDuration} seconds to complete the challenge. \n\n Each Elimination will add a BONUS TIME of {bonusTime} seconds";
     }
 
     public override string GetProgressText()

@@ -23,6 +23,7 @@ public class Buff : ScriptableObject
     [TextArea]
     public string flavourText;
     public Sprite icon;
+    public Color iconColor = Color.white;
     public Material frontMaterial;
     public Material backMaterial;
     public BuffProvider cardDisplay;

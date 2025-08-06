@@ -8,5 +8,5 @@ public class ChallengeUIData : ScriptableObject
     [TextArea] public string description;
     [TextArea] public string flavourText;
     public Sprite icon;
-    public GameObject slicaeableStatue; 
+    public GameObject startStatue; 
 }

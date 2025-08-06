@@ -6,10 +6,10 @@ public static class GameEvents
     public static System.Action<ObjectiveType> OnElimination;
     public static System.Action<float> OnGloabalMovementSpeedChange;
     public static System.Action<float> OnGloablAttackSpeedChange;
-    public static event Action<IRewardProvider> OnCurrencyGiven;
+    public static event Action<IRewardProvider<GameReward>> OnRewardProvided;
 
-    public static void RaiseReward(IRewardProvider giver)
+    public static void RaiseReward(IRewardProvider<GameReward> giver)
     {
-        OnCurrencyGiven?.Invoke(giver);
+        OnRewardProvided?.Invoke(giver);
     }
 }

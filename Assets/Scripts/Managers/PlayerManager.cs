@@ -23,12 +23,6 @@ public class PlayerManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void SetPlayerPosition(Transform targetTransform)
-    {
-        PlayerOrigin.MoveCameraToWorldLocation(targetTransform.position);
-        PlayerOrigin.MatchOriginUpCameraForward(targetTransform.up, targetTransform.forward);
-    }
-
     public void SetPlayerPosition(Vector3 targetPosition)
     {
         PlayerOrigin.MoveCameraToWorldLocation(targetPosition);

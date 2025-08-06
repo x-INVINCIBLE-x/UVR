@@ -12,6 +12,8 @@ public class ChallengeUI : MonoBehaviour
     [SerializeField] private ChallengeUIDataRegistry uiRegistry;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TextMeshProUGUI difficultyText;
+    [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Image iconImage;
 
     [Header("Challenge Progress UI")]
@@ -28,6 +30,8 @@ public class ChallengeUI : MonoBehaviour
 
     [Header("Challenge Statue")]
     [SerializeField] private Transform statueSpawnTransform;
+
+    private GameObject currentStartStatue = null;
 
     private ChallengeUIData data;
     private readonly float uiCloseTime = 2f;
@@ -115,7 +119,19 @@ public class ChallengeUI : MonoBehaviour
     {
         data = uiRegistry.GetUIData(challenge.GetID());
 
-        Instantiate(data.slicaeableStatue, statueSpawnTransform.position, Quaternion.identity, statueSpawnTransform);
+        if (DungeonManager.Instance != null)
+        {
+            difficultyText.text = DungeonManager.Instance.DifficultyLevel.ToString();
+            levelText.text = DungeonManager.Instance.Level.ToString();
+        }
+
+        if (currentStartStatue != null)
+        {
+            Destroy(currentStartStatue);
+            currentStartStatue = null;
+        }
+
+        currentStartStatue = Instantiate(data.startStatue, statueSpawnTransform.position, Quaternion.identity, statueSpawnTransform);
 
         if (data == null)
         {
@@ -123,8 +139,10 @@ public class ChallengeUI : MonoBehaviour
             return;
         }
 
+
         nameText.text = data.displayName;
 
+        sb.Clear();
         sb.AppendLine(data.description);
         sb.AppendLine();
 
