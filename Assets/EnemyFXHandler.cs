@@ -135,15 +135,23 @@ public class EnemyFXHandler : MonoBehaviour
         characterUI.SpawnQuestionUI(Activate);
     }
 
-
     public void SpawnHealthUI(bool Activate = true)
     {   
         characterUI.SpawnHealthUI(Activate);
     }
 
+    public void SpawnAilmentUI(AilmentType type, bool Activate = true)
+    {
+        characterUI.SpawnAilmentUI(type, Activate);
+    }
     public void UpdateHealthValue(float value)
     {
         characterUI.ChangeHealthUI(value);
+    }
+
+    public void UpdateAilmentValue(bool Activated, AilmentStatus ailmentStatus)
+    {
+        characterUI.ChangeAilmentUI(Activated , ailmentStatus);
     }
 
 }

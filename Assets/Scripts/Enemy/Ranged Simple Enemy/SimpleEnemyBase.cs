@@ -60,7 +60,7 @@ public class SimpleEnemyBase : MonoBehaviour
 
     private AttackData ailmentData;
 
-    private Coroutine ailmentRoutine;
+   
 
     protected virtual void Start()
     {
@@ -102,13 +102,8 @@ public class SimpleEnemyBase : MonoBehaviour
     private void HandleAilment(AilmentType type, bool isActivated, float effectAmount)
     {
         AilmentStatus status = enemyStats.GetAilmentStatus(type);
-        ailmentRoutine ??= StartCoroutine(HandleAilmentStatus(status));
-        if (isActivated)
-        {
-            // Open some special UI
-            StopCoroutine(ailmentRoutine);
-            status.AilmentEffectEnded += HandleEffectEnd;
-        }
+        FXManager.SpawnAilmentUI(type,true);
+        FXManager.UpdateAilmentValue(isActivated,status);
 
         if (type == AilmentType.Blitz)
         {
@@ -127,23 +122,7 @@ public class SimpleEnemyBase : MonoBehaviour
             agent.speed = isActivated ? speed * 0.5f : speed;
             magicChargeTime = isActivated ? magicChargeTime * 1.5f : defaultMagicChargeTime;
         }
-    }
-
-    private void HandleEffectEnd(AilmentType type)
-    {
-        Debug.Log($"Ailment Effect Ended: {type}");
-    }
-
-    private IEnumerator HandleAilmentStatus(AilmentStatus status)
-    {
-        while (status.Value  > 0)
-        {
-            Debug.Log($"Ailment Status: {status.Value/status.ailmentLimit}");
-            yield return null;
-        }
-
-        ailmentRoutine = null;
-    }
+    }   
 
     protected virtual void HandleHit(float arg1, float arg2)
     {

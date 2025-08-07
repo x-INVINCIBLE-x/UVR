@@ -939,8 +939,8 @@ Transform:
   m_GameObject: {fileID: 1558766954793813135}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.08112323, y: 0.07662499, z: 0.0071242526}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0.1452, y: 0.0909, z: 0.0071242526}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6129042949620983801}
@@ -1369,6 +1369,7 @@ MonoBehaviour:
     BaseValue: 0
     statModifiers: []
   ignisStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -1379,6 +1380,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   frostStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -1389,6 +1391,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   blitzStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -1399,6 +1402,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   hexStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -1409,6 +1413,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   radianceStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -1419,6 +1424,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   gaiaStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -2540,11 +2546,17 @@ MonoBehaviour:
   ExclamtionUI: {fileID: 2207997331313420479}
   QuestionUI: {fileID: 6653584279636157510}
   burningUI: {fileID: 8858671833012526837}
+  burningSlider: {fileID: 7770893761404618816}
   freezingUI: {fileID: 355623839066811072}
+  freezingSlider: {fileID: 8334914400656397957}
   shockUI: {fileID: 8674465480981102193}
+  shockSlider: {fileID: 8542235524578758235}
   drainUI: {fileID: 3478157519605571480}
+  drainSlider: {fileID: 5113784798026761503}
   blightUI: {fileID: 3482005306938076576}
+  blightSlider: {fileID: 4162336486012269011}
   frenzyUI: {fileID: 7468755095736851681}
+  frenzySlider: {fileID: 4456768476498556365}
 --- !u!1 &5302695093223271562
 GameObject:
   m_ObjectHideFlags: 0

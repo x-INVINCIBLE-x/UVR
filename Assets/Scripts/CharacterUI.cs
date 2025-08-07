@@ -9,7 +9,7 @@ public class CharacterUI : MonoBehaviour
     [Space]
     [SerializeField] private GameObject HealthUI;
     [SerializeField] private Image healthSlider;
-    [SerializeField] private float sliderSmoothness;
+    [SerializeField] private float healthSliderSmoothness;
     private CanvasGroup healthUICanvasGroup;
 
     [Header("Exclamation Mark UI")]
@@ -24,16 +24,33 @@ public class CharacterUI : MonoBehaviour
 
     [Header("Ailment UIs")]
     [Space]
+    [SerializeField] private float ailmentSliderSmoothness;
+    [Space]
     [SerializeField] private GameObject burningUI;
+    [SerializeField] private Image burningSlider;
+    [Space]
     [SerializeField] private GameObject freezingUI;
+    [SerializeField] private Image freezingSlider;
+    [Space]
     [SerializeField] private GameObject shockUI;
+    [SerializeField] private Image shockSlider;
+    [Space]
     [SerializeField] private GameObject drainUI;
+    [SerializeField] private Image drainSlider;
+    [Space]
     [SerializeField] private GameObject blightUI;
+    [SerializeField] private Image blightSlider;
+    [Space]
     [SerializeField] private GameObject frenzyUI;
+    [SerializeField] private Image frenzySlider;
+
+
 
     private GameObject currentAilmentUI;
-    private CanvasGroup ailmentUIquestionUICanvasGroup;
-
+    private Image currentAilmentSlider;
+    private CanvasGroup ailmentUICanvasGroup;
+    
+    private Coroutine ailmentRoutine = null;
 
 
     private void Awake()
@@ -54,17 +71,32 @@ public class CharacterUI : MonoBehaviour
         drainUI.SetActive(false);
         blightUI.SetActive(false);
         frenzyUI.SetActive(false);
+    
     }
-
+   
     public void ChangeHealthUI(float healthvalue)
     {
         StartCoroutine(HealthLerpRoutine(healthvalue));
     }
- 
-    private void Update()
+
+    public void ChangeAilmentUI(bool isActivated, AilmentStatus status)
     {
+        if (ailmentRoutine == null)
+            ailmentRoutine = StartCoroutine(AilmentLerpRoutine(status));
         
+        if (isActivated)
+        {
+            if (currentAilmentSlider != null)
+                currentAilmentSlider.fillAmount = 1;
+            // Open some special UI
+            if (ailmentRoutine != null)
+                StopCoroutine(ailmentRoutine);
+            
+            ailmentRoutine = null;
+            status.AilmentEffectEnded += HandleEffectEnd;
+        }
     }
+
 
    /* private void UpdateHealthSlider(float maxHealth, float currentHealth)
     {   
@@ -124,11 +156,50 @@ public class CharacterUI : MonoBehaviour
         }
     }
 
-    public void SpawnAilmentUI(bool Activate = true)
+    public void SpawnAilmentUI(AilmentType type , bool Activate = true)
     {
-        if(ailmentUIquestionUICanvasGroup != null)
+        switch (type)
         {
+            case AilmentType.Ignis:
+                currentAilmentUI = burningUI;
+                currentAilmentSlider = burningSlider;
+                break;
+            case AilmentType.Frost:
+                currentAilmentUI = freezingUI;
+                currentAilmentSlider = freezingSlider;
+                break;
+            case AilmentType.Blitz:
+                currentAilmentUI = shockUI;
+                currentAilmentSlider = shockSlider;
+                break;
+            case AilmentType.Gaia:
+                currentAilmentUI = drainUI;
+                currentAilmentSlider = drainSlider;
+                break;
+            case AilmentType.Radiance:
+                currentAilmentUI = blightUI;
+                currentAilmentSlider = blightSlider;
+                break;
+            case AilmentType.Hex:
+                currentAilmentUI = frenzyUI;
+                currentAilmentSlider = frenzySlider;
+                break;          
+        }
 
+        ailmentUICanvasGroup = currentAilmentUI.GetComponentInChildren<CanvasGroup>();
+
+        if (ailmentUICanvasGroup != null)
+        {
+            if (Activate)
+            {
+                currentAilmentUI.SetActive(true);
+                ailmentUICanvasGroup.alpha = 0f;
+                StartCoroutine(FadeCanvasGroup(ailmentUICanvasGroup, 0f, 1f, 0.7f));
+            }
+            else
+            {
+                StartCoroutine(FadeCanvasGroup(ailmentUICanvasGroup, ailmentUICanvasGroup.alpha, 0f, 0.7f));
+            }
         }
     }
     private IEnumerator FadeCanvasGroup(CanvasGroup group, float startAlpha, float endAlpha, float duration)
@@ -147,16 +218,48 @@ public class CharacterUI : MonoBehaviour
     }
 
 
+
+    private void HandleEffectEnd(AilmentType type)
+    {
+        Debug.Log($"Ailment Effect Ended: {type}");
+        currentAilmentUI.SetActive(false);
+    }
+
+    // Handles lerping and Updating of the ailment slider values
+    private IEnumerator AilmentLerpRoutine(AilmentStatus status) 
+    {
+        while (status.Value > 0)
+        {   
+            Debug.Log($"Ailment Status: {status.Value / status.ailmentLimit}");
+            currentAilmentSlider.fillAmount = Mathf.Lerp(currentAilmentSlider.fillAmount,(status.Value / status.ailmentLimit), ailmentSliderSmoothness * Time.deltaTime);
+            yield return null;
+        }
+        currentAilmentSlider.fillAmount = 0;
+        ailmentRoutine = null;
+    }
+
     private IEnumerator HealthLerpRoutine(float targetHealthValue)
     {
         while (Mathf.Abs(healthSlider.fillAmount - targetHealthValue) > 0.001f)
         {
-            healthSlider.fillAmount = Mathf.Lerp(healthSlider.fillAmount, targetHealthValue, sliderSmoothness * Time.deltaTime);
+            healthSlider.fillAmount = Mathf.Lerp(healthSlider.fillAmount, targetHealthValue, healthSliderSmoothness * Time.deltaTime);
             yield return null;
         }
 
         healthSlider.fillAmount = targetHealthValue;
     }
+
+    //private IEnumerator AilmentLerpRoutine(float targetValue)
+    //{
+    //    while (Mathf.Abs(currentAilmentSlider.fillAmount - targetValue) > 0.001f)
+    //    {
+    //        currentAilmentSlider.fillAmount = Mathf.Lerp(currentAilmentSlider.fillAmount, targetValue, ailmentSliderSmoothness * Time.deltaTime);
+    //        yield return null;
+    //    }
+
+    //    currentAilmentSlider.fillAmount = targetValue;
+    //}
+
 
     //private void UpdateHealthSlider(int maxHealth, int currentHealth)
     //{
