@@ -41,6 +41,45 @@ public enum AilmentType
     Gaia
 }
 
+[System.Serializable]
+public class AilmentStatus
+{
+    public AilmentType Type;
+    public float Value;
+    public Stat resistance;
+    public Stat defence;
+    public bool isMaxed = false;
+    public float ailmentLimit = 100;
+    public event Action<AilmentType> AilmentEffectEnded;
+    public IEnumerator ReduceValueOverTime()
+    {
+        while (Value > 0)
+        {
+            if (Value > 0)
+            {
+                Value -= resistance.Value * Time.deltaTime;
+
+                if (Value <= 0)
+                {
+                    if (isMaxed)
+                        AilmentEffectEnded?.Invoke(Type);
+
+                    Value = 0;
+                    isMaxed = false;
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+            yield return null;
+        }
+    }
+
+    public void Reset()
+    {
+        Value = 0;
+        isMaxed = false;
+    }
+}
 public class CharacterStats : MonoBehaviour, IDamageable
 {
     [SerializeField] protected DifficultyProfile difficultyProfile;
@@ -94,6 +133,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
     public bool IsConsumingStamina { get; private set; } = false;
 
     protected Dictionary<AilmentType, System.Action<float>> ailmentActions;
+    protected Dictionary<AilmentType, AilmentStatus> ailmentStatuses;
     public Dictionary<Stats, Stat> statDictionary;
 
     private bool isDead = false;
@@ -111,48 +151,16 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
     //public event System.Action UpdateHUD;
 
-    [System.Serializable]
-    public class AilmentStatus
-    {
-        public float Value;
-        public Stat resistance;
-        public Stat defence;
-        public bool isMaxed = false;
-        public float ailmentLimit = 100;
-        public event Action<AilmentStatus> AilmentEffectEnded;
-        public IEnumerator ReduceValueOverTime()
-        {
-            while (Value > 0)
-            {
-                if (Value > 0)
-                {
-                    Value -= resistance.Value * Time.deltaTime;
-
-                    if (Value <= 0)
-                    {
-                        if (isMaxed)
-                            AilmentEffectEnded?.Invoke(this);
-
-                        Value = 0;
-                        isMaxed = false;
-                    }
-
-                    yield return new WaitForEndOfFrame();
-                }
-                yield return null;
-            }
-        }
-
-        public void Reset()
-        {
-            Value = 0;
-            isMaxed = false;
-        }
-    }
-
     protected virtual void Awake()
     {
         InitializeValues();
+
+        ignisStatus.Type = AilmentType.Ignis;
+        frostStatus.Type = AilmentType.Frost;
+        blitzStatus.Type = AilmentType.Blitz;
+        hexStatus.Type = AilmentType.Hex;
+        radianceStatus.Type = AilmentType.Radiance;
+        gaiaStatus.Type = AilmentType.Gaia;
 
         ailmentActions = new Dictionary<AilmentType, System.Action<float>>
         {
@@ -162,6 +170,16 @@ public class CharacterStats : MonoBehaviour, IDamageable
             { AilmentType.Hex, ApplyHexAilment },
             { AilmentType.Radiance, ApplyRadianceAilment },
             { AilmentType.Gaia, ApplyGaiaAilment }
+        };
+
+        ailmentStatuses = new Dictionary<AilmentType, AilmentStatus>
+        {
+            { AilmentType.Ignis, ignisStatus },
+            { AilmentType.Frost, frostStatus },
+            { AilmentType.Blitz, blitzStatus },
+            { AilmentType.Hex, hexStatus },
+            { AilmentType.Radiance, radianceStatus },
+            { AilmentType.Gaia, gaiaStatus }
         };
     }
 
@@ -267,8 +285,12 @@ public class CharacterStats : MonoBehaviour, IDamageable
         ailmentStatus.Value = Mathf.Min(ailmentStatus.ailmentLimit + ailmentLimitOffset, ailmentStatus.Value + effectAmount);
         StartCoroutine(ailmentStatus.ReduceValueOverTime());
 
+        OnAilmentStatusChange?.Invoke(ailmentType, false, 0f);
+
         if (hasAilment || ailmentStatus.Value < ailmentStatus.ailmentLimit)
             return;
+
+        OnAilmentStatusChange?.Invoke(ailmentType, true, ailmentEffect);
 
         ApplyAilment(ailmentType, ailmentEffect);
         ailmentStatus.isMaxed = true;
@@ -292,7 +314,6 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
     private void ApplyFireAilment(float amount)
     {
-        OnAilmentStatusChange?.Invoke(AilmentType.Ignis, true, amount);
         StartCoroutine(ContinousDamage(amount));
     }
 
@@ -307,36 +328,28 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
     private void ApplyFrostAilment(float amount)
     {
-        OnAilmentStatusChange?.Invoke(AilmentType.Frost, true, amount);
-
         // Listen to frost event and slow down the character
+        // handled by subscribers
     }
 
     private void ApplyBlitzAilment(float amount)
     {
-        OnAilmentStatusChange?.Invoke(AilmentType.Blitz, true, amount);
-
         // Check if blitz event applied and damage is taken in character -> shoot lightning homing projectilee
+        // handled by subscribers
     }
 
     private void ApplyHexAilment(float amount)
     {
-        OnAilmentStatusChange?.Invoke(AilmentType.Hex, true, amount);
-
         KillCharacter();
     }
 
     private void ApplyRadianceAilment(float amount)
     {
-        OnAilmentStatusChange?.Invoke(AilmentType.Radiance, true, amount);
-
         KillCharacter();
     }
 
     private void ApplyGaiaAilment(float amount)
     {
-        OnAilmentStatusChange?.Invoke(AilmentType.Gaia, true, amount);
-
         // Check if gaia event applied and shooting healing projectile to player
     }
 
@@ -393,6 +406,15 @@ public class CharacterStats : MonoBehaviour, IDamageable
         OnDeath?.Invoke();
     }
 
+    public AilmentStatus GetAilmentStatus(AilmentType type)
+    {
+        if (ailmentStatuses.TryGetValue(type, out var status))
+        {
+            return status;
+        }
+        return null;
+    }
+    
     public void SetInvincibleFor(float time) => StartCoroutine(MakeInvincibleFor(time));
 
     private IEnumerator MakeInvincibleFor(float time)
