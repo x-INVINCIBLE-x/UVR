@@ -304,10 +304,9 @@ public class CharacterStats : MonoBehaviour, IDamageable
             ailmentEffect(amount);
     }
 
-    protected virtual void AilmentEffectEnded(AilmentStatus ailmentStatus)
+    protected virtual void AilmentEffectEnded(AilmentType ailmentStatus)
     {
         hasAilment = false;
-        ailmentStatus.AilmentEffectEnded -= AilmentEffectEnded;
     }
 
     #region Ailment Specific functions
