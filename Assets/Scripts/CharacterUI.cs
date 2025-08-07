@@ -22,6 +22,19 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private GameObject QuestionUI;
     private CanvasGroup questionUICanvasGroup;
 
+    [Header("Ailment UIs")]
+    [Space]
+    [SerializeField] private GameObject burningUI;
+    [SerializeField] private GameObject freezingUI;
+    [SerializeField] private GameObject shockUI;
+    [SerializeField] private GameObject drainUI;
+    [SerializeField] private GameObject blightUI;
+    [SerializeField] private GameObject frenzyUI;
+
+    private GameObject currentAilmentUI;
+    private CanvasGroup ailmentUIquestionUICanvasGroup;
+
+
 
     private void Awake()
     {
@@ -35,6 +48,12 @@ public class CharacterUI : MonoBehaviour
         HealthUI.SetActive(false);
         ExclamtionUI.SetActive(false);
         QuestionUI.SetActive(false);
+        burningUI.SetActive(false);
+        freezingUI.SetActive(false);
+        shockUI.SetActive(false);
+        drainUI.SetActive(false);
+        blightUI.SetActive(false);
+        frenzyUI.SetActive(false);
     }
 
     public void ChangeHealthUI(float healthvalue)
@@ -105,6 +124,13 @@ public class CharacterUI : MonoBehaviour
         }
     }
 
+    public void SpawnAilmentUI(bool Activate = true)
+    {
+        if(ailmentUIquestionUICanvasGroup != null)
+        {
+
+        }
+    }
     private IEnumerator FadeCanvasGroup(CanvasGroup group, float startAlpha, float endAlpha, float duration)
     {
         float elapsed = 0f;
