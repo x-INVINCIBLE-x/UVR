@@ -1,9 +1,18 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
+    [SerializeField] private Player player;
+
+    [Header("Health UI")]
+    [SerializeField] private SkinnedMeshRenderer[] healthRenderes;
+    private static readonly int DissolveAmountID = Shader.PropertyToID("_Horizontal_Dissolve_Amount");
+    private const float dissolveMaxValue = 0.725f;
+    private const float dissolveMinValue = 0.990f;
+
     [Header("Ability Duration UI")]
     [SerializeField] private Image durationFill;
     [SerializeField] private GameObject durationSegmentParent;
@@ -14,6 +23,34 @@ public class PlayerUI : MonoBehaviour
     private void Awake()
     {
         InitializeAbilityDurationUI();
+
+        foreach (SkinnedMeshRenderer renderer in healthRenderes)
+        {
+            if (renderer != null && renderer.material != null)
+            {
+                renderer.material.SetFloat(DissolveAmountID, dissolveMaxValue);
+            }
+        }
+    }
+
+    private void Start()
+    {
+        player = PlayerManager.instance.Player;
+        player.stats.OnHealthChanged += UpdateHealthUI;
+    }
+
+    private void UpdateHealthUI(float normalizedValue)
+    {
+        float diff = dissolveMinValue - dissolveMaxValue;
+        float dissolveValue = dissolveMinValue - (diff * normalizedValue);
+
+        foreach (SkinnedMeshRenderer renderer in healthRenderes)
+        {
+            if (renderer != null && renderer.material != null)
+            {
+                renderer.material.SetFloat(DissolveAmountID, dissolveValue);
+            }
+        }
     }
 
     private void InitializeAbilityDurationUI()
@@ -75,5 +112,29 @@ public class PlayerUI : MonoBehaviour
 
         for (int i = 0; i < durationSegments.Length; i++)
             durationSegments[i].gameObject.SetActive(i < activeSegments);
+    }
+
+    private void OnDisable()
+    {
+        foreach (SkinnedMeshRenderer renderer in healthRenderes)
+        {
+            if (renderer != null && renderer.material != null)
+            {
+                renderer.material.SetFloat(DissolveAmountID, dissolveMaxValue);
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (player != null && player.stats != null)
+        {
+            player.stats.OnHealthChanged -= UpdateHealthUI;
+        }
+        if (cooldownCoroutine != null)
+        {
+            StopCoroutine(cooldownCoroutine);
+            cooldownCoroutine = null;
+        }
     }
 }

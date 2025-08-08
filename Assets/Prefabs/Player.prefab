@@ -2665,6 +2665,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43cfd04b899b0d4e8c855ebfbfa13c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  healthRenderes:
+  - {fileID: 199746993902841905}
+  - {fileID: 4556818676298399969}
   durationFill: {fileID: 720483673360383241}
   durationSegmentParent: {fileID: 1902482797851716404}
 --- !u!1 &2434468367561188645
@@ -9589,6 +9593,7 @@ GameObject:
   - component: {fileID: 8783013619063033898}
   - component: {fileID: 2221226634371410362}
   - component: {fileID: 2031313677347957276}
+  - component: {fileID: 9104449561853037942}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -9678,6 +9683,7 @@ MonoBehaviour:
     BaseValue: 0
     statModifiers: []
   ignisStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -9688,6 +9694,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   frostStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -9698,6 +9705,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   blitzStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -9708,6 +9716,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   hexStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -9718,6 +9727,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   radianceStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -9728,6 +9738,7 @@ MonoBehaviour:
     isMaxed: 0
     ailmentLimit: 100
   gaiaStatus:
+    Type: 0
     Value: 0
     resistance:
       BaseValue: 0
@@ -9740,7 +9751,7 @@ MonoBehaviour:
   ailmentLimitOffset: 10
   currentHealth: 0
   currentStamina: 0
-  <isInvincible>k__BackingField: 0
+  <IsInvincible>k__BackingField: 0
 --- !u!114 &2031313677347957276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9755,6 +9766,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainScanner: {fileID: 1179676358264739748}
   coolDownTimer: 8
+--- !u!114 &9104449561853037942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8407348866999892390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc7ef76839c42c4c8e7f62bb42a949e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseExp: 100
+  growthFactor: 1.3
+  expSteps:
+  - startLevel: 0
+    expIncrease: 50
+  expToDisplay: 5
+  expRequird: 6400000082000000a9000000dc0000001e010000
 --- !u!1 &8493140311028471354
 GameObject:
   m_ObjectHideFlags: 0
@@ -10790,6 +10820,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c130d0676e385141bf73d539871578d, type: 3}
+--- !u!137 &199746993902841905 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1435962367991912346, guid: 0c130d0676e385141bf73d539871578d, type: 3}
+  m_PrefabInstance: {fileID: 1236296368851216299}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &720483673360383241 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1790067508353850018, guid: 0c130d0676e385141bf73d539871578d, type: 3}
@@ -11256,6 +11291,11 @@ PrefabInstance:
 --- !u!4 &125132787930101679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3669293250453067641, guid: aedc873a6281f394fa99b979b4d07c38, type: 3}
+  m_PrefabInstance: {fileID: 3699563465072812246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4556818676298399969 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 894649726409662519, guid: aedc873a6281f394fa99b979b4d07c38, type: 3}
   m_PrefabInstance: {fileID: 3699563465072812246}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7280688267597864885

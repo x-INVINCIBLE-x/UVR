@@ -436,17 +436,9 @@ public class CharacterStats : MonoBehaviour, IDamageable
     public (float, float) GetHealth() => (currentHealth, health.Value);
     public float GetCurrentStamina() => currentStamina;
 
-    public void RestoreStats()
+    public virtual void RestoreStats()
     {
         isDead = false;
-
-        if (statDictionary != null)
-        {
-            foreach (Stat stat in statDictionary.Values)
-            {
-                stat.RemoveAllModifiersFromSource(this);
-            }
-        }
 
         currentHealth = health.Value;
         ignisStatus.Reset();

@@ -13,5 +13,16 @@ public class EnemyStats : CharacterStats
         }
     }
 
+    public override void RestoreStats()
+    {
+        base.RestoreStats();
 
+        if (statDictionary != null)
+        {
+            foreach (Stat stat in statDictionary.Values)
+            {
+                stat.RemoveAllModifiersFromSource(this);
+            }
+        }
+    }
 }
