@@ -12,7 +12,7 @@ public class Effect : ScriptableObject
     public virtual void Apply()
     {
         if (stats == null)
-            stats = PlayerManager.instance.Player.stats;
+            stats = PlayerManager.instance.Player.Stats;
     }
 
     public virtual void Remove()

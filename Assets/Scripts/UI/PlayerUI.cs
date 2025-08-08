@@ -36,7 +36,7 @@ public class PlayerUI : MonoBehaviour
     private void Start()
     {
         player = PlayerManager.instance.Player;
-        player.stats.OnHealthChanged += UpdateHealthUI;
+        player.Stats.OnHealthChanged += UpdateHealthUI;
     }
 
     private void UpdateHealthUI(float normalizedValue)
@@ -127,9 +127,9 @@ public class PlayerUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (player != null && player.stats != null)
+        if (player != null && player.Stats != null)
         {
-            player.stats.OnHealthChanged -= UpdateHealthUI;
+            player.Stats.OnHealthChanged -= UpdateHealthUI;
         }
         if (cooldownCoroutine != null)
         {

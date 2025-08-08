@@ -11,8 +11,8 @@ public class PlayerManager : MonoBehaviour
 
     public event System.Action OnPlayerDeath
     {
-        add => Player.stats.OnDeath += value;
-        remove => Player.stats.OnDeath -= value;
+        add => Player.Stats.OnDeath += value;
+        remove => Player.Stats.OnDeath -= value;
     }
 
     private void Awake()

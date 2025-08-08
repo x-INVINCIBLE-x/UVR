@@ -30,7 +30,7 @@ public class TemporaryBuffs : MonoBehaviour
 
     private void Start()
     {
-        stats = PlayerManager.instance.Player.stats;
+        stats = PlayerManager.instance.Player.Stats;
         InitializeDungeonSetup();
     }
 

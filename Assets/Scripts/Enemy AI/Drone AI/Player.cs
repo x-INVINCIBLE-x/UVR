@@ -6,8 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [field: SerializeField] public Transform playerBody { get; internal set; }
-    public PlayerStats stats { get; private set; }
-    public CharacterXP characterXP { get; private set; }
+    public PlayerStats Stats { get; private set; }
+    public CharacterXP XP { get; private set; }
 
     [field: SerializeField] private PlayerGravity playerGravity;
 
@@ -21,16 +21,24 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        stats = GetComponentInChildren<PlayerStats>();
-        characterXP = GetComponentInChildren<CharacterXP>();
+        Stats = GetComponentInChildren<PlayerStats>();
+        XP = GetComponentInChildren<CharacterXP>();
         playerGravity = GetComponentInChildren<PlayerGravity>();
     }
 
     private void Start()
     {
-        characterXP.OnLevelUp += stats.OnLevelUp;
+        XP.OnLevelUp += Stats.OnLevelUp;
+        Stats.OnDeath += RestorePlayer;
         StartCoroutine(SafePositionRoutine());
     }
+
+    private void RestorePlayer()
+    {
+        Invoke(nameof(RestoreStats), 1f);
+    }
+
+    private void RestoreStats() => Stats.RestoreStats();
 
     public void SetPlayerToSafePosition()
     {
@@ -78,7 +86,8 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
-        characterXP.OnLevelUp -= stats.OnLevelUp;
+        XP.OnLevelUp -= Stats.OnLevelUp;
+        Stats.OnDeath -= RestorePlayer;
 
         StopAllCoroutines();
     }

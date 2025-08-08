@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Text;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
 using static UnityEngine.GraphicsBuffer;
@@ -33,15 +34,20 @@ public abstract class Challenge: MonoBehaviour
 
     public abstract void InitializeChallenge();
 
-    public abstract void StartChallenge();
+    public virtual void StartChallenge()
+    {
+        PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
+    }
 
     public virtual void ChallengeCompleted()
     {
+        PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
         OnChallengeCompleted?.Invoke();
     }
 
     public virtual void ChallengeFailed()
     {
+        PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
         StartCoroutine(RaiseChallengeFailRoutine(4f));
     }
 

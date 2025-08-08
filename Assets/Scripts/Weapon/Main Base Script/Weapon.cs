@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour
     private void PickUpWeapon(SelectEnterEventArgs args)
     {
         transform.parent = args.interactorObject.transform;
-        finalAttackData = PlayerManager.instance.Player.stats.CombineWith(attackData);
+        finalAttackData = PlayerManager.instance.Player.Stats.CombineWith(attackData);
     }
 
     private void DropWeapon(SelectExitEventArgs args)

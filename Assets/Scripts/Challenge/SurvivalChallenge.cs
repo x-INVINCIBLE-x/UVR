@@ -24,9 +24,6 @@ public class SurvivalChallenge : Challenge
 
     public override void InitializeChallenge()
     {
-        if (PlayerManager.instance != null)
-            PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
-
         status = ChallengeStatus.InProgress;
         timer = survivalDuration;
     }
@@ -48,8 +45,6 @@ public class SurvivalChallenge : Challenge
 
         base.ChallengeCompleted();
 
-        PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
-
         if (safeZoneRoutine != null)
             StopCoroutine(safeZoneRoutine);
     }
@@ -61,8 +56,6 @@ public class SurvivalChallenge : Challenge
         StopCoroutine(currentRoutine);
 
         base.ChallengeFailed();
-
-        PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
 
         if (safeZoneRoutine != null)
             StopCoroutine(safeZoneRoutine);
