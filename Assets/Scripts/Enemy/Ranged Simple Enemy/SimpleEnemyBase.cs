@@ -311,7 +311,10 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     protected virtual void Chase()
     {
         if (EnemyEventManager.Instance != null)
+        {
             EnemyEventManager.Instance.SeePlayer(enemyID);
+            //AudioManager.Instance.PlaySFX();
+        }
 
         wasPlayerInSight = true;
         walkPoint = transform.position;

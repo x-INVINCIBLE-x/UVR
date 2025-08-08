@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c525b4729a763e740ac7954bb9393678, type: 3}
+  m_Name: PlayerInventory
+  m_EditorClassIdentifier: 
+  m_MaxCapacity: 250
+  m_BagColor: {r: 0, g: 0.60694027, b: 1, a: 1}
+  m_Items:
+    m_Weapons:
+    - {fileID: 11400000, guid: 1b31315567a4a574fba1918d346afe66, type: 2}
+    - {fileID: 11400000, guid: 6464ef39cabbdb649a4c197b4c3e9def, type: 2}
+    - {fileID: 11400000, guid: d68bac0c4c310d94aad0ed8cb9271a6e, type: 2}
+    - {fileID: 11400000, guid: 6b682de41c3b7b64282e5dc8b9892555, type: 2}
+    m_Consumables:
+    - m_DisplayName: Health Infusion
+      m_Color: {r: 0, g: 1, b: 0, a: 1}
+      m_Icon: {fileID: 21300000, guid: 92d8b44b92d6fc042a14e5bdbc42ad1a, type: 3}
+      m_HealthRestored: 150
+      m_ManaRestored: 0
+      m_StaminaRestored: 0
+      m_DurationInSeconds: 10
+      m_IsStackable: 1
+    - m_DisplayName: Arcane Brew
+      m_Color: {r: 0, g: 0.89255476, b: 1, a: 1}
+      m_Icon: {fileID: 21300000, guid: 88d7e709862c6e647b0320ebcb9b5ae6, type: 3}
+      m_HealthRestored: 0
+      m_ManaRestored: 100
+      m_StaminaRestored: 0
+      m_DurationInSeconds: 20
+      m_IsStackable: 1

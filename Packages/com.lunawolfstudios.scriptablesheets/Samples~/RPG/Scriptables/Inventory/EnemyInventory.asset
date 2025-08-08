@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c525b4729a763e740ac7954bb9393678, type: 3}
+  m_Name: EnemyInventory
+  m_EditorClassIdentifier: 
+  m_MaxCapacity: 100
+  m_BagColor: {r: 1, g: 0.82689786, b: 0, a: 1}
+  m_Items:
+    m_Weapons:
+    - {fileID: 11400000, guid: 5ba768a7d0fe06348b93b6b135ec8ebd, type: 2}
+    - {fileID: 11400000, guid: eadb64536cf7b014a92738b634f208c7, type: 2}
+    - {fileID: 11400000, guid: 949b973ca908cd043b0af663e964568a, type: 2}
+    m_Consumables:
+    - m_DisplayName: Life Essence
+      m_Color: {r: 0, g: 1, b: 0, a: 1}
+      m_Icon: {fileID: 21300000, guid: 92d8b44b92d6fc042a14e5bdbc42ad1a, type: 3}
+      m_HealthRestored: 200
+      m_ManaRestored: 0
+      m_StaminaRestored: 0
+      m_DurationInSeconds: 0
+      m_IsStackable: 1
+    - m_DisplayName: Crystal of Energy
+      m_Color: {r: 0, g: 0.89411765, b: 1, a: 1}
+      m_Icon: {fileID: 21300000, guid: 88d7e709862c6e647b0320ebcb9b5ae6, type: 3}
+      m_HealthRestored: 0
+      m_ManaRestored: 150
+      m_StaminaRestored: 0
+      m_DurationInSeconds: 10
+      m_IsStackable: 0

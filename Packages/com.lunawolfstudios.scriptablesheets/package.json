@@ -1,0 +1,65 @@
+{
+  "name": "com.lunawolfstudios.scriptablesheets",
+  "displayName": "LWS Scriptable Sheets",
+  "version": "1.2.1",
+  "unity": "2020.3",
+  "description": "<b>Overview</b>\nView your Unity assets in a whole new way. Scriptable Sheets revolutionizes Unity by integrating spreadsheet-like views for all your assets, boosting productivity and simplifying data management.\n\n<b>Core Features</b>\n- <b>Seamless Integration</b>: Directly integrates with existing ScriptableObjects and other Unity asset types, providing a cohesive experience inside the Unity Editor.\n- <b>Asset Management</b>: Select, read, update, and delete Unity Objects within Scriptable Sheets table list view.\n- <b>Batch Create</b>: Quickly create multiple instances of any ScriptableObject type with a single click.\n- <b>Import/Export</b>: Easily import CSV, TSV, and other flat file formats. Export to your preferred format, including Json, with options for headers, wrap settings, custom delimiters, and string-to-enum conversions.\n- <b>Copy/Paste</b>: Copy entire tables, single columns, rows, or cells into any flat file format. Paste data seamlessly back into Scriptable Sheets, simplifying complex data transfers across serialized fields.\n- <b>Serialization</b>: Visualize serializable classes, complex data, and serialized property types within a multi-column view.\n- <b>Complex Data</b>: Handles complex Objects with inherited, nested, and generic fields.\n- <b>Object References</b>: Supports Unity Object types such as AudioClips, Materials, Prefabs, ScriptableObjects, and more!\n- <b>Collections</b>: Basic support for serializable arrays and lists (not recommended for very large or deeply nested collections).\n- <b>Read-only fields</b>: View Asset Paths, GUIDs, and read-only fields for any Unity Object.\n\n<b>User Interface</b>\n- <b>Keyboard Navigation</b>: Familiar spreadsheet-like navigation using tab, enter, shift, and arrow keys.\n- <b>Search Filtering</b>: Search and filter Objects by directory, name, or other property values. Includes additional search settings for case sensitivity and prefixes.\n- <b>Pagination</b>: Navigate large amounts of Objects with intuitive controls for changing between pages.\n- <b>Hide/Show Columns</b>: Hide or show specific columns to focus on the data that matters most to you.\n- <b>Resizable Columns</b>: Adjust column widths to fit your data for a customized view. Includes preset buttons for stretching, compacting, and expanding columns.\n- <b>Sorting</b>: Sort Unity Objects by any column and property type in the table view, even colors, gradients, animation curves, and read-only fields.\n- <b>Multiple Windows</b>: Open multiple Scriptable Sheet windows simultaneously, enabling efficient context switching between Unity Object types.\n- <b>Recent Pins</b>: Recently viewed Unity Object types can be auto pinned for quick access.\n- <b>Session Cache</b>: Attempts to persist pinned Object types after code compilation or restarting Unity.\n- <b>Lightweight Text Editor</b>: Includes 'Paste Pad', a lightweight text editor for quick text editing within Unity.\n- <b>Inspector Compatibility</b>: Automatically selects Objects in Unity's Inspector and Project windows as you navigate across table cells.\n- <b>Theme Compatibility</b>: Compatible with both Unity light and dark themes.\n\n<b>Why Scriptable Sheets?</b>\n- <b>Boost Productivity</b>: Streamline your workflow with a familiar spreadsheet-like interface tailored for Unity.\n- <b>Powerful Data Editor</b>: Easily manage, edit, and transfer large amounts of data both in and out of Unity.\n- <b>Advanced Customization</b>: Tailor Scriptable Sheets to your specific needs with an extensive list of settings and options to choose from.\n- <b>No Coding Required</b>: Start using Scriptable Sheets right away without any coding and minimal setup. Scriptable Sheets automatically categorizes and organizes all your Unity Asset Types and serializable ScriptableObject types. To fully leverage all features of Scriptable Sheets, you will want to use Unity's ScriptableObjects. To learn more about ScriptableObjects in Unity, you can visit the official <a href=\"https://docs.unity3d.com/Manual/class-ScriptableObject.html\">Unity documentation</a>.\n\nElevate your Unity development experience with Scriptable Sheets. Say goodbye to tedious data management and hello to a new level of efficiency and organization.\n\n<b>Technical details</b>\n- <b>Full Source Code</b>: Power-users can customize Scriptable Sheets to fit their specific needs.\n- <b>Samples</b>: Select from a variety of sample projects to see Scriptable Sheets in action and accelerate your learning curve with ScriptableObjects.\n- <b>Unit Tests</b>: Ensure reliability and robustness with a comprehensive suite of unit tests.\n- <b>User Settings</b>: Leverages the \"UserSettings\" folder for user-specific preferences.\n- <b>Immediate Mode GUI</b>: Uses Unity's IMGUI system for specific features not yet available in UI Toolkit.\n- <b>Editor Only</b>: Functions only in the Editor and is completely stripped in builds, except for the provided Samples.\n- <b>Unity LTS Support</b>: Supports Unity LTS versions 2020.3 and up.\n\nGet Scriptable Sheets today and transform the way you work with Unity assets!\n\n<b>Setup</b>\n1. <b>Pre-requisites</b>:\n   - Ensure you have imported these Unity packages:\n     - `com.unity.nuget.newtonsoft-json`\n     - `com.unity.test-framework`\n2. <b>Source Control</b>:\n   - If you are using source control, it is recommended to ignore the \"UserSettings\" folder under the root Unity project directory.\n3. <b>Opening Scriptable Sheets</b>:\n   - Navigate to `Window -> Scriptable Sheets` to open your first Scriptable Sheets Window.\n4. <b>Different Unity Asset Types</b>:\n   - In the top left corner of the window, you can select the Unity asset types you'd like to explore in Scriptable Sheets. By default it'll be set to ScriptableObjects.\n5. <b>Select Object Type</b>:\n   - Use the next dropdown to select a serializable Object type that is of the Unity asset type you chose.\n   - The available ScriptableObject types will be based on your selected Scan Option setting.\n6. <b>Accessing Settings</b>:\n   - To open settings, navigate to `Edit -> Project Settings -> Preferences -> Scriptable Sheets` or right-click the title of any Scriptable Sheets window and select \"Open Settings Window\".\n\n<a href=\"https://www.youtube.com/playlist?list=PL6G9X1zrT3BLwLA7pbgM5Aam9RrLsrBZp\">Video Tutorials</a>\n\nQuestions? Email us at: <a href=\"mailto:support@lunawolfstudios.com\">support@lunawolfstudios.com</a>",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
+    "com.unity.test-framework": "1.1.33"
+  },
+  "documentationUrl": "https://github.com/LunaWolfStudios/ScriptableSheetsDocs/blob/main/DOCUMENTATION.md",
+  "changelogUrl": "https://github.com/LunaWolfStudios/ScriptableSheetsDocs/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://unity.com/legal/as-terms",
+  "author": {
+    "name": "Luna Wolf Studios LLC",
+    "email": "support@lunawolfstudios.com",
+    "url": "https://lunawolfstudios.com/"
+  },
+  "keywords": [
+    "csv",
+    "data management",
+    "editor extension",
+    "editor tools",
+    "json",
+    "scriptableobject",
+    "spreadsheet"
+  ],
+  "samples": [
+    {
+      "displayName": "All Samples",
+      "description": "Imports every sample listed below. If you select this, then do NOT import the other samples separately.",
+      "path": "Samples~"
+    },
+    {
+      "displayName": "Collections",
+      "description": "Shows how to manage arrays and lists as separate ScriptableObjects in order to maximize performance within the Scriptable Sheets Window.",
+      "path": "Samples~/Collections"
+    },
+    {
+      "displayName": "Component Presets",
+      "description": "Shows how you can create backing ScriptableObject classes to drive data in MonoBehaviour components like Rigidbodies and Transforms.",
+      "path": "Samples~/ComponentPresets"
+    },
+    {
+      "displayName": "Deep Inheritance",
+      "description": "Includes sample ScriptableObjects to demo how Scriptable Sheets is able to flatten an Object hierarchy and show deeply nested fields, classes, interfaces, and generics. It also shows that property attributes like 'Header', 'Range', and 'TextArea' are ignored within the Scriptable Sheets Window itself.",
+      "path": "Samples~/DeepInheritance"
+    },
+    {
+      "displayName": "Localization",
+      "description": "Shows how you can use the Scriptable Sheets Window as a spreadsheet for your localized text. Demos how to display that text back in game by referencing the localized text ScriptableObjects.",
+      "path": "Samples~/Localization"
+    },
+    {
+      "displayName": "RPG",
+      "description": "Includes data driven ScriptableObjects you might see in a RPG game that include various Unity Object references and serialized property types.",
+      "path": "Samples~/RPG"
+    },
+    {
+      "displayName": "Sampler",
+      "description": "Includes a sampler ScriptableObject that has nearly every serialized property type that is supported by Scriptable Sheets.",
+      "path": "Samples~/Sampler"
+    }
+  ]
+}
