@@ -6,12 +6,14 @@ public class PlayerStats : CharacterStats
     protected override void Start()
     {
         base.Start();
-
-        GameEvents.OnRewardProvided += HandleRewardProvided;
     }
 
-    private void HandleRewardProvided(IRewardProvider<GameReward> provider)
+    public void OnLevelUp(int level)
     {
-        
+        Debug.Log("stats levellep up");
+        if (difficultyProfile != null)
+        {
+            difficultyProfile.ApplyModifiers(statDictionary, level, this);
+        }
     }
 }

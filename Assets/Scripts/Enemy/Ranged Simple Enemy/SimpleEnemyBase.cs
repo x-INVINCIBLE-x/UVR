@@ -9,7 +9,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
-public class SimpleEnemyBase : MonoBehaviour
+public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 { // Base class for all simple enemy types
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected Transform Player;
@@ -17,6 +17,8 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected Animator animator;
     [SerializeField] private LayerMask allyLayer;
     [SerializeField] private Transform spawnPosition;
+
+    [SerializeField] private GameReward eliminationReward;
 
     [SerializeField] protected float sightRange, attackRange;
     [SerializeField] protected float attackCooldownTime = 2f;
@@ -44,7 +46,7 @@ public class SimpleEnemyBase : MonoBehaviour
     [SerializeField] protected HomingMissile blitzProjectile;
     [SerializeField] protected HomingMissile healProjectile;
 
-    private WaitForSeconds attackCheckCooldown = new WaitForSeconds(0.2f);
+    private readonly WaitForSeconds attackCheckCooldown = new(0.2f);
     private LayerMask playerLayer;
     private Coroutine currentCheckRoutine = null;
     private Collider m_Collider;
@@ -197,6 +199,8 @@ public class SimpleEnemyBase : MonoBehaviour
             currentCheckRoutine = null;
         }
 
+        GameEvents.RaiseReward(this);
+
         Invoke(nameof(Despawn), 2);
     }
 
@@ -295,8 +299,7 @@ public class SimpleEnemyBase : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomx, transform.position.y, transform.position.z + randomz);
 
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(walkPoint, out hit, 5f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(walkPoint, out NavMeshHit hit, 5f, NavMesh.AllAreas))
         {
             walkPoint = hit.position;
             walkPointSet = true;
@@ -345,4 +348,8 @@ public class SimpleEnemyBase : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, surroundingHitRadius);
     }
 
+    public GameReward GetReward()
+    {
+        return eliminationReward;
+    }
 }

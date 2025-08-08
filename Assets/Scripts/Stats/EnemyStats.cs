@@ -12,4 +12,6 @@ public class EnemyStats : CharacterStats
             difficultyProfile.ApplyModifiers(statDictionary, DungeonManager.Instance.DifficultyLevel, this);
         }
     }
+
+
 }

@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [field: SerializeField] public Transform playerBody { get; internal set; }
     public PlayerStats stats { get; private set; }
+    public CharacterXP characterXP { get; private set; }
 
     [field: SerializeField] private PlayerGravity playerGravity;
 
@@ -20,11 +21,14 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         stats = GetComponentInChildren<PlayerStats>();
+        characterXP = GetComponentInChildren<CharacterXP>();
         playerGravity = GetComponentInChildren<PlayerGravity>();
     }
 
     private void Start()
     {
+        characterXP.OnLevelUp += stats.OnLevelUp;
+
         StartCoroutine(SafePositionRoutine());
     }
 
@@ -74,6 +78,8 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
+        characterXP.OnLevelUp -= stats.OnLevelUp;
+
         StopAllCoroutines();
     }
 }

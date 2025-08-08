@@ -439,6 +439,15 @@ public class CharacterStats : MonoBehaviour, IDamageable
     public void RestoreStats()
     {
         isDead = false;
+
+        if (statDictionary != null)
+        {
+            foreach (Stat stat in statDictionary.Values)
+            {
+                stat.RemoveAllModifiersFromSource(this);
+            }
+        }
+
         currentHealth = health.Value;
         ignisStatus.Reset();
         frostStatus.Reset();

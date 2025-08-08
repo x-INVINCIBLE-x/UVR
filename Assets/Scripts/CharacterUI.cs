@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class CharacterUI : MonoBehaviour
     [Space]
     [SerializeField] private GameObject HealthUI;
     [SerializeField] private Image healthSlider;
-    [SerializeField] private float healthSliderSmoothness;
+    [SerializeField, Min(1)] private float healthSliderSmoothness;
     private CanvasGroup healthUICanvasGroup;
 
     [Header("Exclamation Mark UI")]
@@ -23,7 +24,7 @@ public class CharacterUI : MonoBehaviour
     private CanvasGroup questionUICanvasGroup;
 
     [Header("Ailment UIs")]
-    [Space]
+    [Space, Min(1)]
     [SerializeField] private float ailmentSliderSmoothness;
     [Space]
     [SerializeField] private GameObject burningUI;
@@ -46,19 +47,55 @@ public class CharacterUI : MonoBehaviour
 
 
 
-    private GameObject currentAilmentUI;
-    private Image currentAilmentSlider;
-    private CanvasGroup ailmentUICanvasGroup;
-    
+    private Dictionary<AilmentType, GameObject> ailmentUIs;
+    private Dictionary<AilmentType, Image> ailmentSliders;
+    private Dictionary<AilmentType, CanvasGroup> ailmentCanvasGroups;
+
+    private Dictionary<AilmentStatus, Coroutine> ailmentRoutines = new Dictionary<AilmentStatus, Coroutine>();
     private Coroutine ailmentRoutine = null;
+    private Coroutine healthRoutine = null;
+    private float targetHealthValue = 1f;
 
 
     private void Awake()
     {
-        healthUICanvasGroup = HealthUI.GetComponentInChildren<CanvasGroup>(); // reference to health ui's canvas group
-        exclamationUICanvasGroup = ExclamtionUI.GetComponentInChildren<CanvasGroup>(); // reference to exclamation mark ui's canvas group
-        questionUICanvasGroup = QuestionUI.GetComponentInChildren<CanvasGroup>(); // reference to question mark ui's canvas group
+        healthUICanvasGroup = HealthUI.GetComponentInChildren<CanvasGroup>();
+        exclamationUICanvasGroup = ExclamtionUI.GetComponentInChildren<CanvasGroup>();
+        questionUICanvasGroup = QuestionUI.GetComponentInChildren<CanvasGroup>();
+
+
+        ailmentUIs = new Dictionary<AilmentType, GameObject>
+    {
+        { AilmentType.Ignis, burningUI },
+        { AilmentType.Frost, freezingUI },
+        { AilmentType.Blitz, shockUI },
+        { AilmentType.Gaia, drainUI },
+        { AilmentType.Radiance, blightUI },
+        { AilmentType.Hex, frenzyUI },
+    };
+
+        ailmentSliders = new Dictionary<AilmentType, Image>
+    {
+        { AilmentType.Ignis, burningSlider },
+        { AilmentType.Frost, freezingSlider },
+        { AilmentType.Blitz, shockSlider },
+        { AilmentType.Gaia, drainSlider },
+        { AilmentType.Radiance, blightSlider },
+        { AilmentType.Hex, frenzySlider },
+    };
+
+        ailmentCanvasGroups = new Dictionary<AilmentType, CanvasGroup>();
+
+        foreach (var kvp in ailmentUIs)
+        {
+            if (kvp.Value != null)
+            {
+                var canvasGroup = kvp.Value.GetComponentInChildren<CanvasGroup>();
+                ailmentCanvasGroups[kvp.Key] = canvasGroup;
+            }
+        }
     }
+
 
     private void Start()
     {
@@ -71,39 +108,48 @@ public class CharacterUI : MonoBehaviour
         drainUI.SetActive(false);
         blightUI.SetActive(false);
         frenzyUI.SetActive(false);
-    
+
     }
-   
+
     public void ChangeHealthUI(float healthvalue)
     {
-        StartCoroutine(HealthLerpRoutine(healthvalue));
+        targetHealthValue = healthvalue;
+        if (healthRoutine == null)
+            StartCoroutine(HealthLerpRoutine());
     }
 
     public void ChangeAilmentUI(bool isActivated, AilmentStatus status)
     {
-        if (ailmentRoutine == null)
-            ailmentRoutine = StartCoroutine(AilmentLerpRoutine(status));
-        
+        AilmentType type = status.Type;
+
+        if (!ailmentRoutines.ContainsKey(status) || ailmentRoutines[status] == null)
+        {
+            Coroutine routine = StartCoroutine(AilmentLerpRoutine(status));
+            ailmentRoutines[status] = routine;
+        }
+
         if (isActivated)
         {
-            if (currentAilmentSlider != null)
-                currentAilmentSlider.fillAmount = 1;
-            // Open some special UI
-            if (ailmentRoutine != null)
-                StopCoroutine(ailmentRoutine);
-            
-            ailmentRoutine = null;
+            if (ailmentSliders.TryGetValue(type, out var slider))
+                slider.fillAmount = 1;
+
+            if (ailmentRoutines[status] != null)
+            {
+                StopCoroutine(ailmentRoutines[status]);
+                ailmentRoutines[status] = null;
+            }
+
             status.AilmentEffectEnded += HandleEffectEnd;
         }
     }
 
 
-   /* private void UpdateHealthSlider(float maxHealth, float currentHealth)
-    {   
-        float healthRatio = (currentHealth /maxHealth);
+    /* private void UpdateHealthSlider(float maxHealth, float currentHealth)
+     {   
+         float healthRatio = (currentHealth /maxHealth);
 
-        StartCoroutine(HealthLerpRoutine(healthRatio));
-    }*/
+         StartCoroutine(HealthLerpRoutine(healthRatio));
+     }*/
 
     public void SpawnHealthUI(bool Activate = true)
     {
@@ -156,52 +202,28 @@ public class CharacterUI : MonoBehaviour
         }
     }
 
-    public void SpawnAilmentUI(AilmentType type , bool Activate = true)
+    public void SpawnAilmentUI(AilmentType type, bool Activate = true)
     {
-        switch (type)
-        {
-            case AilmentType.Ignis:
-                currentAilmentUI = burningUI;
-                currentAilmentSlider = burningSlider;
-                break;
-            case AilmentType.Frost:
-                currentAilmentUI = freezingUI;
-                currentAilmentSlider = freezingSlider;
-                break;
-            case AilmentType.Blitz:
-                currentAilmentUI = shockUI;
-                currentAilmentSlider = shockSlider;
-                break;
-            case AilmentType.Gaia:
-                currentAilmentUI = drainUI;
-                currentAilmentSlider = drainSlider;
-                break;
-            case AilmentType.Radiance:
-                currentAilmentUI = blightUI;
-                currentAilmentSlider = blightSlider;
-                break;
-            case AilmentType.Hex:
-                currentAilmentUI = frenzyUI;
-                currentAilmentSlider = frenzySlider;
-                break;          
-        }
+        if (!ailmentUIs.ContainsKey(type)) return;
 
-        ailmentUICanvasGroup = currentAilmentUI.GetComponentInChildren<CanvasGroup>();
+        GameObject ui = ailmentUIs[type];
+        CanvasGroup group = ailmentCanvasGroups[type];
 
-        if (ailmentUICanvasGroup != null)
+        if (group != null)
         {
             if (Activate)
             {
-                currentAilmentUI.SetActive(true);
-                ailmentUICanvasGroup.alpha = 0f;
-                StartCoroutine(FadeCanvasGroup(ailmentUICanvasGroup, 0f, 1f, 0.7f));
+                ui.SetActive(true);
+                group.alpha = 0f;
+                StartCoroutine(FadeCanvasGroup(group, 0f, 1f, 0.7f));
             }
             else
             {
-                StartCoroutine(FadeCanvasGroup(ailmentUICanvasGroup, ailmentUICanvasGroup.alpha, 0f, 0.7f));
+                StartCoroutine(FadeCanvasGroup(group, group.alpha, 0f, 0.7f));
             }
         }
     }
+
     private IEnumerator FadeCanvasGroup(CanvasGroup group, float startAlpha, float endAlpha, float duration)
     {
         float elapsed = 0f;
@@ -221,24 +243,37 @@ public class CharacterUI : MonoBehaviour
 
     private void HandleEffectEnd(AilmentType type)
     {
-        Debug.Log($"Ailment Effect Ended: {type}");
-        currentAilmentUI.SetActive(false);
+        if (ailmentUIs.TryGetValue(type, out var ui))
+            ui.SetActive(false);
     }
 
-    // Handles lerping and Updating of the ailment slider values
-    private IEnumerator AilmentLerpRoutine(AilmentStatus status) 
+
+    private IEnumerator AilmentLerpRoutine(AilmentStatus status)
     {
+        AilmentType type = status.Type;
+
+        if (!ailmentSliders.ContainsKey(type) || !ailmentUIs.ContainsKey(type))
+            yield break;
+
+        Image slider = ailmentSliders[type];
+        GameObject ui = ailmentUIs[type];
+
+        float normalizedValue = (float)Math.Round((status.Value / status.ailmentLimit), 2);
+
         while (status.Value > 0)
-        {   
-            Debug.Log($"Ailment Status: {status.Value / status.ailmentLimit}");
-            currentAilmentSlider.fillAmount = Mathf.Lerp(currentAilmentSlider.fillAmount,(status.Value / status.ailmentLimit), ailmentSliderSmoothness * Time.deltaTime);
+        {
+            normalizedValue = (float)Math.Round((status.Value / status.ailmentLimit), 2);
+            slider.fillAmount = Mathf.Lerp(slider.fillAmount, normalizedValue, ailmentSliderSmoothness * Time.deltaTime);
             yield return null;
         }
-        currentAilmentSlider.fillAmount = 0;
-        ailmentRoutine = null;
+
+        slider.fillAmount = 0;
+        ui.SetActive(false);
+        ailmentRoutines[status] = null;
     }
 
-    private IEnumerator HealthLerpRoutine(float targetHealthValue)
+
+    private IEnumerator HealthLerpRoutine()
     {
         while (Mathf.Abs(healthSlider.fillAmount - targetHealthValue) > 0.001f)
         {
