@@ -748,9 +748,10 @@ GameObject:
   m_Component:
   - component: {fileID: 771234708968646234}
   - component: {fileID: 9057996489699248160}
-  - component: {fileID: 3659407277155325567}
-  - component: {fileID: 7744429481596366232}
   - component: {fileID: 1890824817137091441}
+  - component: {fileID: 3295975327775487345}
+  - component: {fileID: 5917890840072061789}
+  - component: {fileID: 2212698865306944191}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -795,7 +796,46 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 16.289764, y: 4.685968, z: 60.59713}
   m_Center: {x: -5.2752075, y: -0.38703063, z: 33.733376}
---- !u!54 &3659407277155325567
+--- !u!59 &1890824817137091441
+HingeJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8243754872184435220}
+  serializedVersion: 3
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 0, y: 1, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_UseSpring: 1
+  m_Spring:
+    spring: 0
+    damper: 2
+    targetPosition: 0
+  m_UseMotor: 0
+  m_Motor:
+    targetVelocity: 0
+    force: 0
+    freeSpin: 0
+  m_UseLimits: 1
+  m_ExtendedLimits: 0
+  m_UseAcceleration: 0
+  m_Limits:
+    min: -62.156677
+    max: 58.291847
+    bounciness: 0
+    bounceMinVelocity: 0.2
+    contactDistance: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!54 &3295975327775487345
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -822,7 +862,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7744429481596366232
+--- !u!114 &5917890840072061789
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -944,7 +984,7 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
---- !u!59 &1890824817137091441
+--- !u!59 &2212698865306944191
 HingeJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

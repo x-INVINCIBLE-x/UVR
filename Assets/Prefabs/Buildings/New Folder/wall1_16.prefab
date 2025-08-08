@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 4521000528673160951}
   - component: {fileID: 4913117188135783189}
   - component: {fileID: 1355236790755843334}
+  - component: {fileID: 7675036511523215936}
   m_Layer: 0
   m_Name: wall1_16_bricks_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4521000528673160951
 Transform:
@@ -86,6 +87,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7675036511523215936
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4801195310265951971}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 417.0001, y: 266.46777, z: 37.096546}
+  m_Center: {x: 208.4981, y: 133.23398, z: -14.378757}
 --- !u!1 &5473895099075272964
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +122,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &43745320757122745
 Transform:
@@ -110,15 +132,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5473895099075272964}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 298.5187, y: 67.0905, z: 26.24849}
-  m_LocalScale: {x: 0.050000038, y: 0.050000016, z: 0.050000027}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4521000528673160951}
   - {fileID: 5051147754439892790}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &8693993423152481110
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,12 +152,13 @@ GameObject:
   - component: {fileID: 5051147754439892790}
   - component: {fileID: 1847777989152640155}
   - component: {fileID: 535783608449604846}
+  - component: {fileID: 5284456209225779630}
   m_Layer: 0
   m_Name: wall1_16_concrete_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5051147754439892790
 Transform:
@@ -205,3 +228,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5284456209225779630
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8693993423152481110}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 417.0001, y: 36.716637, z: 49.60655}
+  m_Center: {x: 208.49808, y: 284.82617, z: -14.378755}
