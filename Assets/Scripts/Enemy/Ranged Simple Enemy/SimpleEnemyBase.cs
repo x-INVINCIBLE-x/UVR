@@ -11,6 +11,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 { // Base class for all simple enemy types
+
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected Transform Player;
     [SerializeField] protected EnemyFXHandler FXManager;
@@ -59,10 +60,17 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     private int enemyID;
     protected bool isDead;
     private bool HealthUIActive = false;
+    protected bool attackSoundPlayed = false;
 
     private AttackData ailmentData;
 
-   
+    private EnemyEventManager enemyEventManager;
+ 
+    private bool registered = false;
+
+    [SerializeField] private AudioClip attackClip;
+    [SerializeField] private AudioClip idleClip;
+    [SerializeField] private AudioClip hitClip;
 
     protected virtual void Start()
     {
@@ -72,8 +80,10 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
         dissolver = GetComponent<MeshDissolver>();
         m_Collider = GetComponent<Collider>();
 
-        if (EnemyEventManager.Instance != null)
-            enemyID = EnemyEventManager.Instance.GetNewEnemyID();
+        enemyEventManager = EnemyEventManager.Instance;
+
+        if (enemyEventManager != null)
+            enemyID = enemyEventManager.GetNewEnemyID();
 
         enemyStats = GetComponent<EnemyStats>();
         enemyStats.OnDamageTaken += HandleHit;
@@ -129,6 +139,8 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     protected virtual void HandleHit(float arg1, float arg2)
     {
         if (isDead) return;
+
+        AudioManager.Instance.PlaySFX(hitClip);
 
         if (hitSurroundingEnemies)
         {
@@ -189,6 +201,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     protected virtual void HandleDeath()
     {
         isDead = true;
+
         if (agent.enabled)
             agent.SetDestination(transform.position);
 
@@ -208,8 +221,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     {
         isDead = false;
         enemyStats.RestoreStats();
-        FXManager.SpawnQuestionMark(false);
-        FXManager.SpawnExclamationMark(false);
+        HideAllDetectionUI();
         wasPlayerInSight = false;
         walkPoint = transform.position;
         currentCheckRoutine = StartCoroutine(CheckRoutine());
@@ -246,18 +258,16 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     {
         while (true)
         {
-            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, LayerMask.GetMask("Player"));
-            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
+
             yield return attackCheckCooldown;
         }
     }
 
     protected virtual void Patrol()
     {
-        if (EnemyEventManager.Instance != null)
-            EnemyEventManager.Instance.LostPlayer(enemyID);
-
-        FXManager.SpawnExclamationMark(false); // turning off exclamation mark
+        UnregisterEnemy();
 
         if (walkPointSet)
         {
@@ -285,9 +295,19 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
         {
             searchingWalkPoint = true;
             Invoke(nameof(SearchWalkPoint), patrollwaitTime);
-            return;
+            
+            AudioManager.Instance.PlaySFX(idleClip);
         }
+    }
 
+    private void UnregisterEnemy()
+    {
+        if (enemyEventManager != null && wasPlayerInSight)
+        {
+            enemyEventManager.LostPlayer(enemyID);
+            FXManager.SpawnExclamationMark(false); // turning off exclamation mark
+            registered = false;
+        }
     }
 
     private void DisableQuestionmark() => FXManager.SpawnQuestionMark(false);
@@ -310,27 +330,39 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
     protected virtual void Chase()
     {
-        if (EnemyEventManager.Instance != null)
+        Debug.Log($"Chasing Player: {Player.name}");
+        if (enemyEventManager != null)
         {
-            EnemyEventManager.Instance.SeePlayer(enemyID);
-            //AudioManager.Instance.PlaySFX();
+            enemyEventManager.SeePlayer(enemyID);
         }
 
         wasPlayerInSight = true;
         walkPoint = transform.position;
         agent.SetDestination(Player.position);
-        FXManager.SpawnQuestionMark(false);
-        FXManager.SpawnExclamationMark();// turning on exclamation mark
+        ShowExclamationOnly();
     }
 
     protected virtual void Attack()
     {
-        if (EnemyEventManager.Instance != null)
-            EnemyEventManager.Instance.SeePlayer(enemyID);
+        RegisterEnemy();
 
         wasPlayerInSight = true;
-        FXManager.SpawnQuestionMark(false);
-        FXManager.SpawnExclamationMark(false); // turning off exclamation mark
+        HideAllDetectionUI();
+
+        if (!attackSoundPlayed)
+        {
+            AudioManager.Instance.PlaySFX(attackClip);
+            attackSoundPlayed = true;
+        }
+    }
+
+    private void RegisterEnemy()
+    {
+        if (!registered && enemyEventManager != null)
+        {
+            enemyEventManager.SeePlayer(enemyID);
+            registered = true;
+        }
     }
 
     protected virtual void ResetAttack()
@@ -338,6 +370,17 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
         hasAttacked = false;
     }
 
+    private void HideAllDetectionUI()
+    {
+        FXManager.SpawnQuestionMark(false);
+        FXManager.SpawnExclamationMark(false);
+    }
+
+    private void ShowExclamationOnly()
+    {
+        FXManager.SpawnQuestionMark(false);
+        FXManager.SpawnExclamationMark(true);
+    }
 
     protected virtual void OnDrawGizmosSelected()
     {

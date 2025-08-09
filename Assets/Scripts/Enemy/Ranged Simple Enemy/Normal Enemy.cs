@@ -8,11 +8,6 @@ public class NormalEnemy : SimpleEnemyBase
     public float shootForce;
     public Transform projectileSpawn;
     
-  
-    protected override void Start()
-    {
-        base.Start();   
-    }
     protected override void Update()
     {   
         base.Update();
@@ -27,23 +22,6 @@ public class NormalEnemy : SimpleEnemyBase
         else if (playerInAttackRange)
             Attack();
     }
-
-
-    protected override void Patrol()
-    {
-        base.Patrol();    
-    }
-
-    protected override void SearchWalkPoint()
-    {   
-        base.SearchWalkPoint();
-    }
-
-    protected override void Chase()
-    {
-        base.Chase();
-    }
-
 
     protected override void Attack()
     {
@@ -86,15 +64,5 @@ public class NormalEnemy : SimpleEnemyBase
         FXManager.DestroyMagicCircleVFX();
 
         Invoke(nameof(ResetAttack), attackCooldownTime);
-    }
-
-    protected override void ResetAttack()
-    {
-        base.ResetAttack();
-    }
-
-    protected override void OnDrawGizmosSelected()
-    {
-        base.OnDrawGizmosSelected();
     }
 }

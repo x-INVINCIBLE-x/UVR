@@ -51,8 +51,8 @@ public class LaserEnemy : SimpleEnemyBase
     {
         base.Attack();
         StartCoroutine(ChargeAndFireLaser());
-
     }
+
     private IEnumerator ChargeAndFireLaser()
     {
         isCharging = true;

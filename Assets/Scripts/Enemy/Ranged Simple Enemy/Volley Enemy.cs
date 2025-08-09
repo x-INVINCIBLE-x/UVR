@@ -7,11 +7,6 @@ public class VolleyEnemy : SimpleEnemyBase
     public GameObject volleyProjectile;
     public Transform projectileSpawnPosition;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
     protected override void Update()
     {   
         base.Update();
@@ -27,13 +22,16 @@ public class VolleyEnemy : SimpleEnemyBase
         
     }
 
+    protected override void Attack()
+    {
+        base.Attack();
+        TryVolleyAttack();
+    }
+
     private void TryVolleyAttack()
     {
         agent.SetDestination(transform.position);
         transform.LookAt(Player.position + PlayerBodyOffset);
-
-       
-
 
         if (!isChargingAttack && !hasAttacked)
         {
@@ -79,34 +77,4 @@ public class VolleyEnemy : SimpleEnemyBase
         proj.GetComponent<Rigidbody>().linearVelocity = velocity;
     }
 
-    protected override void ResetAttack()
-    {
-        base.ResetAttack();
-    }
-
-    protected override void Attack()
-    {
-        base.Attack();
-        TryVolleyAttack();
-
-    }
-    protected override void Patrol()
-    {
-        base.Patrol();
-    }
-
-    protected override void Chase()
-    {
-        base.Chase();
-    }
-
-    protected override void SearchWalkPoint()
-    {   
-        base.SearchWalkPoint();
-    }
-
-    protected override void OnDrawGizmosSelected()
-    {
-        base.OnDrawGizmosSelected();
-    }
 }
