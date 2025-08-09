@@ -64,14 +64,14 @@ public class LaserAttackTurret : AttackTurret
     {
         base.OnCooldownEnter();
 
-        GetComponent<Renderer>().material.color = Color.red;
+        //GetComponent<Renderer>().material.color = Color.red;
     }
 
     protected override void OnCooldownExit()
     {
         base.OnCooldownExit();
 
-        GetComponent<Renderer>().material.color = Color.white;
+        //GetComponent<Renderer>().material.color = Color.white;
     }
 
     private IEnumerator RotationCoroutine()

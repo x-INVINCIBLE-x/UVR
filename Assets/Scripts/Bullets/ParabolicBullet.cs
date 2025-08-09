@@ -25,6 +25,8 @@ public class ParabolicBullet : MonoBehaviour
 
     public void StartParabola()
     {
+        if(target == null) return;
+
         started = true;
         startPoint = transform.position;
         finalTargetPosition = target.position;
