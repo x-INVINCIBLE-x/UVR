@@ -59,6 +59,8 @@ public class Player : MonoBehaviour
         // Recurse this function if still giving problems
 
         PlayerManager.instance.ActionMediator.EnableControl();
+
+        positionResetRoutine = null; 
     }
 
     private IEnumerator SafePositionRoutine()

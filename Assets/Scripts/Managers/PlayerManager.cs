@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 
@@ -25,7 +27,17 @@ public class PlayerManager : MonoBehaviour
 
     public void SetPlayerPosition(Vector3 targetPosition)
     {
+        StartCoroutine(SetPlayerPositionDelayed(targetPosition));
+    }
+
+    private IEnumerator SetPlayerPositionDelayed(Vector3 targetPosition)
+    {
+        bool kinematicState = Rb.isKinematic;
+        Rb.isKinematic = true; // Disable physics temporarily
+        Debug.Log("Setting player position to: " + targetPosition);
         PlayerOrigin.MoveCameraToWorldLocation(targetPosition);
+        yield return null; 
         PlayerOrigin.MatchOriginUpCameraForward(Vector3.up, Vector3.forward);
+        Rb.isKinematic = kinematicState; 
     }
 }
