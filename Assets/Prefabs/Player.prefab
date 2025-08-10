@@ -8639,6 +8639,7 @@ MonoBehaviour:
   jumpCooldown: 1
   jumpHeight: 1.5
   blendDuration: 1
+  jumpCount: 1
 --- !u!114 &5002200702055627208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8713,8 +8714,13 @@ MonoBehaviour:
   skillCooldown: 2
   showDurationDisplay: 0
   rb: {fileID: 0}
+  bodyCollider: {fileID: 0}
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 65
   dashForce: 25
   dashDuration: 0.5
+  safeDashDistance: 2
   headTransform: {fileID: 5266892086697293392}
   canSwingDash: 1
 --- !u!114 &4839762849219426667
