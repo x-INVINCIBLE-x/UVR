@@ -67,6 +67,9 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
         return false;
     }
 
+    public int GetGold() => Gold;
+    public int GetMagika() => Magika;
+
     public object CaptureState()
     {
         SaveCurrencies saveCurrencies = new();
