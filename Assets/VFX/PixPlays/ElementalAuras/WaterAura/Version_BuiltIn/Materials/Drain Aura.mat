@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-650404770795159384
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 0
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FireAuraMat
+  m_Name: Drain Aura
   m_Shader: {fileID: -6465566751694194690, guid: 4c9c846df19bed74f86c0cbbd835ba19, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -51,8 +38,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Color_Texture:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 0613aad931dd9af4286d24633909c4dc, type: 3}
+        m_Scale: {x: 3, y: 2}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
@@ -83,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask_1:
-        m_Texture: {fileID: 2800000, guid: b50df5ab82c5e3e4d983e5f744a8e765, type: 3}
+        m_Texture: {fileID: 2800000, guid: cbc058b2894b72a46887e7051d878dd2, type: 3}
         m_Scale: {x: 2, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask_2:
@@ -128,7 +115,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBoost: 1
+    - _AlphaBoost: 4
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _BUILTIN_AlphaClip: 0
@@ -149,14 +136,14 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Color_Rotate: 0
-    - _Color_Smooth: 0.69
+    - _Color_Smooth: 0
     - _Cull: 0
     - _Cutoff: 0.5
     - _Depth_Distance: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _Disolve: 0.2
-    - _DisolveSmooth: 1
+    - _DisolveSmooth: 0.5
     - _Disolve_Distortion: 0
     - _Disolve_Mask: 1
     - _Disolve_Offset_with_UV_g: 1
@@ -171,7 +158,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Initial_Color_Offset: 2.21
+    - _Initial_Color_Offset: 0.4
     - _Mask1_Distortion: 0
     - _Mask1_PositionUVs: 0
     - _Mask2_Distortion: 0
@@ -195,11 +182,11 @@ Material:
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
-    - _SwitchColors: 1
+    - _SwitchColors: 0
     - _UseFresnel: 0
     - _UseParticleSystemColor: 0
     - _Use_Soft_Particles: 0
-    - _Use_Texture: 0
+    - _Use_Texture: 1
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0
@@ -207,17 +194,17 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color_1: {r: 16, g: 3.3940687, b: 0, a: 0}
-    - _Color_2: {r: 7.9396224, g: 3.2458134, b: 0, a: 0}
-    - _Color_Scroll: {r: 0, g: 0, b: 0, a: 0}
-    - _Color_Tex_Remap: {r: 0, g: 1, b: 0, a: 0}
+    - _Color_1: {r: 0, g: 3.049056, b: 1.1048865, a: 0}
+    - _Color_2: {r: 0, g: 2.9960785, b: 0.011749148, a: 0}
+    - _Color_Scroll: {r: -0.2, g: -0.2, b: 0, a: 0}
+    - _Color_Tex_Remap: {r: 0.15, g: 1, b: 0, a: 0}
     - _Disolve_Remap: {r: 0, g: 1, b: 0, a: 0}
     - _Disolve_Scroll: {r: 0, g: 0, b: 0, a: 0}
     - _Distort_Scroll: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Fresnel_Remap: {r: 0, g: 1, b: 0, a: 0}
     - _Mask1_Remap: {r: 0, g: 1, b: 0, a: 0}
-    - _Mask1_Scroll: {r: -0.3, g: 0, b: 0, a: 0}
+    - _Mask1_Scroll: {r: -0.5, g: 0, b: 0, a: 0}
     - _Mask2_Remap: {r: 0, g: 1, b: 0, a: 0}
     - _Mask2_Scroll: {r: 0, g: 0, b: 0, a: 0}
     - _Offset_Mask_Smoothstep: {r: 0, g: 0, b: 0, a: 0}
@@ -225,7 +212,20 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &1085095839550936756
+--- !u!114 &699887682971794896
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
+--- !u!114 &6729324532606618941
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

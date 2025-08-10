@@ -1,26 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-650404770795159384
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 0
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FireAuraMat
+  m_Name: Frenzy Aura
   m_Shader: {fileID: -6465566751694194690, guid: 4c9c846df19bed74f86c0cbbd835ba19, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -84,10 +71,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Mask_1:
         m_Texture: {fileID: 2800000, guid: b50df5ab82c5e3e4d983e5f744a8e765, type: 3}
-        m_Scale: {x: 2, y: 1}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask_2:
-        m_Texture: {fileID: 2800000, guid: d3aa3d94976775346898a41c87b423ce, type: 3}
+        m_Texture: {fileID: 2800000, guid: 975a323c04edb8547a9caef6469d7035, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -149,7 +136,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Color_Rotate: 0
-    - _Color_Smooth: 0.69
+    - _Color_Smooth: 4.87
     - _Cull: 0
     - _Cutoff: 0.5
     - _Depth_Distance: 0.5
@@ -207,8 +194,8 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color_1: {r: 16, g: 3.3940687, b: 0, a: 0}
-    - _Color_2: {r: 7.9396224, g: 3.2458134, b: 0, a: 0}
+    - _Color_1: {r: 0, g: 0, b: 0, a: 0}
+    - _Color_2: {r: 10.680627, g: 0.015603256, b: 0, a: 0}
     - _Color_Scroll: {r: 0, g: 0, b: 0, a: 0}
     - _Color_Tex_Remap: {r: 0, g: 1, b: 0, a: 0}
     - _Disolve_Remap: {r: 0, g: 1, b: 0, a: 0}
@@ -225,7 +212,20 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &1085095839550936756
+--- !u!114 &2627641638680983623
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
+--- !u!114 &8337148455048768705
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
