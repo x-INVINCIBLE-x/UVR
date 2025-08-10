@@ -44,7 +44,7 @@ public enum AilmentType
 [System.Serializable]
 public class AilmentStatus
 {
-    public AilmentType Type;
+    [HideInInspector] public AilmentType Type;
     public float Value;
     public Stat resistance;
     public Stat defence;
@@ -307,6 +307,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
     protected virtual void AilmentEffectEnded(AilmentType ailmentStatus)
     {
         hasAilment = false;
+        OnAilmentStatusChange?.Invoke(ailmentStatus, false, 0f);
     }
 
     #region Ailment Specific functions

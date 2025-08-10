@@ -11,7 +11,7 @@ public class PurchasableItem : MonoBehaviour
     public bool isShopItem = false;
 
     private XRGrabInteractable grabInteractable;
-    private bool hasPurchased = false;
+    [SerializeField] private bool hasPurchased = false;
 
     [Header("Visuals Settings")]
 
@@ -30,7 +30,10 @@ public class PurchasableItem : MonoBehaviour
     private int layerMask; 
 
     private void Awake()
-    {
+    {   
+        if(!isShopItem)
+            hasPurchased = true;
+
         grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.selectEntered.AddListener(OnGrabAttempt);
         grabInteractable.hoverEntered.AddListener(OnHoverAttempt);

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 public class EnemyFXHandler : MonoBehaviour
 {
-    [Header("Character UI")]
-    [SerializeField] private CharacterUI characterUI;
+    [Header("References")]
+    [Space]
+    [SerializeField] private CharacterUI characterUI; // Used for managing the character UI (Ailment type UI, Exclamation UI, QuestionMark UI , etc...)
+    [SerializeField] private CharacterStatusVfx characterStatusVfx; // Used for managing the character VFX (Ailment types VFXs , etc...)
 
     [Header("VFX")]
     public GameObject selfDestructVFX;
@@ -19,15 +21,6 @@ public class EnemyFXHandler : MonoBehaviour
     public Vector3 minScale = new Vector3(0.1f, 0.1f, 0.1f);
     public Vector3 midScale = new Vector3(1f, 1f, 1f);
     public Vector3 maxScale = new Vector3(2f, 2f, 2f);
-
-    
-
-    [Header("Question Mark UI")]
-    [Space]
-    public GameObject QuestionMarkUI;
-    public Transform QuestionMarkSpawn;
-    public float QuestionMarkScale = 250f;
-    private GameObject currentQuestionMark;
 
     private GameObject spawnedVFX;
 
@@ -144,6 +137,10 @@ public class EnemyFXHandler : MonoBehaviour
     {
         characterUI.SpawnAilmentUI(type, Activate);
     }
+    public void SpawnAilmentVFX(AilmentType type , bool Activate = true)
+    {
+        characterStatusVfx.SpawnStatusVFX(type, Activate);
+    }
     public void UpdateHealthValue(float value)
     {
         characterUI.ChangeHealthUI(value);
@@ -153,5 +150,6 @@ public class EnemyFXHandler : MonoBehaviour
     {
         characterUI.ChangeAilmentUI(Activated , ailmentStatus);
     }
+
 
 }

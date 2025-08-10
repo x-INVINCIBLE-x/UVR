@@ -1729,6 +1729,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spawnPosition: {fileID: 0}
+  eliminationReward:
+    Gold: 0
+    Magika: 0
+    Experience: 0
   sightRange: 15
   attackRange: 1
   attackCooldownTime: 2
@@ -1753,6 +1757,9 @@ MonoBehaviour:
   surroundingHitRadius: 0
   blitzProjectile: {fileID: 0}
   healProjectile: {fileID: 0}
+  attackClip: {fileID: 0}
+  idleClip: {fileID: 0}
+  hitClip: {fileID: 0}
   selfDestructTime: 0.5
 --- !u!95 &754690804
 Animator:
@@ -2439,6 +2446,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spawnPosition: {fileID: 0}
+  eliminationReward:
+    Gold: 0
+    Magika: 0
+    Experience: 0
   sightRange: 12
   attackRange: 6
   attackCooldownTime: 2
@@ -2463,6 +2474,9 @@ MonoBehaviour:
   surroundingHitRadius: 0
   blitzProjectile: {fileID: 0}
   healProjectile: {fileID: 0}
+  attackClip: {fileID: 0}
+  idleClip: {fileID: 0}
+  hitClip: {fileID: 0}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
   shootForce: 20
   projectileSpawn: {fileID: 1938889000}
@@ -3070,6 +3084,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: spawnPosition
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 495170623552757639, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: healProjectile
       value: 
       objectReference: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
@@ -3081,9 +3099,41 @@ PrefabInstance:
       propertyPath: surroundingHitRadius
       value: 9.37
       objectReference: {fileID: 0}
+    - target: {fileID: 902090359453726285, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 902090359453726285, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 902090359453726285, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 902090359453726285, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_Name
       value: Jack O Gool
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725099031235039921, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725099031235039921, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725099031235039921, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725099031235039921, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3478157519605571480, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_IsActive
@@ -3093,6 +3143,42 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3866540778409179385, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3866540778409179385, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3866540778409179385, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3866540778409179385, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213633618091946397, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: characterStatusVfx
+      value: 
+      objectReference: {fileID: 4965237242508028951}
+    - target: {fileID: 4215187314174329020, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215187314174329020, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215187314174329020, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215187314174329020, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5522769340667715344, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: healthSliderSmoothness
       value: 20
@@ -3100,6 +3186,38 @@ PrefabInstance:
     - target: {fileID: 5522769340667715344, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: ailmentSliderSmoothness
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129042949620983801, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129042949620983801, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129042949620983801, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129042949620983801, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165586928864104726, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165586928864104726, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165586928864104726, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165586928864104726, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6525117224224477189, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: blitzStatus.resistance.BaseValue
@@ -3342,6 +3460,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spawnPosition: {fileID: 0}
+  eliminationReward:
+    Gold: 0
+    Magika: 0
+    Experience: 0
   sightRange: 15
   attackRange: 7
   attackCooldownTime: 2
@@ -3366,6 +3488,9 @@ MonoBehaviour:
   surroundingHitRadius: 0
   blitzProjectile: {fileID: 0}
   healProjectile: {fileID: 0}
+  attackClip: {fileID: 0}
+  idleClip: {fileID: 0}
+  hitClip: {fileID: 0}
   LaserVFX: {fileID: 8476203572993528117, guid: b17767be6c49bff438d30e7290943d94, type: 3}
   projectileSpawnPosition: {fileID: 1848429663}
   LaserStartOffset: {x: 0, y: -2, z: 0}
@@ -3895,6 +4020,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spawnPosition: {fileID: 0}
+  eliminationReward:
+    Gold: 0
+    Magika: 0
+    Experience: 0
   sightRange: 12
   attackRange: 6
   attackCooldownTime: 3
@@ -3919,6 +4048,9 @@ MonoBehaviour:
   surroundingHitRadius: 0
   blitzProjectile: {fileID: 0}
   healProjectile: {fileID: 0}
+  attackClip: {fileID: 0}
+  idleClip: {fileID: 0}
+  hitClip: {fileID: 0}
   volleyProjectile: {fileID: 5916890302093399832, guid: de5b1b6a91a278f468d797063a5c3249, type: 3}
   projectileSpawnPosition: {fileID: 360953207}
 --- !u!95 &1137888475
@@ -5924,6 +6056,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spawnPosition: {fileID: 0}
+  eliminationReward:
+    Gold: 0
+    Magika: 0
+    Experience: 0
   sightRange: 10
   attackRange: 3
   attackCooldownTime: 2
@@ -5948,6 +6084,9 @@ MonoBehaviour:
   surroundingHitRadius: 0
   blitzProjectile: {fileID: 0}
   healProjectile: {fileID: 0}
+  attackClip: {fileID: 0}
+  idleClip: {fileID: 0}
+  hitClip: {fileID: 0}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
   shootForce: 25
   projectileSpawn: {fileID: 5840461848085708654}
@@ -9978,6 +10117,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6725115372276687912}
   m_Mesh: {fileID: 6287375019687772453, guid: b0401c36d3e31714d8d6330b308f81d4, type: 3}
+--- !u!114 &4965237242508028951 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3983680122803517662, guid: 39b9448778082804eada18c86642fb64, type: 3}
+  m_PrefabInstance: {fileID: 1064242563}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a80a129ab65e194f80fcfb8444ba014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4990555844623742827
 GameObject:
   m_ObjectHideFlags: 0
@@ -10467,6 +10617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterUI: {fileID: 0}
+  characterStatusVfx: {fileID: 0}
   selfDestructVFX: {fileID: 0}
   MagicCircleAttackVfx: {fileID: 654805830734500129, guid: 408634c04d23d974093f22cae0f9b420, type: 3}
   MagicCircleSpawn: {fileID: 5840461848085708654}
@@ -10474,9 +10625,6 @@ MonoBehaviour:
   minScale: {x: 1, y: 1, z: 1}
   midScale: {x: 100, y: 100, z: 100}
   maxScale: {x: 150, y: 150, z: 150}
-  QuestionMarkUI: {fileID: 6120648611442620250, guid: 2ebe27acf2205754d82d85a2b8838ac7, type: 3}
-  QuestionMarkSpawn: {fileID: 90774250}
-  QuestionMarkScale: 250
 --- !u!1 &6438572434294106314
 GameObject:
   m_ObjectHideFlags: 0

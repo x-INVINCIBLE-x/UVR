@@ -4847,7 +4847,7 @@ GameObject:
   - component: {fileID: 1613771613060480676}
   - component: {fileID: 2163846161385424056}
   m_Layer: 0
-  m_Name: Dark Status Effect
+  m_Name: Frenzy Status Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19419,6 +19419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7438367469002402015}
+  - component: {fileID: 4589596015672717912}
   m_Layer: 0
   m_Name: Status Effects VFX
   m_TagString: Untagged
@@ -19442,11 +19443,29 @@ Transform:
   - {fileID: 3143689138431333990}
   - {fileID: 7529925067396420590}
   - {fileID: 5078390305362191569}
-  - {fileID: 3002450424374001027}
-  - {fileID: 6608164346225260796}
   - {fileID: 7484889128323022983}
+  - {fileID: 6608164346225260796}
+  - {fileID: 3002450424374001027}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4589596015672717912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843718365070588961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a80a129ab65e194f80fcfb8444ba014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BurnStatusEffect: {fileID: 2543240993355477102}
+  FreezeStatusEffect: {fileID: 207628151360097469}
+  DrainStatusEffect: {fileID: 4210206017542463745}
+  ShockStatusEffect: {fileID: 5105344493619409444}
+  BlightStatusEffect: {fileID: 4144516861404749994}
+  FrenzyStatusEffect: {fileID: 2029506226159818413}
 --- !u!1 &4144516861404749994
 GameObject:
   m_ObjectHideFlags: 0

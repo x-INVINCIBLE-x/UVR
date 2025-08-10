@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 7713051580393146924}
   - component: {fileID: 814163498722138343}
   - component: {fileID: 1681698471380193012}
+  - component: {fileID: 9132833008774234027}
   m_Layer: 10
   m_Name: Blunderbuss Shotgun
   m_TagString: Untagged
@@ -169,10 +170,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2852090575269373135}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -488,6 +489,24 @@ MonoBehaviour:
   minPitch: 1
   maxPitch: 3
   bulletLifeTime: 5
+--- !u!114 &9132833008774234027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852090575269373135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03588f75fe9d75e41b612292741f40ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 0}
+  isShopItem: 0
+  meshes: []
+  defaultMaterial: []
+  AffordableMaterial: {fileID: 0}
+  UnaffordableMaterial: {fileID: 0}
 --- !u!1 &3059704357039862770
 GameObject:
   m_ObjectHideFlags: 0

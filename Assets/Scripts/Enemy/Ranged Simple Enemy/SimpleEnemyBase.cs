@@ -70,7 +70,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
     [SerializeField] private AudioClip attackClip;
     [SerializeField] private AudioClip idleClip;
-    [SerializeField] private AudioClip hitClip;
+    [SerializeField] private AudioClip enemyHitCry;
 
     protected virtual void Start()
     {
@@ -117,6 +117,17 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
         FXManager.SpawnAilmentUI(type,true);
         FXManager.UpdateAilmentValue(isActivated,status);
 
+        // Ailment VFX Spawning
+        if (isActivated)
+        {
+            FXManager.SpawnAilmentVFX(type);
+        }
+        if (!isActivated)
+        {
+            FXManager.SpawnAilmentVFX(type, false);
+        }
+
+
         if (type == AilmentType.Blitz)
         {
             hitSurroundingEnemies = isActivated;
@@ -140,7 +151,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     {
         if (isDead) return;
 
-        AudioManager.Instance.PlaySFX(hitClip);
+        AudioManager.Instance.PlaySFX(enemyHitCry);
 
         if (hitSurroundingEnemies)
         {
