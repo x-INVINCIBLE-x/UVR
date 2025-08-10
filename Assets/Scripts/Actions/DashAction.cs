@@ -5,9 +5,12 @@ using UnityEngine.Windows;
 public class DashAction : Action
 {
     public Rigidbody rb;
+    public CapsuleCollider bodyCollider;
+    public LayerMask obstacleLayerMask;
 
     public float dashForce;
     public float dashDuration = 0.5f;
+    public float safeDashDistance = 2f;
     public Transform headTransform;
     private Vector3 direction;
 
@@ -15,6 +18,8 @@ public class DashAction : Action
     private float defaultDashForce;
     private Coroutine dashCoroutine;
     private Vector2 input;
+
+    private Vector3 heightOffset = new Vector3(0f, 0.5f, 0f);
 
     protected override void Start()
     {
@@ -31,6 +36,7 @@ public class DashAction : Action
         };
 
         rb = actionMediator.rb;
+        bodyCollider = actionMediator.bodyCollider.GetComponent<CapsuleCollider>();
     }
 
     private void Dash(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -53,21 +59,31 @@ public class DashAction : Action
 
         float timer = 0f;
 
-        // Compute direction once
+        // Compute dash direction once
         direction = headTransform.right * input.x + headTransform.forward * input.y;
         direction.y = 0f;
         direction.Normalize();
 
         Vector3 dashVelocity = direction * dashForce;
 
+        // Use velocity-based movement so CCD is applied
+        rb.linearVelocity = dashVelocity;
+
         while (timer < dashDuration)
         {
-            Vector3 moveDelta = dashVelocity * Time.unscaledDeltaTime;
-            rb.MovePosition(rb.position + moveDelta);
+            // Check if obstacle in front (considering capsule size)
+            if (HasObstacleInPath(direction, dashVelocity.magnitude * Time.unscaledDeltaTime))
+            {
+                rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+                break;
+            }
 
             timer += Time.unscaledDeltaTime;
             yield return null;
         }
+
+        // Stop horizontal motion after dash
+        rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
 
         actionMediator.immuneInterpolation = false;
 
@@ -77,6 +93,23 @@ public class DashAction : Action
             actionMediator.DisablePhysicalMotionOnLand(true);
 
         dashCoroutine = null;
+    }
+
+    private bool HasObstacleInPath(Vector3 dir, float checkDistance)
+    {
+        // Get capsule points based on your collider size
+        Vector3 point1 = rb.position + Vector3.up * (bodyCollider.radius);
+        Vector3 point2 = rb.position + Vector3.up * (bodyCollider.height - bodyCollider.radius);
+
+        return Physics.CapsuleCast(
+            point1,
+            point2,
+            bodyCollider.radius,
+            dir,
+            out _,
+            checkDistance + 0.05f, // extra buffer
+            obstacleLayerMask
+        );
     }
 
     //private void HandleTimeModification(float modifier)
