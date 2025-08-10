@@ -441,7 +441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2928328193571432953, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5737115565858695821, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: saveToSO
@@ -825,8 +825,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: density
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: saveToSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b01a82e736914c49b0dade1ab55ae85, type: 2}
     - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: gridDatabase
       value: 
@@ -836,8 +840,32 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: formations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: formations.Array.data[1].difficultyLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: formations.Array.data[0].config.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: formations.Array.data[1].config.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: radiusPrefabs.Array.data[0].prefabs.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: formations.Array.data[1].config.Array.data[0].type
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: radiusPrefabs.Array.data[0].prefabs.Array.data[0].prefab
@@ -870,6 +898,50 @@ PrefabInstance:
     - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: radiusPrefabs.Array.data[0].prefabs.Array.data[3].weight
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[1].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[0].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268240835334529299, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: customWaveSettings.Array.data[0].curve.m_Curve.Array.data[1].outWeight
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

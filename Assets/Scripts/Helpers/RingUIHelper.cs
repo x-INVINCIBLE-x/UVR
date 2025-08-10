@@ -39,11 +39,11 @@ public class RingUIHelper : MonoBehaviour
             return;
         }
 
-        float angleStep = angleToUse / slots.Count + startOffset;
+        float angleStep = angleToUse / slots.Count;
 
         for (int i = 0; i < slots.Count; i++)
         {
-            float angle = angleStep * (i + 1);
+            float angle = (angleStep * (i + 1)) + startOffset;
 
             Vector3 worldPos = Vector3.zero;
             if (ringAxis == RingAxis.XZ)
