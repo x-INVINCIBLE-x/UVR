@@ -42,8 +42,8 @@ public class PlayerUI : MonoBehaviour
         player.Stats.OnHealthChanged += UpdateHealthUI;
 
         player.Stats.OnAilmentStatusChange += HandleStatusChange;
+        player.Stats.OnDeath += HandleDeath;
     }
-
     private void HandleStatusChange(AilmentType type, bool isActivated, float effectAmount)
     {
         if (isActivated == true)
@@ -57,6 +57,11 @@ public class PlayerUI : MonoBehaviour
     {
         fullScreenEffect.DeactivateFullscreenEffect();
         player.Stats.GetAilmentStatus(type).AilmentEffectEnded -= HandleEffectEnd;
+    }
+
+    private void HandleDeath()
+    {
+        fullScreenEffect.DeactivateFullscreenEffect();
     }
 
     private void UpdateHealthUI(float normalizedValue)

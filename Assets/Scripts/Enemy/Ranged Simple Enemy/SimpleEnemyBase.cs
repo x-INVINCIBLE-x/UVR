@@ -285,7 +285,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
         if (wasPlayerInSight)
         {
-            FXManager.SpawnQuestionMark(); // turn on question mark ui for patrolling
+            FXManager.SpawnQuestionMark();
             wasPlayerInSight = false;
             Invoke(nameof(DisableQuestionmark), 4f);
         }
@@ -307,7 +307,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
         if (enemyEventManager != null && wasPlayerInSight)
         {
             enemyEventManager.LostPlayer(enemyID);
-            FXManager.SpawnExclamationMark(false); // turning off exclamation mark
+            FXManager.SpawnExclamationMark(false);
             registered = false;
         }
     }
@@ -380,6 +380,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
     private void ShowExclamationOnly()
     {
+        Debug.Log($"Showing Exclamation Mark for Player: {Player.name}");
         FXManager.SpawnQuestionMark(false);
         FXManager.SpawnExclamationMark(true);
     }

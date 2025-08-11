@@ -170,7 +170,7 @@ public class CharacterUI : MonoBehaviour
 
     public void SpawnExclamationUI(bool Activate = true)
     {
-        if (ExclamtionUI.activeSelf == Activate)
+        if (exclamationUICanvasGroup.gameObject.activeSelf == Activate)
             return;
 
         if (exclamationUICanvasGroup != null)
@@ -190,7 +190,7 @@ public class CharacterUI : MonoBehaviour
 
     public void SpawnQuestionUI(bool Activate = true)
     {
-        if (QuestionUI.activeSelf == Activate)
+        if (questionUICanvasGroup.gameObject.activeSelf == Activate)
             return;
 
         if (questionUICanvasGroup != null)
@@ -235,6 +235,11 @@ public class CharacterUI : MonoBehaviour
         float elapsed = 0f;
         group.alpha = startAlpha;
 
+        if (endAlpha > 0f)
+        {
+            group.gameObject.SetActive(true);
+        }
+
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
@@ -243,6 +248,11 @@ public class CharacterUI : MonoBehaviour
         }
 
         group.alpha = endAlpha;
+
+        if (endAlpha <= 0f)
+        {
+            group.gameObject.SetActive(false);
+        }
     }
 
 

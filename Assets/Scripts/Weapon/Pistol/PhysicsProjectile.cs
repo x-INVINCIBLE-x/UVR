@@ -56,8 +56,6 @@ public class PhysicsProjectile : Projectile
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Projectile hit: {other.name}");
-
         IDamageable damagable = other.GetComponentInParent<IDamageable>();
         damagable ??= other.GetComponentInChildren<IDamageable>();
         if (damagable != null && !damaged.Contains(damagable) && attackData != null)
