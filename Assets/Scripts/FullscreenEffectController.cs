@@ -30,11 +30,16 @@ public class FullscreenEffectController : MonoBehaviour
     private int defaulteffectPower;
 
     // Coroutines 
-    private Coroutine startCoroutine;
-    private Coroutine endCoroutine;
-
+    private Coroutine fullScreenCorountine;
+    
     // Material Reference
     private Material effectType;
+
+    // Values to Set For Shader
+    [SerializeField] private float transitioneffectPower = 25f;
+    [SerializeField] private float effectFaderRate = 0.0125f; // Addtion value for increase per refresh rate
+    [SerializeField] private float refreshRate = 0.025f; // Coroutine time value
+    private float currenteffectPower;
 
     //[SerializeField] private Color color;
     //[SerializeField] private float intensity = 8f;
@@ -51,6 +56,19 @@ public class FullscreenEffectController : MonoBehaviour
     private void Start()
     {
         fullScreenEffect.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            ActivateFullscreenEffect(AilmentType.Ignis);
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            DeactivateFullscreenEffect();
+        }
     }
 
     public void ActivateFullscreenEffect(AilmentType ailmentType)
@@ -81,33 +99,51 @@ public class FullscreenEffectController : MonoBehaviour
             effectType = HolyEffect;
         }
         
-        if(startCoroutine != null)
+        if(fullScreenCorountine!= null)
         {
-            StopCoroutine(startCoroutine);
+            StopCoroutine(fullScreenCorountine);
         }
-        startCoroutine = StartCoroutine(StartFullscreenEffect(effectType));
+        fullScreenCorountine = StartCoroutine(StartFullscreenEffect(effectType));
     }
 
     public void DeactivateFullscreenEffect()
     {
-        endCoroutine = StartCoroutine(EndFullscreenEffect(effectType));
+        if (fullScreenCorountine != null)
+        {
+            StopCoroutine(fullScreenCorountine);
+        }
+        fullScreenCorountine = StartCoroutine(EndFullscreenEffect(effectType));
     }
 
     private IEnumerator StartFullscreenEffect(Material effectMaterial)
     {   
-
         fullScreenEffect.SetActive(true);
         fullScreenEffect.passMaterial = effectMaterial;
-        startCoroutine = null;
-        yield return null;
+
+        effectMaterial.SetFloat(effectPower, transitioneffectPower);
+        currenteffectPower = transitioneffectPower; // Set to transition effect power 
+
+        while (currenteffectPower > effectPower) // From transtion effect power to effect power
+        {
+            currenteffectPower -= effectFaderRate;
+            effectMaterial.SetFloat(effectPower, currenteffectPower);
+            yield return new WaitForSeconds(refreshRate);
+        }
+
+        fullScreenCorountine = null;
     }
 
     private IEnumerator EndFullscreenEffect(Material effectMaterial)
-    {
+    {         
+        while (currenteffectPower < effectPower) // From current effect power to effect power (default)
+        {
+            currenteffectPower += effectFaderRate;
+            effectMaterial.SetFloat(effectPower, currenteffectPower);
+            yield return new WaitForSeconds(refreshRate);
+        }
+
+        fullScreenCorountine = null;
         fullScreenEffect.SetActive(false);
-        fullScreenEffect.passMaterial = effectMaterial;
-        endCoroutine = null;
-        yield return null;
     }
 
     private void OnDisable()

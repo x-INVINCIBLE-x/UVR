@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Full Screen Shader
+  m_Name: Radiance Full Screen
   m_Shader: {fileID: -6465566751694194690, guid: 498d9fd009af2df4cb2d6db1b894beca, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Noise_Texture:
-        m_Texture: {fileID: 2800000, guid: f6440be864ade564fa3a0cab07aec13a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 43276e0bf183d4a4f87bd4acde8c078a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -42,7 +42,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Breath_Frequency: 2
-    - _Breath_Intensity: 0.57
+    - _Breath_Intensity: 0.5
     - _Fullscreen_AlphaBlendOperation: 0
     - _Fullscreen_BlendMode: 1
     - _Fullscreen_ColorBlendOperation: 0
@@ -52,10 +52,10 @@ Material:
     - _Fullscreen_SrcAlphaBlend: 1
     - _Fullscreen_SrcColorBlend: 5
     - _Vignette_Intensity: 4
-    - _Vignette_Power: 8
+    - _Vignette_Power: 7.5
     m_Colors:
-    - _Color: {r: 15.999997, g: 2.5130885, b: 0, a: 0.58431375}
+    - _Color: {r: 14.259475, g: 9.25746, b: 0, a: 0.3921569}
     - _Noise_Speed: {r: 0, g: 0, b: 0, a: 0}
-    - _Noise_Tilling: {r: 1, g: 1, b: 0, a: 0}
+    - _Noise_Tilling: {r: 3, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

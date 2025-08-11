@@ -1759,7 +1759,7 @@ MonoBehaviour:
   healProjectile: {fileID: 0}
   attackClip: {fileID: 0}
   idleClip: {fileID: 0}
-  hitClip: {fileID: 0}
+  enemyHitCry: {fileID: 0}
   selfDestructTime: 0.5
 --- !u!95 &754690804
 Animator:
@@ -2476,7 +2476,7 @@ MonoBehaviour:
   healProjectile: {fileID: 0}
   attackClip: {fileID: 0}
   idleClip: {fileID: 0}
-  hitClip: {fileID: 0}
+  enemyHitCry: {fileID: 0}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
   shootForce: 20
   projectileSpawn: {fileID: 1938889000}
@@ -3101,19 +3101,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 902090359453726285, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 902090359453726285, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 902090359453726285, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.5882
       objectReference: {fileID: 0}
     - target: {fileID: 902090359453726285, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.03865
       objectReference: {fileID: 0}
     - target: {fileID: 1841170377458739796, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_Name
@@ -3121,19 +3121,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2725099031235039921, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2725099031235039921, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2725099031235039921, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.7682
       objectReference: {fileID: 0}
     - target: {fileID: 2725099031235039921, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.03865
       objectReference: {fileID: 0}
     - target: {fileID: 3478157519605571480, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_IsActive
@@ -3145,19 +3145,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3866540778409179385, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3866540778409179385, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3866540778409179385, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.04819995
       objectReference: {fileID: 0}
     - target: {fileID: 3866540778409179385, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.03865
       objectReference: {fileID: 0}
     - target: {fileID: 4213633618091946397, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: characterStatusVfx
@@ -3165,19 +3165,19 @@ PrefabInstance:
       objectReference: {fileID: 4965237242508028951}
     - target: {fileID: 4215187314174329020, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4215187314174329020, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4215187314174329020, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.22819996
       objectReference: {fileID: 0}
     - target: {fileID: 4215187314174329020, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.03865
       objectReference: {fileID: 0}
     - target: {fileID: 5522769340667715344, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: healthSliderSmoothness
@@ -3189,35 +3189,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6129042949620983801, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6129042949620983801, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6129042949620983801, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.9482
       objectReference: {fileID: 0}
     - target: {fileID: 6129042949620983801, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.03865
       objectReference: {fileID: 0}
     - target: {fileID: 6165586928864104726, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6165586928864104726, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6165586928864104726, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.40819997
       objectReference: {fileID: 0}
     - target: {fileID: 6165586928864104726, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.03865
       objectReference: {fileID: 0}
     - target: {fileID: 6525117224224477189, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: blitzStatus.resistance.BaseValue
@@ -3490,7 +3490,7 @@ MonoBehaviour:
   healProjectile: {fileID: 0}
   attackClip: {fileID: 0}
   idleClip: {fileID: 0}
-  hitClip: {fileID: 0}
+  enemyHitCry: {fileID: 0}
   LaserVFX: {fileID: 8476203572993528117, guid: b17767be6c49bff438d30e7290943d94, type: 3}
   projectileSpawnPosition: {fileID: 1848429663}
   LaserStartOffset: {x: 0, y: -2, z: 0}
@@ -4050,7 +4050,7 @@ MonoBehaviour:
   healProjectile: {fileID: 0}
   attackClip: {fileID: 0}
   idleClip: {fileID: 0}
-  hitClip: {fileID: 0}
+  enemyHitCry: {fileID: 0}
   volleyProjectile: {fileID: 5916890302093399832, guid: de5b1b6a91a278f468d797063a5c3249, type: 3}
   projectileSpawnPosition: {fileID: 360953207}
 --- !u!95 &1137888475
@@ -6086,7 +6086,7 @@ MonoBehaviour:
   healProjectile: {fileID: 0}
   attackClip: {fileID: 0}
   idleClip: {fileID: 0}
-  hitClip: {fileID: 0}
+  enemyHitCry: {fileID: 0}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
   shootForce: 25
   projectileSpawn: {fileID: 5840461848085708654}
