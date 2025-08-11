@@ -14,29 +14,29 @@ public class FullscreenEffectController : MonoBehaviour
     [Header("References")]
 
     [SerializeField] private FullScreenPassRendererFeature fullScreenEffect;
-    [SerializeField] private Material FireEffect;
-    [SerializeField] private Material IceEffect;
-    [SerializeField] private Material ElectricEffect;
-    [SerializeField] private Material DendroEffect;
-    [SerializeField] private Material HolyEffect;
-    [SerializeField] private Material DarkEffect;
+    [SerializeField] private Material FireEffectMaterial;
+    [SerializeField] private Material IceEffectMaterial;
+    [SerializeField] private Material ElectricEffectMaterial;
+    [SerializeField] private Material DendroEffectMaterial;
+    [SerializeField] private Material HolyEffectMaterial;
+    [SerializeField] private Material DarkEffectMaterial;
     
     // Shader Variables (Property) 
     private static readonly int effectIntensity = Shader.PropertyToID("_Vignette_Intensity");
     private static readonly int effectPower = Shader.PropertyToID("_Vignette_Power");
 
     // Default value of the effect material
-    private int defaulteffectIntensity; 
-    private int defaulteffectPower;
+    private float defaulteffectIntensity; 
+    private float defaulteffectPower;
 
     // Coroutines 
     private Coroutine fullScreenCorountine;
     
     // Material Reference
-    private Material effectType;
+    private Material effectMaterial;
 
     // Values to Set For Shader
-    [SerializeField] private float transitioneffectPower = 25f;
+    [SerializeField] private float transitionEffectPower = 25f;
     [SerializeField] private float effectFaderRate = 0.0125f; // Addtion value for increase per refresh rate
     [SerializeField] private float refreshRate = 0.025f; // Coroutine time value
     private float currenteffectPower;
@@ -49,8 +49,7 @@ public class FullscreenEffectController : MonoBehaviour
 
     private void Awake()
     {
-        defaulteffectIntensity = effectIntensity;
-        defaulteffectPower = effectPower;
+        
     }
 
     private void Start()
@@ -62,7 +61,11 @@ public class FullscreenEffectController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            ActivateFullscreenEffect(AilmentType.Ignis);
+            ActivateFullscreenEffect(AilmentType.Frost);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ActivateFullscreenEffect(AilmentType.Gaia);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
@@ -76,34 +79,37 @@ public class FullscreenEffectController : MonoBehaviour
 
         if(ailmentType == AilmentType.Ignis)
         {
-            effectType = FireEffect;
+            effectMaterial = FireEffectMaterial;
         }
         else if(ailmentType == AilmentType.Gaia)
         {
-            effectType = DendroEffect;
+            effectMaterial = DendroEffectMaterial;
         }
         else if(ailmentType == AilmentType.Blitz)
         {
-            effectType = ElectricEffect;
+            effectMaterial = ElectricEffectMaterial;
         }
         else if(ailmentType == AilmentType.Frost)
         {
-            effectType = IceEffect;
+            effectMaterial = IceEffectMaterial;
         }
         else if(ailmentType == AilmentType.Hex)
         {
-            effectType = DarkEffect;
+            effectMaterial = DarkEffectMaterial;
         }
         else if(ailmentType == AilmentType.Radiance)
         {
-            effectType = HolyEffect;
+            effectMaterial = HolyEffectMaterial;
         }
-        
-        if(fullScreenCorountine!= null)
+
+        defaulteffectIntensity = effectMaterial.GetFloat("_Vignette_Intensity");
+        defaulteffectPower = effectMaterial.GetFloat("_Vignette_Power");
+
+        if (fullScreenCorountine!= null)
         {
             StopCoroutine(fullScreenCorountine);
         }
-        fullScreenCorountine = StartCoroutine(StartFullscreenEffect(effectType));
+        fullScreenCorountine = StartCoroutine(StartFullscreenEffect(effectMaterial));
     }
 
     public void DeactivateFullscreenEffect()
@@ -112,43 +118,46 @@ public class FullscreenEffectController : MonoBehaviour
         {
             StopCoroutine(fullScreenCorountine);
         }
-        fullScreenCorountine = StartCoroutine(EndFullscreenEffect(effectType));
+        fullScreenCorountine = StartCoroutine(EndFullscreenEffect(effectMaterial));
     }
 
-    private IEnumerator StartFullscreenEffect(Material effectMaterial)
+    private IEnumerator StartFullscreenEffect(Material material)
     {   
         fullScreenEffect.SetActive(true);
-        fullScreenEffect.passMaterial = effectMaterial;
+        fullScreenEffect.passMaterial = material;
 
-        effectMaterial.SetFloat(effectPower, transitioneffectPower);
-        currenteffectPower = transitioneffectPower; // Set to transition effect power 
+        material.SetFloat(effectPower, transitionEffectPower);
+        currenteffectPower = transitionEffectPower; // Set to transition effect power 
 
-        while (currenteffectPower > effectPower) // From transtion effect power to effect power
+        while (currenteffectPower > defaulteffectPower) // From transtion effect power to effect power
         {
             currenteffectPower -= effectFaderRate;
-            effectMaterial.SetFloat(effectPower, currenteffectPower);
+            material.SetFloat(effectPower, currenteffectPower);
             yield return new WaitForSeconds(refreshRate);
         }
 
         fullScreenCorountine = null;
     }
 
-    private IEnumerator EndFullscreenEffect(Material effectMaterial)
-    {         
-        while (currenteffectPower < effectPower) // From current effect power to effect power (default)
+    private IEnumerator EndFullscreenEffect(Material material)
+    {
+        // Assuming we call the StartFullscreenEffect before  EndFullscreenEffect 
+        // Or else we have to set the currenteffectPower to defaulteffectpower
+
+        while (currenteffectPower < transitionEffectPower) // From current effect power to effect power (default)
         {
             currenteffectPower += effectFaderRate;
-            effectMaterial.SetFloat(effectPower, currenteffectPower);
+            material.SetFloat(effectPower, currenteffectPower);
             yield return new WaitForSeconds(refreshRate);
         }
 
+        material.SetFloat(effectPower, defaulteffectPower); // Force set to original effect power value
         fullScreenCorountine = null;
         fullScreenEffect.SetActive(false);
     }
 
     private void OnDisable()
     {
-        effectType.SetFloat(effectIntensity, defaulteffectIntensity);
-        effectType.SetFloat(effectPower, defaulteffectPower);
+        effectMaterial.SetFloat(effectPower, defaulteffectPower);       
     }
 }
