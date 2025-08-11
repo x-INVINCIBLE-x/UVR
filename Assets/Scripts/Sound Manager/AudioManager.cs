@@ -29,6 +29,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource musicSource;
     private AudioSource musicSource2;
     private AudioSource sfxSource;
+    private Coroutine musicCoroutine;
 
     private bool isPlayingMusicSource1; // if it is true then musicSource is playing , If it is false then musicSource 2 is playing
 
@@ -43,6 +44,8 @@ public class AudioManager : MonoBehaviour
         // Loop the music sources
         musicSource.loop = true;
         musicSource2.loop = true;
+        // Intialization
+        isPlayingMusicSource1 = true;
     }
 
     public void PlayMusic(AudioClip musicClip)
@@ -60,11 +63,18 @@ public class AudioManager : MonoBehaviour
     {   
         // Determine which AudioSource is active
         AudioSource activeSource = (isPlayingMusicSource1) ? musicSource : musicSource2;
-        StartCoroutine(UpdateMusicWithFade(activeSource, newClip, transitionTime));
+        // Coroutine Check
+        if (musicCoroutine!= null)
+        {
+            StopCoroutine(musicCoroutine);
+        }
+        musicCoroutine = StartCoroutine(UpdateMusicWithFade(activeSource, newClip, transitionTime));
     }
 
     public void PlayMusicWithCrossFade(AudioClip newClip, float transitionTime = 1.0f)
     {
+        if (newClip == null) return;
+
         // Determine which AudioSource is active
         AudioSource activeSource = (isPlayingMusicSource1) ? musicSource : musicSource2; // Terinary operation to check if musicSource is playing (Read Above)
         AudioSource newSource = (isPlayingMusicSource1) ? musicSource2 : musicSource; // Swap the terinary, condition to play musicSource2 if the musicSource is playing
@@ -74,8 +84,15 @@ public class AudioManager : MonoBehaviour
 
         // Set the fields of the audioSource , then start the courutine for cross fade
         newSource.clip = newClip;
+        newSource.volume = 0; // Start at 0 volume
         newSource.Play();
-        StartCoroutine(UpdateMusicWithCrossFade(activeSource,newSource,transitionTime));
+
+        // Coroutine Check
+        if (musicCoroutine != null)
+        {
+            StopCoroutine(musicCoroutine);
+        }
+        musicCoroutine = StartCoroutine(UpdateMusicWithCrossFade(activeSource,newSource,transitionTime));
     }
 
     private IEnumerator UpdateMusicWithCrossFade(AudioSource original, AudioSource newSource, float transitionTime)
@@ -88,11 +105,12 @@ public class AudioManager : MonoBehaviour
             newSource.volume = (t / transitionTime);
             yield return null;
         }
-
+        
         original.Stop();
+        musicCoroutine = null;
     }
 
-    private IEnumerator UpdateMusicWithFade(AudioSource activeSource , AudioClip newClip , float transitionTime)
+    private IEnumerator UpdateMusicWithFade(AudioSource activeSource, AudioClip newClip, float transitionTime)
     {
         if (!activeSource.isPlaying)
         {
@@ -102,7 +120,7 @@ public class AudioManager : MonoBehaviour
         float t = 0.0f;
 
         // FADE OUT
-        for ( t = 0.0f; t < transitionTime ; t+= Time.deltaTime)
+        for (t = 0.0f; t < transitionTime; t += Time.deltaTime)
         {
             activeSource.volume = (1 - (t / transitionTime));
             yield return null;
@@ -110,6 +128,7 @@ public class AudioManager : MonoBehaviour
 
         activeSource.Stop();
         activeSource.clip = newClip;
+        activeSource.volume = 0; // Explicitly set to 0 before playing (just a brute force way to ensure volume is 0 when new clip is played)
         activeSource.Play();
 
         // FADE IN
@@ -118,6 +137,8 @@ public class AudioManager : MonoBehaviour
             activeSource.volume = (t / transitionTime);
             yield return null;
         }
+
+        musicCoroutine = null;
     }
     public void PlaySFX(AudioClip sfxClip)
     {
