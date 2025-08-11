@@ -21,6 +21,7 @@ public class ActionMediator : MonoBehaviour
     public ContinuousTurnProvider turnProvider;
     public ManualRigidbodyTurn rbTurnProvider;
     public PlayerGravity playerGravity;
+    public VelocityEstimator playerVelocity;
 
     public GrabStatus grabStatus;
     public Rigidbody rb;
@@ -92,9 +93,15 @@ public class ActionMediator : MonoBehaviour
             if (LastActionStatus == ActionStatus.Climb)
             {
                 //SetPhysicalMotion(true);
+                Debug.Log("Velocity: " + playerVelocity.GetAccelerationEstimate());
                 playerGravity.EnableGravity();
                 EnableMovement();
                 rb.isKinematic = defaultKinematicStatus;
+                
+                JumpAction action = JumpAction as JumpAction;
+                if (action != null)
+                    action.AcceleratedJump(playerVelocity.GetAccelerationEstimate().magnitude);
+
                 //DisablePhysicalMotionOnLand();
             }
         }
@@ -114,9 +121,6 @@ public class ActionMediator : MonoBehaviour
             DisableMovement();
             defaultKinematicStatus = rb.isKinematic;
             rb.isKinematic = true;
-            //SetPhysicalMotion(false);
-            //if (landRoutine != null)
-            //    StopCoroutine(landRoutine);
         }
         else if (grabStatus.IsSwinging())
         {

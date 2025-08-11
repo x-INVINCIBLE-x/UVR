@@ -13,6 +13,8 @@ public class JumpAction : Action
     public float blendDuration = 0.1f;
 
     public int jumpCount = 1;
+    [Min(1)]
+    public float acceleratedJumpMultiplier = 1f;
     private int currentJumpCount;
     private bool jumpStarted = false;
 
@@ -58,6 +60,17 @@ public class JumpAction : Action
         }
     }
 
+    public void AcceleratedJump(float acceleration)
+    {
+        if (jumpCoroutine != null)
+        {
+            StopCoroutine(jumpCoroutine);
+            jumpCoroutine = null;
+        }
+
+        StartCoroutine(AcceleratedJumpRoutine(acceleration));
+    }
+
     private IEnumerator LerpJump()
     {
         float jumpDuration = 2f * Mathf.Sqrt(2f * jumpHeight / -Physics.gravity.y);
@@ -96,6 +109,50 @@ public class JumpAction : Action
         actionMediator.playerGravity.EnableGravity();
         previousMove = Vector3.zero;
 
+        jumpCoroutine = null;
+    }
+
+    private IEnumerator AcceleratedJumpRoutine(float jumpAcceleration)
+    {
+        actionMediator.immuneInterpolation = true;
+        actionMediator.playerGravity.DisableGravity();
+        previousMove = Vector3.zero;
+
+        // Initial upward velocity (based on jumpAcceleration and jumpHeight)
+        float velocity = Mathf.Sqrt(2f * jumpAcceleration * jumpHeight * acceleratedJumpMultiplier);
+
+        while (velocity > 0f || !actionMediator.IsGrounded())
+        {
+            // Apply upward movement if velocity > 0
+            if (velocity > 0f)
+            {
+                float deltaHeight = velocity * Time.deltaTime;
+                Vector3 move = Vector3.up * deltaHeight;
+
+                if (actionMediator.controller.enabled)
+                    actionMediator.controller.Move(move);
+
+                previousMove.y += deltaHeight;
+            }
+
+            // Update velocity (gravity effect)
+            velocity += Physics.gravity.y * Time.deltaTime;
+
+            // Landing check (after initial lift-off)
+            if (previousMove.y > 0.2f && actionMediator.IsGrounded())
+            {
+                actionMediator.playerGravity.EnableGravity();
+                currentJumpCount = jumpCount; // reset on landing
+                break;
+            }
+
+            yield return null;
+        }
+
+        // Restore gravity fully at end
+        actionMediator.immuneInterpolation = false;
+        actionMediator.playerGravity.EnableGravity();
+        previousMove = Vector3.zero;
         jumpCoroutine = null;
     }
 

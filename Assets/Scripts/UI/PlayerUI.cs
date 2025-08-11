@@ -17,6 +17,9 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private Image durationFill;
     [SerializeField] private GameObject durationSegmentParent;
 
+    [Header("Full scrreen effect")]
+    [SerializeField] private FullscreenEffectController fullScreenEffect;
+    
     private Transform[] durationSegments;
     private Coroutine cooldownCoroutine;
 
@@ -37,6 +40,23 @@ public class PlayerUI : MonoBehaviour
     {
         player = PlayerManager.instance.Player;
         player.Stats.OnHealthChanged += UpdateHealthUI;
+
+        player.Stats.OnAilmentStatusChange += HandleStatusChange;
+    }
+
+    private void HandleStatusChange(AilmentType type, bool isActivated, float effectAmount)
+    {
+        if (isActivated == true)
+        {
+            fullScreenEffect.ActivateFullscreenEffect(type);
+            player.Stats.GetAilmentStatus(type).AilmentEffectEnded += HandleEffectEnd;
+        }
+    }
+
+    private void HandleEffectEnd(AilmentType type)
+    {
+        fullScreenEffect.DeactivateFullscreenEffect();
+        player.Stats.GetAilmentStatus(type).AilmentEffectEnded -= HandleEffectEnd;
     }
 
     private void UpdateHealthUI(float normalizedValue)

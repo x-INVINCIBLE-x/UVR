@@ -117,16 +117,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
         FXManager.SpawnAilmentUI(type,true);
         FXManager.UpdateAilmentValue(isActivated,status);
 
-        // Ailment VFX Spawning
-        if (isActivated)
-        {
-            FXManager.SpawnAilmentVFX(type);
-        }
-        if (!isActivated)
-        {
-            FXManager.SpawnAilmentVFX(type, false);
-        }
-
+        FXManager.SpawnAilmentVFX(type, isActivated);
 
         if (type == AilmentType.Blitz)
         {
