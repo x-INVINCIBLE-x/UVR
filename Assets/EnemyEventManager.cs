@@ -7,9 +7,10 @@ public class EnemyEventManager : MonoBehaviour
     public static EnemyEventManager Instance { get; private set; }
 
     public event Action<int> OnEnemySeePlayer; // Enemy sees the player
-    public event Action<int> OnEnemyLostPlayer; // Enemy lost the player from sight or enemy died
-  
-    
+    public event Action<int> OnEnemyLostPlayer; // Enemy lost the player from sight 
+    public event Action<int> OnEnemyDeath; // Enemy has died
+
+
     public List<int> ActiveEnemies { get; private set;} = new List<int>();
     private int nextEnemyID = 0;
 
@@ -46,6 +47,13 @@ public class EnemyEventManager : MonoBehaviour
         OnEnemyLostPlayer?.Invoke(enemyID);
     }
 
-    
+    public void EnemyDeath(int enemyID)
+    {
+        if (ActiveEnemies.Contains(enemyID))
+        {
+            ActiveEnemies.Remove(enemyID);
+        }
+        OnEnemyDeath?.Invoke(enemyID);
+    }
 
 }

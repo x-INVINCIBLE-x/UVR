@@ -98,6 +98,8 @@ public class SwingAction : MonoBehaviour
 
     private void StopSwing()
     {
+        if (!joint) return;
+
         actionMediator.grabStatus.ResetHandStatus(hand);
 
         if (!actionMediator.grabStatus.IsSwinging())

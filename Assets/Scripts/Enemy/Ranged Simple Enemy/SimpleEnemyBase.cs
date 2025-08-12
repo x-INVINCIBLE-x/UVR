@@ -203,6 +203,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     protected virtual void HandleDeath()
     {
         isDead = true;
+        enemyEventManager.EnemyDeath(enemyID); 
 
         if (agent.enabled)
             agent.SetDestination(transform.position);

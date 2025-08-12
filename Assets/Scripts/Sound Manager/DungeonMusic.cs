@@ -17,12 +17,14 @@ public class DungeonMusic : MonoBehaviour
         AudioManager.Instance.PlayMusic(dungeonTheme);
         EnemyEventManager.Instance.OnEnemySeePlayer  += OnEngageCombat;
         EnemyEventManager.Instance.OnEnemyLostPlayer += OnDisengageCombat;
+        EnemyEventManager.Instance.OnEnemyDeath += OnDisengageCombat; // Also disengage combat when all enemies are dead
     }
 
     private void OnDestroy()
     {
         EnemyEventManager.Instance.OnEnemySeePlayer -= OnEngageCombat;
         EnemyEventManager.Instance.OnEnemyLostPlayer -= OnDisengageCombat;
+        EnemyEventManager.Instance.OnEnemyDeath -= OnDisengageCombat; // Unsubscribe to avoid memory leaks
     }
 
     private void OnEngageCombat(int enemyId)

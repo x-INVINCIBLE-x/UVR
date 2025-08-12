@@ -39,22 +39,31 @@ public class GrabStatus : MonoBehaviour
 
     private void OnLeftHandSelect(SelectEnterEventArgs args)
     {
-        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable statusUpdater))
+        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable _))
             ChangeLeftHandStatus(GrabType.Object);
         if (args.interactableObject.transform.TryGetComponent(out ClimbInteractable _))
             ChangeLeftHandStatus(GrabType.Climb);
     }
 
-    private void OnLeftHandDeselect(SelectExitEventArgs args) => ResetHandStatus(Hand.Left);
+    private void OnLeftHandDeselect(SelectExitEventArgs args)
+    {
+        Debug.Log("Left hand deselected");
+        ResetHandStatus(Hand.Left);
+    }
+
     private void OnRightHandSelect(SelectEnterEventArgs args)
     {
-        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable statusUpdater))
+        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable _))
             ChangeRightHandStatus(GrabType.Object);
         if (args.interactableObject.transform.TryGetComponent(out ClimbInteractable _))
             ChangeRightHandStatus(GrabType.Climb);
     }
 
-    private void OnRightHandDeselect(SelectExitEventArgs args) => ResetHandStatus(Hand.Right);
+    private void OnRightHandDeselect(SelectExitEventArgs args)
+    {
+        Debug.Log("Right hand deselected");
+        ResetHandStatus(Hand.Right);
+    }
 
     public void ChangeHandStatus(Hand hand, GrabType type)
     {
