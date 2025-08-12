@@ -3135,6 +3135,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2738658457756015292, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.023
+      objectReference: {fileID: 0}
+    - target: {fileID: 2738658457756015292, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2738658457756015292, guid: 39b9448778082804eada18c86642fb64, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.362
+      objectReference: {fileID: 0}
     - target: {fileID: 3478157519605571480, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3159,10 +3171,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4213633618091946397, guid: 39b9448778082804eada18c86642fb64, type: 3}
-      propertyPath: characterStatusVfx
-      value: 
-      objectReference: {fileID: 4965237242508028951}
     - target: {fileID: 4215187314174329020, guid: 39b9448778082804eada18c86642fb64, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10121,17 +10129,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6725115372276687912}
   m_Mesh: {fileID: 6287375019687772453, guid: b0401c36d3e31714d8d6330b308f81d4, type: 3}
---- !u!114 &4965237242508028951 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3983680122803517662, guid: 39b9448778082804eada18c86642fb64, type: 3}
-  m_PrefabInstance: {fileID: 1064242563}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a80a129ab65e194f80fcfb8444ba014, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4990555844623742827
 GameObject:
   m_ObjectHideFlags: 0
@@ -10627,9 +10624,7 @@ MonoBehaviour:
   characterUI: {fileID: 0}
   characterStatusVfx: {fileID: 0}
   selfDestructVFX: {fileID: 0}
-  MagicCircleAttackVfx: {fileID: 654805830734500129, guid: 408634c04d23d974093f22cae0f9b420, type: 3}
-  MagicCircleSpawn: {fileID: 5840461848085708654}
-  vfxOffset: {x: 0, y: 0.3, z: 0}
+  MagicCircle: {fileID: 0}
   minScale: {x: 1, y: 1, z: 1}
   midScale: {x: 100, y: 100, z: 100}
   maxScale: {x: 150, y: 150, z: 150}
@@ -11952,7 +11947,6 @@ SceneRoots:
   - {fileID: 1638845484}
   - {fileID: 1317829583}
   - {fileID: 2109821313}
-  - {fileID: 1514080425}
   - {fileID: 1342541184054630750}
   - {fileID: 8746274636540729994}
   - {fileID: 989840599}
@@ -11971,3 +11965,4 @@ SceneRoots:
   - {fileID: 4317925935848769569}
   - {fileID: 596350608}
   - {fileID: 1064242563}
+  - {fileID: 1514080425}

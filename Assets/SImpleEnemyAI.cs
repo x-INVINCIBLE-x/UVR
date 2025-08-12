@@ -505,7 +505,7 @@ public class SimpleEnemyAI : MonoBehaviour
         Debug.Log("Laser attack is performing");
         if (laserActive)
         {
-            VFXManager.ActivateMagicCircle();
+            //VFXManager.ActivateMagicCircle();
             currentLaser = Instantiate(LaserVFX, projectileSpawnPosition);
             laserRenderer = currentLaser.GetComponent<LineRenderer>();
 
@@ -529,7 +529,7 @@ public class SimpleEnemyAI : MonoBehaviour
             Destroy(currentLaser);
             laserActive = false;
             Debug.Log("Laser Destroyed");
-            VFXManager.DestroyMagicCircle();
+            //VFXManager.DestroyMagicCircle();
 
         }
         
