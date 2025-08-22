@@ -2634,6 +2634,17 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                 },
                 {
                     ""name"": """",
+                    ""id"": ""02233d99-f223-4041-b407-3de8a04fca39"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UI Press"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""5b4ef08d-9ddd-4f0a-8539-d1114d14d143"",
                     ""path"": ""<XRController>{RightHand}/{Trigger}"",
                     ""interactions"": """",
