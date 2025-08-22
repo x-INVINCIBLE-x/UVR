@@ -52,8 +52,9 @@ public class TimeTrialChallenge : Challenge
 
     public override void StartChallenge()
     {
+        base.StartChallenge();
         GameEvents.OnElimination += UpdateChallengeStatus;
-
+        PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
         currentRoutine = StartCoroutine(StartChallengeRoutine());
     }
 
@@ -73,7 +74,7 @@ public class TimeTrialChallenge : Challenge
     public override void ChallengeFailed()
     {
         if (status == ChallengeStatus.Success) return;
-
+        Debug.Log("Failed");
         status = ChallengeStatus.Failed;
         GameEvents.OnElimination -= UpdateChallengeStatus;
 

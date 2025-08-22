@@ -74,8 +74,11 @@ public class GridFormationController : FormationProvider
     private List<Vector3> transitionStart = new List<Vector3>();
     private List<Vector3> transitionTarget = new List<Vector3>();
 
-    private float gridSpanX, gridSpanZ; private Vector3 gridCenter;
-    private int currentIndex = 0; private bool isTransitioning = false; private float timer = 0f;
+    private float gridSpanX, gridSpanZ; 
+    private Vector3 gridCenter;
+    private int currentIndex = 0; 
+    private bool isTransitioning = false; 
+    private float timer = 0f;
     private int difficultyLevel = 1;
     private NavMeshSurface[] navMeshSurfaces;
 
@@ -261,17 +264,6 @@ public class GridFormationController : FormationProvider
         StartCoroutine(SpawnFormationGraduallyThenBuildNavMesh(positionsPerFormation[currentIndex]));
     }
 
-
-    private IEnumerator BuildNavMeshGradually()
-    {
-        yield return new WaitForEndOfFrame();
-        foreach (NavMeshSurface surface in navMeshSurfaces)
-        {
-            surface.BuildNavMesh();
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
     [ContextMenu("Load Random Formation From Database")]
     public void LoadRandomFormationFromDatabase()
     {
@@ -413,7 +405,8 @@ public class GridFormationController : FormationProvider
 
     public override void NextTransition()
     {
-        isTransitioning = true; timer = 0f;
+        isTransitioning = true;
+        timer = 0f;
         transitionStart = new List<Vector3>(GetCurrentPositions());
         int next = (currentIndex + 1) % formations[difficultyLevel].config.Count;
         transitionTarget = new List<Vector3>(positionsPerFormation[next]);
@@ -690,6 +683,19 @@ public class GridFormationController : FormationProvider
     }
 
     float EstimateTotalSpan(GameObject s, int c, float minS, float maxS) { float size = s.GetComponent<Renderer>().bounds.size.x; float avg = (minS + maxS) * 0.5f; return c * size + (c - 1) * avg; }
+
+    public Vector3 GetGridCentre() => gridCenter;
+    public float GetGridRadius()
+    {
+        float maxRadius = 0f;
+        for (int i = 0; i < radiusPrefabs.Count; i++)
+        {
+            maxRadius = Mathf.Max(maxRadius, radiusPrefabs[i].radius);
+        }
+
+        return maxRadius;
+    }
+
 #if UNITY_EDITOR
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()

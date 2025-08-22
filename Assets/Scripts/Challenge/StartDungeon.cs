@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class StartDungeon : MonoBehaviour
 {
     [SerializeField] private GameObject dungeonEssentials;
+    [SerializeField] private DynamicFormationController groundGrid;
 
     void Start()
     {

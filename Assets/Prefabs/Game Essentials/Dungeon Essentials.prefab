@@ -105,6 +105,7 @@ MonoBehaviour:
   - sceneAsset: {fileID: 102900000, guid: 144cf87799e59e4429e2caa003a8cff0, type: 3}
     scenePath: Assets/Scenes/Dungeon Transition Fail.unity
     sceneName: Dungeon Transition Fail
+  groundGrid: {fileID: 0}
 --- !u!114 &3417520076172352710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a30b0f33ab0574eb98134e06c3207f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  challenges: []
+  challenges:
+  - {fileID: 1640362732571325783}
   possibleChallenges: 
 --- !u!114 &1640362732571325783
 MonoBehaviour:
@@ -236,13 +238,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challengeID: Survival
-  survivalDuration: 3
+  survivalDuration: 45
   timer: 0
-  safeZone: {fileID: 0}
-  safeBounds: {fileID: 0}
+  safeZone: {fileID: -6119084836104393201, guid: 161afd3d7e9b4c442bb6448ca51965e0, type: 3}
+  damageOutsideSafeZone: {fileID: 11400000, guid: a0a9d27b0c8856c4ab6bb4e6acc47e62, type: 2}
   moveSpeed: 5
   stopDuration: 3
   minMoveDistance: 5
+  speedIncreaseRate: 0.05
+  maxSpeed: 20
 --- !u!114 &4416125102421606189
 MonoBehaviour:
   m_ObjectHideFlags: 0

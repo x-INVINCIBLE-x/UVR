@@ -25,6 +25,7 @@ public class SliceChallenge : Challenge
     {
         base.StartChallenge();
         GameEvents.OnElimination += HandleElimination;
+        PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
     }
 
     public override void ChallengeCompleted()

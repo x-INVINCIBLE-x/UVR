@@ -21,7 +21,8 @@ public class ChallengeManager : MonoBehaviour
         else 
             Destroy(gameObject);
 
-        challenges = GetComponentsInChildren<Challenge>();
+        if (challenges == null || challenges.Length == 0)
+            challenges = GetComponentsInChildren<Challenge>();
     }
 
     private void Start()

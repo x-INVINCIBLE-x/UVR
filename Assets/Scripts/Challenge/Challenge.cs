@@ -36,7 +36,6 @@ public abstract class Challenge: MonoBehaviour
 
     public virtual void StartChallenge()
     {
-        PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
     }
 
     public virtual void ChallengeCompleted()
