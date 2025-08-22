@@ -29,6 +29,10 @@ public class GrabStatus : MonoBehaviour
 
     public event Action <GrabType> GrabStatusChanged;
 
+    private Transform leftInteractableObject = null;
+    private Transform rightInteractableObject = null;
+
+
     private void Start()
     {
         LeftInteractor.selectEntered.AddListener(OnLeftHandSelect);
@@ -39,29 +43,50 @@ public class GrabStatus : MonoBehaviour
 
     private void OnLeftHandSelect(SelectEnterEventArgs args)
     {
-        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable _))
+        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable interactable))
+        {
+            interactable.transform.parent = args.interactorObject.transform;
+            leftInteractableObject = interactable.transform;
             ChangeLeftHandStatus(GrabType.Object);
+        }
         if (args.interactableObject.transform.TryGetComponent(out ClimbInteractable _))
             ChangeLeftHandStatus(GrabType.Climb);
     }
 
     private void OnLeftHandDeselect(SelectExitEventArgs args)
     {
-        Debug.Log("Left hand deselected");
+        if (leftInteractableObject != null) 
+        {
+            leftInteractableObject.parent = null;
+            leftInteractableObject = null;
+        }
+
         ResetHandStatus(Hand.Left);
     }
 
     private void OnRightHandSelect(SelectEnterEventArgs args)
     {
-        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable _))
+        if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable interactable))
+        {
+            interactable.transform.parent = args.interactorObject.transform;
+            rightInteractableObject = interactable.transform;
             ChangeRightHandStatus(GrabType.Object);
+
+        }
         if (args.interactableObject.transform.TryGetComponent(out ClimbInteractable _))
+        {
             ChangeRightHandStatus(GrabType.Climb);
+        }
     }
 
     private void OnRightHandDeselect(SelectExitEventArgs args)
     {
-        Debug.Log("Right hand deselected");
+        if (rightInteractableObject != null) 
+        {
+            rightInteractableObject.parent = null;
+            rightInteractableObject = null;
+        }
+        
         ResetHandStatus(Hand.Right);
     }
 
