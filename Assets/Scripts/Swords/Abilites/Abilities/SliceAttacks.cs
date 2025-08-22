@@ -27,21 +27,11 @@ public class SliceAttacks : WeaponAbilitiesBase
         AOE
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-    protected override void Start()
-    {
-        base.Start();
-
-    }
-
-    protected override void Update()
+    protected void Update()
     {   
-        base.Update();
         AllAttacks();                
     }
+
     protected override void AllAttacks()
     {
         base.AllAttacks();
@@ -69,6 +59,7 @@ public class SliceAttacks : WeaponAbilitiesBase
         }
 
     }
+
     private void ActivateSlashEffect()
     {
         float velocity = velocityEstimator.GetVelocityEstimate().magnitude;

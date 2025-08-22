@@ -50,17 +50,25 @@ public class WeaponAbilitiesBase : MonoBehaviour
         WeaponSFXSource = GetComponent<AudioSource>();
     }
 
-    protected virtual void Start()
+    private void Start()
     {
-        
-        
+        interactableWeapon.selectEntered.AddListener(PickUpWeapon);
+        interactableWeapon.selectExited.AddListener(DropWeapon);
     }
 
-    protected virtual void Update()
+    private void PickUpWeapon(SelectEnterEventArgs arg0)
     {
-        
+        interactableWeapon.activated.AddListener(ActivateWeapon);
+        interactableWeapon.deactivated.AddListener(DeactivateWeapon);
     }
 
+    private void DropWeapon(SelectExitEventArgs arg0)
+    {
+        DeactivateWeapon(default);
+
+        interactableWeapon.activated.RemoveListener(ActivateWeapon);
+        interactableWeapon.deactivated.RemoveListener(DeactivateWeapon);
+    }
 
     protected virtual void AllAttacks()
     {
@@ -78,29 +86,15 @@ public class WeaponAbilitiesBase : MonoBehaviour
         WeaponSFXSource.PlayOneShot(WeaponSFX);
     }
 
-
-    protected virtual void SetupInteractableWeaponEvents()
+    protected virtual void ActivateWeapon(ActivateEventArgs arg)
     {
-        interactableWeapon.activated.AddListener(ActivateWeapon);
-        interactableWeapon.deactivated.AddListener(DeactivateWeapon);
-    }
-    protected virtual void OnDestroy()
-    {
-        interactableWeapon.activated.RemoveListener(ActivateWeapon);
-        interactableWeapon.deactivated.RemoveListener(DeactivateWeapon);
+        AbilityEnable = true;        
     }
 
-    protected virtual void ActivateWeapon(ActivateEventArgs args)
-    {
-        AbilityEnable = true;
-        
-    }
-    protected virtual void DeactivateWeapon(DeactivateEventArgs args)
+    protected virtual void DeactivateWeapon(DeactivateEventArgs arg)
     {
         AbilityEnable = false;
-        
     }
-
 
     protected virtual IEnumerator ReduceValueOverTime()
     {

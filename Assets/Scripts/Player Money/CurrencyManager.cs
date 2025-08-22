@@ -17,7 +17,6 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
