@@ -137,10 +137,12 @@ public class CharacterStats : MonoBehaviour, IDamageable
     public Dictionary<Stats, Stat> statDictionary;
 
     private bool isDead = false;
+    public bool deadResult = false;
 
     public event System.Action OnDeath;
     public event Action<float> OnHealthChanged;
     public event Action<float, float> OnDamageTaken;
+    public event Action<DamageResult> OnDamageGiven;
     public event Action<AilmentType, bool, float> OnAilmentStatusChange;
 
     private float damageTakenBuffer = 0.1f;
@@ -226,23 +228,29 @@ public class CharacterStats : MonoBehaviour, IDamageable
         };
     }
 
-    public void TakeDamage(AttackData attackData)
+    public void RaiseOnDamageGiven(DamageResult result)
     {
-        TakePhysicalDamage(attackData);
-        TakeAilmentDamage(attackData);
+        if (result.killed)
+            OnDamageGiven?.Invoke(result);
     }
 
-    private void TakePhysicalDamage(AttackData attackData)
+    public DamageResult TakeDamage(AttackData attackData)
+    {
+        TakeAilmentDamage(attackData);
+        return TakePhysicalDamage(attackData);
+    }
+
+    private DamageResult TakePhysicalDamage(AttackData attackData)
     {
         if (attackData.physicalDamage.Value < 0)
         {
             IncreaseHealthBy(-attackData.physicalDamage.Value);
-            return;
+            return null;
         }
 
         float reducedDamage = Mathf.Max(0, attackData.physicalDamage.Value - physicalDef.Value);
 
-        ReduceHealthBy(reducedDamage);
+        return ReduceHealthBy(reducedDamage);
     }
 
     private void TakeAilmentDamage(AttackData attackData)
@@ -340,12 +348,12 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
     private void ApplyHexAilment(float amount)
     {
-        KillCharacter();
+        ReduceHealthBy(health.Value);
     }
 
     private void ApplyRadianceAilment(float amount)
     {
-        KillCharacter();
+        ReduceHealthBy(health.Value);
     }
 
     private void ApplyGaiaAilment(float amount)
@@ -355,17 +363,18 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
     #endregion
 
-    public void TakePhysicalDamage(float damage)
+    public DamageResult ReduceHealthBy(float damage)
     {
-        float reducedDamage = Mathf.Max(0, damage - physicalDef.Value);
+        if (isDead && deadResult == false)
+        {
+            deadResult = true;
+            return new DamageResult(true, true, 0, this);
+        } 
 
-        ReduceHealthBy(reducedDamage);
-    }
-
-    public void ReduceHealthBy(float damage)
-    {
         if (IsInvincible || isDead)
-            return;
+            return null;
+
+        DamageResult result;
 
         damage *= vulnerability;
 
@@ -373,19 +382,23 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
         OnHealthChanged?.Invoke(currentHealth/health.Value);
 
+        result = new (true, false, damage, this);
+
         if (currentHealth == 0f)
         {
             KillCharacter();
-            return;
+
+            result.killed = true;
+            return result;
         }
 
-        // If the character is not dead, invoke the damage taken event
-        if (damageTakenBuffer + lastDamageTakenTime > Time.time)
-            return;
-        // If the damage taken is too close to the last damage taken, ignore it
-        
-        lastDamageTakenTime = Time.time;
-        OnDamageTaken?.Invoke(currentHealth, health.Value);
+        if (damageTakenBuffer + lastDamageTakenTime < Time.time)
+        {
+            lastDamageTakenTime = Time.time;
+            OnDamageTaken?.Invoke(currentHealth, health.Value);
+        }
+
+        return result;
     }
 
     private void IncreaseHealthBy(float amount)
@@ -440,6 +453,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
     public virtual void RestoreStats()
     {
         isDead = false;
+        deadResult = false;
 
         currentHealth = health.Value;
         ignisStatus.Reset();

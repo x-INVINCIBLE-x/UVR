@@ -40,6 +40,8 @@ public class Buff : ScriptableObject
     public float timer = -10f;
     public float activeDuration = 2f;
     public float cooldownDuration = 2f;
+    public bool isStackable = false;
+    public int maxStacks;
 
     public string GetName() => buffName;
     public string GetFlavourText() => flavourText;

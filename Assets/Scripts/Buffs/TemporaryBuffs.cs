@@ -27,6 +27,8 @@ public class TemporaryBuffs : MonoBehaviour
 
     private CharacterStats stats;
     private HashSet<Buff> activeBuffs = new();
+    private Dictionary<Buff, int> buffStacks = new();
+    private Dictionary<Buff, Coroutine> activeStackCoroutines = new();
 
     private void Start()
     {
@@ -39,6 +41,7 @@ public class TemporaryBuffs : MonoBehaviour
         ChallengeManager.instance.OnChallengeStart += ActivateAllBuffs;
         ChallengeManager.instance.OnChallengeSuccess += RemoveAllBuffs;
         ChallengeManager.instance.OnChallengeFail += ClearAllBuffs;
+        PlayerManager.instance.Player.Stats.OnDamageGiven += HandleDamage;
 
         stats.OnDamageTaken += HandleHit;
     }
@@ -122,7 +125,7 @@ public class TemporaryBuffs : MonoBehaviour
     }
 
     //TODO: Handle Damage Buff Activation
-    private void HandleDamage()
+    private void HandleDamage(DamageResult result)
     {
         foreach (BuffInfo buffInfo in onDamageBuffs)
         {
@@ -145,21 +148,63 @@ public class TemporaryBuffs : MonoBehaviour
 
     private void ActivateBuff(Buff buff)
     {
-        if (buff.activeDuration > 0 && buff.ActivationType != ActivationType.Timer 
-            && buff.ActivationType != ActivationType.OneOff)
+        if (buff.isStackable)
         {
-            if (activeBuffs.Contains(buff))
+            // Add or refresh stack count
+            if (!buffStacks.ContainsKey(buff))
+                buffStacks[buff] = 0;
+
+            if (buffStacks[buff] < buff.maxStacks)
+                buffStacks[buff]++;
+
+            // Apply or update scaled modifier
+            UpdateStackModifier(buff);
+
+            // Reset removal coroutine
+            if (activeStackCoroutines.ContainsKey(buff))
+                StopCoroutine(activeStackCoroutines[buff]);
+
+            activeStackCoroutines[buff] = StartCoroutine(RemoveStackOverTime(buff));
+        }
+        else
+        {
+            // Non-stackable buff logic
+            if (buff.activeDuration > 0 && buff.ActivationType != ActivationType.Timer
+                && buff.ActivationType != ActivationType.OneOff)
             {
-                RemoveBuff(buff);
+                if (activeBuffs.Contains(buff))
+                {
+                    StopCoroutine(RemoveBuffCoroutine(buff));
+                    RemoveBuff(buff);
+                }
+
+                StartCoroutine(RemoveBuffCoroutine(buff));
             }
 
-            StartCoroutine(RemoveBuffCoroutine(buff));
+            ApplyModifiers(buff);
+            ApplyEffects(buff);
+            activeBuffs.Add(buff);
         }
-
-        ApplyModifiers(buff);
-        ApplyEffects(buff);
-        activeBuffs.Add(buff);
     }
+
+    private void UpdateStackModifier(Buff buff)
+    {
+        foreach (Modifier modifier in buff.statsToBuff)
+        {
+            if (stats.statDictionary.TryGetValue(modifier.stat, out Stat stat))
+            {
+                // Remove old scaled modifier first
+                stat.RemoveAllModifiersFromSource(buff);
+
+                // Add new scaled modifier
+                float scaledValue = modifier.value * buffStacks[buff];
+                StatModifier statMod = new StatModifier(scaledValue, modifier.modType, buff);
+                stat.AddModifier(statMod);
+            }
+        }
+    }
+
+
 
     #region Apply Modifiers and Effectors
     private void ApplyModifiers(Buff buff)
@@ -209,6 +254,36 @@ public class TemporaryBuffs : MonoBehaviour
         StopAllCoroutines();
         RemoveBuffFrom(timerBuffs);
     }
+    private IEnumerator RemoveStackOverTime(Buff buff)
+    {
+        while (buffStacks.ContainsKey(buff) && buffStacks[buff] > 0)
+        {
+            yield return new WaitForSeconds(buff.activeDuration);
+
+            buffStacks[buff]--;
+
+            if (buffStacks[buff] > 0)
+            {
+                // Update to weaker value
+                UpdateStackModifier(buff);
+            }
+            else
+            {
+                // Remove completely
+                foreach (Modifier modifier in buff.statsToBuff)
+                {
+                    if (stats.statDictionary.TryGetValue(modifier.stat, out Stat stat))
+                    {
+                        stat.RemoveAllModifiersFromSource(buff);
+                    }
+                }
+
+                buffStacks.Remove(buff);
+                activeStackCoroutines.Remove(buff);
+            }
+        }
+    }
+
 
     private IEnumerator RemoveBuffCoroutine(Buff buff)
     {

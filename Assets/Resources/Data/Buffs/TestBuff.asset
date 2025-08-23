@@ -19,7 +19,7 @@ MonoBehaviour:
   frontMaterial: {fileID: 2100000, guid: 650f96e31205a9940a13d7a77624d175, type: 2}
   backMaterial: {fileID: 2100000, guid: 650f96e31205a9940a13d7a77624d175, type: 2}
   cardDisplay: {fileID: 1935915853918742404, guid: 5e9763fea5c4de445ba2a99c872e408f, type: 3}
-  ActivationType: 0
+  ActivationType: 3
   ActivationStatus: 0
   statsToBuff:
   - stat: 0
@@ -31,5 +31,7 @@ MonoBehaviour:
   effects:
   - {fileID: 11400000, guid: 930c648a6522fdd4fbe27db1985c0cec, type: 2}
   timer: 5
-  activeDuration: 2
-  cooldownDuration: 2
+  activeDuration: 3
+  cooldownDuration: 0
+  isStackable: 1
+  maxStacks: 3

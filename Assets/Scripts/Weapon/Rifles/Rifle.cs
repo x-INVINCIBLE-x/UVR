@@ -10,19 +10,6 @@ public class Rifle : RangedWeapon
     [SerializeField] protected float maxPitch = 3f;
     [SerializeField] protected float bulletLifeTime = 3f; 
 
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Shoot();
-        }
-    }
     protected override void ActivateWeapon(ActivateEventArgs args)
     {
         base.ActivateWeapon(args);

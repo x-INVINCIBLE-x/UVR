@@ -11,9 +11,9 @@ public class HitBox : MonoBehaviour, IDamageable
 
     }
 
-    public virtual void TakeDamage(AttackData attackData)
+    public virtual DamageResult TakeDamage(AttackData attackData)
     {
-        
+        return null;
     }
 
     public void Heal(float amount)

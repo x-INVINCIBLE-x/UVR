@@ -24,9 +24,10 @@ public class Enemy_Shield : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(AttackData attackData)
+    public DamageResult TakeDamage(AttackData attackData)
     {
         ReduceDurability(((int)attackData.physicalDamage.Value));
+        return null;
     }
 
     public void Heal(float amount)

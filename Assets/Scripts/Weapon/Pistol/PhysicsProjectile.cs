@@ -53,14 +53,19 @@ public class PhysicsProjectile : Projectile
         rigidBody.linearVelocity = lookDirection * force;
         transform.rotation = Quaternion.LookRotation(rigidBody.linearVelocity.normalized);
     }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         IDamageable damagable = other.GetComponentInParent<IDamageable>();
         damagable ??= other.GetComponentInChildren<IDamageable>();
         if (damagable != null && !damaged.Contains(damagable) && attackData != null)
         {
-            damagable.TakeDamage(attackData);
+            DamageResult result = damagable.TakeDamage(attackData);
+            if (attackData.owner != null && result != null)
+            {
+                attackData.owner.RaiseOnDamageGiven(result);
+            }
+
             damaged.Add(damagable);
         }
 
@@ -83,7 +88,5 @@ public class PhysicsProjectile : Projectile
         {
             audioSource.PlayOneShot(impactSFX);
         }
-
     }
-    
 }

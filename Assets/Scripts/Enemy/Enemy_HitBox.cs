@@ -13,12 +13,12 @@ public class Enemy_HitBox : HitBox
         enemy = GetComponentInParent<Enemy>();
     }
 
-    public override void TakeDamage(AttackData damage)
-    {
-        AttackData _damage = Instantiate(damage);
+    //public override DamageResult TakeDamage(AttackData damage)
+    //{
+    //    AttackData _damage = Instantiate(damage);
 
-        _damage.physicalDamage.BaseValue *= damageMultiplier;
+    //    _damage.physicalDamage.BaseValue *= damageMultiplier;
 
-        enemy.GetHit(_damage);
-    }
+    //    enemy.GetHit(_damage);
+    //}
 }
