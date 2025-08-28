@@ -8,8 +8,7 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField] private int poolSize = 10;
 
-    private Dictionary<GameObject, Queue<GameObject>> poolDictionary = 
-        new Dictionary<GameObject, Queue<GameObject>>();
+    private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new ();
 
     private void Awake()
     {
@@ -19,14 +18,14 @@ public class ObjectPool : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void Start()
-    {
-        //InitializeNewPool(weaponPickup);
-        //InitializeNewPool(ammoPickup);
-    }
-
     public GameObject GetObject(GameObject prefab,Transform target)
     {
+        if (prefab == null)
+        {
+            Debug.LogWarning("Trying to get an object from pool but the prefab is null.");
+            return null;
+        }
+
         if (poolDictionary.ContainsKey(prefab) == false)
         {
             InitializeNewPool(prefab);
@@ -47,6 +46,12 @@ public class ObjectPool : MonoBehaviour
 
     public GameObject GetObject(GameObject prefab, Vector3 target)
     {
+        if (prefab == null)
+        {
+            Debug.LogWarning("Trying to get a null prefab from the object pool.");
+            return null;
+        }
+
         if (poolDictionary.ContainsKey(prefab) == false)
         {
             InitializeNewPool(prefab);

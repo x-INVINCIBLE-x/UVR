@@ -232,7 +232,6 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
     private void OnDisable()
     {
-        enemyStats.OnDeath -= HandleDeath;
         if (currentCheckRoutine != null)
         {
             StopCoroutine(currentCheckRoutine);
@@ -274,7 +273,8 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
         if (walkPointSet)
         {
-            agent.SetDestination(walkPoint);
+            if (agent.isActiveAndEnabled)
+                agent.SetDestination(walkPoint);
 
             Vector3 distanceToWalkPoint = transform.position - walkPoint;
             distanceToWalkPoint.y = 0;

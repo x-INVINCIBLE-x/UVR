@@ -170,7 +170,7 @@ public class CharacterUI : MonoBehaviour
 
     public void SpawnExclamationUI(bool Activate = true)
     {
-        if (exclamationUICanvasGroup.gameObject.activeSelf == Activate)
+        if (exclamationUICanvasGroup == null || exclamationUICanvasGroup.gameObject.activeSelf == Activate)
             return;
 
         if (exclamationUICanvasGroup != null)
@@ -190,7 +190,7 @@ public class CharacterUI : MonoBehaviour
 
     public void SpawnQuestionUI(bool Activate = true)
     {
-        if (questionUICanvasGroup.gameObject.activeSelf == Activate)
+        if (questionUICanvasGroup == null || questionUICanvasGroup.gameObject.activeSelf == Activate)
             return;
 
         if (questionUICanvasGroup != null)
