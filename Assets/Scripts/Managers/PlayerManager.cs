@@ -34,7 +34,6 @@ public class PlayerManager : MonoBehaviour
     {
         bool kinematicState = Rb.isKinematic;
         Rb.isKinematic = true; // Disable physics temporarily
-        Debug.Log("Setting player position to: " + targetPosition);
         PlayerOrigin.MoveCameraToWorldLocation(targetPosition);
         yield return null; 
         PlayerOrigin.MatchOriginUpCameraForward(Vector3.up, Vector3.forward);

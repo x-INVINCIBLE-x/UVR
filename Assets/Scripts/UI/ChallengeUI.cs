@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Text;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -167,10 +165,30 @@ public class ChallengeUI : MonoBehaviour
 
     private IEnumerator UpdateProgressUI(Challenge challenge)
     {
+        AttachToPlayer();
         while (true)
         {
             progressText.text = challenge.GetProgressText();
-            yield return new WaitForSeconds(0.2f); 
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    private void AttachToPlayer()
+    {
+        Transform playerTransform = PlayerManager.instance.PlayerOrigin.transform.GetChild(0);
+
+        if (playerTransform != null)
+        {
+            Debug.Log("pt is not null");
+            Transform attatchTransform = playerTransform.Find("Right Controller/Progression Anchor");
+
+            if (attatchTransform != null)
+            {
+                Debug.Log("at is not null");
+                progressUI.transform.parent = attatchTransform;
+                progressUI.transform.localPosition = Vector3.zero;
+                progressUI.transform.localRotation = Quaternion.identity;
+            }
         }
     }
 
