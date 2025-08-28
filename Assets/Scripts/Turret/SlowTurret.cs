@@ -7,11 +7,11 @@ public class SlowTurret : Turret
 
     protected override void Activate(Collider other)
     {
-        PlayerManager.instance.ActionMediator.ModifySpeedMultiplier(speedMutiplier);
+        PlayerManager.instance.ActionMediator.AddSpeedMultiplier(speedMutiplier);
     }
 
     protected override void Deactivate(Collider other)
     {
-        PlayerManager.instance.ActionMediator.ResetMovementSpeed();
+        PlayerManager.instance.ActionMediator.RemoveSpeedMultiplier(speedMutiplier);
     }
 }

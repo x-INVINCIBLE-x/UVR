@@ -25,12 +25,6 @@ public class Action : MonoBehaviour
         inputManager.YTap.action.performed += ctx => StartAbility();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-            StartAbility();
-    }
-
     public virtual void PermitAbility(bool status)
     {
         isPermitted = status;

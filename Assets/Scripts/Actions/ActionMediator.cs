@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
@@ -35,16 +36,17 @@ public class ActionMediator : MonoBehaviour
     public bool immuneInterpolation = false;
     public bool defaultKinematicStatus = true;
 
-    public Action TimeAction;
-    public Action JumpAction;
-    public Action TelekemisisAction;
-    public Action DashAction;
+    public TimeAction TimeAction;
+    public JumpAction JumpAction;
+    public VirtualAction TelekemisisAction;
+    public DashAction DashAction;
 
     [field: SerializeField] public ActionStatus LastActionStatus { get; private set; } = ActionStatus.None;
 
     private float defaultSpeed;
     [SerializeField] private float rotationFixDuration = 1f;
     private Coroutine rotationFixRoutine = null;
+    private List<float> speedMultipliers = new List<float>();
 
     public class ConstantVector2InputReader : IXRInputValueReader<Vector2>
     {
@@ -98,9 +100,8 @@ public class ActionMediator : MonoBehaviour
                 EnableMovement();
                 rb.isKinematic = defaultKinematicStatus;
                 
-                JumpAction action = JumpAction as JumpAction;
-                if (action != null)
-                    action.AcceleratedJump(playerVelocity.GetAccelerationEstimate().magnitude);
+                if (JumpAction != null)
+                    JumpAction.AcceleratedJump(playerVelocity.GetAccelerationEstimate().magnitude);
 
                 //DisablePhysicalMotionOnLand();
             }
@@ -133,12 +134,29 @@ public class ActionMediator : MonoBehaviour
     }
 
     #region Handles Movement
-    public void ModifySpeedMultiplier(float multiplier)
+    public void AddSpeedMultiplier(float multiplier)
     {
-        moveProvider.moveSpeed *= multiplier;
+        speedMultipliers.Add(multiplier);
+        UpdateSpeed();
     }
 
-    public void ResetMovementSpeed() => moveProvider.moveSpeed = defaultSpeed;
+    public void RemoveSpeedMultiplier(float multiplier)
+    {
+        if (speedMultipliers.Contains(multiplier))
+        {
+            speedMultipliers.Remove(multiplier);
+            UpdateSpeed();
+        }
+    }
+
+    private void UpdateSpeed()
+    {
+        float finalMultiplier = 1f;
+        foreach (var m in speedMultipliers)
+            finalMultiplier *= m;
+
+        moveProvider.moveSpeed = defaultSpeed * finalMultiplier;
+    }
 
     public void EnableControl()
     {

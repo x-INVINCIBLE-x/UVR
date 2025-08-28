@@ -12,10 +12,11 @@ public enum ActivationType
     OneOff,
     Timer,
     OnHit,
-    OnDamage
+    OnDamage,
+    OnHealth
 }
 
-[CreateAssetMenu(fileName = "New Buff", menuName = "Buffs")]
+[CreateAssetMenu(fileName = "New Buff", menuName = "Buff")]
 public class Buff : ScriptableObject
 {
     [Header("Details")]

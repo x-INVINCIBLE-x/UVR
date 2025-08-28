@@ -80,6 +80,18 @@ public class AilmentStatus
         isMaxed = false;
     }
 }
+[System.Serializable]
+public class DeathDefice
+{
+    public DeathDefice(int amount, object source) 
+    {
+        healthAmount = amount;
+        this.source = source;
+    }
+    
+    public object source;
+    public int healthAmount;
+}
 public class CharacterStats : MonoBehaviour, IDamageable
 {
     [SerializeField] protected DifficultyProfile difficultyProfile;
@@ -136,9 +148,11 @@ public class CharacterStats : MonoBehaviour, IDamageable
     protected Dictionary<AilmentType, AilmentStatus> ailmentStatuses;
     public Dictionary<Stats, Stat> statDictionary;
 
+    [SerializeField] private List<DeathDefice> deathDefices = new();
     private bool isDead = false;
-    public bool deadResult = false;
+    private bool deadResult = false;
 
+    public event System.Action OnDeathDeficeUsed;
     public event System.Action OnDeath;
     public event Action<float> OnHealthChanged;
     public event Action<float, float> OnDamageTaken;
@@ -386,6 +400,14 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
         if (currentHealth == 0f)
         {
+            if (deathDefices.Count > 0)
+            {
+                IncreaseHealthBy(deathDefices[0].healthAmount);
+                deathDefices.RemoveAt(0);
+                OnDeathDeficeUsed?.Invoke();
+                return result;
+            }
+
             KillCharacter();
 
             result.killed = true;
@@ -439,6 +461,13 @@ public class CharacterStats : MonoBehaviour, IDamageable
         IsInvincible = false;
     }
 
+    public void AddDeathDefice(int healthAmount, object source) => deathDefices.Add(new (healthAmount, source));
+
+    public void RemoveDeathDeficesFromSource(object source)
+    {
+        deathDefices.RemoveAll(defice => defice.source == source);
+    }
+
     public void SetInvincible(bool invincible) => IsInvincible = invincible;
 
     public void SetBlocking(bool blocking) => IsBlocking = blocking;
@@ -463,6 +492,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
         gaiaStatus.Reset();
         radianceStatus.Reset();
         // TODO: Stop Ailment
+
     }
 
     public void Heal(float amount) => IncreaseHealthBy(amount);

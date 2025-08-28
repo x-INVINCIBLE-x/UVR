@@ -5,6 +5,7 @@ using UnityEngine;
 public class Effect : ScriptableObject
 {
     protected CharacterStats stats;
+    protected ActionMediator actionMediator;
     [TextArea]
     public string description;
     public bool isActive = true;
@@ -13,6 +14,9 @@ public class Effect : ScriptableObject
     {
         if (stats == null)
             stats = PlayerManager.instance.Player.Stats;
+
+        if (actionMediator == null)
+            actionMediator = PlayerManager.instance.ActionMediator;
     }
 
     public virtual void Remove()

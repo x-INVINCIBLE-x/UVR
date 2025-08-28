@@ -156,6 +156,13 @@ public class JumpAction : Action
         jumpCoroutine = null;
     }
 
+    public void AddJumps(int amt) => jumpCount += amt;
+
+    public void RemoveJumps(int amt)
+    {
+        jumpCount = Mathf.Min(2, amt);
+    }
+
     protected override void OnDestroy()
     {
         base.OnDestroy();

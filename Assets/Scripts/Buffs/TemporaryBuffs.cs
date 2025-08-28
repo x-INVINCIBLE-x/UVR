@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class TemporaryBuffs : MonoBehaviour
     public List<Buff> timerBuffs = new(); // => Activates after certain period of time, if always active then calls itself
     public List<BuffInfo> onHitBuffs = new();
     public List<BuffInfo> onDamageBuffs = new();
+    public List<BuffInfo> onHealthBuffs = new();
 
     public List<BuffInfo> disabledHitBuffs = new();
     public List<BuffInfo> disabledDamageBuffs = new();
@@ -36,14 +38,25 @@ public class TemporaryBuffs : MonoBehaviour
         InitializeDungeonSetup();
     }
 
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            foreach (Buff buff in oneOffBufffs)
+                ActivateBuff(buff);
+        }
+    }
+#endif
     private void InitializeDungeonSetup()
     {
         ChallengeManager.instance.OnChallengeStart += ActivateAllBuffs;
         ChallengeManager.instance.OnChallengeSuccess += RemoveAllBuffs;
         ChallengeManager.instance.OnChallengeFail += ClearAllBuffs;
-        PlayerManager.instance.Player.Stats.OnDamageGiven += HandleDamage;
 
+        stats.OnDamageGiven += HandleDamage;
         stats.OnDamageTaken += HandleHit;
+        stats.OnHealthChanged += HandleHealthChange;
     }
 
     private void ActivateAllBuffs(ChallengeType type)
@@ -71,6 +84,9 @@ public class TemporaryBuffs : MonoBehaviour
                 return;
             case ActivationType.OnHit:
                 AddHitBuff(buff);
+                return;
+            case ActivationType.OnHealth:
+                AddHealthBuff(buff);
                 return;
         }
     }
@@ -124,7 +140,6 @@ public class TemporaryBuffs : MonoBehaviour
         }
     }
 
-    //TODO: Handle Damage Buff Activation
     private void HandleDamage(DamageResult result)
     {
         foreach (BuffInfo buffInfo in onDamageBuffs)
@@ -143,6 +158,14 @@ public class TemporaryBuffs : MonoBehaviour
                     buffInfo.lastTimeUsed = Time.time;
                 }
             }
+        }
+    }
+
+    private void HandleHealthChange(float obj)
+    {
+        foreach (BuffInfo buffInfo in onHealthBuffs)
+        {
+            ActivateBuff(buffInfo.buff);
         }
     }
 
@@ -181,9 +204,12 @@ public class TemporaryBuffs : MonoBehaviour
                 StartCoroutine(RemoveBuffCoroutine(buff));
             }
 
-            ApplyModifiers(buff);
-            ApplyEffects(buff);
-            activeBuffs.Add(buff);
+            if (!activeBuffs.Contains(buff))
+            {
+                ApplyModifiers(buff);
+                ApplyEffects(buff);
+                activeBuffs.Add(buff);
+            }
         }
     }
 
@@ -203,8 +229,6 @@ public class TemporaryBuffs : MonoBehaviour
             }
         }
     }
-
-
 
     #region Apply Modifiers and Effectors
     private void ApplyModifiers(Buff buff)
@@ -247,6 +271,7 @@ public class TemporaryBuffs : MonoBehaviour
         onHitBuffs.Clear();
         onDamageBuffs.Clear();
         timerBuffs.Clear();
+        onHealthBuffs.Clear();
     }
 
     private void RemoveTimerBuffs()
@@ -254,6 +279,7 @@ public class TemporaryBuffs : MonoBehaviour
         StopAllCoroutines();
         RemoveBuffFrom(timerBuffs);
     }
+
     private IEnumerator RemoveStackOverTime(Buff buff)
     {
         while (buffStacks.ContainsKey(buff) && buffStacks[buff] > 0)
@@ -326,6 +352,7 @@ public class TemporaryBuffs : MonoBehaviour
     private void AddTimerBuff(Buff buff) => timerBuffs.Add(buff);
     private void AddHitBuff(Buff buff) => onHitBuffs.Add(new BuffInfo(buff, -10f));
     private void AddDamageBuff(Buff buff) => onDamageBuffs.Add(new BuffInfo(buff, -10f));
+    private void AddHealthBuff(Buff buff) => onHealthBuffs.Add(new BuffInfo(buff, -10f));
 
     public IEnumerable<Buff> GetCurrentBuffs()
     {

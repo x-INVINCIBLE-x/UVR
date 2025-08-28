@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour ,ISaveable
@@ -5,6 +6,15 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
     public static CurrencyManager Instance {get; private set;}
     [field: SerializeField]public int Gold { get; private set; } = 10000;
     [field: SerializeField]public int Magika { get; private set; } = 10000;
+
+    [SerializeField] private float baseGoldMultiplier = 1f;
+    [SerializeField] private float baseMagikaMultiplier = 1f;
+
+    private List<float> goldMultipliers = new List<float>();
+    private List<float> magikaMultipliers = new List<float>();
+
+    public float CurrentGoldMultiplier { get; private set; }
+    public float CurrentMagikaMultiplier { get; private set; }
 
     public event System.Action<int, int> OnCurrencyChanged;
 
@@ -29,6 +39,34 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
         GameEvents.OnRewardProvided -= HandleCurrencyGiven;
     }
 
+    public void AddCurrencyMultiplier(float goldMulti, float magikaMulti)
+    {
+        if (goldMulti != 0f) goldMultipliers.Add(goldMulti);
+        if (magikaMulti != 0f) magikaMultipliers.Add(magikaMulti);
+        UpdateMultipliers();
+    }
+
+    public void RemoveCurrencyMultiplier(float goldMulti, float magikaMulti)
+    {
+        goldMultipliers.Remove(goldMulti);
+        magikaMultipliers.Remove(magikaMulti);
+        UpdateMultipliers();
+    }
+
+    private void UpdateMultipliers()
+    {
+        float goldSum = 0f;
+        foreach (var g in goldMultipliers)
+            goldSum += g;
+
+        float magikaSum = 0f;
+        foreach (var m in magikaMultipliers)
+            magikaSum += m;
+
+        CurrentGoldMultiplier = baseGoldMultiplier + goldSum;
+        CurrentMagikaMultiplier = baseMagikaMultiplier + magikaSum;
+    }
+
     private void HandleCurrencyGiven(IRewardProvider<GameReward> provider)
     {
         GameReward reward = provider.GetReward();
@@ -37,9 +75,14 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
 
     private void AddCurrency(int gold, int magika)
     {
-        Gold += gold;
-        Magika += magika;
+        int finalGold = Mathf.RoundToInt(gold * CurrentGoldMultiplier);
+        int finalMagika = Mathf.RoundToInt(magika * CurrentMagikaMultiplier);
+
+        Gold += finalGold;
+        Magika += finalMagika;
+
         OnCurrencyChanged?.Invoke(Gold, Magika);
+
         // Trigger UI update or audio feedback if needed
     }
 
