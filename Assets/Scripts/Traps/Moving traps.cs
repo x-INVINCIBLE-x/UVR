@@ -7,8 +7,10 @@ public class Movingtraps : MonoBehaviour
     [Header("Moving trap Setup")]
     [Space]
     public Vector3 movetoOffset;
+    public Vector3 rotationSetting;
     private Vector3 startPosition;
     [SerializeField] private float moveDuration;
+    
 
     [Space]
     [Header("Ease Type")]
@@ -39,6 +41,6 @@ public class Movingtraps : MonoBehaviour
 
     public void RotateTrap()
     {
-        transform.DORotate(new Vector3(0, 360f, 0), 1.5f, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetRelative().SetEase(Ease.Linear);
+        transform.DOLocalRotate(rotationSetting, 1.5f, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetRelative().SetEase(Ease.Linear);
     }
 }
