@@ -70,7 +70,6 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
     [SerializeField] protected AudioSource sfxSource;
     [SerializeField] protected AudioClip attackClip;
-    [SerializeField] protected AudioClip idleClip;
     [SerializeField] protected AudioClip enemyHitCry;
     [SerializeField] protected AudioClip enemyDeath;
 
