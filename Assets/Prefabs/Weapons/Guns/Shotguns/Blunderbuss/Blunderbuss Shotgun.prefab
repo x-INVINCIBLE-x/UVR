@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 814163498722138343}
   - component: {fileID: 1681698471380193012}
   - component: {fileID: 9132833008774234027}
+  - component: {fileID: 7190351828217521253}
   m_Layer: 10
   m_Name: Blunderbuss Shotgun
   m_TagString: Untagged
@@ -503,10 +504,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemData: {fileID: 0}
   isShopItem: 0
+  hasPurchased: 0
   meshes: []
   defaultMaterial: []
   AffordableMaterial: {fileID: 0}
   UnaffordableMaterial: {fileID: 0}
+--- !u!114 &7190351828217521253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852090575269373135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
 --- !u!1 &3059704357039862770
 GameObject:
   m_ObjectHideFlags: 0

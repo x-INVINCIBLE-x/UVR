@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4526158435406677602}
   - component: {fileID: 1722243425438553440}
+  - component: {fileID: 5868037966744054409}
   m_Layer: 0
   m_Name: Circular saw blade
   m_TagString: Untagged
@@ -52,6 +53,21 @@ MonoBehaviour:
   moveDuration: 1
   ease: 7
   loopType: 1
+--- !u!114 &5868037966744054409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3687853660807341838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
 --- !u!1 &4913673440413769244
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,6 +79,7 @@ GameObject:
   - component: {fileID: 7710156012335315253}
   - component: {fileID: 4943546620148802884}
   - component: {fileID: 1564993157401879662}
+  - component: {fileID: 8821171672469015733}
   m_Layer: 0
   m_Name: Circular saw blade_Material.004_0
   m_TagString: Untagged
@@ -138,6 +155,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8821171672469015733
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4913673440413769244}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 18.233318, y: 17.840189, z: 0.21999998}
+  m_Center: {x: 0.0000038146968, y: 0, z: 0}
 --- !u!1 &6488868442704096896
 GameObject:
   m_ObjectHideFlags: 0
