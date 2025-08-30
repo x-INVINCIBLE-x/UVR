@@ -1109,6 +1109,7 @@ GameObject:
   - component: {fileID: 48596461268294645}
   - component: {fileID: 3167418809312875840}
   - component: {fileID: 8215943308792986158}
+  - component: {fileID: 5837076230311056980}
   - component: {fileID: 4852360917691025332}
   - component: {fileID: 7025851156519144306}
   - component: {fileID: 495170623552757639}
@@ -1181,6 +1182,103 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 4904d32b912a37042b4f3620bdde9054, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &5837076230311056980
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841170377458739796}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1227,7 +1325,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.8
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1340,7 +1438,7 @@ MonoBehaviour:
   attackCooldownTime: 2
   magicChargeTime: 3
   walkpointRange: 1
-  patrollwaitTime: 50
+  patrollwaitTime: 500
   walkPoint: {x: 0, y: 0, z: 0}
   speed: 3
   searchingWalkPoint: 0
@@ -1359,9 +1457,11 @@ MonoBehaviour:
   surroundingHitRadius: 10
   blitzProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
   healProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
-  attackClip: {fileID: 0}
+  sfxSource: {fileID: 5837076230311056980}
+  attackClip: {fileID: 8300000, guid: 7e68645e316d39444be8bf430f49f7f8, type: 3}
   idleClip: {fileID: 0}
-  enemyHitCry: {fileID: 0}
+  enemyHitCry: {fileID: 8300000, guid: 587b7741f3ac52f48816a95bc096bf9d, type: 3}
+  enemyDeath: {fileID: 8300000, guid: b8833599be5e4374595ac5b913988914, type: 3}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
   shootForce: 15
   projectileSpawn: {fileID: 4247280855487520295}
@@ -1379,7 +1479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyProfile: {fileID: 11400000, guid: f36ca4f47ea78c641818026cb1c26ba2, type: 2}
   health:
-    BaseValue: 100
+    BaseValue: 300
     statModifiers: []
   stamina:
     BaseValue: 0
@@ -1426,7 +1526,7 @@ MonoBehaviour:
     Type: 0
     Value: 0
     resistance:
-      BaseValue: 0
+      BaseValue: 5
       statModifiers: []
     defence:
       BaseValue: 0
@@ -1459,7 +1559,7 @@ MonoBehaviour:
     Type: 0
     Value: 0
     resistance:
-      BaseValue: 0
+      BaseValue: 25
       statModifiers: []
     defence:
       BaseValue: 0
@@ -1481,6 +1581,7 @@ MonoBehaviour:
   currentHealth: 0
   currentStamina: 0
   <IsInvincible>k__BackingField: 0
+  deathDefices: []
 --- !u!114 &1950080235530340913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1553,7 +1654,7 @@ GameObject:
   - component: {fileID: 4787270269731890793}
   - component: {fileID: 435717019024306613}
   - component: {fileID: 4701048457637021642}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: 'Freeze Status Effect '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6419,7 +6520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5591551796114055265}
   - component: {fileID: 3983680122803517662}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Status Effects VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6476,7 +6577,7 @@ GameObject:
   - component: {fileID: 1178881132649396504}
   - component: {fileID: 2953080533688152061}
   - component: {fileID: 1938506828793130253}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Burn Status Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12088,7 +12189,7 @@ GameObject:
   - component: {fileID: 2646174251799471101}
   - component: {fileID: 3999003804812659014}
   - component: {fileID: 3879158043704021500}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Shock Status Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16931,7 +17032,7 @@ GameObject:
   - component: {fileID: 3426601847023460988}
   - component: {fileID: 5724397378044296705}
   - component: {fileID: 5561918861144647783}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FlyingRocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22149,7 +22250,7 @@ GameObject:
   - component: {fileID: 4655290357461579515}
   - component: {fileID: 1168918151412791174}
   - component: {fileID: 375287074904841320}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Blight Status Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27284,7 +27385,7 @@ GameObject:
   - component: {fileID: 5389027029595090326}
   - component: {fileID: 4559182287970544860}
   - component: {fileID: 2535172958301250929}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Drain Status Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32324,7 +32425,7 @@ GameObject:
   - component: {fileID: 7386213387527865749}
   - component: {fileID: 8464866523077328975}
   - component: {fileID: 7907792408761538179}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Frenzy Status Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37299,7 +37400,7 @@ GameObject:
   - component: {fileID: 8838492905349041904}
   - component: {fileID: 2742753664747621512}
   - component: {fileID: 1921367052677093580}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: AuraLines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42411,7 +42512,7 @@ GameObject:
   - component: {fileID: 8188860675141963420}
   - component: {fileID: 1788730472993915216}
   - component: {fileID: 946671298474040273}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Lightning Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}

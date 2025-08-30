@@ -57,7 +57,14 @@ public class GrabStatus : MonoBehaviour
     {
         if (leftInteractableObject != null) 
         {
-            leftInteractableObject.parent = null;
+            try
+            {
+                leftInteractableObject.parent = null;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error while releasing object: {e.Message}");
+            }
             leftInteractableObject = null;
         }
 

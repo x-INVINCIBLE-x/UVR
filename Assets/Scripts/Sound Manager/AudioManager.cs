@@ -140,18 +140,39 @@ public class AudioManager : MonoBehaviour
 
         musicCoroutine = null;
     }
+
+    public void PlaySFXLoop(AudioClip sfxClip)
+    {
+        if (sfxClip == null) return;
+
+        sfxSource.loop = true;
+        sfxSource.clip = sfxClip;
+        sfxSource.Play();
+    }
+
     public void PlaySFX(AudioClip sfxClip)
     {
+        if (sfxClip == null) return;
+
+        // Stop any loop before playing one-shot
+        sfxSource.loop = false;
+        sfxSource.Stop();
+
         sfxSource.PlayOneShot(sfxClip);
     }
 
     public void PlaySFX(AudioClip sfxClip, float volume)
     {
-        sfxSource.PlayOneShot(sfxClip,volume);
+        if (sfxClip == null) return;
+
+        // Stop any loop before playing one-shot
+        sfxSource.loop = false;
+        sfxSource.Stop();
+
+        sfxSource.PlayOneShot(sfxClip, volume);
     }
 
     // Extra Function for setting Volume
-
     public void SetMusicVolume(float volume)
     {
         musicSource.volume = volume;

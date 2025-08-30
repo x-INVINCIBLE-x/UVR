@@ -151,6 +151,12 @@ public class DynamicFormationController : FormationProvider
             difficultyLevel = formationSequence.Count - 1;
         }
 
+        Setup();
+    }
+
+    [ContextMenu("Re-Setup Formation")]
+    private void Setup()
+    {
         Initialize();
 
         StartFormation();
@@ -236,7 +242,7 @@ public class DynamicFormationController : FormationProvider
         if (Input.GetKeyDown(KeyCode.Space) && !isAnimating)
         {
             // Advance to next formation in our formations, wrap around if needed
-            //NextTransition();
+            NextTransition();
         }
 
         if (shouldRotate && !isAnimating )

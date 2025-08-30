@@ -51,7 +51,8 @@ public class NormalEnemy : SimpleEnemyBase
 
     private void NormalAttack()
     {
-       
+        sfxSource.PlayOneShot(attackClip);
+
         GameObject enemyProjectile = ObjectPool.instance.GetObject(bullet.gameObject, projectileSpawn.position + PlayerBodyOffset);
         PhysicsProjectile projectileInstance = enemyProjectile.GetComponent<PhysicsProjectile>();
 

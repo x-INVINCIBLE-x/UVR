@@ -68,9 +68,11 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
  
     private bool registered = false;
 
-    [SerializeField] private AudioClip attackClip;
-    [SerializeField] private AudioClip idleClip;
-    [SerializeField] private AudioClip enemyHitCry;
+    [SerializeField] protected AudioSource sfxSource;
+    [SerializeField] protected AudioClip attackClip;
+    [SerializeField] protected AudioClip idleClip;
+    [SerializeField] protected AudioClip enemyHitCry;
+    [SerializeField] protected AudioClip enemyDeath;
 
     protected virtual void Start()
     {
@@ -142,7 +144,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     {
         if (isDead) return;
 
-        AudioManager.Instance.PlaySFX(enemyHitCry);
+        sfxSource.PlayOneShot(enemyHitCry);
 
         if (hitSurroundingEnemies)
         {
@@ -204,6 +206,8 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     {
         isDead = true;
         enemyEventManager.EnemyDeath(enemyID); 
+
+        sfxSource.PlayOneShot(enemyDeath);
 
         if (agent.enabled)
             agent.SetDestination(transform.position);
@@ -299,7 +303,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
             searchingWalkPoint = true;
             Invoke(nameof(SearchWalkPoint), patrollwaitTime);
             
-            AudioManager.Instance.PlaySFX(idleClip);
+            //AudioManager.Instance.PlaySFXLoop(idleClip);
         }
     }
 
@@ -340,8 +344,8 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
         }
 
         wasPlayerInSight = true;
-        walkPoint = transform.position;
-        agent.SetDestination(Player.position);
+        walkPoint = Player.position;
+        agent.SetDestination(walkPoint);
         ShowExclamationOnly();
     }
 
@@ -354,7 +358,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
         if (!attackSoundPlayed)
         {
-            AudioManager.Instance.PlaySFX(attackClip);
+            //AudioManager.Instance.PlaySFX(attackClip);
             attackSoundPlayed = true;
         }
     }
