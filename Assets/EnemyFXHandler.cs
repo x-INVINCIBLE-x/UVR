@@ -23,8 +23,9 @@ public class EnemyFXHandler : MonoBehaviour
 
 
     private void Awake()
-    {
-        MagicCircle.SetActive(false);
+    {   
+        if(MagicCircle != null)
+            MagicCircle.SetActive(false);
     }
     private void Start()
     {
