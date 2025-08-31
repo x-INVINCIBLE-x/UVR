@@ -4,7 +4,7 @@ using UnityEngine;
 public class LaserEnemy : SimpleEnemyBase
 {
     public GameObject LaserVFX;
-    public Transform projectileSpawnPosition;
+    public Transform projectileSpawn;
     public Vector3 LaserStartOffset;
 
     private LineRenderer laserRenderer;
@@ -50,6 +50,11 @@ public class LaserEnemy : SimpleEnemyBase
     protected override void Attack()
     {
         base.Attack();
+        Invoke(nameof(AttackStart), 2f);
+    }
+
+    private void AttackStart()
+    {
         StartCoroutine(ChargeAndFireLaser());
     }
 
@@ -70,9 +75,9 @@ public class LaserEnemy : SimpleEnemyBase
         if (currentLaser != null)
             DestroyLaser();
 
-        currentLaser = Instantiate(LaserVFX, projectileSpawnPosition);
+        currentLaser = Instantiate(LaserVFX, projectileSpawn);
         laserRenderer = currentLaser.GetComponent<LineRenderer>();
-        laserRenderer.SetPosition(0, projectileSpawnPosition.position);
+        laserRenderer.SetPosition(0, projectileSpawn.position);
         laserRenderer.SetPosition(1, Player.position + PlayerBodyOffset);
 
         // Laser Coroutine for tracking the laser to player
@@ -99,7 +104,7 @@ public class LaserEnemy : SimpleEnemyBase
     {
         if (laserRenderer != null)
         {
-            laserRenderer.SetPosition(0, projectileSpawnPosition.position);
+            laserRenderer.SetPosition(0, projectileSpawn.position);
             laserRenderer.SetPosition(1, Player.position + PlayerBodyOffset);
         }
     }

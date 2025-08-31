@@ -47,6 +47,8 @@ public class VolleyEnemy : SimpleEnemyBase
 
     private void VolleyAttack()
     {
+        sfxSource.PlayOneShot(attackClip);
+
         GameObject volleySpawn = ObjectPool.instance.GetObject(volleyProjectile.gameObject, projectileSpawnPosition.position + PlayerBodyOffset);
         PhysicsProjectile projectileInstance = volleySpawn.GetComponent<PhysicsProjectile>();
 
