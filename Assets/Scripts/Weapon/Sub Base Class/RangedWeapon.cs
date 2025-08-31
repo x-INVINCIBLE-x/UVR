@@ -39,6 +39,7 @@ public class RangedWeapon : Weapon
         base.Awake();
 
         WeaponAudioSource = GetComponent<AudioSource>();
+        OverHeatMaterial = new Material[overheatRenderer.Length];
 
         for (int i = 0; i < overheatRenderer.Length; i++)
         {
