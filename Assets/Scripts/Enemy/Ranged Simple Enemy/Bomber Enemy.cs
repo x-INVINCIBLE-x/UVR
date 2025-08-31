@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class BomberEnemy : SimpleEnemyBase
 {
-    public float selfDestructTime = 0.5f;
+    public float selfDestructTime = 1f;
 
     protected override void Update()
     {
@@ -21,7 +21,7 @@ public class BomberEnemy : SimpleEnemyBase
 
     private void SelfDestruct()
     {
-        FXManager.SelfDestructingVFX(1f);
+        FXManager.SelfDestructingVFX(0.5f);
         Destroy(gameObject, selfDestructTime);
     }
 }

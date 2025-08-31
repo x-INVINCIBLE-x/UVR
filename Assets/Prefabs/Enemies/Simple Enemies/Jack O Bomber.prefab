@@ -193,7 +193,6 @@ GameObject:
   - component: {fileID: 2134723489045318479}
   - component: {fileID: 8293755258319496797}
   - component: {fileID: 534009968402607213}
-  - component: {fileID: 1203866073464470037}
   - component: {fileID: 1090079852145425556}
   - component: {fileID: 3214734812707414291}
   - component: {fileID: 1460654397629125615}
@@ -229,10 +228,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736561174556473890}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -292,25 +291,6 @@ NavMeshAgent:
   m_BaseOffset: 3
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1203866073464470037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736561174556473890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39f26202abce79840a0fc1a5f2b2ea99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MagicCircleAttackVfx: {fileID: 654805830734500129, guid: 498aa3303af628040bb48f3f9d93acf4, type: 3}
-  selfDestructVFX: {fileID: 1329845292236604, guid: 7d2a64cb3767cfe4589a800a5f0cc399, type: 3}
-  MagicCircleSpawn: {fileID: 0}
-  vfxOffset: {x: 0, y: 0.1, z: 0}
-  minScale: {x: 0.1, y: 0.1, z: 0.1}
-  midScale: {x: 1.5, y: 1.5, z: 1.5}
-  maxScale: {x: 2.5, y: 2.5, z: 2.5}
 --- !u!95 &1090079852145425556
 Animator:
   serializedVersion: 7
@@ -347,8 +327,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 534009968402607213}
   Player: {fileID: 0}
-  VFXManager: {fileID: 1203866073464470037}
+  FXManager: {fileID: 0}
   animator: {fileID: 0}
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spawnPosition: {fileID: 0}
+  eliminationReward:
+    Gold: 0
+    Magika: 0
+    Experience: 0
   sightRange: 15
   attackRange: 1
   attackCooldownTime: 2
@@ -356,14 +344,27 @@ MonoBehaviour:
   walkpointRange: 5
   patrollwaitTime: 4
   walkPoint: {x: 0, y: 0, z: 0}
+  speed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
   hasAttacked: 0
+  wasPlayerInSight: 0
   isChargingAttack: 0
   vfxSpawned: 0
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0, z: 0}
+  projectileLifeTime: 3
+  attackData: {fileID: 0}
+  enemyStats: {fileID: 0}
+  dissolver: {fileID: 0}
+  surroundingHitRadius: 0
+  blitzProjectile: {fileID: 0}
+  healProjectile: {fileID: 0}
+  sfxSource: {fileID: 0}
+  attackClip: {fileID: 0}
+  enemyHitCry: {fileID: 0}
+  enemyDeath: {fileID: 0}
   selfDestructTime: 0.5
 --- !u!82 &1460654397629125615
 AudioSource:

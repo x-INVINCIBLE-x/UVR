@@ -11,6 +11,7 @@ public class EnemyFXHandler : MonoBehaviour
 
     [Header("VFX")]
     public GameObject selfDestructVFX;
+    private GameObject currentSelfDestructVFX;
     
     [Header("Magic Circle Settings")]
     [Space]
@@ -95,11 +96,11 @@ public class EnemyFXHandler : MonoBehaviour
     {
         if (selfDestructVFX == null) return;
 
-        if (MagicCircle != null) return; // Prevents duplicates
+        if (currentSelfDestructVFX != null) return; // Prevents duplicates
 
-        MagicCircle = Instantiate(selfDestructVFX,this.transform);
+        currentSelfDestructVFX = Instantiate(selfDestructVFX,this.transform);
 
-        Destroy(MagicCircle,lifetime);
+        Destroy(currentSelfDestructVFX,lifetime);
     }
     public void SpawnExclamationMark(bool Activate = true)
     {
