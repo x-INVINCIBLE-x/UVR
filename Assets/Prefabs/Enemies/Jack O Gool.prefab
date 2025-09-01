@@ -1117,6 +1117,7 @@ GameObject:
   - component: {fileID: 1950080235530340913}
   - component: {fileID: 4213633618091946397}
   - component: {fileID: 7453753112221629227}
+  - component: {fileID: 4953172411832571289}
   m_Layer: 14
   m_Name: Jack O Gool
   m_TagString: Untagged
@@ -1395,7 +1396,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841170377458739796}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -334000983
   m_Radius: 0.74
   m_Speed: 3.5
   m_Acceleration: 10
@@ -1459,7 +1460,6 @@ MonoBehaviour:
   healProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
   sfxSource: {fileID: 5837076230311056980}
   attackClip: {fileID: 8300000, guid: 7e68645e316d39444be8bf430f49f7f8, type: 3}
-  idleClip: {fileID: 0}
   enemyHitCry: {fileID: 8300000, guid: 587b7741f3ac52f48816a95bc096bf9d, type: 3}
   enemyDeath: {fileID: 8300000, guid: b8833599be5e4374595ac5b913988914, type: 3}
   bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
@@ -1643,6 +1643,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.8632184
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4953172411832571289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841170377458739796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
 --- !u!1 &2203634453558401543
 GameObject:
   m_ObjectHideFlags: 0

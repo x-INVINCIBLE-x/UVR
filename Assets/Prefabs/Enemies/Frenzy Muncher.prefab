@@ -17021,6 +17021,7 @@ GameObject:
   - component: {fileID: 4824314922433113814}
   - component: {fileID: 392064339844354020}
   - component: {fileID: 4677376891388787733}
+  - component: {fileID: 8998499965582916288}
   m_Layer: 14
   m_Name: Frenzy Muncher
   m_TagString: Untagged
@@ -17354,7 +17355,7 @@ MonoBehaviour:
   walkPointSet: 0
   PlayerBodyOffset: {x: 0, y: 0, z: 0}
   projectileLifeTime: 3
-  attackData: {fileID: 0}
+  attackData: {fileID: 11400000, guid: 7152b33ef63ab634bacc9a1d1c4fe822, type: 2}
   enemyStats: {fileID: 392064339844354020}
   dissolver: {fileID: 4677376891388787733}
   surroundingHitRadius: 10
@@ -17364,7 +17365,7 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: 7e68645e316d39444be8bf430f49f7f8, type: 3}
   enemyHitCry: {fileID: 8300000, guid: 587b7741f3ac52f48816a95bc096bf9d, type: 3}
   enemyDeath: {fileID: 8300000, guid: b8833599be5e4374595ac5b913988914, type: 3}
-  selfDestructTime: 1
+  selfDestructTime: 0.5
 --- !u!114 &4824314922433113814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17522,6 +17523,21 @@ MonoBehaviour:
   impactDissolveRate: 0.0125
   impactDissolveThreshold: 0.5
   currentDissolve: 0
+--- !u!114 &8998499965582916288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177325855240077410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
 --- !u!1 &4693715253941878559
 GameObject:
   m_ObjectHideFlags: 0
