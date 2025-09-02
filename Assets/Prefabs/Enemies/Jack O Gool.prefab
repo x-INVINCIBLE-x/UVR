@@ -1108,6 +1108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 48596461268294645}
   - component: {fileID: 3167418809312875840}
+  - component: {fileID: 7453753112221629227}
   - component: {fileID: 8215943308792986158}
   - component: {fileID: 5837076230311056980}
   - component: {fileID: 4852360917691025332}
@@ -1116,7 +1117,6 @@ GameObject:
   - component: {fileID: 6525117224224477189}
   - component: {fileID: 1950080235530340913}
   - component: {fileID: 4213633618091946397}
-  - component: {fileID: 7453753112221629227}
   - component: {fileID: 4953172411832571289}
   m_Layer: 14
   m_Name: Jack O Gool
@@ -1172,6 +1172,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &7453753112221629227
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841170377458739796}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.8632184
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &8215943308792986158
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1456,8 +1477,8 @@ MonoBehaviour:
   enemyStats: {fileID: 6525117224224477189}
   dissolver: {fileID: 1950080235530340913}
   surroundingHitRadius: 10
-  blitzProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
-  healProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
+  blitzProjectile: {fileID: 541757065818075778, guid: d1ca0f4b7a96cfd4cb9fa8e793cd7538, type: 3}
+  healProjectile: {fileID: 6428853215137849390, guid: 09596badd6e771241a83d74e0a091a33, type: 3}
   sfxSource: {fileID: 5837076230311056980}
   attackClip: {fileID: 8300000, guid: 7e68645e316d39444be8bf430f49f7f8, type: 3}
   enemyHitCry: {fileID: 8300000, guid: 587b7741f3ac52f48816a95bc096bf9d, type: 3}
@@ -1622,27 +1643,6 @@ MonoBehaviour:
   minScale: {x: 0.1, y: 0.1, z: 0.1}
   midScale: {x: 1, y: 1, z: 1}
   maxScale: {x: 2, y: 2, z: 2}
---- !u!135 &7453753112221629227
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841170377458739796}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.8632184
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4953172411832571289
 MonoBehaviour:
   m_ObjectHideFlags: 0
