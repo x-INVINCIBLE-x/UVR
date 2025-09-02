@@ -162,6 +162,15 @@ public class DynamicFormationController : FormationProvider
         StartFormation();
     }
 
+    [ContextMenu("Clear Existing Cubes")]
+    private void DeleteInstances()
+    {
+        for (int i = transform.childCount -1; i >= 0; i--)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+    }
+
     private void Initialize()
     {
         // Initialize per‐cube arrays

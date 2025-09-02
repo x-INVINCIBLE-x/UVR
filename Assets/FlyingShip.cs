@@ -19,7 +19,7 @@ public class FlyingShip : MonoBehaviour
     [Header("Bomb setup")]
     [SerializeField] private PhysicsProjectile projectilePrefab;
     [SerializeField] private AttackData attackData;
-    [SerializeField] private Transform projectileSpawnPoint;
+    [SerializeField] private Transform[] projectileSpawnPoints;
     [SerializeField] private float projectileForce = 1f;
     private Vector3 previousPosition;
     private float attackCoolDown;
@@ -140,14 +140,17 @@ public class FlyingShip : MonoBehaviour
         {
             if (projectilePrefab != null)
             {
-                Vector3 spawnPosition = projectileSpawnPoint != null ? projectileSpawnPoint.position : transform.position;
-                PhysicsProjectile newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, spawnPosition).
-                    GetComponent<PhysicsProjectile>();
+                foreach (Transform projectileSpawnPoint in projectileSpawnPoints)
+                {
+                    Vector3 spawnPosition = projectileSpawnPoint != null ? projectileSpawnPoint.position : transform.position;
+                    PhysicsProjectile newProjectile = ObjectPool.instance.GetObject(projectilePrefab.gameObject, spawnPosition).
+                        GetComponent<PhysicsProjectile>();
 
-                newProjectile.Init(projectileLifeTime, attackData);
-                newProjectile.Launch(projectileSpawnPoint, projectileForce, -projectileSpawnPoint.transform.up);
+                    newProjectile.Init(projectileLifeTime, attackData);
+                    newProjectile.Launch(projectileSpawnPoint, projectileForce, -projectileSpawnPoint.transform.up);
 
-                lastAttackTime = Time.time;
+                    lastAttackTime = Time.time;
+                }
             }
         }
     }

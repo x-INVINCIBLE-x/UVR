@@ -9,6 +9,7 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] private int poolSize = 10;
 
     private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new ();
+    private Dictionary<GameObject, Coroutine> returnRoutines = new();
 
     private void Awake()
     {
@@ -62,8 +63,8 @@ public class ObjectPool : MonoBehaviour
 
         GameObject objectToGet = poolDictionary[prefab].Dequeue();
 
-        objectToGet.transform.position = target;
         objectToGet.transform.parent = null;
+        objectToGet.transform.position = target;
 
         objectToGet.SetActive(true);
 
@@ -72,7 +73,14 @@ public class ObjectPool : MonoBehaviour
 
     public void ReturnObject(GameObject objectToReturn, float delay = .001f)
     {
-        StartCoroutine(DelayReturn(delay, objectToReturn));
+        if (returnRoutines.TryGetValue(objectToReturn, out Coroutine running))
+        {
+            StopCoroutine(running);
+            returnRoutines.Remove(objectToReturn);
+        }
+
+        Coroutine routine = StartCoroutine(DelayReturn(delay, objectToReturn));
+        returnRoutines[objectToReturn] = routine;
     }
 
     private IEnumerator DelayReturn(float delay,GameObject objectToReturn)
@@ -84,6 +92,8 @@ public class ObjectPool : MonoBehaviour
 
     private void ReturnToPool(GameObject objectToReturn)
     {
+        if (objectToReturn == null) return;
+
         if (!objectToReturn.TryGetComponent<PooledObject>(out var pooledObject))
         {
             Destroy(objectToReturn);

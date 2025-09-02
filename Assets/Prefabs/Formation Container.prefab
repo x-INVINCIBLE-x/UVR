@@ -813,18 +813,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b9cca88dbfab314491ea4e69e25441e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabsToSpawn:
-  - {fileID: -3811945984315983383, guid: 510faa317c72e964581e028a27f8a1cd, type: 3}
-  spawnFrequency: 2
-  concurrentSpawnAmount: 5
-  spawnArea: {fileID: 0}
-  innerRadius: 20.1
+  laserBeamsToSpawn:
+  - {fileID: 2149032716591354291, guid: a060dccf64b03764aac62660fde36cf2, type: 3}
+  spawnFrequency: 1
+  concurrentSpawnAmount: 1
+  spawnArea: {fileID: 5960887174185615583, guid: 8433a40b91d023b4d91122c65568489d, type: 3}
+  innerRadius: 20
   innerRadiusPercentage: 0.758
   angle: 5
   oscillationSpeed: 1
+  beamWarningDuration: 3
   shootingForce: 100
-  bulletLifeTime: 7
-  attackData: {fileID: 0}
+  laserLifeTime: 13
+  attackData: {fileID: 11400000, guid: a976ac9fa472e5445bb56a3ff6d0049b, type: 2}
   isActive: 0
 --- !u!114 &2214716588204618147
 MonoBehaviour:
@@ -1001,11 +1002,11 @@ MonoBehaviour:
   gridChangeDuration: 5
   timedForamtions:
   - cubeFormationController: {fileID: 5748234482282748767}
-    duration: 10
+    duration: 50
   - cubeFormationController: {fileID: 3526463747834264901}
-    duration: 10
+    duration: 50
   - cubeFormationController: {fileID: 6885477660519354693}
-    duration: 10
+    duration: 50
   scalingFormations:
   - difficultyLevel: 1
     formations:

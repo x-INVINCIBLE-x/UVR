@@ -61,9 +61,9 @@ public class GrabStatus : MonoBehaviour
             {
                 leftInteractableObject.parent = null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Debug.LogError($"Error while releasing object: {e.Message}");
+                Debug.LogError($"Error while releasing object:");
             }
             leftInteractableObject = null;
         }

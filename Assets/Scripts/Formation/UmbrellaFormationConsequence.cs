@@ -5,7 +5,8 @@ using UnityEngine;
 public class UmbrellaFormationConsequence : FomationConsequence
 {
     [Header("Spawn Settings")]
-    public PhysicsProjectile[] prefabsToSpawn;
+    //public PhysicsProjectile[] laserBeamsToSpawn;
+    public LaserBeam[] laserBeamsToSpawn;
     public float spawnFrequency = 2f;
     public int concurrentSpawnAmount = 5;
 
@@ -22,34 +23,44 @@ public class UmbrellaFormationConsequence : FomationConsequence
     public float oscillationSpeed = 1f;
 
     [Header("Shooting Info")]
+    [SerializeField] private float beamWarningDuration = 1f;
     [SerializeField] private float shootingForce;
-    [SerializeField] private float bulletLifeTime = 10f;
+    [SerializeField] private float laserLifeTime = 10f;
     [SerializeField] private AttackData attackData;
 
     [SerializeField] private bool isActive = false;
     private Quaternion initialRotation;
     private float timer;
 
+    private Collider spawnerInstance = null;
+
     protected override void Start()
     {
         base.Start();
         type = FormationType.JapaneseUmbrella;
     }
-
  
     protected override void HandleUnwrapStart(FormationType formationType)
     {
         if (formationType != type) return;
+
+        if (spawnerInstance)
+        {
+            Destroy(spawnerInstance.gameObject);
+            spawnerInstance = null;
+        }
     }
 
     protected override void HandleFormationComplete(FormationType formationType)
     {
         if (formationType != type) return;
 
+        spawnerInstance = Instantiate(spawnArea, transform.position, spawnArea.transform.rotation);
+        
         isActive = true;
-        initialRotation = spawnArea.transform.localRotation;
+        initialRotation = spawnerInstance.transform.localRotation;
         StartCoroutine(StartSpawnRoutine());
-        StartCoroutine(OscillationRoutine());
+        //StartCoroutine(OscillationRoutine());
     }
 
     private IEnumerator StartSpawnRoutine()
@@ -66,40 +77,48 @@ public class UmbrellaFormationConsequence : FomationConsequence
         int innerCount = Mathf.RoundToInt(concurrentSpawnAmount * innerRadiusPercentage);
         int outerCount = concurrentSpawnAmount - innerCount;
 
-        PhysicsProjectile newPP= null;
+        LaserBeam laserBeamInstance;
 
         for (int i = 0; i < innerCount; i++)
         {
-            GameObject newProjectile = ObjectPool.instance.GetObject(GetRandomPrefab().gameObject, GetPointInInnerRadius());
-            newPP = newProjectile.GetComponent<PhysicsProjectile>();
-            newPP.Init(bulletLifeTime, attackData);
-            newPP.Launch(spawnArea.transform, shootingForce, -spawnArea.transform.up);
+            GameObject newBeam = ObjectPool.instance.GetObject(GetRandomPrefab().gameObject, GetPointInInnerRadius());
+            laserBeamInstance = newBeam.GetComponent<LaserBeam>();
+            laserBeamInstance.transform.localRotation = spawnerInstance.transform.localRotation;
+
+            laserBeamInstance.Setup(beamWarningDuration, laserLifeTime, attackData);
+            //laserBeamInstance.Init(laserLifeTime, attackData);
+            //laserBeamInstance.Launch(spawnerInstance.transform, shootingForce, -spawnerInstance.transform.up);
         }
 
         for (int i = 0; i < outerCount; i++)
         {
-            GameObject newProjectile = ObjectPool.instance.GetObject(GetRandomPrefab().gameObject, GetPointInOuterRegion());
-            newPP = newProjectile.GetComponent<PhysicsProjectile>();
-            newPP.Init(bulletLifeTime, attackData);
-            newPP.Launch(spawnArea.transform, shootingForce, -spawnArea.transform.up);
+            GameObject newBeam = ObjectPool.instance.GetObject(GetRandomPrefab().gameObject, GetPointInOuterRegion());
+            laserBeamInstance = newBeam.GetComponent<LaserBeam>();
+            laserBeamInstance.transform.localRotation = spawnerInstance.transform.localRotation;
+
+            laserBeamInstance.Setup(beamWarningDuration, laserLifeTime, attackData);
+            //GameObject newProjectile = ObjectPool.instance.GetObject(GetRandomPrefab().gameObject, GetPointInOuterRegion());
+            //laserBeamInstance = newProjectile.GetComponent<PhysicsProjectile>();
+            //laserBeamInstance.Init(laserLifeTime, attackData);
+            //laserBeamInstance.Launch(spawnerInstance.transform, shootingForce, -spawnerInstance.transform.up);
         }
     }
 
-    private PhysicsProjectile GetRandomPrefab()
+    private LaserBeam GetRandomPrefab()
     {
-        if (prefabsToSpawn == null || prefabsToSpawn.Length == 0)
+        if (laserBeamsToSpawn == null || laserBeamsToSpawn.Length == 0)
         {
             Debug.LogWarning("No prefabs assigned to spawn.");
             return null;
         }
 
-        int index = Random.Range(0, prefabsToSpawn.Length);
-        return prefabsToSpawn[index];
+        int index = Random.Range(0, laserBeamsToSpawn.Length);
+        return laserBeamsToSpawn[index];
     }
 
     private Vector3 GetPointInInnerRadius()
     {
-        Vector3 center = spawnArea.bounds.center;
+        Vector3 center = spawnerInstance.bounds.center;
         Vector2 randomCircle = Random.insideUnitCircle * innerRadius;
         Vector3 spawnPoint = new Vector3(center.x + randomCircle.x, center.y, center.z + randomCircle.y);
         return spawnPoint;
@@ -107,7 +126,7 @@ public class UmbrellaFormationConsequence : FomationConsequence
 
     private Vector3 GetPointInOuterRegion()
     {
-        Bounds bounds = spawnArea.bounds;
+        Bounds bounds = spawnerInstance.bounds;
         Vector3 point;
 
         int maxAttempts = 10;
@@ -133,27 +152,27 @@ public class UmbrellaFormationConsequence : FomationConsequence
         return point;
     }
 
-    private IEnumerator OscillationRoutine()
-    {
-        while (isActive)
-        {
-            float rotX = Mathf.PingPong(Time.time * oscillationSpeed * 2, angle * 2) - angle;
+    //private IEnumerator OscillationRoutine()
+    //{
+    //    while (isActive)
+    //    {
+    //        float rotX = Mathf.PingPong(Time.time * oscillationSpeed * 2, angle * 2) - angle;
 
-            spawnArea.transform.localRotation = initialRotation * Quaternion.Euler(rotX, 0f, 0f);
+    //        spawnerInstance.transform.localRotation = initialRotation * Quaternion.Euler(rotX, 0f, 0f);
 
-            yield return null;
-        }
-    }
+    //        yield return null;
+    //    }
+    //}
 
     private void OnDrawGizmosSelected()
     {
-        if (spawnArea)
+        if (spawnerInstance)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(spawnArea.bounds.center, spawnArea.bounds.size);
+            Gizmos.DrawWireCube(spawnerInstance.bounds.center, spawnerInstance.bounds.size);
 
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(spawnArea.bounds.center, innerRadius);
+            Gizmos.DrawWireSphere(spawnerInstance.bounds.center, innerRadius);
         }
     }
 }

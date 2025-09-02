@@ -44,6 +44,7 @@ public class PlayerUI : MonoBehaviour
         player.Stats.OnAilmentStatusChange += HandleStatusChange;
         player.Stats.OnDeath += HandleDeath;
     }
+
     private void HandleStatusChange(AilmentType type, bool isActivated, float effectAmount)
     {
         if (isActivated == true)

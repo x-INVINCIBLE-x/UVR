@@ -15,10 +15,13 @@ public class PhysicsProjectile : Projectile
     private Rigidbody rigidBody;
     private AudioSource audioSource;
     public AudioClip impactSFX;
+    public float impactDuration = 0.5f;
     private ParticleSystem VFXparticleSystem;
 
     private HashSet<IDamageable> damaged = new();
     private Collider col;
+
+    [SerializeField] private float blastRadius = 0f;
 
     private void Awake()
     {
@@ -53,7 +56,7 @@ public class PhysicsProjectile : Projectile
         rigidBody.linearVelocity = lookDirection * force;
         transform.rotation = Quaternion.LookRotation(rigidBody.linearVelocity.normalized);
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         IDamageable damagable = other.GetComponentInParent<IDamageable>();
@@ -71,8 +74,30 @@ public class PhysicsProjectile : Projectile
 
         col.enabled = false;
         ObjectPool.instance.ReturnObject(gameObject, 1f);
+        rigidBody.linearVelocity = Vector3.zero;
 
-        
+        if (blastRadius > 0f)
+        {
+            Collider[] colliders = new Collider[20];
+            int count = Physics.OverlapSphereNonAlloc(transform.position, blastRadius, colliders);
+            for (int i = 0; i < count; i++)
+            {
+                Collider collider = colliders[i];
+                if (collider == null) break;
+                IDamageable blastDamagable = collider.GetComponentInParent<IDamageable>();
+                blastDamagable ??= collider.GetComponentInChildren<IDamageable>();
+                if (blastDamagable != null && !damaged.Contains(blastDamagable) && attackData != null)
+                {
+                    DamageResult result = blastDamagable.TakeDamage(attackData);
+                    if (attackData.owner != null && result != null)
+                    {
+                        attackData.owner.RaiseOnDamageGiven(result);
+                    }
+                    damaged.Add(blastDamagable);
+                }
+            }
+        }
+
         if (VFXparticleSystem != null)
         {
             VFXparticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -80,13 +105,22 @@ public class PhysicsProjectile : Projectile
 
         if (impactVFX != null)
         {
-            currentImpactVFX = ObjectPool.instance.GetObject(impactVFX.gameObject, transform);
-            ObjectPool.instance.ReturnObject(currentImpactVFX, 0.5f);
+            currentImpactVFX = ObjectPool.instance.GetObject(impactVFX, transform.position);
+            ObjectPool.instance.ReturnObject(currentImpactVFX, impactDuration);
         }
 
         if (impactSFX != null)
         {
             audioSource.PlayOneShot(impactSFX);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (blastRadius > 0)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, blastRadius);
         }
     }
 }

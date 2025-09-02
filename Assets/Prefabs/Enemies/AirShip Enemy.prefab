@@ -25459,13 +25459,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6437060418359491876}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.67, z: 1.44}
+  m_LocalRotation: {x: 0.2164396, y: -0, z: -0, w: 0.97629607}
+  m_LocalPosition: {x: 0, y: -2, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1766493715090787288}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 2491749257041131278}
+  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
 --- !u!1 &6437236213138995666
 GameObject:
   m_ObjectHideFlags: 0
@@ -26778,6 +26778,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6658972416899953429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2317182669384522873}
+  m_Layer: 22
+  m_Name: bombSpawn (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2317182669384522873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658972416899953429}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.32521793, y: 0.28368962, z: 0.02288054, w: 0.9017927}
+  m_LocalPosition: {x: -5, y: -2, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2491749257041131278}
+  m_LocalEulerAnglesHint: {x: 35, y: 40, z: 16}
 --- !u!1 &6675791414820600467
 GameObject:
   m_ObjectHideFlags: 0
@@ -28663,6 +28694,37 @@ Transform:
   - {fileID: 5578737019104395551}
   m_Father: {fileID: 6484880848970450737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7339812888492536920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 870506015734293569}
+  m_Layer: 22
+  m_Name: bombSpawn (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &870506015734293569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7339812888492536920}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.32521793, y: -0.28368962, z: -0.02288054, w: 0.9017927}
+  m_LocalPosition: {x: 5, y: -2, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2491749257041131278}
+  m_LocalEulerAnglesHint: {x: 35, y: -40, z: -16}
 --- !u!1 &7375077152828968336
 GameObject:
   m_ObjectHideFlags: 0
@@ -31805,11 +31867,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.94, y: 125.06, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8479576646616677524}
-  - {fileID: 8070081620880207540}
+  - {fileID: 2491749257041131278}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6218986033095211842
@@ -31824,15 +31886,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6620d5f54c397245aec979c954e38e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.4
+  speed: 0.1
   minRadius: 100
   maxRadius: 500
-  radiusExpansionSpeed: 25
+  radiusExpansionSpeed: 15
   orbitsToReachMaxRadius: 1
-  projectilePrefab: {fileID: 4794003180515700712, guid: 0c235e83a45556d48b6634c083d01d63, type: 3}
+  projectilePrefab: {fileID: 3255010235463080683, guid: 3ac0014e40b129d48ae8d8b29c23ec38, type: 3}
   attackData: {fileID: 11400000, guid: 797bd4d86c601a74bb1588abc57e1afe, type: 2}
-  projectileSpawnPoint: {fileID: 8070081620880207540}
-  projectileForce: 1
+  projectileSpawnPoints:
+  - {fileID: 8070081620880207540}
+  - {fileID: 870506015734293569}
+  - {fileID: 2317182669384522873}
+  projectileForce: 100
   projectileLifeTime: 10
 --- !u!1 &8199525044525787537
 GameObject:
@@ -34438,6 +34503,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8835997233959512356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2491749257041131278}
+  m_Layer: 22
+  m_Name: Spawners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2491749257041131278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8835997233959512356}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8070081620880207540}
+  - {fileID: 870506015734293569}
+  - {fileID: 2317182669384522873}
+  m_Father: {fileID: 1766493715090787288}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8839404756596313155
 GameObject:
   m_ObjectHideFlags: 0
