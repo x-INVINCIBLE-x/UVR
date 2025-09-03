@@ -120,6 +120,12 @@ public class UmbrellaFormationConsequence : FomationConsequence
     {
         Vector3 center = spawnerInstance.bounds.center;
         Vector2 randomCircle = Random.insideUnitCircle * innerRadius;
+        
+        if (Random.Range(0, 1f) < 0.3f)
+        {
+            randomCircle = Vector3.zero;
+        }
+        
         Vector3 spawnPoint = new Vector3(center.x + randomCircle.x, center.y, center.z + randomCircle.y);
         return spawnPoint;
     }

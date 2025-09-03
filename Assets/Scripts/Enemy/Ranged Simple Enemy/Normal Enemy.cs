@@ -29,7 +29,6 @@ public class NormalEnemy : SimpleEnemyBase
         TryAttack();
     }
 
-
     private void TryAttack()
     {
         agent.SetDestination(transform.position);

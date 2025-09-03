@@ -8,6 +8,8 @@ public abstract class Turret : MonoBehaviour, ISliceable
     protected SphereCollider col;
     protected bool isActive = true;
     protected bool isSliced = false;
+    private float bufferTime = 0.1f;
+    private float lastActivationTime = -1f;
 
     protected virtual void Awake()
     {
@@ -22,9 +24,10 @@ public abstract class Turret : MonoBehaviour, ISliceable
     {
         if (isSliced) return;
 
-        if (other.CompareTag(activationTag))
+        if (other.CompareTag(activationTag) && lastActivationTime + bufferTime < Time.time)
         {
             isActive = true;
+            lastActivationTime = Time.time;
             Activate(other);
         }
     }

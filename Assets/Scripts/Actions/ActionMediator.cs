@@ -46,7 +46,7 @@ public class ActionMediator : MonoBehaviour
     private float defaultSpeed;
     [SerializeField] private float rotationFixDuration = 1f;
     private Coroutine rotationFixRoutine = null;
-    private List<float> speedMultipliers = new List<float>();
+    [SerializeField] private List<float> speedMultipliers = new List<float>();
 
     public class ConstantVector2InputReader : IXRInputValueReader<Vector2>
     {

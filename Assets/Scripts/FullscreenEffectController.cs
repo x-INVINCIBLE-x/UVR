@@ -46,11 +46,6 @@ public class FullscreenEffectController : MonoBehaviour
     //[SerializeField] private float breathFrequency = 2f;
     //[SerializeField] private float breathIntensity = 0.6f;
 
-    private void Awake()
-    {
-        
-    }
-
     private void Start()
     {
         fullScreenEffect.SetActive(false);
