@@ -9,7 +9,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
-public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
+public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpeedModifiable
 { // Base class for all simple enemy types
 
     [SerializeField] protected NavMeshAgent agent;
@@ -22,15 +22,14 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     [SerializeField] private GameReward eliminationReward;
 
     [SerializeField] protected float sightRange, attackRange;
-    [SerializeField] protected float attackCooldownTime = 2f;
-    [SerializeField] protected float magicChargeTime = 2f;
+    [SerializeField] private float attackCooldownTime = 2f;
+    protected float AttackCooldownTime => attackCooldownTime / AttackSpeedMultiplier;
     [SerializeField] protected float walkpointRange;
     [SerializeField] protected float patrollwaitTime;
 
-
     [SerializeField] protected Vector3 walkPoint;
+    [SerializeField] protected float walkSpeed = 3f;
 
-    [SerializeField] protected float speed = 3f;
     [SerializeField] protected bool searchingWalkPoint = false;
     [SerializeField] protected bool playerInSightRange, playerInAttackRange;
     [SerializeField] protected bool hasAttacked, wasPlayerInSight, isChargingAttack, vfxSpawned;
@@ -47,12 +46,15 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
     [SerializeField] protected HomingMissile blitzProjectile;
     [SerializeField] protected HomingMissile healProjectile;
 
+    [SerializeField] protected AudioSource sfxSource;
+    [SerializeField] protected AudioClip attackClip;
+    [SerializeField] protected AudioClip enemyHitCry;
+    [SerializeField] protected AudioClip enemyDeath;
+
     private readonly WaitForSeconds attackCheckCooldown = new(0.2f);
     private LayerMask playerLayer;
     private Coroutine currentCheckRoutine = null;
     private Collider m_Collider;
-
-    private float defaultMagicChargeTime;
 
     private bool hitSurroundingEnemies = false;
     private bool healPlayer = false;
@@ -68,10 +70,60 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
  
     private bool registered = false;
 
-    [SerializeField] protected AudioSource sfxSource;
-    [SerializeField] protected AudioClip attackClip;
-    [SerializeField] protected AudioClip enemyHitCry;
-    [SerializeField] protected AudioClip enemyDeath;
+    [SerializeField] private float magicChargeTime = 2f;
+    public float MagicChargeTime => magicChargeTime / AttackSpeedMultiplier;
+
+    [Header("Speed Modifiers")]
+    private float currentBaseSpeed;
+    [SerializeField] private float minSpeedMultiplier = 0.1f;
+    [SerializeField] private float maxSpeedMultiplier = 3f;
+
+    private float globalSpeedMultiplier = 1f;
+    private float localSpeedMultiplier = 1f;
+
+    public float LocalSpeedMultiplier
+    {
+        get => localSpeedMultiplier;
+        set
+        {
+            if (Mathf.Approximately(localSpeedMultiplier, value)) return;
+            localSpeedMultiplier = value;
+            UpdateMovementSpeed();
+        }
+    }
+    public float WalkSpeed => walkSpeed * localSpeedMultiplier;
+
+    [Header("Attack Speed")]
+    private float _cachedAttackSpeedMultiplier = 1f;
+    private float localAttackSpeedMultiplier = 1f;
+    private float globalAttackSpeedMultiplier = 1f;
+
+    private bool isAttackSpeedDirty = true;
+
+    public float AttackSpeedMultiplier
+    {
+        get
+        {
+            if (isAttackSpeedDirty)
+            {
+                _cachedAttackSpeedMultiplier = Mathf.Clamp(localAttackSpeedMultiplier * globalAttackSpeedMultiplier, minSpeedMultiplier, maxSpeedMultiplier);
+                isAttackSpeedDirty = false;
+            }
+
+            return _cachedAttackSpeedMultiplier;
+        }
+    }
+
+    public float LocalAttackSpeedMultiplier
+    {
+        get => localAttackSpeedMultiplier;
+        set
+        {
+            isAttackSpeedDirty = true;
+            localAttackSpeedMultiplier = value;
+        }
+    }
+
 
     protected virtual void Start()
     {
@@ -83,6 +135,9 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
         enemyEventManager = EnemyEventManager.Instance;
 
+        GameEvents.OnGloabalMovementSpeedChange += HandleGlobalMovementSpeedChange;
+        GameEvents.OnGloablAttackSpeedChange += HandleGlobalAttackSpeedChange;
+
         if (enemyEventManager != null)
             enemyID = enemyEventManager.GetNewEnemyID();
 
@@ -91,8 +146,21 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
         enemyStats.OnDeath += HandleDeath;
         enemyStats.OnAilmentStatusChange += HandleAilment;
         enemyStats.OnHealthChanged += HandleHealthChange; //Event called when healthchange (gives normalized health value)
-        defaultMagicChargeTime = magicChargeTime;
+        magicChargeTime = MagicChargeTime;
         InitializeAilmentData();
+
+        currentBaseSpeed = walkSpeed;
+    }
+    private void HandleGlobalMovementSpeedChange(float newGlobalMultiplier)
+    {
+        globalSpeedMultiplier = newGlobalMultiplier;
+        UpdateMovementSpeed();
+    }
+
+    private void HandleGlobalAttackSpeedChange(float newGlobalMultiplier)
+    {
+        globalSpeedMultiplier = newGlobalMultiplier;
+        //isAttackSpeedDirty = true;
     }
 
     private void HandleHealthChange(float health)
@@ -134,8 +202,18 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
         }
         else if (type == AilmentType.Frost)
         {
-            agent.speed = isActivated ? speed * 0.5f : speed;
-            magicChargeTime = isActivated ? magicChargeTime * 1.5f : defaultMagicChargeTime;
+            if (isActivated)
+            {
+                localSpeedMultiplier = 0.5f;
+                localAttackSpeedMultiplier = 1.5f;
+            }
+            else
+            {
+                localSpeedMultiplier = 1f;
+            }
+
+            //agent.speed = isActivated ? walkSpeed * 0.5f : walkSpeed;
+            magicChargeTime = isActivated ? MagicChargeTime * 1.5f : magicChargeTime;
         }
     }   
 
@@ -188,6 +266,15 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>
 
         healthTimerCoroutine = StartCoroutine(HealthTimer(3f));
 
+    }
+
+    public void UpdateMovementSpeed()
+    {
+        float finalMultiplier = localSpeedMultiplier * globalSpeedMultiplier;
+
+        finalMultiplier = Mathf.Clamp(finalMultiplier, minSpeedMultiplier, maxSpeedMultiplier);
+
+        agent.speed = currentBaseSpeed * finalMultiplier;
     }
 
     private IEnumerator HealthTimer(float time)

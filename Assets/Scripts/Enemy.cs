@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour, IRewardProvider<GameReward>
+public class Enemy : MonoBehaviour, IRewardProvider<GameReward>, ISpeedModifiable
 {
     [SerializeField] private RewardProfile rewardProfile;
     [SerializeField] private GameReward eliminationReward;

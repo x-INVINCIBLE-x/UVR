@@ -39,10 +39,10 @@ public class NormalEnemy : SimpleEnemyBase
             isChargingAttack = true;
             if (!vfxSpawned)
             {
-                FXManager.SpawnMagicCircleVFX(magicChargeTime);
+                FXManager.SpawnMagicCircleVFX(MagicChargeTime);
                 vfxSpawned = true;
             }
-            Invoke(nameof(NormalAttack), magicChargeTime);
+            Invoke(nameof(NormalAttack), MagicChargeTime);
         }
 
         walkPoint = transform.position;
@@ -63,6 +63,6 @@ public class NormalEnemy : SimpleEnemyBase
         vfxSpawned = false;
         FXManager.DestroyMagicCircleVFX();
 
-        Invoke(nameof(ResetAttack), attackCooldownTime);
+        Invoke(nameof(ResetAttack), AttackCooldownTime);
     }
 }

@@ -6,7 +6,7 @@ public class AttackSpeedTurret : Turret
     [Range(1f, 10f)]
     [SerializeField] private float attackSpeedMultiplier = 1.5f;
 
-    private HashSet<Enemy> enemies = new HashSet<Enemy>();
+    private HashSet<ISpeedModifiable> enemies = new HashSet<ISpeedModifiable>();
     [SerializeField] private LayerMask enemyLayer;
 
     protected override void OnTriggerEnter(Collider other)
@@ -27,9 +27,9 @@ public class AttackSpeedTurret : Turret
 
     protected override void Activate(Collider other)
     {
-        Enemy enemy = other.GetComponentInParent<Enemy>();
+        ISpeedModifiable enemy = other.GetComponentInParent<ISpeedModifiable>();
         if (enemy == null)
-            enemy = other.GetComponentInChildren<Enemy>();
+            enemy = other.GetComponentInChildren<ISpeedModifiable>();
 
         if (enemy == null) { return; }
         if (enemies.Contains(enemy)) { return; }
@@ -40,9 +40,9 @@ public class AttackSpeedTurret : Turret
 
     protected override void Deactivate(Collider other)
     {
-        Enemy enemy = other.GetComponentInParent<Enemy>();
+        ISpeedModifiable enemy = other.GetComponentInParent<ISpeedModifiable>();
         if (enemy == null)
-            enemy = other.GetComponentInChildren<Enemy>();
+            enemy = other.GetComponentInChildren<ISpeedModifiable>();
 
         if (enemy == null) { return; }
 

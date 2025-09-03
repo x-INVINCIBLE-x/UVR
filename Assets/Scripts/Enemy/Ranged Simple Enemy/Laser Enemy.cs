@@ -65,11 +65,11 @@ public class LaserEnemy : SimpleEnemyBase
         // Spawning the magic circle VFX
         if (!vfxSpawned)
         {
-            FXManager.SpawnMagicCircleVFX(magicChargeTime);
+            FXManager.SpawnMagicCircleVFX(MagicChargeTime);
             vfxSpawned = true;
         }
 
-        yield return new WaitForSeconds(magicChargeTime);
+        yield return new WaitForSeconds(MagicChargeTime);
 
         // Spawn laser after charging
         if (currentLaser != null)

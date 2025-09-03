@@ -38,10 +38,10 @@ public class VolleyEnemy : SimpleEnemyBase
             isChargingAttack = true;
             if (!vfxSpawned)
             {
-                FXManager.SpawnMagicCircleVFX(magicChargeTime);
+                FXManager.SpawnMagicCircleVFX(MagicChargeTime);
                 vfxSpawned = true;
             }
-            Invoke(nameof(VolleyAttack), magicChargeTime);
+            Invoke(nameof(VolleyAttack), MagicChargeTime);
         }
     }
 
@@ -60,7 +60,7 @@ public class VolleyEnemy : SimpleEnemyBase
         vfxSpawned = false;
         FXManager.DestroyMagicCircleVFX();
 
-        Invoke(nameof(ResetAttack), attackCooldownTime);
+        Invoke(nameof(ResetAttack), AttackCooldownTime);
     }
 
     private void LaunchVolley(Transform proj, Vector3 target, float time)
