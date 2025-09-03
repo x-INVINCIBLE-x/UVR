@@ -37,7 +37,9 @@ public class SliceAttacks : WeaponAbilitiesBase
         base.AllAttacks();
 
         if (AbilityEnable == true)
-        {
+        {   
+            WeaponVFX.SetActive(true);
+
             switch (sliceAttackType)
             {
                 case TypesOfSlices.Straight:
@@ -56,6 +58,10 @@ public class SliceAttacks : WeaponAbilitiesBase
                     AoeSliceAttack();
                     break;
             }
+        }
+        else
+        {
+            WeaponVFX.SetActive (false);
         }
 
     }
@@ -87,7 +93,12 @@ public class SliceAttacks : WeaponAbilitiesBase
     {
         if (AbilityEnable == false) return;
         if(!VelocityChecker()) return; // checks the velocity of the weapon that is swung
-        if (!CanAttack()) return;
+        if (!CanAttack())
+        {   
+            WeaponVFX.SetActive (false);
+            return;
+        }
+       
         ApplyHeat();
         SlashAudio();
 
@@ -102,7 +113,11 @@ public class SliceAttacks : WeaponAbilitiesBase
     {
         if (AbilityEnable == false) return;
         if (!VelocityChecker()) return; // checks the velocity of the weapon that is swung
-        if (!CanAttack()) return;
+        if (!CanAttack())
+        {
+            WeaponVFX.SetActive(false);
+            return;
+        }
         ApplyHeat();
         SlashAudio();
 
@@ -129,9 +144,9 @@ public class SliceAttacks : WeaponAbilitiesBase
         if (AbilityEnable == false) return;
         if (!VelocityChecker()) return; // checks the velocity of the weapon that is swung
         if (!CanAttack())
-        {   
+        {
             WeaponVFX.SetActive(false);
-            return; 
+            return;
         }
         ApplyHeat();
         SlashAudio();
