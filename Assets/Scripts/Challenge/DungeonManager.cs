@@ -33,7 +33,6 @@ public class DungeonManager : MonoBehaviour
     private int currentSuccessTransitionSceneIndex = 0;
     [SerializeField] private SceneReference[] dungeonFailTransitionScene;
     private int currentFailTransitionSceneIndex = 0;
-    public DynamicFormationController groundGrid;
     private const int Failure_Transition_Stay = 7;
 
     public event Action<int> OnDifficultyChange;
@@ -87,10 +86,6 @@ public class DungeonManager : MonoBehaviour
             ChallengeManager.instance.OnChallengeSuccess += HandleLevelCompletion;
             ChallengeManager.instance.OnChallengeFail += HandleLevelFailure;
         }
-
-        GameObject grid = GameObject.FindGameObjectWithTag("GroundGrid");
-        if (grid != null)
-            groundGrid = GameObject.FindGameObjectWithTag("GroundGrid")?.GetComponent<DynamicFormationController>();
     }
 
     public void HandleLevelCompletion()

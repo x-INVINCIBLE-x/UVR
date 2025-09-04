@@ -248,8 +248,10 @@ public class GridFormationController : FormationProvider
             Debug.LogError("Grid database is not assigned.");
             return;
         }
+
         groupKey = ChallengeManager.instance.CurrentChallenge.GetID();
-        var data = gridDatabase.GetRandomUniqueFormation(groupKey);
+        GridFormationData data = gridDatabase.GetRandomUniqueFormation(groupKey);
+
         if (data == null || data.positions == null || data.positions.Count == 0)
         {
             Debug.LogError("Grid formation data is missing or empty.");
@@ -558,8 +560,11 @@ public class GridFormationController : FormationProvider
     void SpawnFormation(int idx)
     {
         // Destroy old
-        foreach (Transform c in transform)
-            DestroyImmediate(c.gameObject);
+        int n = transform.childCount;
+        for (int i = n-1; i >= 0; i--)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        }
         instances.Clear();
 
         var positions = positionsPerFormation[idx];
