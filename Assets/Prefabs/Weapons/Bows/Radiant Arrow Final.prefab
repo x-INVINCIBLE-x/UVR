@@ -160,10 +160,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4662338454233567465}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -179,7 +179,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &5231629382678314228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,13 +192,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07cdaf57cc0507343b281b51d05cb802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explodeOnImpact: 0
+  _explodeOnImpact: 1
   _stickDuration: 3
   _minEmbedDepth: 0.05
   _maxEmbedDepth: 0.15
   _ignoreLayers:
     serializedVersion: 2
-    m_Bits: 2147573751
+    m_Bits: 90038
   _tip: {fileID: 402095380093800995}
   _impactGameObject: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
   _arrowMeshRenderer: {fileID: 6953386574652351001}
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00d5273ad91fbc45af56831f65899ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
+  _speed: 50
   _trailSystem: {fileID: 2613462060424995206, guid: 101a8868c1adc5b40bdaf7526f47b7b5, type: 3}
 --- !u!1 &5491814476065512309
 GameObject:
