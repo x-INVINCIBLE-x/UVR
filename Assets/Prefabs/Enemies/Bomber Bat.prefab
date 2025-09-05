@@ -22667,11 +22667,10 @@ MonoBehaviour:
   sightRange: 15
   attackRange: 2
   attackCooldownTime: 1
-  magicChargeTime: 0
   walkpointRange: 6
   patrollwaitTime: 2
   walkPoint: {x: 0, y: 0, z: 0}
-  speed: 3
+  walkSpeed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -22692,6 +22691,9 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: 7e68645e316d39444be8bf430f49f7f8, type: 3}
   enemyHitCry: {fileID: 8300000, guid: 587b7741f3ac52f48816a95bc096bf9d, type: 3}
   enemyDeath: {fileID: 8300000, guid: b8833599be5e4374595ac5b913988914, type: 3}
+  magicChargeTime: 0
+  minSpeedMultiplier: 0.1
+  maxSpeedMultiplier: 3
   selfDestructTime: 0.5
 --- !u!114 &7652278560548047992
 MonoBehaviour:
@@ -22745,7 +22747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e268f02b12da422498f77b07c61ab5c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyProfile: {fileID: 0}
+  difficultyProfile: {fileID: 11400000, guid: f36ca4f47ea78c641818026cb1c26ba2, type: 2}
   health:
     BaseValue: 0
     statModifiers: []

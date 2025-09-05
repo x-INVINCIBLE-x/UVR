@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5294434939156471119}
@@ -4915,10 +4915,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5294434938954069234}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4954,8 +4954,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.64213425, y: 0.4465392, z: 2.6660929}
-  m_Center: {x: 0, y: 0, z: 0.111504495}
+  m_Size: {x: 0.34667197, y: 0.44653922, z: 0.6039699}
+  m_Center: {x: 0, y: 0, z: 1.1425662}
 --- !u!82 &5325557149986335911
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5068,6 +5068,8 @@ MonoBehaviour:
   lifeTime: 3
   impactVFX: {fileID: 686560194651972754, guid: 9eb391681fa568149b4ea97737161b26, type: 3}
   impactSFX: {fileID: 8300000, guid: b93e727a42f734f46b4569ecc87ba41e, type: 3}
+  impactDuration: 0.5
+  blastRadius: 0
 --- !u!1 &5294434939156470960
 GameObject:
   m_ObjectHideFlags: 0

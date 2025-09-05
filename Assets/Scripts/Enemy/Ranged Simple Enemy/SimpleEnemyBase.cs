@@ -130,7 +130,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         playerLayer = LayerMask.GetMask("Player");
         Player = PlayerManager.instance.PlayerOrigin.transform;
         animator = GetComponent<Animator>();
-        dissolver = GetComponent<MeshDissolver>();
+        //dissolver = GetComponent<MeshDissolver>();
         m_Collider = GetComponent<Collider>();
 
         enemyEventManager = EnemyEventManager.Instance;

@@ -113,16 +113,14 @@ public sealed class VolumetricFogRendererFeature : ScriptableRendererFeature
 		return isActive && isVolumeOk && isCameraOk && areResourcesOk;
 	}
 
-	/// <summary>
-	/// Returns the render pass event for the volumetric fog.
-	/// </summary>
-	/// <returns></returns>
-	private RenderPassEvent GetRenderPassEvent()
-	{
-		VolumetricFogVolumeComponent fogVolume = VolumeManager.instance.stack.GetComponent<VolumetricFogVolumeComponent>();
-		
-		return (RenderPassEvent)fogVolume.renderPassEvent.value;
-	}
+    /// <summary>
+    /// Returns the render pass event for the volumetric fog.
+    /// </summary>
+    /// <returns></returns>
+    private RenderPassEvent GetRenderPassEvent()
+    {
+        return RenderPassEvent.BeforeRenderingTransparents;
+    }
 
-	#endregion
+    #endregion
 }
