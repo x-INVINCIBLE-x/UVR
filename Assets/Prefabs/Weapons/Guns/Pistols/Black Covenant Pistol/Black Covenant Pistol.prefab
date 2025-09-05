@@ -245,7 +245,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -507,13 +507,15 @@ MonoBehaviour:
   recoilForce: 0
   muzzleVFX: {fileID: 4261401178541585102, guid: d1078aea6864e714da833997823aeb93, type: 3}
   shootSFX: {fileID: 8300000, guid: a4d9a3f4831d4e74ba00f57030822199, type: 3}
-  fireRate: 3
+  fireRate: 6
   maxHeatLimit: 100
   coolDownRate: 70
   overheatResistance: 5
   currentHeat: 0
   isOverheated: 0
-  OverHeatMaterial: {fileID: 2100000, guid: 8ee0cabbd02d86d47a9a6a28da091766, type: 2}
+  overheatRenderer:
+  - {fileID: 1183962641890911232}
+  - {fileID: 7402622742509132287}
   currentEmissionIntensity: 0
   minEmissionIntensity: 0.02
   projectilePrefab: {fileID: 4794003180515700712, guid: 0c235e83a45556d48b6634c083d01d63, type: 3}
@@ -835,7 +837,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 06bc00863d50e044f93ab6694245d6cc, type: 2}
+  - {fileID: 2100000, guid: 8ee0cabbd02d86d47a9a6a28da091766, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf288a73612fb540a6cbe416309c2e1, type: 3}
   m_Name: FlintLock_AttackData
   m_EditorClassIdentifier: 
+  owner: {fileID: 0}
   physicalDamage:
-    BaseValue: 0
+    BaseValue: 25
     statModifiers: []
   ignisDamage:
-    BaseValue: 0
+    BaseValue: 30
     statModifiers: []
   frostDamage:
     BaseValue: 0
@@ -33,3 +34,7 @@ MonoBehaviour:
   gaiaDamage:
     BaseValue: 0
     statModifiers: []
+  burnDamage: 0
+  frostSpeedReduction: 0
+  blitzSurroundingDamage: 0
+  gaiaHealAmount: 0

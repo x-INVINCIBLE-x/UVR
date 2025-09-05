@@ -885,7 +885,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 1881988578716435527}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -993,7 +994,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  m_FarAttachMode: 0
+  m_FarAttachMode: 1
 --- !u!114 &-3024982956286912013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1007,17 +1008,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackData: {fileID: 11400000, guid: 99997bffd4c525c4ead0c83880a3c7f0, type: 2}
-  shootingForce: 10
+  shootingForce: 35
   recoilForce: 0
   muzzleVFX: {fileID: 5732568103209889489, guid: dc3350fad137eaf4f8c5609a38edd1b6, type: 3}
   shootSFX: {fileID: 8300000, guid: 85528486534b42444a28b34573366913, type: 3}
-  fireRate: 1.1
+  fireRate: 1.001
   maxHeatLimit: 100
   coolDownRate: 40
   overheatResistance: 40
   currentHeat: 0
   isOverheated: 0
-  OverHeatMaterial: {fileID: 2100000, guid: 7d3d0bcc31ea4f641af6878605a91a74, type: 2}
+  overheatRenderer:
+  - {fileID: 3273278901730357511}
+  - {fileID: 8049587082196763675}
+  - {fileID: 2626644181248636276}
   currentEmissionIntensity: 0
   minEmissionIntensity: 0.02
   projectilePrefab: {fileID: -2565223642012065073, guid: 45f3ba94110b3904185f82bab2dc40fd, type: 3}

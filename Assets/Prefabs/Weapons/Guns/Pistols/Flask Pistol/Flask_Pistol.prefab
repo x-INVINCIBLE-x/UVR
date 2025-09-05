@@ -664,7 +664,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d2a4840b978e92445b3be180d623f535, type: 2}
+  - {fileID: 2100000, guid: 451856e4bd8889a4ca5ea81fc7c9aacc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -782,7 +782,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d2a4840b978e92445b3be180d623f535, type: 2}
+  - {fileID: 2100000, guid: 451856e4bd8889a4ca5ea81fc7c9aacc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1294,15 +1294,18 @@ MonoBehaviour:
   recoilForce: 0
   muzzleVFX: {fileID: 5912344974454636654, guid: 4a8d6a47930b61643b35b1026138ada3, type: 3}
   shootSFX: {fileID: 8300000, guid: dbc1410092b77ba46aed877167dd3289, type: 3}
-  fireRate: 3
+  fireRate: 1.5
   maxHeatLimit: 100
   coolDownRate: 5
   overheatResistance: 6
   currentHeat: 0
   isOverheated: 0
-  overheatRenderer: []
+  overheatRenderer:
+  - {fileID: 8794821200055264066}
+  - {fileID: 8340639521610924045}
+  - {fileID: 7318395493711080527}
   currentEmissionIntensity: 0
-  minEmissionIntensity: 0.02
+  minEmissionIntensity: 0.01
   projectilePrefab: {fileID: 3808637600400401628, guid: 4a8d6a47930b61643b35b1026138ada3, type: 3}
   bulletSpawn: {fileID: 3247670750951175227}
   minPitch: 1
@@ -1700,7 +1703,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f7683563a1c35eb49b151d3d771d84f7, type: 2}
+  - {fileID: 2100000, guid: 451856e4bd8889a4ca5ea81fc7c9aacc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

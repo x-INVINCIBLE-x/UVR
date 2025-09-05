@@ -6413,11 +6413,10 @@ MonoBehaviour:
   sightRange: 7
   attackRange: 5
   attackCooldownTime: 2
-  magicChargeTime: 2
   walkpointRange: 5
   patrollwaitTime: 5
   walkPoint: {x: 0, y: 0, z: 0}
-  speed: 3
+  walkSpeed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -6438,6 +6437,9 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: 7e68645e316d39444be8bf430f49f7f8, type: 3}
   enemyHitCry: {fileID: 8300000, guid: 587b7741f3ac52f48816a95bc096bf9d, type: 3}
   enemyDeath: {fileID: 8300000, guid: b8833599be5e4374595ac5b913988914, type: 3}
+  magicChargeTime: 2
+  minSpeedMultiplier: 0.1
+  maxSpeedMultiplier: 3
   bullet: {fileID: 5912344974454636654, guid: 704a8921eece38846a484c04aa1a0243, type: 3}
   shootForce: 10
   projectileSpawn: {fileID: 8286332168735797658}
@@ -6456,7 +6458,7 @@ MonoBehaviour:
   characterUI: {fileID: 1300805378593157023}
   characterStatusVfx: {fileID: 59105777675156914}
   selfDestructVFX: {fileID: 0}
-  MagicCircle: {fileID: 0}
+  MagicCircle: {fileID: 3730724425776360118}
   minScale: {x: 0.1, y: 0.1, z: 0.1}
   midScale: {x: 1, y: 1, z: 1}
   maxScale: {x: 2, y: 2, z: 2}

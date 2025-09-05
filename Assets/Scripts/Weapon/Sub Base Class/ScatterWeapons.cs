@@ -30,7 +30,8 @@ public class ScatterWeapons : Weapon
 
     [Header("CooldownShader Settings")]
     [Space]
-    [SerializeField] protected Material OverHeatMaterial;
+    [SerializeField] protected MeshRenderer[] overheatRenderer;
+    protected Material[] OverHeatMaterial;
     [SerializeField] protected float currentEmissionIntensity = 0f;
     [SerializeField] protected float minEmissionIntensity = 0.02f; // The less the value the lesser the final intensity of weapon
     private float maxEmissionIntensity; // max brightness (original brightness)
@@ -43,9 +44,19 @@ public class ScatterWeapons : Weapon
         base.Awake();
         WeaponAudioSource = GetComponent<AudioSource>();
 
+        OverHeatMaterial = new Material[overheatRenderer.Length];
+
+        for (int i = 0; i < overheatRenderer.Length; i++)
+        {
+            OverHeatMaterial[i] = overheatRenderer[i].material;
+        }
+
         if (OverHeatMaterial != null)
         {
-            originalEmissionColor = OverHeatMaterial.GetColor(EmissionColorID);
+            for (int i = 0; i < OverHeatMaterial.Length; i++)
+            {
+                originalEmissionColor = OverHeatMaterial[i].GetColor(EmissionColorID);
+            }
 
             // Optional: derive brightness from color
             float baseIntensity = (originalEmissionColor.r + originalEmissionColor.g + originalEmissionColor.b) / 3f;
@@ -145,7 +156,8 @@ public class ScatterWeapons : Weapon
             cooldownCoroutine = null;
         }
 
-        OverHeatMaterial.SetColor(EmissionColorID, originalEmissionColor);
+        for (int i = 0; i < OverHeatMaterial.Length; i++)
+            OverHeatMaterial[i].SetColor(EmissionColorID, originalEmissionColor);
     }
 
     private void UpdateEmissionBasedOnHeat() // Extra adjustment refinement , checks based on current heat value
@@ -159,7 +171,8 @@ public class ScatterWeapons : Weapon
     private void UpdateEmission(float strength)
     {
         var emissionColor = originalEmissionColor * strength;
-        OverHeatMaterial.SetColor(EmissionColorID, emissionColor);
+        for (int i = 0; i < OverHeatMaterial.Length; i++)
+            OverHeatMaterial[i].SetColor(EmissionColorID, emissionColor);
         //Debug.Log($"[Heat: {currentHeat:F1}] Emission RGB: {emissionColor.r:F2}, {emissionColor.g:F2}, {emissionColor.b:F2}");
     }
 }

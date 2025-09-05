@@ -21,6 +21,7 @@ public class BomberEnemy : SimpleEnemyBase
 
     private void SelfDestruct()
     {
+        Invoke(nameof(HandleDeath),0.1f);
         FXManager.SelfDestructingVFX(0.5f);
         Destroy(gameObject, selfDestructTime);
     }

@@ -1159,18 +1159,20 @@ MonoBehaviour:
   bulletSpawns:
   - {fileID: 5471555653866774896}
   - {fileID: 5194965613116606497}
-  shootingForce: 15
+  shootingForce: 20
   recoilForce: 0
   damage: 50
-  spreadAngle: 1
+  spreadAngle: 1.3
   muzzleVFX: {fileID: 3661185807493288774, guid: 575fb9697aa289c4ab66233c0fc2e339, type: 3}
-  fireRate: 3
+  fireRate: 2
   maxHeatLimit: 100
   coolDownRate: 40
   overheatResistance: 6
   currentHeat: 0
   isOverheated: 0
-  OverHeatMaterial: {fileID: 2100000, guid: 066942e92b68a9c4183550e5bb7c283e, type: 2}
+  overheatRenderer:
+  - {fileID: 7608447227876064582}
+  - {fileID: 895379757923965573}
   currentEmissionIntensity: 0
   minEmissionIntensity: 0.02
   projectilePrefab: {fileID: 8011422273124021194, guid: d0e4ee93d47d5aa4ba5c6d5a5c893eda, type: 3}
