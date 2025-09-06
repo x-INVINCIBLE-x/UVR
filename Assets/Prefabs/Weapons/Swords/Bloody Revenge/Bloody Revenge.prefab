@@ -4911,10 +4911,12 @@ GameObject:
   - component: {fileID: 4848228943012869232}
   - component: {fileID: 5043665500082942199}
   - component: {fileID: 105470632370470269}
+  - component: {fileID: 4218204624332217853}
   - component: {fileID: 1451788115017666827}
   - component: {fileID: 8684417984725405047}
   - component: {fileID: 1496598303966930909}
   - component: {fileID: 3868670680027319624}
+  - component: {fileID: 7602131288416114617}
   m_Layer: 10
   m_Name: Bloody Revenge
   m_TagString: Untagged
@@ -4984,14 +4986,35 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16384
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.12583034, y: 0.29625875, z: 1.8292603}
-  m_Center: {x: 0, y: 0, z: 0.2512293}
+  m_Size: {x: 0.07836429, y: 0.29625875, z: 0.5068798}
+  m_Center: {x: 0.00000072795706, y: 0, z: -0.4099605}
+--- !u!65 &4218204624332217853
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733979014457306346}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.12583034, y: 0.29625875, z: 1.2685117}
+  m_Center: {x: -0.0000013660546, y: 0, z: 0.5316031}
 --- !u!82 &1451788115017666827
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5224,7 +5247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7f7ea6bcdf143418b3a878536b549f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 4
+  fireRate: 2
   maxHeatLimit: 100
   coolDownRate: 100
   overheatResistance: 50
@@ -5236,14 +5259,16 @@ MonoBehaviour:
   maxPitch: 2
   WeaponVFX: {fileID: 334314153268595364}
   WeaponSFX: {fileID: 8300000, guid: b86f14af76b9e60499e3e5f8dfc70338, type: 3}
-  SlashVFX: {fileID: 6973394827918343032, guid: c85b89e20bd140b4bb3e54f718104843, type: 3}
+  SlashVFX: {fileID: 7842369755937919025, guid: 4c85e07f3a750f546a6eb2ad9a08fe5b, type: 3}
   velovityThreshold: 3
   slashSpawn: {fileID: 2543457897019082775}
   force: 20
   movetoOffset: {x: 0, y: 0, z: 10}
   moveDuration: 2
   rotationSpeed: 0.3
-  sliceAttackType: 1
+  sliceAttackType: 0
+  lifeTime: 3
+  attackData: {fileID: 11400000, guid: a0a9d27b0c8856c4ab6bb4e6acc47e62, type: 2}
 --- !u!114 &3868670680027319624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5264,7 +5289,22 @@ MonoBehaviour:
     m_Bits: 2048
   velocityEstimator: {fileID: 1906161421425008561}
   crossSectionMaterial: {fileID: 2100000, guid: eccfa80f317ecc84487be0e91dc9ef9c, type: 2}
-  cutForce: 200
+  cutForce: 500
+--- !u!114 &7602131288416114617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733979014457306346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
 --- !u!1 &2333670994080230329
 GameObject:
   m_ObjectHideFlags: 0
@@ -5454,7 +5494,7 @@ Transform:
   m_GameObject: {fileID: 5953493610022150700}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.825}
+  m_LocalPosition: {x: 0, y: -0.065, z: 0.956}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

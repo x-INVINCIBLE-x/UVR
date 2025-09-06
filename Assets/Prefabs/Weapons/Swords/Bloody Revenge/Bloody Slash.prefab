@@ -24563,10 +24563,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7502270796110716741}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -24692,6 +24692,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652403e0f71b4104a862e3c616b7a377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 0
+  lifeTime: 4
   impactVFX: {fileID: 340623526033932231, guid: c3109a84378dd9a4b8255e919d3f9bd4, type: 3}
   impactSFX: {fileID: 8300000, guid: b86f14af76b9e60499e3e5f8dfc70338, type: 3}
+  impactDuration: 0.5
+  blastRadius: 0

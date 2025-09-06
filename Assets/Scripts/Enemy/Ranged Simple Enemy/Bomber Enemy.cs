@@ -23,6 +23,6 @@ public class BomberEnemy : SimpleEnemyBase
     {
         Invoke(nameof(HandleDeath),0.1f);
         FXManager.SelfDestructingVFX(0.5f);
-        Destroy(gameObject, selfDestructTime);
+        ObjectPool.instance.ReturnObject(gameObject,selfDestructTime);
     }
 }

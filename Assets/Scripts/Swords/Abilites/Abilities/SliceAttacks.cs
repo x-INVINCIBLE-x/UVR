@@ -7,7 +7,7 @@ public class SliceAttacks : WeaponAbilitiesBase
 {
     [Header("Refernces and Settings")]
     [Space]
-    public GameObject SlashVFX;
+    public PhysicsProjectile SlashVFX;
     [SerializeField] private float velovityThreshold = 3f;
     [SerializeField] private Transform slashSpawn;
     [SerializeField] private float force;
@@ -17,8 +17,12 @@ public class SliceAttacks : WeaponAbilitiesBase
     private Vector3 startPosition;
     [SerializeField] private float moveDuration;
     [SerializeField] private float rotationSpeed;
-   
+
+    [Header("Slash Data")]
     public TypesOfSlices sliceAttackType;
+    [SerializeField] private float lifeTime;
+    [SerializeField] private AttackData attackData;
+
     public enum TypesOfSlices
     {
         Straight,
@@ -75,13 +79,14 @@ public class SliceAttacks : WeaponAbilitiesBase
             Debug.Log(velocity);
             //Instantiate(SlashVFX, gameObject.transform.position,Quaternion.identity);
             //Destroy(SlashVFX,1f);*
-            GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX, slashSpawn);
+            GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX.gameObject, slashSpawn);
+            newSlashVFX.GetComponent<PhysicsProjectile>().Init(lifeTime, attackData);
             Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
 
-            slashBody.linearVelocity = Camera.main.transform.forward * force;
+            slashBody.linearVelocity = slashSpawn.transform.forward * force;
 
             SlashAudio();
-            ObjectPool.instance.ReturnObject(SlashVFX,2f);
+            ObjectPool.instance.ReturnObject(SlashVFX.gameObject,2f);
 
         }
 
@@ -102,7 +107,8 @@ public class SliceAttacks : WeaponAbilitiesBase
         ApplyHeat();
         SlashAudio();
 
-        GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX, slashSpawn);
+        GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX.gameObject, slashSpawn);
+        newSlashVFX.GetComponent<PhysicsProjectile>().Init(lifeTime, attackData);
         Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
         slashBody.linearVelocity = Camera.main.transform.forward * force;
         ObjectPool.instance.ReturnObject(newSlashVFX, 2f);   
@@ -121,7 +127,8 @@ public class SliceAttacks : WeaponAbilitiesBase
         ApplyHeat();
         SlashAudio();
 
-        GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX, slashSpawn);
+        GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX.gameObject, slashSpawn);
+        newSlashVFX.GetComponent<PhysicsProjectile>().Init(lifeTime, attackData);
         Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
 
         // Postion Estimations
@@ -152,7 +159,8 @@ public class SliceAttacks : WeaponAbilitiesBase
         SlashAudio();
 
         WeaponVFX.SetActive(true);
-        GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX, slashSpawn);
+        GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX.gameObject, slashSpawn);
+        newSlashVFX.GetComponent<PhysicsProjectile>().Init(lifeTime, attackData);
         Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
         
         // Postion Estimations

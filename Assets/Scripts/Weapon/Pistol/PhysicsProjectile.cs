@@ -33,6 +33,8 @@ public class PhysicsProjectile : Projectile
     private void OnEnable()
     {
         damaged.Clear();
+        if (col != null)
+            col.enabled = true;
     }
 
     private void Start()
