@@ -42848,7 +42848,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 121.09, y: 4.49, z: 103.45011}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5542034374774193626}
@@ -43190,11 +43190,10 @@ MonoBehaviour:
   sightRange: 12
   attackRange: 7.15
   attackCooldownTime: 5
-  magicChargeTime: 3
   walkpointRange: 4
   patrollwaitTime: 1
   walkPoint: {x: 0, y: 0, z: 0}
-  speed: 3
+  walkSpeed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -43215,6 +43214,9 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: 7e68645e316d39444be8bf430f49f7f8, type: 3}
   enemyHitCry: {fileID: 8300000, guid: 587b7741f3ac52f48816a95bc096bf9d, type: 3}
   enemyDeath: {fileID: 8300000, guid: b8833599be5e4374595ac5b913988914, type: 3}
+  magicChargeTime: 3
+  minSpeedMultiplier: 0.1
+  maxSpeedMultiplier: 3
   volleyProjectile: {fileID: 5916890302093399832, guid: de5b1b6a91a278f468d797063a5c3249, type: 3}
   projectileSpawnPosition: {fileID: 2312421866680037983}
 --- !u!114 &5159175092092209468
