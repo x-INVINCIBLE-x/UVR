@@ -46,16 +46,16 @@ public class PlayerUI : MonoBehaviour
     }
 
     private void HandleStatusChange(AilmentType type, bool isActivated, float effectAmount)
-    {
+    {   
         if (isActivated == true)
-        {
+        {   
             fullScreenEffect.ActivateFullscreenEffect(type);
             player.Stats.GetAilmentStatus(type).AilmentEffectEnded += HandleEffectEnd;
         }
     }
 
     private void HandleEffectEnd(AilmentType type)
-    {
+    {   
         fullScreenEffect.DeactivateFullscreenEffect();
         player.Stats.GetAilmentStatus(type).AilmentEffectEnded -= HandleEffectEnd;
     }
