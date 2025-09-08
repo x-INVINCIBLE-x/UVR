@@ -38,7 +38,8 @@ public enum AilmentType
     Blitz,
     Hex,
     Radiance,
-    Gaia
+    Gaia,
+    None
 }
 
 [System.Serializable]
@@ -250,11 +251,30 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
     public DamageResult TakeDamage(AttackData attackData)
     {
-        TakeAilmentDamage(attackData);
-        return TakePhysicalDamage(attackData);
+        AilmentType ailmentType = GetAilmentType(attackData);
+        TakeAilmentDamage(attackData, ailmentType);
+        return TakePhysicalDamage(attackData, ailmentType);
     }
 
-    private DamageResult TakePhysicalDamage(AttackData attackData)
+    private AilmentType GetAilmentType(AttackData attackData)
+    {
+        if (attackData.ignisDamage.Value > 0)
+            return AilmentType.Ignis;
+        else if (attackData.frostDamage.Value > 0)
+            return AilmentType.Frost;
+        else if (attackData.blitzDamage.Value > 0)
+            return AilmentType.Blitz;
+        else if (attackData.hexDamage.Value > 0)
+            return AilmentType.Hex;
+        else if (attackData.radianceDamage.Value > 0)
+            return AilmentType.Radiance;
+        else if (attackData.gaiaDamage.Value > 0)
+            return AilmentType.Gaia;
+        else 
+            return AilmentType.None;
+    }
+
+    private DamageResult TakePhysicalDamage(AttackData attackData, AilmentType ailment)
     {
         if (attackData.physicalDamage.Value < 0)
         {
@@ -262,37 +282,43 @@ public class CharacterStats : MonoBehaviour, IDamageable
             return null;
         }
 
-        float reducedDamage = Mathf.Max(0, attackData.physicalDamage.Value - physicalDef.Value);
+        float finalDamage = attackData.physicalDamage.Value - physicalDef.Value;
+        if (ailment != AilmentType.None)
+        {
+            finalDamage -= GetAilmentStatus(ailment).defence.Value;
+        }
 
-        return ReduceHealthBy(reducedDamage);
+        finalDamage = Mathf.Max(1, finalDamage);
+
+        return ReduceHealthBy(finalDamage);
     }
 
-    private void TakeAilmentDamage(AttackData attackData)
+    private void TakeAilmentDamage(AttackData attackData, AilmentType ailment)
     {
-        float _ignisAtk = attackData.ignisDamage.Value;
-        float _frostAtk = attackData.frostDamage.Value;
-        float _blitzAtk = attackData.blitzDamage.Value;
-        float _hexAtk = attackData.hexDamage.Value;
-        float _radianceAtk = attackData.radianceDamage.Value;
-        float _gaiaAtk = attackData.gaiaDamage.Value;
+        //float _ignisAtk = attackData.ignisDamage.Value;
+        //float _frostAtk = attackData.frostDamage.Value;
+        //float _blitzAtk = attackData.blitzDamage.Value;
+        //float _hexAtk = attackData.hexDamage.Value;
+        //float _radianceAtk = attackData.radianceDamage.Value;
+        //float _gaiaAtk = attackData.gaiaDamage.Value;
 
-        float damage = _ignisAtk + _frostAtk + _blitzAtk + _hexAtk + _radianceAtk + _gaiaAtk;
+        //float damage = _ignisAtk + _frostAtk + _blitzAtk + _hexAtk + _radianceAtk + _gaiaAtk;
 
-        if (damage == 0)
+        if (ailment == AilmentType.None)
             return;
 
-        if (_ignisAtk > 0)
-            TryApplyAilmentEffect(_ignisAtk, attackData.burnDamage, ref ignisStatus, AilmentType.Ignis);
-        else if (_frostAtk > 0)
-            TryApplyAilmentEffect(_frostAtk, attackData.frostSpeedReduction, ref frostStatus, AilmentType.Frost);
-        else if (_blitzAtk > 0)
-            TryApplyAilmentEffect(_blitzAtk, attackData.blitzSurroundingDamage, ref blitzStatus, AilmentType.Blitz);
-        else if (_hexAtk > 0)
-            TryApplyAilmentEffect(_hexAtk, 0f, ref hexStatus, AilmentType.Hex);
-        else if (_gaiaAtk > 0)
-            TryApplyAilmentEffect(_gaiaAtk, attackData.gaiaHealAmount, ref gaiaStatus, AilmentType.Gaia);
-        else if (_radianceAtk > 0)
-            TryApplyAilmentEffect(_radianceAtk, 0f, ref radianceStatus, AilmentType.Radiance);
+        if (ailment == AilmentType.Ignis)
+            TryApplyAilmentEffect(attackData.ignisDamage.Value, attackData.burnDamage, ref ignisStatus, AilmentType.Ignis);
+        else if (ailment == AilmentType.Frost)
+            TryApplyAilmentEffect(attackData.frostDamage.Value, attackData.frostSpeedReduction, ref frostStatus, AilmentType.Frost);
+        else if (ailment == AilmentType.Blitz)
+            TryApplyAilmentEffect(attackData.blitzDamage.Value, attackData.blitzSurroundingDamage, ref blitzStatus, AilmentType.Blitz);
+        else if (ailment == AilmentType.Hex)
+            TryApplyAilmentEffect(attackData.hexDamage.Value, 0f, ref hexStatus, AilmentType.Hex);
+        else if (ailment == AilmentType.Gaia)
+            TryApplyAilmentEffect(attackData.gaiaDamage.Value, attackData.gaiaHealAmount, ref gaiaStatus, AilmentType.Gaia);
+        else if (ailment == AilmentType.Radiance)
+            TryApplyAilmentEffect(attackData.radianceDamage.Value, 0f, ref radianceStatus, AilmentType.Radiance);
     }
 
     protected virtual void TryApplyAilmentEffect(float ailmentAtk, float ailmentEffect, ref AilmentStatus ailmentStatus, AilmentType ailmentType)
@@ -303,6 +329,9 @@ public class CharacterStats : MonoBehaviour, IDamageable
         float ailmentDefence = ailmentStatus.defence.Value;
         float effectAmount = ailmentAtk - ailmentDefence;
         //ReduceHealthBy(effectAmount); // This line is commented out to prevent direct health reduction from ailment effects
+
+        if (effectAmount <= 0)
+            return;
 
         ailmentStatus.Value = Mathf.Min(ailmentStatus.ailmentLimit + ailmentLimitOffset, ailmentStatus.Value + effectAmount);
         StartCoroutine(ailmentStatus.ReduceValueOverTime());
