@@ -46,11 +46,11 @@ public enum AilmentType
 public class AilmentStatus
 {
     [HideInInspector] public AilmentType Type;
-    public float Value;
+    [HideInInspector] public float Value;
     public Stat resistance;
     public Stat defence;
     public bool isMaxed = false;
-    public float ailmentLimit = 100;
+    [HideInInspector] public float ailmentLimit = 100;
     public event Action<AilmentType> AilmentEffectEnded;
     public IEnumerator ReduceValueOverTime()
     {
