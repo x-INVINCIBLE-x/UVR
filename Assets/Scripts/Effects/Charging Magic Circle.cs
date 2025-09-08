@@ -13,7 +13,7 @@ public class ChargingMagicCircle : MonoBehaviour
     public float MaxChargeTime = 5f;   //  Max Charge Time for the  weapon
     private float circlePerSecond;
 
-    private void Awake()
+    private void Start()
     {
         TotalMagicCircles = MagicCircles.Length; // Number of Circle in the list that we want to show
         circlePerSecond = MaxChargeTime/TotalMagicCircles; // Circle to be spawned (Time for spawning circle)
@@ -22,18 +22,9 @@ public class ChargingMagicCircle : MonoBehaviour
 
 
     private void Update()
-    {
-        if (isHeld)
-        {
+    {     
             ChargeTimeElapsed += Time.deltaTime;
-            EnableMagicCircles();
-        }
-
-        else
-        {
-            ChargeTimeElapsed = 0f;
-        }
-        
+            EnableMagicCircles();    
     }
 
     public void EnableMagicCircles()
@@ -45,7 +36,23 @@ public class ChargingMagicCircle : MonoBehaviour
             MagicCircles[i].SetActive(i < circlesToEnable); // As long as the value of the current element of the array is less than circlesToEnable then it will activate
         }
     }
+    private void ResetMagicCircle()
+    {
+        ChargeTimeElapsed = 0f;
+
+        foreach (GameObject circle in MagicCircles)
+        {
+            if (circle != null)
+            {
+                circle.SetActive(false);
+            }
+        }
+    }
 
 
-    
+    private void OnDisable()
+    {
+        ResetMagicCircle();
+    }
+
 }
