@@ -52,13 +52,19 @@ public class AilmentStatus
     public bool isMaxed = false;
     [HideInInspector] public float ailmentLimit = 100;
     public event Action<AilmentType> AilmentEffectEnded;
-    public IEnumerator ReduceValueOverTime()
+    [HideInInspector] public bool isActive = false;
+
+    public IEnumerator ReduceValueOverTime(float resistance = -1)
     {
+        if (resistance < 0)
+            resistance = this.resistance.Value;
+
         while (Value > 0)
         {
+            isActive = true;
             if (Value > 0)
             {
-                Value -= resistance.Value * Time.deltaTime;
+                Value -= resistance * Time.deltaTime;
 
                 if (Value <= 0)
                 {
@@ -73,6 +79,8 @@ public class AilmentStatus
             }
             yield return null;
         }
+
+        isActive = false;
     }
 
     public void Reset()
@@ -84,12 +92,12 @@ public class AilmentStatus
 [System.Serializable]
 public class DeathDefice
 {
-    public DeathDefice(int amount, object source) 
+    public DeathDefice(int amount, object source)
     {
         healthAmount = amount;
         this.source = source;
     }
-    
+
     public object source;
     public int healthAmount;
 }
@@ -129,6 +137,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
     public AilmentStatus gaiaStatus;
 
     public float ailmentLimitOffset = 10;
+    public float maxResistance = 75f;
 
     private float vulnerability = 1f;
     public float Vulnerability
@@ -136,7 +145,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
         get => vulnerability;
         set => vulnerability = value;
     }
-    
+
     public float currentHealth;
     public float currentStamina;
 
@@ -270,7 +279,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
             return AilmentType.Radiance;
         else if (attackData.gaiaDamage.Value > 0)
             return AilmentType.Gaia;
-        else 
+        else
             return AilmentType.None;
     }
 
@@ -334,7 +343,9 @@ public class CharacterStats : MonoBehaviour, IDamageable
             return;
 
         ailmentStatus.Value = Mathf.Min(ailmentStatus.ailmentLimit + ailmentLimitOffset, ailmentStatus.Value + effectAmount);
-        StartCoroutine(ailmentStatus.ReduceValueOverTime());
+
+        if (!ailmentStatus.isActive)
+            StartCoroutine(ailmentStatus.ReduceValueOverTime());
 
         OnAilmentStatusChange?.Invoke(ailmentType, false, 0f);
 
@@ -342,6 +353,9 @@ public class CharacterStats : MonoBehaviour, IDamageable
             return;
 
         OnAilmentStatusChange?.Invoke(ailmentType, true, ailmentEffect);
+
+        StopCoroutine(ailmentStatus.ReduceValueOverTime());
+        StartCoroutine(ailmentStatus.ReduceValueOverTime(maxResistance));
 
         ApplyAilment(ailmentType, ailmentEffect);
         ailmentStatus.isMaxed = true;
@@ -412,7 +426,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
         {
             deadResult = true;
             return new DamageResult(true, true, 0, this);
-        } 
+        }
 
         if (IsInvincible || isDead)
             return null;
@@ -423,9 +437,9 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
 
-        OnHealthChanged?.Invoke(currentHealth/health.Value);
+        OnHealthChanged?.Invoke(currentHealth / health.Value);
 
-        result = new (true, false, damage, this);
+        result = new(true, false, damage, this);
 
         if (currentHealth == 0f)
         {
@@ -478,7 +492,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
         }
         return null;
     }
-    
+
     public void SetInvincibleFor(float time) => StartCoroutine(MakeInvincibleFor(time));
 
     private IEnumerator MakeInvincibleFor(float time)
@@ -490,7 +504,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
         IsInvincible = false;
     }
 
-    public void AddDeathDefice(int healthAmount, object source) => deathDefices.Add(new (healthAmount, source));
+    public void AddDeathDefice(int healthAmount, object source) => deathDefices.Add(new(healthAmount, source));
 
     public void RemoveDeathDeficesFromSource(object source)
     {

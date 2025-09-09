@@ -9837,10 +9837,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8403486212064752507}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -9876,8 +9876,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.2453959, y: 1.4914954, z: 1.8202982}
-  m_Center: {x: 0, y: 0, z: -0.9950652}
+  m_Size: {x: 0.41384277, y: 1.4914955, z: 0.6611333}
+  m_Center: {x: 0, y: 0, z: -0.12219994}
 --- !u!82 &-9031964753220554389
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9990,6 +9990,8 @@ MonoBehaviour:
   lifeTime: 2
   impactVFX: {fileID: 9034931375999670547, guid: ebc8971da1aad994bad9f21d79e5ee36, type: 3}
   impactSFX: {fileID: 8300000, guid: a8477ad7ee90c1a4394969487e930fe1, type: 3}
+  impactDuration: 0.5
+  blastRadius: 0
 --- !u!1 &8403486212273179138
 GameObject:
   m_ObjectHideFlags: 0
