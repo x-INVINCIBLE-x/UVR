@@ -31970,6 +31970,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8252244853442949313}
   - component: {fileID: 1018100211684614324}
+  - component: {fileID: 301261990844829123}
   - component: {fileID: 5406655697280952366}
   - component: {fileID: 380290307789595545}
   - component: {fileID: 3077707565809712985}
@@ -32032,6 +32033,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &301261990844829123
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5918217600509512548}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.04095562, y: 0.042705443, z: 0.049390413}
+  m_Center: {x: 0, y: 0, z: -0.001153183}
 --- !u!82 &5406655697280952366
 AudioSource:
   m_ObjectHideFlags: 0
@@ -32401,6 +32423,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   frostStatus:
     Type: 0
     Value: 50
@@ -32412,6 +32435,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   blitzStatus:
     Type: 0
     Value: 0
@@ -32423,6 +32447,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   hexStatus:
     Type: 0
     Value: 50
@@ -32434,6 +32459,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   radianceStatus:
     Type: 0
     Value: 0
@@ -32445,6 +32471,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   gaiaStatus:
     Type: 0
     Value: 0
@@ -32456,7 +32483,9 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   ailmentLimitOffset: 10
+  maxResistance: 75
   currentHealth: 0
   currentStamina: 0
   <IsInvincible>k__BackingField: 0

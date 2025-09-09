@@ -6729,7 +6729,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ecb61540c4700884dbcd917f3f425144, type: 2}
-  - {fileID: 2100000, guid: ecb61540c4700884dbcd917f3f425144, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6751,6 +6750,38 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3395125779109168038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5295017886226010467}
+  m_Layer: 14
+  m_Name: Magic Circle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5295017886226010467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3395125779109168038}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.261, z: 3.719}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6918466187217132849}
+  m_Father: {fileID: 4997406183352598140}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3510178798796825284
 GameObject:
   m_ObjectHideFlags: 0
@@ -7011,6 +7042,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5985538458176650169}
   - component: {fileID: 2673925511114185812}
+  - component: {fileID: 3511588570243136833}
   m_Layer: 14
   m_Name: SketchfabUpload_Lightning_12-16.FBX
   m_TagString: Untagged
@@ -7058,6 +7090,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3511588570243136833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695332929651528368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  DissolveMaterial: {fileID: 2100000, guid: ecb61540c4700884dbcd917f3f425144, type: 2}
+  Dissolve: 0
+  defaultMaterials: []
+  dissolveRate: 0.0125
+  RefreshRate: 0.025
+  impactDissolveRate: 0.0125
+  impactDissolveThreshold: 0.5
+  currentDissolve: 0
 --- !u!1 &3719867298979312922
 GameObject:
   m_ObjectHideFlags: 0
@@ -17309,7 +17362,6 @@ GameObject:
   - component: {fileID: 4665725492000243509}
   - component: {fileID: 4910358275126087708}
   - component: {fileID: 8876039665137798731}
-  - component: {fileID: 4098160986052327939}
   - component: {fileID: 2674591347573145302}
   m_Layer: 14
   m_Name: Feliron Turret Radiance
@@ -17335,6 +17387,7 @@ Transform:
   - {fileID: 8722137769134344425}
   - {fileID: 4285532699244928192}
   - {fileID: 4397592668915603927}
+  - {fileID: 5295017886226010467}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6331894853919902489
@@ -17647,8 +17700,8 @@ MonoBehaviour:
     Gold: 0
     Magika: 0
     Experience: 0
-  sightRange: 13
-  attackRange: 10
+  sightRange: 16
+  attackRange: 13
   attackCooldownTime: 2
   walkpointRange: 6
   patrollwaitTime: 8
@@ -17666,7 +17719,7 @@ MonoBehaviour:
   projectileLifeTime: 3
   attackData: {fileID: 11400000, guid: d6884fa4d2d2a7f44bc75bb7956906c2, type: 2}
   enemyStats: {fileID: 8876039665137798731}
-  dissolver: {fileID: 4098160986052327939}
+  dissolver: {fileID: 3511588570243136833}
   surroundingHitRadius: 0
   blitzProjectile: {fileID: 541757065818075778, guid: d1ca0f4b7a96cfd4cb9fa8e793cd7538, type: 3}
   healProjectile: {fileID: 6428853215137849390, guid: 09596badd6e771241a83d74e0a091a33, type: 3}
@@ -17695,7 +17748,7 @@ MonoBehaviour:
   characterUI: {fileID: 3920013882998920387}
   characterStatusVfx: {fileID: 884077143121756133}
   selfDestructVFX: {fileID: 0}
-  MagicCircle: {fileID: 0}
+  MagicCircle: {fileID: 3395125779109168038}
   minScale: {x: 0.1, y: 0.1, z: 0.1}
   midScale: {x: 1, y: 1, z: 1}
   maxScale: {x: 2, y: 2, z: 2}
@@ -17756,6 +17809,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   frostStatus:
     Type: 0
     Value: 0
@@ -17767,6 +17821,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   blitzStatus:
     Type: 0
     Value: 0
@@ -17778,6 +17833,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   hexStatus:
     Type: 0
     Value: 50
@@ -17789,6 +17845,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   radianceStatus:
     Type: 0
     Value: 0
@@ -17800,6 +17857,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   gaiaStatus:
     Type: 0
     Value: 0
@@ -17811,32 +17869,13 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   ailmentLimitOffset: 10
+  maxResistance: 75
   currentHealth: 0
   currentStamina: 0
   <IsInvincible>k__BackingField: 0
   deathDefices: []
---- !u!114 &4098160986052327939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4257354433657515815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Meshes: []
-  DissolveMaterial: {fileID: 2100000, guid: ecb61540c4700884dbcd917f3f425144, type: 2}
-  Dissolve: 0
-  defaultMaterials: []
-  dissolveRate: 0.0125
-  RefreshRate: 0.025
-  impactDissolveRate: 0.0125
-  impactDissolveThreshold: 0.5
-  currentDissolve: 0
 --- !u!114 &2674591347573145302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49017,3 +49056,81 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &6613278526238974085
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5295017886226010467}
+    m_Modifications:
+    - target: {fileID: 772580304266951493, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_Name
+      value: Charging Magic Circle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.007
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.007
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.007
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821372753645219920, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+      propertyPath: MaxChargeTime
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+--- !u!4 &6918466187217132849 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4306639232997375412, guid: a986632d7ad4dc449a411646d0495cc4, type: 3}
+  m_PrefabInstance: {fileID: 6613278526238974085}
+  m_PrefabAsset: {fileID: 0}

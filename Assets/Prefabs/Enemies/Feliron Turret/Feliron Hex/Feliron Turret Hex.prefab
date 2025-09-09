@@ -27384,6 +27384,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4432594832648803991}
   - component: {fileID: 3562148357813152706}
+  - component: {fileID: 7123110654121706493}
   m_Layer: 14
   m_Name: SketchfabUpload_Lightning_12-16.FBX
   m_TagString: Untagged
@@ -27431,6 +27432,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7123110654121706493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5048781054007523608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  DissolveMaterial: {fileID: 2100000, guid: a018cd0e72fac914e9b74d393e7087bb, type: 2}
+  Dissolve: 0
+  defaultMaterials: []
+  dissolveRate: 0.0125
+  RefreshRate: 0.025
+  impactDissolveRate: 0.0125
+  impactDissolveThreshold: 0.5
+  currentDissolve: 0
 --- !u!1 &5254856334469183785
 GameObject:
   m_ObjectHideFlags: 0
@@ -27602,7 +27624,6 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a018cd0e72fac914e9b74d393e7087bb, type: 2}
   - {fileID: 2100000, guid: a018cd0e72fac914e9b74d393e7087bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -38543,7 +38564,6 @@ GameObject:
   - component: {fileID: 4157655835013244023}
   - component: {fileID: 1594450298228545570}
   - component: {fileID: 1972249252508037630}
-  - component: {fileID: 8932367073754189651}
   - component: {fileID: 5692904090053902468}
   m_Layer: 14
   m_Name: Feliron Turret Hex
@@ -38569,6 +38589,7 @@ Transform:
   - {fileID: 802335019461210877}
   - {fileID: 789934094961420930}
   - {fileID: 2654168400682403631}
+  - {fileID: 232772942521736310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3158421392307220423
@@ -38881,9 +38902,9 @@ MonoBehaviour:
     Gold: 0
     Magika: 0
     Experience: 0
-  sightRange: 13
-  attackRange: 10
-  attackCooldownTime: 2
+  sightRange: 16
+  attackRange: 12
+  attackCooldownTime: 1
   walkpointRange: 7
   patrollwaitTime: 8
   walkPoint: {x: 0, y: 0, z: 0}
@@ -38900,7 +38921,7 @@ MonoBehaviour:
   projectileLifeTime: 3
   attackData: {fileID: 11400000, guid: f7eb02cda991d254ea669a90c1893348, type: 2}
   enemyStats: {fileID: 1972249252508037630}
-  dissolver: {fileID: 8932367073754189651}
+  dissolver: {fileID: 7123110654121706493}
   surroundingHitRadius: 0
   blitzProjectile: {fileID: 541757065818075778, guid: d1ca0f4b7a96cfd4cb9fa8e793cd7538, type: 3}
   healProjectile: {fileID: 6428853215137849390, guid: 09596badd6e771241a83d74e0a091a33, type: 3}
@@ -38908,7 +38929,7 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: 9ddc256f25e32e54094938435ef83eea, type: 3}
   enemyHitCry: {fileID: 8300000, guid: 4902e3b48ea8aec44b9ce3e78a97b945, type: 3}
   enemyDeath: {fileID: 8300000, guid: 5e93b98a854aeed408f326a04a47a8c6, type: 3}
-  magicChargeTime: 2
+  magicChargeTime: 4
   minSpeedMultiplier: 0.1
   maxSpeedMultiplier: 3
   volleyProjectile: {fileID: 5916890302093399832, guid: db188dc0b4dba4b4ba481e167824e433, type: 3}
@@ -38928,7 +38949,7 @@ MonoBehaviour:
   characterUI: {fileID: 1088346740851036472}
   characterStatusVfx: {fileID: 735232809548154710}
   selfDestructVFX: {fileID: 0}
-  MagicCircle: {fileID: 0}
+  MagicCircle: {fileID: 9008179369561879419}
   minScale: {x: 0.1, y: 0.1, z: 0.1}
   midScale: {x: 1, y: 1, z: 1}
   maxScale: {x: 2, y: 2, z: 2}
@@ -38989,6 +39010,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   frostStatus:
     Type: 0
     Value: 0
@@ -39000,6 +39022,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   blitzStatus:
     Type: 0
     Value: 0
@@ -39011,6 +39034,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   hexStatus:
     Type: 0
     Value: 50
@@ -39022,6 +39046,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   radianceStatus:
     Type: 0
     Value: 0
@@ -39033,6 +39058,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   gaiaStatus:
     Type: 0
     Value: 0
@@ -39044,32 +39070,13 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   ailmentLimitOffset: 10
+  maxResistance: 75
   currentHealth: 0
   currentStamina: 0
   <IsInvincible>k__BackingField: 0
   deathDefices: []
---- !u!114 &8932367073754189651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8529879004403947166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Meshes: []
-  DissolveMaterial: {fileID: 2100000, guid: a018cd0e72fac914e9b74d393e7087bb, type: 2}
-  Dissolve: 0
-  defaultMaterials: []
-  dissolveRate: 0.0125
-  RefreshRate: 0.025
-  impactDissolveRate: 0.0125
-  impactDissolveThreshold: 0.5
-  currentDissolve: 0
 --- !u!114 &5692904090053902468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44086,6 +44093,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3844569953575179775}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9008179369561879419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 232772942521736310}
+  m_Layer: 14
+  m_Name: Magic Circle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &232772942521736310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9008179369561879419}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.51, z: 3.86}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1614123838558791882}
+  m_Father: {fileID: 3844569953575179775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9033191487058905527
 GameObject:
   m_ObjectHideFlags: 0
@@ -49016,3 +49055,81 @@ MonoBehaviour:
   ShockStatusEffect: {fileID: 3755952264205399887}
   BlightStatusEffect: {fileID: 585544334763958497}
   FrenzyStatusEffect: {fileID: 4951876162851263002}
+--- !u!1001 &1269859389483213888
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 232772942521736310}
+    m_Modifications:
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.008
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.008
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.008
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6126482031448233581, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: MaxChargeTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8443287053523450047, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+      propertyPath: m_Name
+      value: Charging Magic Circle Hex
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+--- !u!4 &1614123838558791882 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 574762519082437770, guid: fa57e496c9e243a4395b6d432e72ed53, type: 3}
+  m_PrefabInstance: {fileID: 1269859389483213888}
+  m_PrefabAsset: {fileID: 0}

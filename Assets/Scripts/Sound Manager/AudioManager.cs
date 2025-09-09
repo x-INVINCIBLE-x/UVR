@@ -92,7 +92,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // Play Sfx Sounds in 3d
-    public void PlaySFX3d(AudioSource sfxSource, AudioClip sfxClip)
+    public void PlaySFX3d(AudioSource sfxSource, AudioClip sfxClip , float volume = 1)
     {
         if (sfxClip == null) return;
 
@@ -105,11 +105,12 @@ public class AudioManager : MonoBehaviour
     }
 
     // Play SFX sounds in 2d
-    public void PlaySFX2d(AudioClip sfxClip, float volume)
+    public void PlaySFX2d(AudioSource sfxSource, AudioClip sfxClip , float volume)
     {
         if (sfxClip == null) return;
 
         // Stop any loop before playing one-shot
+        sfxSource.spatialBlend = 0; // 2d Sound
         sfxSource.loop = false;
         sfxSource.Stop();
 
@@ -117,7 +118,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // Play SFX with Charging effect
-    public void PlaySFXChargingSound(AudioSource sfxSource, AudioClip sfxClip, float ChargeTime)
+    public void PlaySFXChargingSound3d(AudioSource sfxSource, AudioClip sfxClip, float ChargeTime)
     {
         if (sfxClip == null) return;
 
@@ -206,10 +207,12 @@ public class AudioManager : MonoBehaviour
     {
         float timer = 0.0f;
         activeSource.volume = 0; // Setting of volume to zero when starting charging
+        activeSource.clip = sfxClip;
+        activeSource.Play();
 
-        for(timer = 0 ; timer <= ChargeTime; timer += Time.deltaTime)
+        for (timer = 0 ; timer <= ChargeTime; timer += Time.deltaTime)
         {
-            activeSource.volume += (timer / ChargeTime);
+            activeSource.volume = (timer / ChargeTime);
             yield return null;
         }
         activeSource.Stop(); // End sound after completion

@@ -53,19 +53,19 @@ public class FullscreenEffectController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            ActivateFullscreenEffect(AilmentType.Frost);
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            ActivateFullscreenEffect(AilmentType.Gaia);
-        }
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    ActivateFullscreenEffect(AilmentType.Frost);
+        //}
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    ActivateFullscreenEffect(AilmentType.Gaia);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            DeactivateFullscreenEffect();
-        }
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    DeactivateFullscreenEffect();
+        //}
     }
 
     public void ActivateFullscreenEffect(AilmentType ailmentType)
