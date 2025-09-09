@@ -30,6 +30,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource musicSource2;
     private AudioSource sfxSource;
     private Coroutine musicCoroutine;
+    private Coroutine sfxCoroutine;
 
     private bool isPlayingMusicSource1; // if it is true then musicSource is playing , If it is false then musicSource 2 is playing
 
@@ -71,6 +72,66 @@ public class AudioManager : MonoBehaviour
         musicCoroutine = StartCoroutine(UpdateMusicWithFade(activeSource, newClip, transitionTime));
     }
 
+    // Play SFX sounds in 3d with Loop
+    public void PlaySFXLoop3d(AudioSource sfxSource, AudioClip sfxClip, bool play)
+    {
+        if (sfxClip == null) return;
+
+        sfxSource.loop = true;
+        sfxSource.spatialBlend = 1; //3d
+        sfxSource.clip = sfxClip;
+        // Check if to play audioclip
+        if (play)
+        {
+            sfxSource.Play();
+        }
+        else
+        {
+            sfxSource.Stop();
+        }
+    }
+
+    // Play Sfx Sounds in 3d
+    public void PlaySFX3d(AudioSource sfxSource, AudioClip sfxClip)
+    {
+        if (sfxClip == null) return;
+
+        // Stop any loop before playing one-shot
+        sfxSource.loop = false;
+        sfxSource.spatialBlend = 1; // 3d sound 
+        //sfxSource.Stop();
+
+        sfxSource.PlayOneShot(sfxClip);
+    }
+
+    // Play SFX sounds in 2d
+    public void PlaySFX2d(AudioClip sfxClip, float volume)
+    {
+        if (sfxClip == null) return;
+
+        // Stop any loop before playing one-shot
+        sfxSource.loop = false;
+        sfxSource.Stop();
+
+        sfxSource.PlayOneShot(sfxClip, volume);
+    }
+
+    // Play SFX with Charging effect
+    public void PlaySFXChargingSound(AudioSource sfxSource, AudioClip sfxClip, float ChargeTime)
+    {
+        if (sfxClip == null) return;
+
+        sfxSource.loop = true;
+        sfxSource.spatialBlend = 1;
+        if (sfxCoroutine != null)
+        {
+            StopCoroutine(sfxCoroutine);
+        }
+
+        sfxCoroutine = StartCoroutine(ChargingSound(sfxSource, sfxClip, ChargeTime)); // Charging coroutine set
+
+    }
+
     public void PlayMusicWithCrossFade(AudioClip newClip, float transitionTime = 1.0f)
     {
         if (newClip == null) return;
@@ -94,7 +155,7 @@ public class AudioManager : MonoBehaviour
         }
         musicCoroutine = StartCoroutine(UpdateMusicWithCrossFade(activeSource,newSource,transitionTime));
     }
-
+    
     private IEnumerator UpdateMusicWithCrossFade(AudioSource original, AudioSource newSource, float transitionTime)
     {
         float t = 0.0f;
@@ -141,37 +202,27 @@ public class AudioManager : MonoBehaviour
         musicCoroutine = null;
     }
 
-    public void PlaySFXLoop(AudioClip sfxClip)
+    private IEnumerator ChargingSound(AudioSource activeSource, AudioClip sfxClip, float ChargeTime)
     {
-        if (sfxClip == null) return;
+        float timer = 0.0f;
+        activeSource.volume = 0; // Setting of volume to zero when starting charging
 
-        sfxSource.loop = true;
-        sfxSource.clip = sfxClip;
-        sfxSource.Play();
+        for(timer = 0 ; timer <= ChargeTime; timer += Time.deltaTime)
+        {
+            activeSource.volume += (timer / ChargeTime);
+            yield return null;
+        }
+        activeSource.Stop(); // End sound after completion
+        sfxCoroutine = null;
     }
 
-    public void PlaySFX(AudioClip sfxClip)
-    {
-        if (sfxClip == null) return;
 
-        // Stop any loop before playing one-shot
-        sfxSource.loop = false;
-        sfxSource.Stop();
-
-        sfxSource.PlayOneShot(sfxClip);
+    public void StopAllSound(AudioSource audioSource)
+    {   // For cases where coroutine doesn't stop
+        
+        //audioSource.Stop();
+        StopAllCoroutines();
     }
-
-    public void PlaySFX(AudioClip sfxClip, float volume)
-    {
-        if (sfxClip == null) return;
-
-        // Stop any loop before playing one-shot
-        sfxSource.loop = false;
-        sfxSource.Stop();
-
-        sfxSource.PlayOneShot(sfxClip, volume);
-    }
-
     // Extra Function for setting Volume
     public void SetMusicVolume(float volume)
     {

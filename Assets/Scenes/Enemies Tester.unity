@@ -336,10 +336,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 9158296212817806835, guid: f428f9f8414055449af587c1ad9de8a4, type: 3}
-      propertyPath: transitionTime
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -488,6 +484,10 @@ PrefabInstance:
     - target: {fileID: 1121493888166942033, guid: c9a7d16ae31c8de4dbb1982d34a9aeb5, type: 3}
       propertyPath: m_Name
       value: Gothic Blood Night Volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 1121493888166942033, guid: c9a7d16ae31c8de4dbb1982d34a9aeb5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4563752941783836265, guid: c9a7d16ae31c8de4dbb1982d34a9aeb5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -993,8 +993,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4370005438645458209, guid: 342d8c61967628541a04456b961334a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1247893576}
   m_SourcePrefab: {fileID: 100100000, guid: 342d8c61967628541a04456b961334a1, type: 3}
+--- !u!1 &1247893575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4370005438645458209, guid: 342d8c61967628541a04456b961334a1, type: 3}
+  m_PrefabInstance: {fileID: 1247893574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1247893576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247893575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c830d98a0b201784cb0933b74d48e706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainAudioSource: {fileID: 0}
+  MainMenuUI: {fileID: 0}
+  SubMenuUI: {fileID: 0}
+  Touch: {fileID: 0}
 --- !u!1 &1370150056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,6 +1325,63 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: a9bda4e390b5f3b429accf29d1031dcb, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1001 &1968970227
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1181040923935555437, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_Name
+      value: Goblin Shield Frost
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 131.69089
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 81.89456
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.005908545
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.99998254
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -179.323
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555683125722035987, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 96e0d33cc9fa4b94e9113a762e210d7f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1314,3 +1395,4 @@ SceneRoots:
   - {fileID: 1370150060}
   - {fileID: 51442300}
   - {fileID: 1655526726}
+  - {fileID: 1968970227}

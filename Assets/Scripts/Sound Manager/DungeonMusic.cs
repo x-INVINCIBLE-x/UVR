@@ -42,7 +42,7 @@ public class DungeonMusic : MonoBehaviour
         if (!inCombat)
         {
             inCombat = true;
-            AudioManager.Instance.PlayMusicWithCrossFade(battleTheme[indexBattle], transitionTime);
+            AudioManager.Instance.PlayMusicWithFade(battleTheme[indexBattle], transitionTime);
         }
     }
     
@@ -55,7 +55,7 @@ public class DungeonMusic : MonoBehaviour
         if (inCombat && EnemyEventManager.Instance.ActiveEnemies.Count == 0)
         {
             inCombat = false;
-            AudioManager.Instance.PlayMusicWithCrossFade(dungeonTheme[indexDungeon], transitionTime);
+            AudioManager.Instance.PlayMusicWithFade(dungeonTheme[indexDungeon], transitionTime);
         }
     }
 
