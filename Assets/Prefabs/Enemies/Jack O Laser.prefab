@@ -454,11 +454,10 @@ MonoBehaviour:
   sightRange: 10
   attackRange: 7
   attackCooldownTime: 2
-  magicChargeTime: 2
   walkpointRange: 5
-  patrollwaitTime: 3
+  patrollwaitTime: 6
   walkPoint: {x: 0, y: 0, z: 0}
-  speed: 3
+  walkSpeed: 3
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -479,6 +478,9 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: 7e68645e316d39444be8bf430f49f7f8, type: 3}
   enemyHitCry: {fileID: 8300000, guid: 587b7741f3ac52f48816a95bc096bf9d, type: 3}
   enemyDeath: {fileID: 8300000, guid: b8833599be5e4374595ac5b913988914, type: 3}
+  magicChargeTime: 2
+  minSpeedMultiplier: 0.1
+  maxSpeedMultiplier: 3
   LaserVFX: {fileID: 8476203572993528117, guid: 6568c18c8c205604da5a787e88e47f7f, type: 3}
   projectileSpawn: {fileID: 4229555114348798151}
   LaserStartOffset: {x: 0, y: -2, z: 0}
