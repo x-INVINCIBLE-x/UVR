@@ -8,7 +8,7 @@ public class SliceAttacks : WeaponAbilitiesBase
     [Header("Refernces and Settings")]
     [Space]
     public PhysicsProjectile SlashVFX;
-    [SerializeField] private float velovityThreshold = 3f;
+    [SerializeField] private float velocityThreshold = 3f;
     [SerializeField] private Transform slashSpawn;
     [SerializeField] private float force;
 
@@ -74,7 +74,7 @@ public class SliceAttacks : WeaponAbilitiesBase
     {
         float velocity = velocityEstimator.GetVelocityEstimate().magnitude;
 
-        if (velocity > velovityThreshold)
+        if (velocity > velocityThreshold)
         {
             Debug.Log(velocity);
             //Instantiate(SlashVFX, gameObject.transform.position,Quaternion.identity);
@@ -186,7 +186,7 @@ public class SliceAttacks : WeaponAbilitiesBase
     {
         float velocity = velocityEstimator.GetVelocityEstimate().magnitude;
 
-        if (velocity > velovityThreshold) 
+        if (velocity > velocityThreshold) 
         {
             return true; 
         }

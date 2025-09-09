@@ -11,6 +11,7 @@ public class GroundAttacks : WeaponAbilitiesBase
     public LayerMask Hitable;
     public bool isStillInContact = false;
     public BoxCollider hitBox;
+    [SerializeField] private float velocityThreshold = 3f;
 
     public TypesOfGroundAttacks groundAttackType;
     public enum TypesOfGroundAttacks
@@ -21,9 +22,10 @@ public class GroundAttacks : WeaponAbilitiesBase
     }
 
     protected void Update()
-    {   
+    {
         AllAttacks();
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -67,7 +69,14 @@ public class GroundAttacks : WeaponAbilitiesBase
 
         if (isStillInContact && contactPoint.HasValue && contactNormal.HasValue)
         {
-            if (!CanAttack()) return;
+            if (AbilityEnable == false) return;
+            if (!VelocityChecker()) return; // checks the velocity of the weapon that is swung
+            if (!CanAttack())
+            {
+                WeaponVFX.SetActive(false);
+                return;
+            }
+
             ApplyHeat();
             SlashAudio();
 
@@ -77,8 +86,11 @@ public class GroundAttacks : WeaponAbilitiesBase
 
             // Offset for above the ground
             Vector3 offset = normal * 0.05f;
+            Debug.Log("Ground Attack");
+            GameObject newGroundSplitterVFX = ObjectPool.instance.GetObject(GroundSplitterVFX, point + offset);
+            ObjectPool.instance.ReturnObject(newGroundSplitterVFX, 4f);
 
-            Instantiate(GroundSplitterVFX, point + offset, Quaternion.identity);
+            //Instantiate(GroundSplitterVFX, point + offset, Quaternion.identity);
 
             // Clear contact points
             contactPoint = null;
@@ -90,8 +102,10 @@ public class GroundAttacks : WeaponAbilitiesBase
     protected override void AllAttacks()
     {
         base.AllAttacks();
+
         if (AbilityEnable == true)
-        {
+        {   
+            WeaponVFX.SetActive (true);
             switch (groundAttackType)
             {
                 case TypesOfGroundAttacks.GroundSplitter:
@@ -107,6 +121,10 @@ public class GroundAttacks : WeaponAbilitiesBase
                     break;
             }
         }
+        else
+        {
+            WeaponVFX.SetActive(false);
+        }
         
     }
 
@@ -118,5 +136,17 @@ public class GroundAttacks : WeaponAbilitiesBase
     private void HomingGroundAttack()
     {
         // Implement HomingGroundAttack  
+    }
+
+    private bool VelocityChecker()
+    {
+        float velocity = velocityEstimator.GetVelocityEstimate().magnitude;
+
+        if (velocity > velocityThreshold)
+        {
+            return true;
+        }
+        return false;
+
     }
 }
