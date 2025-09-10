@@ -1,16 +1,21 @@
+using Autodesk.Fbx;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class LaserEnemy : SimpleEnemyBase
 {
     public GameObject LaserVFX;
     public Transform projectileSpawn;
     public Vector3 LaserStartOffset;
+    public CapsuleCollider laserCollider;
 
     private LineRenderer laserRenderer;
     private GameObject currentLaser;
-    private Coroutine laserRoutine;
+    private Coroutine laserRoutine = null;
+    private Coroutine chargeRoutine = null;
     private bool isCharging = false;
+    private bool shouldUpdateLaser = false;
 
     protected override void Update()
     {
@@ -21,14 +26,14 @@ public class LaserEnemy : SimpleEnemyBase
         if (!playerInSightRange && !playerInAttackRange)
         {
             agent.SetDestination(transform.position);
-            if (laserRoutine != null) StopCoroutine(laserRoutine);
+            if (laserRoutine != null) StopRoutines();
             DestroyLaser();
             Patrol();
         }
         else if (playerInSightRange && !playerInAttackRange)
         {
             Chase();
-            if (laserRoutine != null) StopCoroutine(laserRoutine);
+            if (laserRoutine != null) StopRoutines();
             DestroyLaser();
         }
         else if (playerInAttackRange)
@@ -46,6 +51,15 @@ public class LaserEnemy : SimpleEnemyBase
         UpdateLaser();
     }
 
+    private void StopRoutines()
+    {
+        StopCoroutine(laserRoutine);
+        if (chargeRoutine != null)
+        {
+            StopCoroutine(chargeRoutine);
+            chargeRoutine = null;
+        }
+    }
 
     protected override void Attack()
     {
@@ -55,7 +69,8 @@ public class LaserEnemy : SimpleEnemyBase
 
     private void AttackStart()
     {
-        StartCoroutine(ChargeAndFireLaser());
+        if (chargeRoutine != null) return;
+        chargeRoutine = StartCoroutine(ChargeAndFireLaser());
     }
 
     private IEnumerator ChargeAndFireLaser()
@@ -75,10 +90,12 @@ public class LaserEnemy : SimpleEnemyBase
         if (currentLaser != null)
             DestroyLaser();
 
+        laserCollider.gameObject.SetActive(true);
+
         currentLaser = Instantiate(LaserVFX, projectileSpawn);
         laserRenderer = currentLaser.GetComponent<LineRenderer>();
         laserRenderer.SetPosition(0, projectileSpawn.position);
-        laserRenderer.SetPosition(1, Player.position + PlayerBodyOffset);
+        laserRenderer.SetPosition(1, projectileSpawn.position);
 
         // Laser Coroutine for tracking the laser to player
         if (laserRoutine != null) StopCoroutine(laserRoutine);
@@ -86,6 +103,7 @@ public class LaserEnemy : SimpleEnemyBase
 
         isCharging = false;
         vfxSpawned = false;
+        chargeRoutine = null;
     }
 
     private void DestroyLaser()
@@ -98,19 +116,23 @@ public class LaserEnemy : SimpleEnemyBase
         FXManager.DestroyMagicCircleVFX();
         isCharging = false;
         vfxSpawned = false;
+        laserCollider.gameObject.SetActive(false);
     }
 
     private void UpdateLaser()
     {
-        if (laserRenderer != null)
+        if (shouldUpdateLaser && laserRenderer != null)
         {
             laserRenderer.SetPosition(0, projectileSpawn.position);
             laserRenderer.SetPosition(1, Player.position + PlayerBodyOffset);
+            laserCollider.transform.position = (projectileSpawn.position + Player.position + PlayerBodyOffset) / 2;
+            laserCollider.height = Vector3.Distance(projectileSpawn.position, Player.position + PlayerBodyOffset) * 2.2f;
         }
     }
 
     private IEnumerator UpdateLaserPosition()
     {
+        shouldUpdateLaser = false;
         Vector3 startOffset = Player.position + LaserStartOffset;
         float duration = 2f; // can be used to increase the duration for laser to lerp and reach the player
         float time = 0f; //  timer intialization
@@ -118,10 +140,26 @@ public class LaserEnemy : SimpleEnemyBase
         while (time < duration)
         {
             time += Time.deltaTime;
-            Vector3 interpolated = Vector3.Lerp(startOffset, Player.position + PlayerBodyOffset, time / duration);
-            laserRenderer.SetPosition(1, interpolated);
+
+            Vector3 startPoint = projectileSpawn.position;
+            Vector3 endPoint = Vector3.Lerp(startOffset, Player.position + PlayerBodyOffset, time / duration);
+
+            laserRenderer.SetPosition(1, endPoint);
+
+            Vector3 midPoint = (startPoint + endPoint) * 0.5f;
+            laserCollider.transform.position = midPoint;
+
+            Vector3 direction = (endPoint - startPoint).normalized;
+            laserCollider.transform.rotation = Quaternion.LookRotation(direction);
+
+            float length = Vector3.Distance(startPoint, endPoint) * 2.2f;
+            laserCollider.height = length;
+            
+
             yield return null;
         }
+
+        shouldUpdateLaser = true;
     }
 
     protected override void HandleDeath()

@@ -88,7 +88,7 @@ public class MeshDissolver : MonoBehaviour
         }*/
     public void StartDissolver()
     {
-        if (isDissolving)
+        if (isDissolving && dissolveCoroutine != null)
             StopCoroutine(dissolveCoroutine);
 
         isDissolving = true;

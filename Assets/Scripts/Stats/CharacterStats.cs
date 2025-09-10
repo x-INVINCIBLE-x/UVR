@@ -477,7 +477,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
         OnHealthChanged?.Invoke(currentHealth / health.Value);
     }
 
-    protected virtual void KillCharacter()
+    public virtual void KillCharacter()
     {
         isDead = true;
         currentHealth = 0f;

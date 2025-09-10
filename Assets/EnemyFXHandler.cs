@@ -21,6 +21,8 @@ public class EnemyFXHandler : MonoBehaviour
     public Vector3 midScale = new Vector3(1f, 1f, 1f);
     public Vector3 maxScale = new Vector3(2f, 2f, 2f);
 
+    private Coroutine magicCircleCoroutine;
+
 
     private void Awake()
     {   
@@ -34,15 +36,17 @@ public class EnemyFXHandler : MonoBehaviour
 
     public void SpawnMagicCircleVFX(float chargeTime)
     {
-        if (MagicCircle == null)
+        if (MagicCircle == null) return;
+        if (magicCircleCoroutine != null)
         {
-            return;
+            StopCoroutine(magicCircleCoroutine);
+            magicCircleCoroutine = null;
         }
 
         // Reset scale and position before enabling
         MagicCircle.transform.localScale = minScale;
         MagicCircle.SetActive(true);
-        StartCoroutine(AnimateMagicCircleScale(chargeTime));
+        magicCircleCoroutine = StartCoroutine(AnimateMagicCircleScale(chargeTime));
     }
 
     private IEnumerator AnimateMagicCircleScale(float totalTime)
@@ -83,6 +87,8 @@ public class EnemyFXHandler : MonoBehaviour
         // Ensure it reaches maxScale at the end
         if (MagicCircle != null)
             MagicCircle.transform.localScale = maxScale;
+
+        magicCircleCoroutine = null; 
     }
 
     public void DestroyMagicCircleVFX()
@@ -90,6 +96,8 @@ public class EnemyFXHandler : MonoBehaviour
         if (MagicCircle != null)
         {
             MagicCircle.SetActive(false);
+            if (magicCircleCoroutine != null) StopCoroutine(magicCircleCoroutine);
+            magicCircleCoroutine = null;
         }
     }
 
@@ -99,7 +107,7 @@ public class EnemyFXHandler : MonoBehaviour
 
         if (currentSelfDestructVFX != null) return; // Prevents duplicates
 
-        currentSelfDestructVFX = Instantiate(selfDestructVFX,this.transform);
+        currentSelfDestructVFX = Instantiate(selfDestructVFX, transform.position, Quaternion.identity);
 
         Destroy(currentSelfDestructVFX,lifetime);
     }
