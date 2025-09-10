@@ -64,7 +64,7 @@ public class GroundAttacks : WeaponAbilitiesBase
 
     private void GroundSplitter() // Need to add object pool (Important !!!!!)
     {
-        Debug.Log("GroundSplitter");
+        //Debug.Log("GroundSplitter");
         
 
         if (isStillInContact && contactPoint.HasValue && contactNormal.HasValue)
@@ -86,7 +86,10 @@ public class GroundAttacks : WeaponAbilitiesBase
 
             // Offset for above the ground
             Vector3 offset = normal * 0.05f;
-            Debug.Log("Ground Attack");
+            //Debug.Log("Ground Attack");
+            GameObject newGroundSplitterVFX = ObjectPool.instance.GetObject(GroundSplitterVFX, point + offset);
+            newGroundSplitterVFX.transform.rotation = Quaternion.LookRotation(transform.forward);
+            ObjectPool.instance.ReturnObject(newGroundSplitterVFX, 4f);
 
             //GameObject newGroundSplitterVFX = ObjectPool.instance.GetObject(GroundSplitterVFX, point + offset);
             //newGroundSplitterVFX.transform.localRotation = rotation;
