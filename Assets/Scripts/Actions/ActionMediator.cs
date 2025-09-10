@@ -95,13 +95,13 @@ public class ActionMediator : MonoBehaviour
             if (LastActionStatus == ActionStatus.Climb)
             {
                 //SetPhysicalMotion(true);
-                Debug.Log("Velocity: " + playerVelocity.GetAccelerationEstimate());
+                //Debug.Log("Velocity: " + playerVelocity.GetAccelerationEstimate());
                 playerGravity.EnableGravity();
                 EnableMovement();
                 rb.isKinematic = defaultKinematicStatus;
                 
-                if (JumpAction != null)
-                    JumpAction.AcceleratedJump(playerVelocity.GetAccelerationEstimate().magnitude);
+                //if (JumpAction != null)
+                //    JumpAction.AcceleratedJump(playerVelocity.GetAccelerationEstimate().magnitude);
 
                 //DisablePhysicalMotionOnLand();
             }

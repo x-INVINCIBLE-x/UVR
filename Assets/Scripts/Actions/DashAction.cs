@@ -54,7 +54,7 @@ public class DashAction : Action
 
     private IEnumerator DashRoutine()
     {
-        actionMediator.immuneInterpolation = true;
+        //actionMediator.immuneInterpolation = true;
         //actionMediator.SetPhysicalMotion(true, true);
 
         float timer = 0f;
@@ -85,7 +85,7 @@ public class DashAction : Action
             yield return null;
         }
 
-        actionMediator.immuneInterpolation = false;
+        //actionMediator.immuneInterpolation = false;
 
         //if (actionMediator.IsGrounded())
         //    actionMediator.DisablePhysicalMotion(0f, true);

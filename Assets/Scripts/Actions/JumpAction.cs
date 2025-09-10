@@ -79,17 +79,22 @@ public class JumpAction : Action
         actionMediator.immuneInterpolation = true;
         actionMediator.playerGravity.DisableGravity();
         previousMove = Vector3.zero;
-
+        
         while (elapsed < jumpDuration)
         {
+            if (actionMediator.grabStatus.IsClimbing())
+                yield break;
+
             float t = elapsed / jumpDuration;
             float height = 4f * jumpHeight * t * (1 - t);
 
             float deltaHeight = height - previousMove.y;
-            Vector3 move = Vector3.up * deltaHeight;
 
-            if (actionMediator.controller.enabled)
-                actionMediator.controller.Move(move);
+            // Instead of controller.Move, directly change Y position
+            Vector3 pos = PlayerManager.instance.PlayerOrigin.transform.position;
+            pos.y += deltaHeight;
+            PlayerManager.instance.PlayerOrigin.transform.position = pos;
+
             previousMove.y = height;
 
             // Don't auto-stop in air for multiple jumps
@@ -104,13 +109,16 @@ public class JumpAction : Action
             yield return null;
         }
 
-        actionMediator.playerGravity.SetYVelocity(-Mathf.Sqrt(2 * -Physics.gravity.y * jumpHeight) * blendDuration);
+        actionMediator.playerGravity.SetYVelocity(
+            -Mathf.Sqrt(2 * -Physics.gravity.y * jumpHeight) * blendDuration
+        );
         actionMediator.immuneInterpolation = false;
         actionMediator.playerGravity.EnableGravity();
         previousMove = Vector3.zero;
 
         jumpCoroutine = null;
     }
+
 
     private IEnumerator AcceleratedJumpRoutine(float jumpAcceleration)
     {

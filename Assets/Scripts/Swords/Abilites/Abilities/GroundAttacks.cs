@@ -87,10 +87,13 @@ public class GroundAttacks : WeaponAbilitiesBase
             // Offset for above the ground
             Vector3 offset = normal * 0.05f;
             Debug.Log("Ground Attack");
-            GameObject newGroundSplitterVFX = ObjectPool.instance.GetObject(GroundSplitterVFX, point + offset);
-            ObjectPool.instance.ReturnObject(newGroundSplitterVFX, 4f);
 
-            //Instantiate(GroundSplitterVFX, point + offset, Quaternion.identity);
+            //GameObject newGroundSplitterVFX = ObjectPool.instance.GetObject(GroundSplitterVFX, point + offset);
+            //newGroundSplitterVFX.transform.localRotation = rotation;
+            //ObjectPool.instance.ReturnObject(newGroundSplitterVFX, 4f);
+
+            GameObject newGroundSplitterVFX = Instantiate(GroundSplitterVFX, point + offset, Quaternion.identity);
+            Destroy(newGroundSplitterVFX, 4f);
 
             // Clear contact points
             contactPoint = null;
