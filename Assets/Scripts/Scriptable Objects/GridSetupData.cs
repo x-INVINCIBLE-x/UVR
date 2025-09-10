@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GridSetupData", menuName = "GridFormation/GridSetupData", order = 1)]
-public class GridSetupData
+public class GridSetupData : ScriptableObject
 {
     public GridFormationController[] gridFormationControllers;
     public Vector3[] positions;

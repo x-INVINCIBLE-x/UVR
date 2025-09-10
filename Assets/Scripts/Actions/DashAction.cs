@@ -55,7 +55,7 @@ public class DashAction : Action
     private IEnumerator DashRoutine()
     {
         actionMediator.immuneInterpolation = true;
-        actionMediator.SetPhysicalMotion(true, true);
+        //actionMediator.SetPhysicalMotion(true, true);
 
         float timer = 0f;
 
@@ -66,34 +66,35 @@ public class DashAction : Action
 
         Vector3 dashVelocity = direction * dashForce;
 
-        // Use velocity-based movement so CCD is applied
-        rb.linearVelocity = dashVelocity;
-
         while (timer < dashDuration)
         {
+            // Distance to move this frame
+            float step = dashVelocity.magnitude * Time.unscaledDeltaTime;
+            Vector3 move = direction * step;
+
             // Check if obstacle in front (considering capsule size)
-            if (HasObstacleInPath(direction, dashVelocity.magnitude * Time.unscaledDeltaTime))
+            if (HasObstacleInPath(direction, step))
             {
-                rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
-                break;
+                break; // stop dash early if blocked
             }
+
+            // Move via transform
+            PlayerManager.instance.PlayerOrigin.transform.position += move;
 
             timer += Time.unscaledDeltaTime;
             yield return null;
         }
 
-        // Stop horizontal motion after dash
-        rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
-
         actionMediator.immuneInterpolation = false;
 
-        if (actionMediator.IsGrounded())
-            actionMediator.DisablePhysicalMotion(0f, true);
-        else
-            actionMediator.DisablePhysicalMotionOnLand(true);
+        //if (actionMediator.IsGrounded())
+        //    actionMediator.DisablePhysicalMotion(0f, true);
+        //else
+        //    actionMediator.DisablePhysicalMotionOnLand(true);
 
         dashCoroutine = null;
     }
+
 
     private bool HasObstacleInPath(Vector3 dir, float checkDistance)
     {
