@@ -9,9 +9,9 @@ public class GroundAttacks : WeaponAbilitiesBase
     private Vector3? contactNormal = null;
     public GameObject GroundSplitterVFX;
     public LayerMask Hitable;
-    public bool isStillInContact = false;
-    public BoxCollider hitBox;
     [SerializeField] private float velocityThreshold = 3f;
+    [SerializeField] private bool isStillInContact = false;
+    public BoxCollider hitBox;
 
     public TypesOfGroundAttacks groundAttackType;
     public enum TypesOfGroundAttacks
@@ -31,8 +31,6 @@ public class GroundAttacks : WeaponAbilitiesBase
     {
         if (((1 << collision.gameObject.layer) & Hitable) != 0)
         {
-
-
             // Gets the first contact point 
             ContactPoint contact = collision.contacts[0];
 
@@ -52,9 +50,7 @@ public class GroundAttacks : WeaponAbilitiesBase
     {
         if (((1 << collision.gameObject.layer) & Hitable) != 0)
         {
-
             isStillInContact = false;
-
             contactPoint = null;
             contactNormal = null;
 
@@ -86,10 +82,11 @@ public class GroundAttacks : WeaponAbilitiesBase
 
             // Offset for above the ground
             Vector3 offset = normal * 0.05f;
+
             //Debug.Log("Ground Attack");
-            GameObject newGroundSplitterVFX = ObjectPool.instance.GetObject(GroundSplitterVFX, point + offset);
-            newGroundSplitterVFX.transform.rotation = Quaternion.LookRotation(transform.forward);
-            ObjectPool.instance.ReturnObject(newGroundSplitterVFX, 4f);
+            //GameObject newGroundSplitterVFX = ObjectPool.instance.GetObject(GroundSplitterVFX, point + offset);
+            //newGroundSplitterVFX.transform.rotation = Quaternion.LookRotation(transform.forward);
+            //ObjectPool.instance.ReturnObject(newGroundSplitterVFX, 4f);
 
             //GameObject newGroundSplitterVFX = ObjectPool.instance.GetObject(GroundSplitterVFX, point + offset);
             //newGroundSplitterVFX.transform.localRotation = rotation;
