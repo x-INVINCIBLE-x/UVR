@@ -9,7 +9,7 @@ public class GroundAttacks : WeaponAbilitiesBase
     private Vector3? contactNormal = null;
     public GameObject GroundSplitterVFX;
     public LayerMask Hitable;
-    [SerializeField] private float velocityThreshold = 3f;
+    [SerializeField] private float accelerationThreshold = 3f;
     [SerializeField] private bool isStillInContact = false;
     public BoxCollider hitBox;
 
@@ -66,7 +66,7 @@ public class GroundAttacks : WeaponAbilitiesBase
         if (isStillInContact && contactPoint.HasValue && contactNormal.HasValue)
         {
             if (AbilityEnable == false) return;
-            if (!VelocityChecker()) return; // checks the velocity of the weapon that is swung
+            if (!AccelerationChecker()) return; // checks the velocity of the weapon that is swung
             if (!CanAttack())
             {
                 WeaponVFX.SetActive(false);
@@ -141,15 +141,18 @@ public class GroundAttacks : WeaponAbilitiesBase
         // Implement HomingGroundAttack  
     }
 
-    private bool VelocityChecker()
+    private bool AccelerationChecker()
     {
-        float velocity = velocityEstimator.GetVelocityEstimate().magnitude;
+        float acceleration = velocityEstimator.GetAccelerationEstimate().magnitude;
 
-        if (velocity > velocityThreshold)
+        if (acceleration > accelerationThreshold)
         {
             return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
 
     }
 }

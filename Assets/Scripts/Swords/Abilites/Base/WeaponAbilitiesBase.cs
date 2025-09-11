@@ -152,6 +152,8 @@ public class WeaponAbilitiesBase : MonoBehaviour
 
     private void OnDisable()
     {
+        interactableWeapon.selectEntered.RemoveListener(PickUpWeapon);
+        interactableWeapon.selectExited.RemoveListener(DropWeapon);
         if (cooldownCoroutine != null)
         {
             StopCoroutine(cooldownCoroutine);

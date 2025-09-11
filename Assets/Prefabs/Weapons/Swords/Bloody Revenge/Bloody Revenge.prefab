@@ -4917,9 +4917,11 @@ GameObject:
   - component: {fileID: 1496598303966930909}
   - component: {fileID: 3868670680027319624}
   - component: {fileID: 7602131288416114617}
+  - component: {fileID: 8780796268865507017}
+  - component: {fileID: -2394098629991684958}
   m_Layer: 10
   m_Name: Bloody Revenge
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5269,6 +5271,7 @@ MonoBehaviour:
   sliceAttackType: 0
   lifeTime: 3
   attackData: {fileID: 11400000, guid: a0a9d27b0c8856c4ab6bb4e6acc47e62, type: 2}
+  activationDelay: 0.5
 --- !u!114 &3868670680027319624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5305,6 +5308,43 @@ MonoBehaviour:
   Meshes: []
   defaultMaterial: []
   highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
+--- !u!114 &8780796268865507017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733979014457306346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cce75d7544eb2418764af403bdbcca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSelectEntered:
+    intensity: 0
+    duration: 0
+  onSelectExited:
+    intensity: 0
+    duration: 0
+  onActivate:
+    intensity: 0
+    duration: 0
+  onDeactivate:
+    intensity: 0
+    duration: 0
+--- !u!114 &-2394098629991684958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733979014457306346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae1430468fd147419c5b32724e389ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &2333670994080230329
 GameObject:
   m_ObjectHideFlags: 0

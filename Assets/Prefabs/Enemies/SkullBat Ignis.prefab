@@ -217,7 +217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6237130585439915671}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5386,7 +5386,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8606661060320891352}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: GLTF_created_0_rootJoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10531,7 +10531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4375300143378179843}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Braco1.L_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10874,7 +10874,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4846090580839280281}
   - component: {fileID: 3139297281865065923}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Sketchfab_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10927,7 +10927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4042342036739800858}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BracoIK.R_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10958,7 +10958,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3429083969539925835}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Braco1.R_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11089,7 +11089,8 @@ GameObject:
   - component: {fileID: 3384768486304200987}
   - component: {fileID: 7505547948646561530}
   - component: {fileID: 4452487288493657818}
-  m_Layer: 0
+  - component: {fileID: 5244129166686847005}
+  m_Layer: 14
   m_Name: SkullBat Ignis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11426,11 +11427,11 @@ MonoBehaviour:
     Gold: 0
     Magika: 0
     Experience: 0
-  sightRange: 10
-  attackRange: 7
+  sightRange: 14
+  attackRange: 10
   attackCooldownTime: 1
-  walkpointRange: 0
-  patrollwaitTime: 0
+  walkpointRange: 7
+  patrollwaitTime: 3
   walkPoint: {x: 0, y: 0, z: 0}
   walkSpeed: 3
   searchingWalkPoint: 0
@@ -11450,15 +11451,15 @@ MonoBehaviour:
   blitzProjectile: {fileID: 541757065818075778, guid: d1ca0f4b7a96cfd4cb9fa8e793cd7538, type: 3}
   healProjectile: {fileID: 6428853215137849390, guid: 09596badd6e771241a83d74e0a091a33, type: 3}
   sfxSource: {fileID: 6979918774135901437}
-  attackClip: {fileID: 0}
-  enemyHitCry: {fileID: 0}
-  enemyDeath: {fileID: 0}
+  attackClip: {fileID: 8300000, guid: be9d2ab2d45b2454cbcd3b5daac19567, type: 3}
+  enemyHitCry: {fileID: 8300000, guid: b4a2587712611914db3a4741d4a14451, type: 3}
+  enemyDeath: {fileID: 8300000, guid: 72eac23f6e7e5e346aae3ec3fc822e4b, type: 3}
   magicChargeTime: 3
   minSpeedMultiplier: 0.1
   maxSpeedMultiplier: 3
-  bullet: {fileID: 0}
-  shootForce: 0
-  projectileSpawn: {fileID: 0}
+  bullet: {fileID: 8378503196372639160, guid: e36d787163fa68f4e92b00aec5a4f0f2, type: 3}
+  shootForce: 15
+  projectileSpawn: {fileID: 7368062350077665273}
 --- !u!114 &7505547948646561530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11474,7 +11475,7 @@ MonoBehaviour:
   characterUI: {fileID: 8865752879728877312}
   characterStatusVfx: {fileID: 7183291873975661404}
   selfDestructVFX: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
-  MagicCircle: {fileID: 0}
+  MagicCircle: {fileID: 6553384471979213363}
   minScale: {x: 0.1, y: 0.1, z: 0.1}
   midScale: {x: 1, y: 1, z: 1}
   maxScale: {x: 2, y: 2, z: 2}
@@ -11602,6 +11603,21 @@ MonoBehaviour:
   currentStamina: 0
   <IsInvincible>k__BackingField: 0
   deathDefices: []
+--- !u!114 &5244129166686847005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2609132474017562496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  defaultMaterial: []
+  highlightmaterial: {fileID: 2100000, guid: 40c534a1bdac14b4a92fdfce5d0dbe1e, type: 2}
 --- !u!1 &2663083353528046364
 GameObject:
   m_ObjectHideFlags: 0
@@ -11701,7 +11717,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 137180823752469216}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Bone.004_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11951,7 +11967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3011916472501752170}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Armature_15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11983,7 +11999,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2793056997028186589}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cube_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12014,7 +12030,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 912677443778984037}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Braco2.L_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16890,7 +16906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3651925555862081737}
   - component: {fileID: 4696985831997366712}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Object_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22456,7 +22472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2208629764176851036}
   - component: {fileID: 733329479718122474}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Object_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22556,7 +22572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2990434455754756495}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Braco2.R_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22625,7 +22641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6741473306768499158}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Braco3.R_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22949,7 +22965,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4637134293540959858}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: GLTF_created_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23058,7 +23074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5612737794035793963}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BracoIK2.L_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23164,7 +23180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1611305873147016857}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Braco3.L_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23231,7 +23247,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7368062350077665273}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Spawn Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23247,7 +23263,7 @@ Transform:
   m_GameObject: {fileID: 5926885484900414117}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23262,7 +23278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7646447348725539579}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: GLTF_SceneRootNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28344,7 +28360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5343438888578743830}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Bone_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28506,7 +28522,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2658805556799210634}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BracoIK.L_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28537,7 +28553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2073799987730187658}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Magic Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38662,7 +38678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8448124147494641032}
   - component: {fileID: 8233452073178293857}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Object_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38998,7 +39014,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2176024229114957746}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BracoIK2.R_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49111,13 +49127,81 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2073799987730187658}
     m_Modifications:
+    - target: {fileID: 7368689095406045, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 279298640733279226, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 316991006378577979, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
       propertyPath: MaxChargeTime
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 590556872015454345, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 614780718008889933, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 930995246463552726, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 943966872804766624, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
       propertyPath: m_Name
       value: Charging Magic Circle Ignis
+      objectReference: {fileID: 0}
+    - target: {fileID: 943966872804766624, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1492288009606923527, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509774493419737215, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347570198595138302, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566201030567564768, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173793641560145466, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3251579528084007662, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3307106776822397987, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4003961020101205972, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111381477441097715, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4759439874376317947, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860636765948659961, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4968916007412911805, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
       propertyPath: m_LocalScale.x
@@ -49170,6 +49254,46 @@ PrefabInstance:
     - target: {fileID: 4968916007412911805, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402552455734892923, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197502824391132757, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515406374490940450, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6900139684333741693, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7007266869306230315, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115649426225381680, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7468016572495470192, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901870309371578110, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948667860949778939, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9119500072850130453, guid: 673906246760ab54ba2d78d71b44e370, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

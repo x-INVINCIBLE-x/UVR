@@ -133,11 +133,12 @@ GameObject:
   - component: {fileID: 7713051580393146924}
   - component: {fileID: 814163498722138343}
   - component: {fileID: 1681698471380193012}
-  - component: {fileID: 9132833008774234027}
   - component: {fileID: 7190351828217521253}
+  - component: {fileID: 2640694274216532335}
+  - component: {fileID: 119696540430499724}
   m_Layer: 10
   m_Name: Blunderbuss Shotgun
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -491,25 +492,6 @@ MonoBehaviour:
   minPitch: 1
   maxPitch: 3
   bulletLifeTime: 5
---- !u!114 &9132833008774234027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2852090575269373135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03588f75fe9d75e41b612292741f40ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemData: {fileID: 0}
-  isShopItem: 0
-  hasPurchased: 0
-  meshes: []
-  defaultMaterial: []
-  AffordableMaterial: {fileID: 0}
-  UnaffordableMaterial: {fileID: 0}
 --- !u!114 &7190351828217521253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +507,43 @@ MonoBehaviour:
   Meshes: []
   defaultMaterial: []
   highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
+--- !u!114 &2640694274216532335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852090575269373135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cce75d7544eb2418764af403bdbcca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSelectEntered:
+    intensity: 0
+    duration: 0
+  onSelectExited:
+    intensity: 0
+    duration: 0
+  onActivate:
+    intensity: 0
+    duration: 0
+  onDeactivate:
+    intensity: 0
+    duration: 0
+--- !u!114 &119696540430499724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852090575269373135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae1430468fd147419c5b32724e389ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: c735811657009224cae130c61f0fb44f, type: 2}
 --- !u!1 &3059704357039862770
 GameObject:
   m_ObjectHideFlags: 0

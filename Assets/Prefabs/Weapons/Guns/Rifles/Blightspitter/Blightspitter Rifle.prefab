@@ -78,9 +78,10 @@ GameObject:
   - component: {fileID: 2355162025576467060}
   - component: {fileID: -1608254755708011312}
   - component: {fileID: 5629444724761522040}
+  - component: {fileID: 2416408262098360100}
   m_Layer: 10
   m_Name: Blightspitter Rifle
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -435,17 +436,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onSelectEntered:
-    intensity: 1
+    intensity: 0
     duration: 2
   onSelectExited:
-    intensity: 1
+    intensity: 0
     duration: 2
   onActivate:
-    intensity: 1
+    intensity: 0
     duration: 2
   onDeactivate:
-    intensity: 1
+    intensity: 0
     duration: 2
+--- !u!114 &2416408262098360100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412443629678744172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae1430468fd147419c5b32724e389ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: c0cb904652731e94eb38e46a4704f194, type: 2}
 --- !u!1 &3456834813900504471
 GameObject:
   m_ObjectHideFlags: 0

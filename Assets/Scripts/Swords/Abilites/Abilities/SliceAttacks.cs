@@ -23,6 +23,11 @@ public class SliceAttacks : WeaponAbilitiesBase
     [SerializeField] private float lifeTime;
     [SerializeField] private AttackData attackData;
 
+    [Header("Activation Delay")]
+    [SerializeField] private float activationDelay = 0.5f;
+    private bool isDelayedActivation = false;
+
+
     public enum TypesOfSlices
     {
         Straight,
@@ -36,12 +41,28 @@ public class SliceAttacks : WeaponAbilitiesBase
         AllAttacks();                
     }
 
+
     protected override void AllAttacks()
     {
         base.AllAttacks();
 
-        if (AbilityEnable == true)
-        {   
+        if (AbilityEnable == true && !isDelayedActivation)
+        {
+            isDelayedActivation = true;
+            Invoke(nameof(DelayedActivation), activationDelay);
+        }
+        else if (AbilityEnable == false)
+        {
+            CancelInvoke(nameof(DelayedActivation));
+            WeaponVFX.SetActive(false);
+            isDelayedActivation = false;
+        }
+    }
+
+    private void DelayedActivation()
+    {
+        if (AbilityEnable)
+        {
             WeaponVFX.SetActive(true);
 
             switch (sliceAttackType)
@@ -61,15 +82,16 @@ public class SliceAttacks : WeaponAbilitiesBase
                 case TypesOfSlices.AOE:
                     AoeSliceAttack();
                     break;
+
             }
         }
         else
         {
-            WeaponVFX.SetActive (false);
+            WeaponVFX.SetActive(false);
         }
-
+        isDelayedActivation = false;
     }
-
+   
     private void ActivateSlashEffect()
     {
         float velocity = velocityEstimator.GetVelocityEstimate().magnitude;
@@ -130,6 +152,7 @@ public class SliceAttacks : WeaponAbilitiesBase
 
         GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX.gameObject, slashSpawn);
         newSlashVFX.GetComponent<PhysicsProjectile>().Init(lifeTime, attackData);
+        newSlashVFX.transform.localRotation = gameObject.transform.rotation;
         Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
 
         // Postion Estimations

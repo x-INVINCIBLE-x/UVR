@@ -197,9 +197,11 @@ GameObject:
   - component: {fileID: 7822324601483818745}
   - component: {fileID: 3009089437218326846}
   - component: {fileID: -3920552154808138074}
+  - component: {fileID: -74097863943518159}
+  - component: {fileID: 8311798805663760583}
   m_Layer: 10
   m_Name: Black Covenant Pistol
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -538,6 +540,43 @@ MonoBehaviour:
   Meshes: []
   defaultMaterial: []
   highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
+--- !u!114 &-74097863943518159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454270549414689597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cce75d7544eb2418764af403bdbcca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSelectEntered:
+    intensity: 0
+    duration: 0
+  onSelectExited:
+    intensity: 0
+    duration: 0
+  onActivate:
+    intensity: 0
+    duration: 0
+  onDeactivate:
+    intensity: 0
+    duration: 0
+--- !u!114 &8311798805663760583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454270549414689597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae1430468fd147419c5b32724e389ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 931281c7b75a1cd45916cbd5dff66451, type: 2}
 --- !u!1 &4823664108286857341
 GameObject:
   m_ObjectHideFlags: 0

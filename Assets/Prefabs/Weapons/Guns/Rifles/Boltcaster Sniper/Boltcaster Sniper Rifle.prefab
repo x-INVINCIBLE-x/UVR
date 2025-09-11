@@ -854,13 +854,15 @@ GameObject:
   - component: {fileID: 7088145440042971577}
   - component: {fileID: -1927599312591043672}
   - component: {fileID: -3790289664445849010}
+  - component: {fileID: 1881988578716435527}
   - component: {fileID: -3364946090917912399}
   - component: {fileID: -3024982956286912013}
-  - component: {fileID: 1881988578716435527}
   - component: {fileID: -85709415823761358}
+  - component: {fileID: 3219896544854867035}
+  - component: {fileID: -3547444121108719478}
   m_Layer: 10
   m_Name: Boltcaster Sniper Rifle
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1010,6 +1012,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1881988578716435527
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4951285828873334640}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.036058147, y: 0.22967413, z: 0.042476125}
+  m_Center: {x: 0, y: -0.013888978, z: 0.0022059046}
 --- !u!114 &-3364946090917912399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1169,27 +1192,6 @@ MonoBehaviour:
   minPitch: 1
   maxPitch: 3
   bulletLifeTime: 3
---- !u!65 &1881988578716435527
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4951285828873334640}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.036058147, y: 0.22967413, z: 0.042476125}
-  m_Center: {x: 0, y: -0.013888978, z: 0.0022059046}
 --- !u!114 &-85709415823761358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1205,6 +1207,43 @@ MonoBehaviour:
   Meshes: []
   defaultMaterial: []
   highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
+--- !u!114 &3219896544854867035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4951285828873334640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cce75d7544eb2418764af403bdbcca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSelectEntered:
+    intensity: 0
+    duration: 0
+  onSelectExited:
+    intensity: 0
+    duration: 0
+  onActivate:
+    intensity: 0
+    duration: 0
+  onDeactivate:
+    intensity: 0
+    duration: 0
+--- !u!114 &-3547444121108719478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4951285828873334640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae1430468fd147419c5b32724e389ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: a795963d9a3d45b42a4b3439ddc7ec8f, type: 2}
 --- !u!1 &5211179416055347321
 GameObject:
   m_ObjectHideFlags: 0

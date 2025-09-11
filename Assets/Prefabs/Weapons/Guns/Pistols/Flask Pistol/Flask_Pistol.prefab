@@ -938,8 +938,9 @@ GameObject:
   - component: {fileID: 8166253949140569854}
   - component: {fileID: 1332242042530113331}
   - component: {fileID: 3722647758622295276}
-  - component: {fileID: 6104269756458222074}
   - component: {fileID: 3607900748598816773}
+  - component: {fileID: -1206916407367460510}
+  - component: {fileID: 6104269756458222074}
   m_Layer: 10
   m_Name: Flask_Pistol
   m_TagString: Weapon
@@ -1311,19 +1312,6 @@ MonoBehaviour:
   minPitch: 1
   maxPitch: 3
   bulletLifeTime: 5
---- !u!114 &6104269756458222074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4200743150739345974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ae1430468fd147419c5b32724e389ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: ff2ead5e16e65c44a9ead755b6fc2de5, type: 2}
 --- !u!114 &3607900748598816773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1339,6 +1327,43 @@ MonoBehaviour:
   Meshes: []
   defaultMaterial: []
   highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
+--- !u!114 &-1206916407367460510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200743150739345974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cce75d7544eb2418764af403bdbcca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSelectEntered:
+    intensity: 0
+    duration: 0
+  onSelectExited:
+    intensity: 0
+    duration: 0
+  onActivate:
+    intensity: 0
+    duration: 0
+  onDeactivate:
+    intensity: 0
+    duration: 0
+--- !u!114 &6104269756458222074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200743150739345974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae1430468fd147419c5b32724e389ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: ff2ead5e16e65c44a9ead755b6fc2de5, type: 2}
 --- !u!1 &4862255119533883280
 GameObject:
   m_ObjectHideFlags: 0
