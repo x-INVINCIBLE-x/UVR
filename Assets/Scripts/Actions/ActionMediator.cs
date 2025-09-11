@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
@@ -41,6 +42,9 @@ public class ActionMediator : MonoBehaviour
     public VirtualAction TelekemisisAction;
     public DashAction DashAction;
 
+    public float forceJumpMultiplier = 1f;
+    public float minAcceleration = 10f;
+    public float maxAcceleration = 60f;
     [field: SerializeField] public ActionStatus LastActionStatus { get; private set; } = ActionStatus.None;
 
     private float defaultSpeed;
@@ -101,7 +105,13 @@ public class ActionMediator : MonoBehaviour
                 rb.isKinematic = defaultKinematicStatus;
                 
                 //if (JumpAction != null)
-                //    JumpAction.AcceleratedJump(playerVelocity.GetAccelerationEstimate().magnitude);
+                Debug.Log("Jump with Acceleration: " + playerVelocity.GetAccelerationEstimate().magnitude);
+
+                if (playerVelocity.GetAccelerationEstimate().magnitude < minAcceleration)
+                    return;
+
+                float normalizedMagnitude = Mathf.Max(playerVelocity.GetAccelerationEstimate().magnitude, maxAcceleration);
+                JumpAction.AcceleratedJump(normalizedMagnitude * forceJumpMultiplier);
 
                 //DisablePhysicalMotionOnLand();
             }

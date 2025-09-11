@@ -62,6 +62,8 @@ public class JumpAction : Action
 
     public void AcceleratedJump(float acceleration)
     {
+        if (acceleration == 0f) return;
+
         if (jumpCoroutine != null)
         {
             StopCoroutine(jumpCoroutine);

@@ -701,6 +701,17 @@ public class GridFormationController : FormationProvider
         return maxRadius;
     }
 
+    public void OnDestroy()
+    {
+        // Clean up instances
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+        instances.Clear();
+        positionsPerFormation.Clear();
+    }
+
 #if UNITY_EDITOR
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()

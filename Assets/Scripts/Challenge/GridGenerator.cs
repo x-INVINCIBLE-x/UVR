@@ -3,28 +3,52 @@ using System.Collections.Generic;
 
 public class GridGenerator : MonoBehaviour
 {
+    [System.Serializable]
     public class GridGroup
     {
         public string gridKey;
         public List<GridSetupData> formations;
     }
 
-    [SerializeField] private string gridKey;
+    public static GridGenerator Instance { get; private set; }
+
     [SerializeField] public List<GridGroup> formationGroups;
 
-    [SerializeField] private Dictionary<string, List<GridSetupData>> gridSetupDatabase;
+    [SerializeField] private Dictionary<string, List<GridSetupData>> gridSetupDatabase = new();
     private readonly Dictionary<string, List<int>> unusedIndicesPerGroup = new();
     [System.NonSerialized] private bool isInitialized = false;
 
-    private void GenerateGrids(string key)
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+        InitializeIfNeeded();
+    }
+
+    private void Start()
+    {
+        GenerateGrids(ChallengeManager.instance.CurrentChallenge.GetID());
+    }
+
+    public void GenerateGrids(string key)
     {
         GridSetupData setupData = GetRandomUniqueFormation(key);
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(this.transform.GetChild(i).gameObject);
+        }
 
         for (int i = 0; i < setupData.gridFormationControllers.Length; i++)
         {
             if (setupData.gridFormationControllers[i] != null)
             {
-                Instantiate(setupData.gridFormationControllers[i], setupData.positions[i], setupData.rotations[i]);
+                GridFormationController formationController = Instantiate(setupData.gridFormationControllers[i], setupData.positions[i], setupData.rotations[i]);
+                formationController.transform.parent = this.transform;
             }
         }
     }

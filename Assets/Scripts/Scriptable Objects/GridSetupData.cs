@@ -13,6 +13,7 @@ public class GridSetupData : ScriptableObject
         if (gridFormationControllers.Length > 0)
         {
             positions = new Vector3[gridFormationControllers.Length];
+            rotations = new Quaternion[gridFormationControllers.Length];
             for (int i = 0; i < gridFormationControllers.Length; i++)
             {
                 if (gridFormationControllers[i] != null)
