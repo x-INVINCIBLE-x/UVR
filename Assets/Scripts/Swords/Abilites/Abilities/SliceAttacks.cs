@@ -109,8 +109,9 @@ public class SliceAttacks : WeaponAbilitiesBase
 
         GameObject newSlashVFX = ObjectPool.instance.GetObject(SlashVFX.gameObject, slashSpawn);
         newSlashVFX.GetComponent<PhysicsProjectile>().Init(lifeTime, attackData);
+        newSlashVFX.transform.localRotation = gameObject.transform.rotation;
         Rigidbody slashBody = newSlashVFX.GetComponent<Rigidbody>();
-        slashBody.linearVelocity = Camera.main.transform.forward * force;
+        slashBody.linearVelocity = transform.forward * force;
         ObjectPool.instance.ReturnObject(newSlashVFX, 2f);   
     }
 
