@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkinnedMeshDissolver : MonoBehaviour
+public class SkinnedMeshDissolver : Dissolver
 {
     [Header("References")]
     public SkinnedMeshRenderer[] skinnedMeshes;
@@ -46,7 +46,7 @@ public class SkinnedMeshDissolver : MonoBehaviour
         }
     }
 
-    public void StartDissolve()
+    public override void StartDissolve()
     {
         if (dissolveCoroutine != null)
             StopCoroutine(dissolveCoroutine);
@@ -55,12 +55,12 @@ public class SkinnedMeshDissolver : MonoBehaviour
         dissolveCoroutine = StartCoroutine(DissolveSkinnedMesh());
     }
 
-    public void StartImpactDissolve(float duration)
+    public override void StartImpactDissolve(float duration)
     {
         StartCoroutine(ImpactDissolveRoutine(duration));
     }
 
-    public void ImpactPartialDissolve()
+    public override void ImpactPartialDissolve()
     {
         if (dissolveCoroutine != null)
             StopCoroutine(dissolveCoroutine);
@@ -69,7 +69,7 @@ public class SkinnedMeshDissolver : MonoBehaviour
         dissolveCoroutine = StartCoroutine(DissolveSkinnedMesh(impactDissolveThreshold, false));
     }
 
-    public void ImpactPartialRedissolve()
+    public override void ImpactPartialRedissolve()
     {
         if (dissolveCoroutine != null)
             StopCoroutine(dissolveCoroutine);

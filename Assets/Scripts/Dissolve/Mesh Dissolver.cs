@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class MeshDissolver : MonoBehaviour
+public class MeshDissolver : Dissolver
 {
     [Header("References")]
     public MeshRenderer[] Meshes;
@@ -57,7 +57,7 @@ public class MeshDissolver : MonoBehaviour
     }
 
 
-    public void StartDissolve()
+    public override void StartDissolve()
     {
         if (dissolveCoroutine != null)
         {
@@ -70,12 +70,12 @@ public class MeshDissolver : MonoBehaviour
 
     // This method does both impact dissolve and impact redissolve in the given time
     // Used where we want to dissolve and redissolve
-    public void StartImpactDissolve(float duration)
+    public override void StartImpactDissolve(float duration)
     {
         StartCoroutine(ImpactDissolveRoutine(duration));
     }
 
-    public void ImpactPartialDissolve()
+    public override void ImpactPartialDissolve()
     {
         if (dissolveCoroutine != null)
         {
@@ -87,7 +87,7 @@ public class MeshDissolver : MonoBehaviour
 
     }
 
-    public void ImpactPartialRedissolve()
+    public override void ImpactPartialRedissolve()
     {
         if (dissolveCoroutine != null)
         {

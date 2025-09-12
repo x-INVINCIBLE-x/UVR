@@ -40,7 +40,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
     [SerializeField] protected float projectileLifeTime = 3f;
     [SerializeField] protected AttackData attackData;
     [SerializeField] protected EnemyStats enemyStats;
-    [SerializeField] protected MeshDissolver dissolver;
+    [SerializeField] protected Dissolver dissolver;
 
     [SerializeField] private float surroundingHitRadius;
     [SerializeField] protected HomingMissile blitzProjectile;
