@@ -10873,7 +10873,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4846090580839280281}
-  - component: {fileID: 3139297281865065923}
+  - component: {fileID: 2876469175406266872}
   m_Layer: 14
   m_Name: Sketchfab_model
   m_TagString: Untagged
@@ -10897,7 +10897,7 @@ Transform:
   - {fileID: 6237130585439915671}
   m_Father: {fileID: 7421123510033273596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3139297281865065923
+--- !u!114 &2876469175406266872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10906,13 +10906,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2094816861398558504}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
+  m_Script: {fileID: 11500000, guid: d8a561159212d274d8191cb35f36141e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Meshes: []
-  DissolveMaterial: {fileID: 2100000, guid: 0aa3cd7ee4f65114e8b154dbad43f3aa, type: 2}
+  skinnedMesh: {fileID: 0}
+  DissolveMaterial: {fileID: 0}
   Dissolve: 0
   defaultMaterials: []
+  skinnedMaterials: []
   dissolveRate: 0.0125
   RefreshRate: 0.025
   impactDissolveRate: 0.0125
@@ -11446,7 +11447,7 @@ MonoBehaviour:
   projectileLifeTime: 3
   attackData: {fileID: 11400000, guid: a2089ac4ee6611746aee2cdc79487134, type: 2}
   enemyStats: {fileID: 4452487288493657818}
-  dissolver: {fileID: 3139297281865065923}
+  dissolver: {fileID: 0}
   surroundingHitRadius: 0
   blitzProjectile: {fileID: 541757065818075778, guid: d1ca0f4b7a96cfd4cb9fa8e793cd7538, type: 3}
   healProjectile: {fileID: 6428853215137849390, guid: 09596badd6e771241a83d74e0a091a33, type: 3}

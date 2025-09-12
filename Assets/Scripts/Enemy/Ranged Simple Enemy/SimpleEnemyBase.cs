@@ -298,7 +298,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         if (agent.enabled)
             agent.SetDestination(transform.position);
 
-        dissolver.StartDissolver();
+        dissolver.StartDissolve();
         if (currentCheckRoutine != null)
         {
             StopCoroutine(currentCheckRoutine);
@@ -444,7 +444,6 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
 
         if (!attackSoundPlayed)
         {
-            //AudioManager.Instance.PlaySFX(attackClip);
             attackSoundPlayed = true;
         }
     }

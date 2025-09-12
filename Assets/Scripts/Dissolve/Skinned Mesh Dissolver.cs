@@ -1,212 +1,142 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SkinnedMeshDissolver : MonoBehaviour
 {
     [Header("References")]
-    public SkinnedMeshRenderer skinnedMesh;
-    public Material DissolveMaterial;
-    public bool Dissolve; // remove this only for testing
-    private bool isDissolving;
+    public SkinnedMeshRenderer[] skinnedMeshes;
 
-    [SerializeField] private Material[] defaultMaterials;
-    [SerializeField] private Material[] skinnedMaterials;
-
-   
     [SerializeField] private float dissolveRate = 0.0125f;
-    [SerializeField] private float RefreshRate = 0.025f;
+    [SerializeField] private float refreshRate = 0.025f;
 
     [SerializeField] private float impactDissolveRate = 0.0125f;
     [SerializeField] private float impactDissolveThreshold = 0.5f;
     [SerializeField] private float currentDissolve;
 
+    private bool isDissolving;
+    private Coroutine dissolveCoroutine;
+
+    private MaterialPropertyBlock mpb;
     private static readonly int DissolveAmountID = Shader.PropertyToID("_Dissolve_Amount");
+
     private void Awake()
     {
-        if (DissolveMaterial == null)
+        if (skinnedMeshes == null || skinnedMeshes.Length == 0)
         {
-            Debug.Log("Dissolve Material not Assigned");
+            skinnedMeshes = GetComponentsInChildren<SkinnedMeshRenderer>();
         }
 
-        if (skinnedMesh != null)
-        {
-            defaultMaterials = skinnedMesh.sharedMaterials;
-            skinnedMaterials = new Material[defaultMaterials.Length];
-
-            for (int i = 0; i < defaultMaterials.Length; i++)
-            {
-                skinnedMaterials[i] = new Material(DissolveMaterial);  
-            }
-            //defaultMaterials = skinnedMesh.sharedMaterials; 
-            //skinnedMaterials = skinnedMesh.sharedMaterials;
-        }
+        mpb = new MaterialPropertyBlock();
+        currentDissolve = 0f;
+        SetDissolveAmount(0f); // Initialize dissolve to zero
     }
 
-    private void Update()
+    private void SetDissolveAmount(float amount)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        currentDissolve = Mathf.Clamp01(amount);
+
+        foreach (SkinnedMeshRenderer renderer in skinnedMeshes)
         {
-            ResetDissolver();
-        }
+            if (renderer == null) continue;
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            ImpactSkinnedPartialDissolve();
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            ImpactSkinnedPartialRedissolve();
-        }
-
-
-
-
-        // to remove this update statements(important)
-        if (Dissolve)
-        {
-            //StartDissolver();
-        }
-        else
-        {
-            //ResetDissolver();
+            renderer.GetPropertyBlock(mpb);
+            mpb.SetFloat(DissolveAmountID, currentDissolve);
+            renderer.SetPropertyBlock(mpb);
         }
     }
 
-    // Public for external use
-    public void ActivateSkinnedDissolver(bool dissolveStatus) // remove this only for testing
+    public void StartDissolve()
     {
-        Dissolve = dissolveStatus;
+        if (dissolveCoroutine != null)
+            StopCoroutine(dissolveCoroutine);
 
-        if (dissolveStatus)
-        {
-            StartDissolver();
-        }
+        isDissolving = true;
+        dissolveCoroutine = StartCoroutine(DissolveSkinnedMesh());
     }
 
-    private void StartDissolver()
+    public void StartImpactDissolve(float duration)
     {
-        if (!isDissolving)
-        {
-            isDissolving = true;
-            skinnedMesh.materials = skinnedMaterials;
-            StartCoroutine(DissolveSkinnedMesh());
-        }
-        
-        
+        StartCoroutine(ImpactDissolveRoutine(duration));
     }
 
-    public void ImpactSkinnedPartialDissolve()
+    public void ImpactPartialDissolve()
     {
-        if (!isDissolving)
-        {
-            isDissolving = true;
-            skinnedMesh.materials = skinnedMaterials;
-            StartCoroutine(DissolveSkinnedMesh(impactDissolveThreshold, false));
-        }
+        if (dissolveCoroutine != null)
+            StopCoroutine(dissolveCoroutine);
 
+        isDissolving = true;
+        dissolveCoroutine = StartCoroutine(DissolveSkinnedMesh(impactDissolveThreshold, false));
     }
 
-    public void ImpactSkinnedPartialRedissolve()
+    public void ImpactPartialRedissolve()
     {
-        if (!isDissolving)
-        {
-            isDissolving = true;
-            skinnedMesh.materials = skinnedMaterials;
-            StartCoroutine(RedissolveSkinnedMesh());
-        }
+        if (dissolveCoroutine != null)
+            StopCoroutine(dissolveCoroutine);
 
+        isDissolving = true;
+        dissolveCoroutine = StartCoroutine(RedissolveSkinnedMesh());
     }
 
-    // Important disclaimer if the parameter dissolve is true ,then normal disolve
-    // if dissolve is false then we do a specified threshold dissolve
+    private IEnumerator ImpactDissolveRoutine(float dissolveDuration)
+    {
+        ImpactPartialDissolve();
+        yield return dissolveCoroutine;
+        yield return new WaitForSeconds(dissolveDuration);
+
+        if (dissolveCoroutine == null)
+            ImpactPartialRedissolve();
+    }
+
     private IEnumerator DissolveSkinnedMesh(float dissolveThreshold = 1f, bool dissolve = true)
-    {   
-        if(skinnedMaterials.Length > 0)
+    {
+        if (skinnedMeshes.Length > 0)
         {
-            currentDissolve = 0;
-
+            currentDissolve = 0f;
             float currentDissolveRate = dissolve ? dissolveRate : impactDissolveRate;
 
             while (currentDissolve < dissolveThreshold)
             {
                 currentDissolve += currentDissolveRate;
                 currentDissolve = Mathf.Clamp01(currentDissolve);
-
-                for (int i = 0 ; i < skinnedMaterials.Length; i++)
-                {
-                    skinnedMaterials[i].SetFloat(DissolveAmountID, currentDissolve);
-                }
-
-                yield return new WaitForSeconds(RefreshRate);
+                SetDissolveAmount(currentDissolve);
+                yield return new WaitForSeconds(refreshRate);
             }
 
-            // Reset isDissolving for next calls
+            SetDissolveAmount(dissolveThreshold);
             isDissolving = false;
+            dissolveCoroutine = null;
         }
     }
 
-    // Redissolves the skinned mesh renderers to 0 dissolve rate
     private IEnumerator RedissolveSkinnedMesh(float dissolveThreshold = 0.0f)
     {
-        if (skinnedMaterials.Length > 0)
+        if (skinnedMeshes.Length > 0)
         {
-           
             while (currentDissolve > dissolveThreshold)
             {
                 currentDissolve -= impactDissolveRate;
                 currentDissolve = Mathf.Clamp01(currentDissolve);
-
-                for (int i = 0; i < skinnedMaterials.Length; i++)
-                {
-                    skinnedMaterials[i].SetFloat(DissolveAmountID, currentDissolve);
-                }
-
-                yield return new WaitForSeconds(RefreshRate);
+                SetDissolveAmount(currentDissolve);
+                yield return new WaitForSeconds(refreshRate);
             }
 
-            // Reset isDissolving for next calls
+            SetDissolveAmount(dissolveThreshold);
             isDissolving = false;
+            dissolveCoroutine = null;
         }
     }
 
-    
-
     public void ResetDissolver()
     {
-        StopAllCoroutines();
         isDissolving = false;
-
-        // Reset dissolve amount on all instances
-        foreach (var material in skinnedMaterials)
-        {
-            material.SetFloat(DissolveAmountID, 0f);
-        }
-
-        // Restore original materials
-        skinnedMesh.materials = defaultMaterials;
+        currentDissolve = 0f;
+        SetDissolveAmount(currentDissolve);
+        StopAllCoroutines();
     }
 
     private void OnDisable()
     {
         ResetDissolver();
-        StopAllCoroutines();
-    }
-
-    private void OnDestroy()
-    {
-        
-        if (skinnedMaterials != null)
-        {
-            foreach (var material in skinnedMaterials)
-            {
-                if (material != null)
-                {
-                    Destroy(material);
-                }
-            }
-        }
     }
 }
-
