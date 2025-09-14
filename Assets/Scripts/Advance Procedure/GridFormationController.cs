@@ -157,8 +157,21 @@ public class GridFormationController : FormationProvider
     {
         if (saveToSO == null)
         {
-            Debug.LogError("No ScriptableObject assigned to saveToSO.");
-            return;
+            saveToSO = ScriptableObject.CreateInstance<GridFormationData>();
+
+            string path = "Assets/Data/Grid Data/Grid Position Data";
+
+            if (System.IO.Directory.Exists(path) == false)
+            {
+                System.IO.Directory.CreateDirectory(path);
+            }
+
+            string assetPathAndName = UnityEditor.AssetDatabase.GenerateUniqueAssetPath(path + "/" + gameObject.name + " Positions.asset");
+
+            UnityEditor.AssetDatabase.CreateAsset(saveToSO, assetPathAndName);
+            UnityEditor.AssetDatabase.SaveAssets();
+
+            Debug.Log("Created new ScriptableObject at: " + assetPathAndName);
         }
 
         if (positionsPerFormation.Count == 0 || positionsPerFormation[0].Count == 0)
@@ -250,7 +263,9 @@ public class GridFormationController : FormationProvider
         }
 
         groupKey = ChallengeManager.instance.CurrentChallenge.GetID();
-        GridFormationData data = gridDatabase.GetRandomUniqueFormation(groupKey);
+        //GridFormationData data = gridDatabase.GetRandomUniqueFormation(groupKey);
+
+        GridFormationData data = saveToSO;
 
         if (data == null || data.positions == null || data.positions.Count == 0)
         {
@@ -532,7 +547,11 @@ public class GridFormationController : FormationProvider
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
 
             Quaternion randomYRotation = Quaternion.Euler(0f, 90f * Random.Range(0, 4), 0f);
-            GameObject newBlock = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform);
+            //GameObject newBlock = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform);
+            Vector3 worldPos = transform.TransformPoint(pos);
+            Quaternion worldRot = transform.rotation * randomYRotation;
+
+            GameObject newBlock = Instantiate(prefabToSpawn, worldPos, worldRot, transform);
             try
             {
                 if (deactivateOnSpawn)
@@ -596,8 +615,11 @@ public class GridFormationController : FormationProvider
             if (prefabToSpawn == null)
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
             Quaternion randomYRotation = Quaternion.Euler(0f, 90f * Random.Range(0, 4), 0f);
-            Transform t = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform).transform;
+            //Transform t = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform).transform;
+            Vector3 worldPos = transform.TransformPoint(pos);
+            Quaternion worldRot = transform.rotation * randomYRotation;
 
+            Transform t = Instantiate(prefabToSpawn, worldPos, worldRot, transform).transform;
             instances.Add(t);
         }
     }
@@ -729,49 +751,55 @@ public class GridFormationController : FormationProvider
         int idx = Mathf.Clamp(currentIndex, 0, positionsPerFormation.Count - 1);
         var list = positionsPerFormation[idx];
         Gizmos.color = Color.cyan;
-        foreach (var pos in list)
+        foreach (var localPos in list)
         {
-            Gizmos.DrawWireCube(pos, Vector3.one * 0.1f);
+            Vector3 worldPos = transform.TransformPoint(localPos);
+            Gizmos.DrawWireCube(worldPos, Vector3.one * 0.1f);
         }
 
         // Draw grid outline
         Gizmos.color = Color.yellow;
-        Vector3 center = gridCenter;
+        Vector3 center = transform.TransformPoint(gridCenter);
         float width = gridSpanX;
         float depth = gridSpanZ;
-        Vector3 bottomLeft = transform.position + new Vector3(center.x - width / 2f, 0, center.z - depth / 2f);
-        Vector3 bottomRight = bottomLeft + new Vector3(width, 0, 0);
-        Vector3 topLeft = bottomLeft + new Vector3(0, 0, depth);
-        Vector3 topRight = bottomLeft + new Vector3(width, 0, depth);
+
+        Vector3 right = transform.right * width;
+        Vector3 forward = transform.forward * depth;
+
+        Vector3 bottomLeft = center - right / 2f - forward / 2f;
+        Vector3 bottomRight = bottomLeft + right;
+        Vector3 topLeft = bottomLeft + forward;
+        Vector3 topRight = bottomLeft + right + forward;
 
         Gizmos.DrawLine(bottomLeft, bottomRight);
         Gizmos.DrawLine(bottomRight, topRight);
         Gizmos.DrawLine(topRight, topLeft);
         Gizmos.DrawLine(topLeft, bottomLeft);
 
+        // Draw circles for radius prefabs
         if (radiusPrefabs != null && radiusPrefabs.Count > 0)
         {
             Gizmos.color = Color.green;
             foreach (var rp in radiusPrefabs)
             {
                 float radius = rp.radius;
-                Vector3 customCenter = transform.position + gridCenter + rp.centerOffset;
+                Vector3 customCenter = transform.TransformPoint(gridCenter + rp.centerOffset);
 
                 int segments = 64;
                 float angleStep = 360f / segments;
-                Vector3 prevPoint = customCenter + new Vector3(Mathf.Cos(0), 0, Mathf.Sin(0)) * radius;
+                Vector3 prevPoint = customCenter + (transform.right * Mathf.Cos(0) + transform.forward * Mathf.Sin(0)) * radius;
 
                 for (int i = 1; i <= segments; i++)
                 {
                     float rad = Mathf.Deg2Rad * (i * angleStep);
-                    Vector3 nextPoint = customCenter + new Vector3(Mathf.Cos(rad), 0, Mathf.Sin(rad)) * radius;
+                    Vector3 nextPoint = customCenter + (transform.right * Mathf.Cos(rad) + transform.forward * Mathf.Sin(rad)) * radius;
                     Gizmos.DrawLine(prevPoint, nextPoint);
                     prevPoint = nextPoint;
                 }
             }
-
         }
     }
+
 #endif
 
 #endif

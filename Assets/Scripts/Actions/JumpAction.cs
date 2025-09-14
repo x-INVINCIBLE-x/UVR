@@ -131,7 +131,7 @@ public class JumpAction : Action
         // Initial upward velocity (based on jumpAcceleration and jumpHeight)
         float velocity = Mathf.Sqrt(2f * jumpAcceleration * jumpHeight * acceleratedJumpMultiplier);
 
-        while (velocity > 0f || !actionMediator.IsGrounded())
+        while (velocity > 0f && !actionMediator.IsGrounded()) // Changed OR to AND
         {
             // Apply upward movement if velocity > 0
             if (velocity > 0f)

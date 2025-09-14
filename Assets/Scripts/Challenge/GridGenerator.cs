@@ -47,8 +47,8 @@ public class GridGenerator : MonoBehaviour
         {
             if (setupData.gridFormationControllers[i] != null)
             {
-                GridFormationController formationController = Instantiate(setupData.gridFormationControllers[i], setupData.positions[i], setupData.rotations[i]);
-                formationController.transform.parent = this.transform;
+                GridFormationController formationController = Instantiate(setupData.gridFormationControllers[i], setupData.positions[i], setupData.rotations[i], transform);
+                //formationController.transform.parent = null;
             }
         }
     }
