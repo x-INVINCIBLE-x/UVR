@@ -1689,7 +1689,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 89
+  m_VersionIndex: 98
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2280,9 +2280,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 0}
+  materialUpTime: 3
 --- !u!1 &533445370333183160
 GameObject:
   m_ObjectHideFlags: 0
@@ -3611,7 +3613,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 95
+  m_VersionIndex: 104
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -6092,9 +6094,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 0}
+  materialUpTime: 3
 --- !u!1 &1725251072260709691
 GameObject:
   m_ObjectHideFlags: 0
@@ -8488,9 +8492,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 0}
+  materialUpTime: 3
 --- !u!1 &2562923195341790654
 GameObject:
   m_ObjectHideFlags: 0
@@ -12383,6 +12389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 55306302244906547}
   - component: {fileID: 6783243274881320352}
+  - component: {fileID: 7128069029814947017}
   m_Layer: 7
   m_Name: wall_mounted_lantern (36)
   m_TagString: Untagged
@@ -12429,6 +12436,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9388719, y: 0.9999998, z: 3.1057045}
   m_Center: {x: -0.38952914, y: -1.7041668e-16, z: 2.196859}
+--- !u!114 &7128069029814947017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4009119833155467895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshType: 0
+  Meshes: []
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: cd9735b760f0f37448da74b143c41cf0, type: 2}
+  materialUpTime: 3
 --- !u!1 &4040387756254432052
 GameObject:
   m_ObjectHideFlags: 0
@@ -13601,7 +13625,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 95
+  m_VersionIndex: 104
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -13836,9 +13860,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  materialUpTime: 3
 --- !u!114 &8744149421683763155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14515,6 +14541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7902275332406214036}
   - component: {fileID: 3505511452307886318}
+  - component: {fileID: 4222250421205127433}
   m_Layer: 7
   m_Name: wall_mounted_lantern (38)
   m_TagString: Untagged
@@ -14561,6 +14588,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9388719, y: 0.9999998, z: 3.1057045}
   m_Center: {x: -0.38952914, y: -1.7041668e-16, z: 2.196859}
+--- !u!114 &4222250421205127433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4521322457275189855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshType: 0
+  Meshes: []
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: cd9735b760f0f37448da74b143c41cf0, type: 2}
+  materialUpTime: 3
 --- !u!1 &4542887875549381505
 GameObject:
   m_ObjectHideFlags: 0
@@ -15819,9 +15863,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  materialUpTime: 3
 --- !u!114 &3412845345150122942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16001,9 +16047,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  materialUpTime: 3
 --- !u!114 &3512743976313097793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17111,9 +17159,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 0}
+  materialUpTime: 3
 --- !u!1 &5364233783896988231
 GameObject:
   m_ObjectHideFlags: 0
@@ -18530,6 +18580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1205933956182826690}
   - component: {fileID: 6022936297567613075}
+  - component: {fileID: 7577700463112156888}
   m_Layer: 7
   m_Name: wall_mounted_lantern (40)
   m_TagString: Untagged
@@ -18576,6 +18627,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9388719, y: 0.9999998, z: 3.1057045}
   m_Center: {x: -0.38952914, y: -1.7041668e-16, z: 2.196859}
+--- !u!114 &7577700463112156888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991758134934557492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshType: 0
+  Meshes: []
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: cd9735b760f0f37448da74b143c41cf0, type: 2}
+  materialUpTime: 3
 --- !u!1 &5995118469938637416
 GameObject:
   m_ObjectHideFlags: 0
@@ -19674,7 +19742,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 89
+  m_VersionIndex: 98
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -21681,6 +21749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5323437849979466858}
   - component: {fileID: 1199709168516729249}
+  - component: {fileID: 2463038501316824942}
   m_Layer: 7
   m_Name: wall_mounted_lantern (39)
   m_TagString: Untagged
@@ -21727,6 +21796,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9388719, y: 0.9999998, z: 3.1057045}
   m_Center: {x: -0.38952914, y: -1.7041668e-16, z: 2.196859}
+--- !u!114 &2463038501316824942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6962539082017878879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshType: 0
+  Meshes: []
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: cd9735b760f0f37448da74b143c41cf0, type: 2}
+  materialUpTime: 3
 --- !u!1 &7049203558008505437
 GameObject:
   m_ObjectHideFlags: 0
@@ -23026,6 +23112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5130684543306516881}
   - component: {fileID: 4154770600747811425}
+  - component: {fileID: 225795444029249643}
   m_Layer: 7
   m_Name: wall_mounted_lantern (37)
   m_TagString: Untagged
@@ -23072,6 +23159,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9388719, y: 0.9999998, z: 3.1057045}
   m_Center: {x: -0.38952914, y: -1.7041668e-16, z: 2.196859}
+--- !u!114 &225795444029249643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7532687885657055767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshType: 0
+  Meshes: []
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: cd9735b760f0f37448da74b143c41cf0, type: 2}
+  materialUpTime: 3
 --- !u!1 &7563867218644264953
 GameObject:
   m_ObjectHideFlags: 0
@@ -23717,7 +23821,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 89
+  m_VersionIndex: 98
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -24296,9 +24400,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  materialUpTime: 3
 --- !u!114 &7557705092846714646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26134,7 +26240,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 95
+  m_VersionIndex: 104
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -28305,7 +28411,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 95
+  m_VersionIndex: 104
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -28455,6 +28561,7 @@ GameObject:
   - component: {fileID: 4917687891482525652}
   - component: {fileID: 6690956605313239589}
   - component: {fileID: 3325174797275762259}
+  - component: {fileID: 5281309325143799073}
   m_Layer: 7
   m_Name: wall_mounted_lantern (35)
   m_TagString: Untagged
@@ -28513,9 +28620,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: 7300479e23e91e8469cbf27aaed67fcc, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: cd9735b760f0f37448da74b143c41cf0, type: 2}
+  materialUpTime: 3
+--- !u!114 &5281309325143799073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8905553707363534668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshType: 0
+  Meshes: []
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 0}
+  materialUpTime: 3
 --- !u!1 &8918804362746851092
 GameObject:
   m_ObjectHideFlags: 0
@@ -28710,9 +28836,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 0}
+  materialUpTime: 3
 --- !u!1 &9059588830250580950
 GameObject:
   m_ObjectHideFlags: 0
@@ -29930,7 +30058,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 89
+  m_VersionIndex: 98
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

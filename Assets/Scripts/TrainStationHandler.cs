@@ -10,7 +10,7 @@ public class TrainStationHandler : MonoBehaviour
 
     [Space]
     [Header("Train Animation and Sound")]
-    [SerializeField] private Animation trainEngineOn;
+    [SerializeField] private Animator trainAnimator;
     //[SerializeField] private Animation trainStartRunnning;
     [SerializeField] private AudioSource trainAudioSource1;
     [SerializeField] private AudioSource trainAudioSource2;
@@ -108,9 +108,9 @@ public class TrainStationHandler : MonoBehaviour
 
     private void TrainAnimationHandler()
     {
-        if (trainEngineOn != null && Vfxs != null)
+        if (trainAnimator != null && Vfxs != null)
         {
-            trainEngineOn.Play();
+            trainAnimator.Play("Train Run");
             foreach (GameObject steam in Vfxs)
             {
                 steam.SetActive(true);

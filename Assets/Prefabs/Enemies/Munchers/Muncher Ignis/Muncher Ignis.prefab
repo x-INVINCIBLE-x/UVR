@@ -26868,11 +26868,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Meshes: []
-  DissolveMaterial: {fileID: 2100000, guid: cb348687f2336074ca1864bf393498b7, type: 2}
-  Dissolve: 0
-  defaultMaterials: []
   dissolveRate: 0.0125
-  RefreshRate: 0.025
+  refreshRate: 0.025
   impactDissolveRate: 0.0125
   impactDissolveThreshold: 0.5
   currentDissolve: 0
@@ -26888,9 +26885,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: 40c534a1bdac14b4a92fdfce5d0dbe1e, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: 40c534a1bdac14b4a92fdfce5d0dbe1e, type: 2}
+  materialUpTime: 3
 --- !u!1 &5290021895596043074
 GameObject:
   m_ObjectHideFlags: 0

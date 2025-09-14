@@ -1,51 +1,152 @@
-using System.Threading;
 using UnityEngine;
 
 public class HighlightObject : MonoBehaviour
 {
-    public MeshRenderer[] Meshes;
-    public Material[] defaultMaterial;
-    private MeshRenderer m_MeshRenderer;
-    
-    //private Material defaultMaterial;
-    public Material highlightmaterial;
-    float materialUpTime = 3f;
+    public TypeofMesh meshType;
+
+    [SerializeField] private MeshRenderer[] Meshes;
+    [SerializeField] private SkinnedMeshRenderer[] SkinnedMeshes;
+    [SerializeField] private Material highlightMaterial;
+    [SerializeField] private float materialUpTime = 3f;
+
+    // cache original materials
+    private Material[] defaultMaterials;
+
+    public enum TypeofMesh
+    {
+        StaticMesh,
+        SkinnedMesh
+    }
 
     private void Awake()
-    {   
-        Meshes = GetComponentsInChildren<MeshRenderer>();
-        defaultMaterial = new Material[Meshes.Length];
-        for (int i = 0; i < Meshes.Length; i++)
-        {
-            defaultMaterial[i] = Meshes[i].material;
-        }
-        //defaultMaterial = GetComponentsInChildren<Material>();
-        //m_MeshRenderer = GetComponent<MeshRenderer>();
-        //defaultMaterial = m_MeshRenderer.material;
-    }
-    private void Update()
     {
-        //float Timer = Time.deltaTime;
-        
+        switch (meshType)
+        {
+            case TypeofMesh.StaticMesh:
+                StaticMeshInitialize();
+                break;
+
+            case TypeofMesh.SkinnedMesh:
+                SkinnedMeshInitialize();
+                break;
+        }
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hitscan");
         if (other.GetComponent<TerrainScanner2>() == null) return;
-        foreach (MeshRenderer renderer in Meshes)
+
+        switch (meshType)
         {
-            renderer.material = highlightmaterial;
+            case TypeofMesh.StaticMesh:
+                StaticMeshHighlight();
+                break;
+
+            case TypeofMesh.SkinnedMesh:
+                SkinnedMeshHighlight();
+                break;
         }
 
-        //m_MeshRenderer.material = highlightmaterial;
         Invoke(nameof(ResetMaterial), materialUpTime);
     }
 
-    void ResetMaterial()
-    {   
-       for(int i = 0; i < Meshes.Length; i++)
-       {
-            Meshes[i].material = defaultMaterial[i];
-       }
+    // Initialization
+    private void StaticMeshInitialize()
+    {
+        if (Meshes == null || Meshes.Length == 0)
+            Meshes = GetComponentsInChildren<MeshRenderer>();
+
+        int totalMats = 0;
+        foreach (var r in Meshes) totalMats += r.sharedMaterials.Length;
+
+        defaultMaterials = new Material[totalMats];
+
+        int index = 0;
+        foreach (var r in Meshes)
+        {
+            foreach (var mat in r.sharedMaterials)
+            {
+                defaultMaterials[index++] = mat;
+            }
+        }
+    }
+
+    private void SkinnedMeshInitialize()
+    {
+        if (SkinnedMeshes == null || SkinnedMeshes.Length == 0)
+            SkinnedMeshes = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        int totalMats = 0;
+        foreach (var r in SkinnedMeshes) totalMats += r.sharedMaterials.Length;
+
+        defaultMaterials = new Material[totalMats];
+
+        int index = 0;
+        foreach (var r in SkinnedMeshes)
+        {
+            foreach (var mat in r.sharedMaterials)
+            {
+                defaultMaterials[index++] = mat;
+            }
+        }
+    }
+
+    //Highlight
+    private void StaticMeshHighlight()
+    {
+        foreach (var r in Meshes)
+        {
+            var newMats = new Material[r.sharedMaterials.Length];
+            for (int j = 0; j < newMats.Length; j++)
+                newMats[j] = highlightMaterial;
+
+            r.materials = newMats;
+        }
+    }
+
+    private void SkinnedMeshHighlight()
+    {
+        foreach (var r in SkinnedMeshes)
+        {
+            var newMats = new Material[r.sharedMaterials.Length];
+            for (int j = 0; j < newMats.Length; j++)
+                newMats[j] = highlightMaterial;
+
+            r.materials = newMats;
+        }
+    }
+
+    // Reset
+    private void ResetMaterial()
+    {
+        int index = 0;
+
+        switch (meshType)
+        {
+            case TypeofMesh.StaticMesh:
+                foreach (var r in Meshes)
+                {
+                    var mats = new Material[r.sharedMaterials.Length];
+                    for (int j = 0; j < mats.Length; j++)
+                        mats[j] = defaultMaterials[index++];
+                    r.materials = mats;
+                }
+                break;
+
+            case TypeofMesh.SkinnedMesh:
+                foreach (var r in SkinnedMeshes)
+                {
+                    var mats = new Material[r.sharedMaterials.Length];
+                    for (int j = 0; j < mats.Length; j++)
+                        mats[j] = defaultMaterials[index++];
+                    r.materials = mats;
+                }
+                break;
+        }
+    }
+
+    private void OnDisable()
+    {
+        ResetMaterial();
     }
 }

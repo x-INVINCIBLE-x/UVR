@@ -17444,6 +17444,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   frostStatus:
     Type: 0
     Value: 0
@@ -17455,6 +17456,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   blitzStatus:
     Type: 0
     Value: 0
@@ -17466,6 +17468,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   hexStatus:
     Type: 0
     Value: 0
@@ -17477,6 +17480,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   radianceStatus:
     Type: 0
     Value: 0
@@ -17488,6 +17492,7 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   gaiaStatus:
     Type: 0
     Value: 0
@@ -17499,7 +17504,9 @@ MonoBehaviour:
       statModifiers: []
     isMaxed: 0
     ailmentLimit: 100
+    isActive: 0
   ailmentLimitOffset: 10
+  maxResistance: 75
   currentHealth: 0
   currentStamina: 0
   <IsInvincible>k__BackingField: 0
@@ -17517,11 +17524,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Meshes: []
-  DissolveMaterial: {fileID: 2100000, guid: b94b5d4f364f4b64aaacc36119bdb7d8, type: 2}
-  Dissolve: 0
-  defaultMaterials: []
   dissolveRate: 0.0125
-  RefreshRate: 0.025
+  refreshRate: 0.025
   impactDissolveRate: 0.0125
   impactDissolveThreshold: 0.5
   currentDissolve: 0
@@ -17537,9 +17541,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshType: 0
   Meshes: []
-  defaultMaterial: []
-  highlightmaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: 40c534a1bdac14b4a92fdfce5d0dbe1e, type: 2}
+  materialUpTime: 3
 --- !u!1 &4693715253941878559
 GameObject:
   m_ObjectHideFlags: 0
