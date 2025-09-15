@@ -29,10 +29,6 @@ public class EnemyFXHandler : MonoBehaviour
         if(MagicCircle != null)
             MagicCircle.SetActive(false);
     }
-    private void Start()
-    {
-    
-    }
 
     public void SpawnMagicCircleVFX(float chargeTime)
     {
@@ -124,6 +120,12 @@ public class EnemyFXHandler : MonoBehaviour
     {   
         characterUI.SpawnHealthUI(Activate);
     }
+
+    public void SpawnDamageUI(float damage)
+    {
+        characterUI.HandleDamageTaken(damage);
+    }
+
     public void SpawnAilmentUI(AilmentType type, bool Activate = true)
     {
         characterUI.SpawnAilmentUI(type, Activate);

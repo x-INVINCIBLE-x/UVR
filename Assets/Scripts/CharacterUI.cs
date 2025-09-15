@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,10 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private Image healthSlider;
     [SerializeField, Min(1)] private float healthSliderSmoothness;
     private CanvasGroup healthUICanvasGroup;
+    [SerializeField] private CanvasGroup damageTakenGroup;
+    [SerializeField] private TextMeshProUGUI damageTakenText;
+    private Coroutine damageTakenCoroutine;
+    private float lastDamageValue;
 
     [Header("Exclamation Mark UI")]
     [Space]
@@ -166,6 +171,24 @@ public class CharacterUI : MonoBehaviour
                 StartCoroutine(FadeCanvasGroup(healthUICanvasGroup, healthUICanvasGroup.alpha, 0f, 0.5f));
             }
         }
+    }
+    public void HandleDamageTaken(float damageAmount)
+    {
+        if (damageTakenGroup.alpha == 0)
+        {
+            lastDamageValue = 0;
+        }
+
+        lastDamageValue += damageAmount;
+        damageTakenText.text = "-" + lastDamageValue.ToString();
+
+        damageTakenGroup.gameObject.SetActive(true);
+        damageTakenGroup.alpha = 1;
+
+        if (damageTakenCoroutine != null)
+            StopCoroutine(damageTakenCoroutine);
+
+        damageTakenCoroutine = StartCoroutine(FadeCanvasGroup(damageTakenGroup, damageTakenGroup.alpha, 0, 1f));
     }
 
     public void SpawnExclamationUI(bool Activate = true)

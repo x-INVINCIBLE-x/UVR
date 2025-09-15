@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -34,6 +35,11 @@ public class AudioManager : MonoBehaviour
 
     private bool isPlayingMusicSource1; // if it is true then musicSource is playing , If it is false then musicSource 2 is playing
 
+    [SerializeField] private int maxSimultaneousSFX = 3;
+    [SerializeField] private AudioSource audioSourcePrefab;
+    private Queue<AudioSource> audioPool = new Queue<AudioSource>();
+    private List<AudioSource> activeSources = new List<AudioSource>();
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -47,6 +53,16 @@ public class AudioManager : MonoBehaviour
         musicSource2.loop = true;
         // Intialization
         isPlayingMusicSource1 = true;
+
+        for (int i = 0; i < maxSimultaneousSFX; i++)
+        {
+            AudioSource src = Instantiate(audioSourcePrefab, transform);
+            src.playOnAwake = false;
+            src.spatialBlend = 0f; // force 2D
+            src.gameObject.SetActive(false);
+
+            audioPool.Enqueue(src);
+        }
     }
 
     public void PlayMusic(AudioClip musicClip)
@@ -133,6 +149,47 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// This function plays a one-shot sound effect using an audio pool to manage simultaneous sounds.
+    /// System SFX is not bound to any entity and is played in 2D space.
+    /// There is a limit to the number of simultaneous SFX that can be played, defined by maxSimultaneousSFX.
+    /// </summary>
+    /// <param name="clip"></param>
+    /// <param name="volume"></param>
+    public void PlaySystemSFX(AudioClip clip, float volume = 1f)
+    {
+        if (clip == null) return;
+
+        // Check if pool has free source
+        if (audioPool.Count > 0)
+        {
+            AudioSource src = audioPool.Dequeue();
+            activeSources.Add(src);
+
+            src.gameObject.SetActive(true);
+            src.clip = clip;
+            src.volume = volume;
+            src.Play();
+
+            StartCoroutine(ReturnToPool(src, clip.length));
+        }
+        else
+        {
+            Debug.Log("SFXHandler: Max simultaneous SFX reached!");
+        }
+    }
+
+    private IEnumerator ReturnToPool(AudioSource src, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        src.Stop();
+        src.clip = null;
+        src.gameObject.SetActive(false);
+
+        activeSources.Remove(src);
+        audioPool.Enqueue(src);
+    }
     public void PlayMusicWithCrossFade(AudioClip newClip, float transitionTime = 1.0f)
     {
         if (newClip == null) return;

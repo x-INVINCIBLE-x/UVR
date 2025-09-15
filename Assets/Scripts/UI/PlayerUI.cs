@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,18 @@ public class PlayerUI : MonoBehaviour
     [Header("Ability Duration UI")]
     [SerializeField] private Image durationFill;
     [SerializeField] private GameObject durationSegmentParent;
+
+    [Header("Hp Update Text")]
+    [SerializeField] private CanvasGroup healthCanvas;
+    [SerializeField] private TextMeshProUGUI healthText;
+    private Coroutine healthRoutine;
+    private float displayDuration = 1.5f;
+    private float lastDamageValue = 0f;
+
+    [Header("Level Up UI")]
+    [SerializeField] private Transform levelupUIContainer;
+    [SerializeField] private LevelupUIView levelupUI;
+    [SerializeField] private AudioClip levelupSFX;
 
     [Header("Full scrreen effect")]
     [SerializeField] private FullscreenEffectController fullScreenEffect;
@@ -42,27 +55,79 @@ public class PlayerUI : MonoBehaviour
         player.Stats.OnHealthChanged += UpdateHealthUI;
 
         player.Stats.OnAilmentStatusChange += HandleStatusChange;
+        player.Stats.OnDamageTaken += HandleDamageTaken;
         player.Stats.OnDeath += HandleDeath;
+
+        player.XP.OnLevelUp += HandleLevelup;
+    }
+
+    private void HandleDamageTaken(float damageAmount)
+    {
+        if (healthCanvas.alpha == 0)
+        {
+            lastDamageValue = 0;
+        }
+
+        lastDamageValue += damageAmount;
+        healthText.text = "-" + lastDamageValue.ToString();
+   
+        healthCanvas.gameObject.SetActive(true);
+        healthCanvas.alpha = 1;
+
+
+        if (healthRoutine != null)
+            StopCoroutine(healthRoutine);
+
+        healthRoutine = StartCoroutine(FadeOutGroup(healthCanvas));
+    }
+
+    private IEnumerator FadeOutGroup(CanvasGroup group)
+    {
+        float timer = 0;
+        while (timer < displayDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / displayDuration;
+            float targetAlpha = Mathf.Lerp(0, 1, t);
+
+            group.alpha = targetAlpha;
+            yield return null;
+        }
+
+        group.alpha = 0;
+        group.gameObject.SetActive(false);
+        healthRoutine = null;
+    }
+
+    private void HandleLevelup(int newLevel)
+    {
+        LevelupUIView newView = Instantiate(levelupUI, levelupUIContainer);
+        newView.SetLevelText((newLevel-1).ToString(), newLevel.ToString());
+        AudioManager.Instance.PlaySystemSFX(levelupSFX);
+        Destroy(newView.gameObject, 3f);
     }
 
     private void HandleStatusChange(AilmentType type, bool isActivated, float effectAmount)
     {   
         if (isActivated == true)
         {   
-            fullScreenEffect.ActivateFullscreenEffect(type);
+            if (fullScreenEffect != null)
+                fullScreenEffect.ActivateFullscreenEffect(type);
             player.Stats.GetAilmentStatus(type).AilmentEffectEnded += HandleEffectEnd;
         }
     }
 
     private void HandleEffectEnd(AilmentType type)
     {   
-        fullScreenEffect.DeactivateFullscreenEffect();
+        if (fullScreenEffect != null)
+            fullScreenEffect.DeactivateFullscreenEffect();
         player.Stats.GetAilmentStatus(type).AilmentEffectEnded -= HandleEffectEnd;
     }
 
     private void HandleDeath()
     {
-        fullScreenEffect.DeactivateFullscreenEffect();
+        if (fullScreenEffect != null)
+            fullScreenEffect.DeactivateFullscreenEffect();
     }
 
     private void UpdateHealthUI(float normalizedValue)

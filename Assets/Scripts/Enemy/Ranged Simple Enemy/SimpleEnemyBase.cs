@@ -217,10 +217,11 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         }
     }   
 
-    protected virtual void HandleHit(float arg1, float arg2)
+    protected virtual void HandleHit(float damageAmount)
     {
         if (isDead) return;
 
+        FXManager.SpawnDamageUI(damageAmount);
         sfxSource.PlayOneShot(enemyHitCry);
 
         if (hitSurroundingEnemies)

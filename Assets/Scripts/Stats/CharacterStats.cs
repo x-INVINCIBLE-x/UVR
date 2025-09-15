@@ -165,7 +165,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
     public event System.Action OnDeathDeficeUsed;
     public event System.Action OnDeath;
     public event Action<float> OnHealthChanged;
-    public event Action<float, float> OnDamageTaken;
+    public event Action<float> OnDamageTaken;
     public event Action<DamageResult> OnDamageGiven;
     public event Action<AilmentType, bool, float> OnAilmentStatusChange;
 
@@ -460,7 +460,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
         if (damageTakenBuffer + lastDamageTakenTime < Time.time)
         {
             lastDamageTakenTime = Time.time;
-            OnDamageTaken?.Invoke(currentHealth, health.Value);
+            OnDamageTaken?.Invoke(damage);
         }
 
         return result;

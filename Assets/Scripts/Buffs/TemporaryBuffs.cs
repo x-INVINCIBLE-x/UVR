@@ -119,7 +119,7 @@ public class TemporaryBuffs : MonoBehaviour
     }
 
 
-    private void HandleHit(float currentHealth, float maxHealth)
+    private void HandleHit(float currentHealth)
     {
         foreach (BuffInfo buffInfo in onHitBuffs)
         {
