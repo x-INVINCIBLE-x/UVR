@@ -6464,6 +6464,8 @@ GameObject:
   - component: {fileID: 5332868967265013993}
   - component: {fileID: 5142437320606782141}
   - component: {fileID: 8387027033982185709}
+  - component: {fileID: 597961190255437046}
+  - component: {fileID: 4050755049154835635}
   m_Layer: 0
   m_Name: forge_axe
   m_TagString: Untagged
@@ -6831,10 +6833,51 @@ MonoBehaviour:
   Hitable:
     serializedVersion: 2
     m_Bits: 4294967295
+  accelerationThreshold: 3
   isStillInContact: 0
   hitBox: {fileID: 5332868967265013993}
-  velocityThreshold: 1
   groundAttackType: 0
+--- !u!114 &597961190255437046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6075706993202606134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cce75d7544eb2418764af403bdbcca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSelectEntered:
+    intensity: 0
+    duration: 0
+  onSelectExited:
+    intensity: 0
+    duration: 0
+  onActivate:
+    intensity: 0
+    duration: 0
+  onDeactivate:
+    intensity: 0
+    duration: 0
+--- !u!114 &4050755049154835635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6075706993202606134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshType: 0
+  Meshes: []
+  SkinnedMeshes: []
+  highlightMaterial: {fileID: 2100000, guid: ea5a4cb608d99334180cb9ae9eff12ca, type: 2}
+  materialUpTime: 3
 --- !u!1 &6298469454524745246
 GameObject:
   m_ObjectHideFlags: 0
