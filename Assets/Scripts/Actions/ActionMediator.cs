@@ -135,6 +135,12 @@ public class ActionMediator : MonoBehaviour
         }
         else if (grabStatus.IsSwinging())
         {
+            if (rotationFixRoutine != null)
+            {
+                StopCoroutine(rotationFixRoutine);
+                rotationFixRoutine = null;
+            }
+            
             LastActionStatus = ActionStatus.Swing;
         }
         else
@@ -287,6 +293,7 @@ public class ActionMediator : MonoBehaviour
 
     private IEnumerator RotateTo(Transform transform, Vector3 targetEulerAngles, float duration)
     {
+        yield return new WaitForSeconds(1.5f);
         Quaternion startRotation = transform.rotation;
 
         Vector3 currentEuler = transform.eulerAngles;
