@@ -1972,6 +1972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987e53fbeda459b4ab9448d6fb56fcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSimultaneousSFX: 3
+  audioSourcePrefab: {fileID: 0}
 --- !u!4 &347583844
 Transform:
   m_ObjectHideFlags: 0
@@ -12047,6 +12049,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Statue Block
       objectReference: {fileID: 0}
+    - target: {fileID: 3964748467599012836, guid: 939702b3c7fb94d4992d1183ffdb17d3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8dbfb6329df5e0f488dea9792399dfa1, type: 2}
     - target: {fileID: 7031517092060600625, guid: 939702b3c7fb94d4992d1183ffdb17d3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 259.21002

@@ -9,6 +9,7 @@ public class DungeonMusic : MonoBehaviour
     public AudioClip[] battleTheme;
     private int indexDungeon;
     private int indexBattle;
+    private int indexBoth;
 
     [SerializeField] private float transitionTime = 2f;
     private bool inCombat = false;
@@ -20,7 +21,7 @@ public class DungeonMusic : MonoBehaviour
         //Debug.Log(dungeonTheme[indexDungeon]);
         //Debug.Log(battleTheme[indexBattle]);
 
-        AudioManager.Instance.PlayMusic(dungeonTheme[indexDungeon]);
+        AudioManager.Instance.PlayMusic(dungeonTheme[indexBoth]);
         EnemyEventManager.Instance.OnEnemySeePlayer  += OnEngageCombat;
         EnemyEventManager.Instance.OnEnemyLostPlayer += OnDisengageCombat;
         EnemyEventManager.Instance.OnEnemyDeath += OnDisengageCombat; // Also disengage combat when all enemies are dead
@@ -42,7 +43,7 @@ public class DungeonMusic : MonoBehaviour
         if (!inCombat)
         {
             inCombat = true;
-            AudioManager.Instance.PlayMusicWithFade(battleTheme[indexBattle], transitionTime);
+            AudioManager.Instance.PlayMusicWithFade(battleTheme[indexBoth], transitionTime);
         }
     }
     
@@ -55,7 +56,7 @@ public class DungeonMusic : MonoBehaviour
         if (inCombat && EnemyEventManager.Instance.ActiveEnemies.Count == 0)
         {
             inCombat = false;
-            AudioManager.Instance.PlayMusicWithFade(dungeonTheme[indexDungeon], transitionTime);
+            AudioManager.Instance.PlayMusicWithFade(dungeonTheme[indexBoth], transitionTime);
         }
     }
 
@@ -63,6 +64,10 @@ public class DungeonMusic : MonoBehaviour
     {
         indexDungeon = UnityEngine.Random.Range(0, dungeonTheme.Length);
         indexBattle = UnityEngine.Random.Range(0,battleTheme.Length);
+        if(dungeonTheme.Length == battleTheme.Length)
+        {
+            indexBoth = UnityEngine.Random.Range(0, battleTheme.Length);
+        }
     }
 
     

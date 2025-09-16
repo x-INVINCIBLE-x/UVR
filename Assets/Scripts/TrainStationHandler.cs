@@ -6,8 +6,10 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class TrainStationHandler : MonoBehaviour
 {
-    // Attach this to Train Lever 
+    [SerializeField] private SceneTransitionProvider sceneTransitionProvider;
+    [SerializeField] private SceneReference dungeonEntranceScene;
 
+    // Attach this to Train Lever 
     [Space]
     [Header("Train Animation and Sound")]
     [SerializeField] private Animator trainAnimator;
@@ -31,6 +33,13 @@ public class TrainStationHandler : MonoBehaviour
     private float currentAngle;
     private bool isGrabbed;
     private bool hasActivated;
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        dungeonEntranceScene?.UpdateFields();
+    }
+#endif
 
     private void Awake()
     {
@@ -74,7 +83,7 @@ public class TrainStationHandler : MonoBehaviour
         //interactableLever.selectExited.RemoveListener(ReleaseLever);
     }
 
-
+    [ContextMenu("acticvate")]
     private void TrainTravelActivator()
     {
         // Manages the scenes and the vfx settings and everything
@@ -88,6 +97,8 @@ public class TrainStationHandler : MonoBehaviour
         // Sets the destination to travel to through button events
         // Write the logic for scene transition
 
+        sceneTransitionProvider.Initialize(dungeonEntranceScene, 2.5f);
+        sceneTransitionProvider.StartTransition();
     }
 
 

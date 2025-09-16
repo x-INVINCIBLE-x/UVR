@@ -28,7 +28,7 @@ public class SceneTransitionProvider : MonoBehaviour
     public Fader fader;
 
     private float fadeInTime = 1f;
-    private int stayDuraion = 5;
+    private float stayDuraion = 5;
     private bool unloadPriorityScene = false;
     private Coroutine currentTransitionRoutine = null;
 
@@ -57,7 +57,7 @@ public class SceneTransitionProvider : MonoBehaviour
             fader = Core.GetComponentInChildren<Fader>();
     }
 
-    public void Initialize(SceneReference newTargetScene, float fadeInTime = 1f, int transitionStayDuration = 5, SceneReference newTransitionReference = null, bool removePriorityScene = false)
+    public void Initialize(SceneReference newTargetScene, float fadeInTime = 1f, float transitionStayDuration = 5, SceneReference newTransitionReference = null, bool removePriorityScene = false)
     {
         targetScene = newTargetScene;
 
@@ -179,9 +179,9 @@ public class SceneTransitionProvider : MonoBehaviour
         if (lm != null)
             lm.SetPlayerToSpawnPosition();
 
-        yield return HandleFadeIn();
-        
         yield return UnloadScene(transitionSceneRef.SceneName);
+        
+        yield return HandleFadeIn();
     }
 
 
@@ -216,9 +216,9 @@ public class SceneTransitionProvider : MonoBehaviour
         if (lm != null)
             lm.SetPlayerToSpawnPosition();
 
-        yield return HandleFadeIn();
-
         yield return UnloadScene(previousScene.name);
+
+        yield return HandleFadeIn();
     }
 
     private IEnumerator LoadAndEnterScene(SceneReference sceneRef)
@@ -264,7 +264,7 @@ public class SceneTransitionProvider : MonoBehaviour
     private IEnumerator HandleFadeIn()
     {
         if (fader != null)
-            yield return fader.FadeIn(1f);
+            yield return fader.FadeIn(fadeInTime);
     }
 
     GameObject FindRootCore()
