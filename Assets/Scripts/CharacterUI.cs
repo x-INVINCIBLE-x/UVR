@@ -174,6 +174,8 @@ public class CharacterUI : MonoBehaviour
     }
     public void HandleDamageTaken(float damageAmount)
     {
+        if (damageTakenText == null || damageTakenGroup == null)
+            return;
         if (damageTakenGroup.alpha == 0)
         {
             lastDamageValue = 0;

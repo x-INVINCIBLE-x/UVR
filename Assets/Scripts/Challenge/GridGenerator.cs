@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GridGenerator : MonoBehaviour
 {
@@ -31,10 +32,10 @@ public class GridGenerator : MonoBehaviour
 
     private void Start()
     {
-        GenerateGrids(ChallengeManager.instance.CurrentChallenge.GetID());
+        StartCoroutine(GenerateGrids(ChallengeManager.instance.CurrentChallenge.GetID()));
     }
 
-    public void GenerateGrids(string key)
+    public IEnumerator GenerateGrids(string key)
     {
         GridSetupData setupData = GetRandomUniqueFormation(key);
 
@@ -48,8 +49,17 @@ public class GridGenerator : MonoBehaviour
             if (setupData.gridFormationControllers[i] != null)
             {
                 GridFormationController formationController = Instantiate(setupData.gridFormationControllers[i], setupData.positions[i], setupData.rotations[i], transform);
+                yield return StartCoroutine(formationController.SetupFormation());
                 //formationController.transform.parent = null;
             }
+        }
+
+        if (PrioritySceneGate.Instance != null)
+        {
+            PrioritySceneGate.Instance.MarkReady();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.1f);
+            PrioritySceneGate.Instance.MarkUnready();
         }
     }
 

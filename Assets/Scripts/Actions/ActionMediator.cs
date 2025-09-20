@@ -121,7 +121,7 @@ public class ActionMediator : MonoBehaviour
         {
             if (LastActionStatus == ActionStatus.Swing && rotationFixRoutine == null)
             {
-                rotationFixRoutine = StartCoroutine(RotateTo(rb.transform, Vector3.zero, rotationFixDuration));
+                //rotationFixRoutine = StartCoroutine(RotateTo(rb.transform, Vector3.zero, rotationFixDuration));
             }
         }
 
@@ -137,8 +137,8 @@ public class ActionMediator : MonoBehaviour
         {
             if (rotationFixRoutine != null)
             {
-                StopCoroutine(rotationFixRoutine);
-                rotationFixRoutine = null;
+                //StopCoroutine(rotationFixRoutine);
+                //rotationFixRoutine = null;
             }
             
             LastActionStatus = ActionStatus.Swing;

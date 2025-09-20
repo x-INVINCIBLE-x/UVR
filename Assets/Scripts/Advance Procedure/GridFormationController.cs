@@ -199,28 +199,19 @@ public class GridFormationController : FormationProvider
     {
         if (!Application.isPlaying) return;
 
-        difficultyLevel = DungeonManager.Instance.DifficultyLevel - 1;
-
         if (difficultyLevel >= formations.Count)
         {
             Debug.LogWarning($"{gameObject.name} has no config for this difficulty level, using last available.");
             difficultyLevel = formations.Count - 1;
         }
-        SetupFormationFromDatabaseAtRuntime();
+        //SetupFormation();
     }
 
 
-    private IEnumerator SpawnFormationGraduallyThenBuildNavMesh(List<Vector3> positions)
+    private IEnumerator SpawnFormation(List<Vector3> positions)
     {
         yield return StartCoroutine(SpawnFormationGradually(positions));
         //yield return StartCoroutine(BuildNavMeshGradually());
-        if (PrioritySceneGate.Instance != null)
-        {
-            PrioritySceneGate.Instance.MarkReady();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForSeconds(0.1f);
-            PrioritySceneGate.Instance.MarkUnready();
-        }
     }
 
     void Update()
@@ -254,13 +245,15 @@ public class GridFormationController : FormationProvider
         }
     }
 
-    private void SetupFormationFromDatabaseAtRuntime()
+    public IEnumerator SetupFormation()
     {
         if (gridDatabase == null)
         {
             Debug.LogError("Grid database is not assigned.");
-            return;
+            yield break;
         }
+
+        difficultyLevel = DungeonManager.Instance.DifficultyLevel - 1;
 
         groupKey = ChallengeManager.instance.CurrentChallenge.GetID();
         //GridFormationData data = gridDatabase.GetRandomUniqueFormation(groupKey);
@@ -270,7 +263,7 @@ public class GridFormationController : FormationProvider
         if (data == null || data.positions == null || data.positions.Count == 0)
         {
             Debug.LogError("Grid formation data is missing or empty.");
-            return;
+            yield break;
         }
 
         // Use this base to compute all formations
@@ -278,7 +271,7 @@ public class GridFormationController : FormationProvider
         currentIndex = 0;
 
         // Gradual spawn with navmesh bake
-        StartCoroutine(SpawnFormationGraduallyThenBuildNavMesh(positionsPerFormation[currentIndex]));
+        yield return StartCoroutine(SpawnFormation(positionsPerFormation[currentIndex]));
     }
 
     [ContextMenu("Load Random Formation From Database")]
@@ -350,7 +343,7 @@ public class GridFormationController : FormationProvider
         RecomputeFormationsFromBase(data.positions);
         currentIndex = 0;
 
-        StartCoroutine(SpawnFormationGraduallyThenBuildNavMesh(positionsPerFormation[currentIndex]));
+        StartCoroutine(SpawnFormation(positionsPerFormation[currentIndex]));
         Debug.Log("Reloaded new formation from group: " + groupKey);
     }
 

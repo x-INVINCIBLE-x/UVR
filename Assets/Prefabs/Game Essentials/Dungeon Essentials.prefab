@@ -47,13 +47,13 @@ MonoBehaviour:
   formationGroups:
   - gridKey: Slice
     formations:
-    - {fileID: 11400000, guid: a63d03821f5120b4fa6dc24f6e7247d0, type: 2}
+    - {fileID: 11400000, guid: 1252d14e72324344989bb0a1c829799a, type: 2}
   - gridKey: TimeTrial
     formations:
-    - {fileID: 11400000, guid: a63d03821f5120b4fa6dc24f6e7247d0, type: 2}
+    - {fileID: 11400000, guid: 1252d14e72324344989bb0a1c829799a, type: 2}
   - gridKey: Survival
     formations:
-    - {fileID: 11400000, guid: a63d03821f5120b4fa6dc24f6e7247d0, type: 2}
+    - {fileID: 11400000, guid: 1252d14e72324344989bb0a1c829799a, type: 2}
 --- !u!1 &3090583521205103612
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challenges:
-  - {fileID: 1640362732571325783}
+  - {fileID: 424034783326359032}
   possibleChallenges: 
 --- !u!114 &1640362732571325783
 MonoBehaviour:
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challengeID: Survival
-  survivalDuration: 5
+  survivalDuration: 45
   timer: 0
   safeZone: {fileID: -6119084836104393201, guid: 161afd3d7e9b4c442bb6448ca51965e0, type: 3}
   damageOutsideSafeZone: {fileID: 11400000, guid: a0a9d27b0c8856c4ab6bb4e6acc47e62, type: 2}
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   challengeID: TimeTrial
   targetAmount: 5
-  challengeDuration: 500
+  challengeDuration: 1000
   bonusTime: 0
   currentObjective: 0
   targetObjectives: 010000000200000003000000
