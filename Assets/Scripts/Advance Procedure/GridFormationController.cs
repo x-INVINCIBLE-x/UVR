@@ -79,7 +79,7 @@ public class GridFormationController : FormationProvider
     private int currentIndex = 0; 
     private bool isTransitioning = false; 
     private float timer = 0f;
-    private int difficultyLevel = 1;
+    private int difficultyLevel = 0;
     private NavMeshSurface[] navMeshSurfaces;
 
 #if UNITY_EDITOR
@@ -100,7 +100,7 @@ public class GridFormationController : FormationProvider
             Debug.LogWarning("Use this only in Edit Mode.");
             return;
         }
-
+        difficultyLevel = 0; // Base formation at index 0
         InitializeFormations();
 
         if (positionsPerFormation.Count == 0 || positionsPerFormation[0].Count == 0)
