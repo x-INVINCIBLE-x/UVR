@@ -828,6 +828,7 @@ GameObject:
   - component: {fileID: -7764852631761830704}
   - component: {fileID: -2146214328787843244}
   - component: {fileID: -2102007195395781577}
+  - component: {fileID: 5245266884928058549}
   m_Layer: 10
   m_Name: Witchfeller
   m_TagString: Weapon
@@ -1236,6 +1237,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 94eec65ce96ba474ca68a8fed083b22f, type: 2}
+--- !u!114 &5245266884928058549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2954804656354370324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03588f75fe9d75e41b612292741f40ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 94eec65ce96ba474ca68a8fed083b22f, type: 2}
+  isShopItem: 1
+  hasPurchased: 0
+  meshes: []
+  AffordableMaterial: {fileID: 2100000, guid: 297e32e6cefda4540b52851e8ebe3bd2, type: 2}
+  UnaffordableMaterial: {fileID: 2100000, guid: 3352791c8dd077746b3ae054a8119e54, type: 2}
 --- !u!1 &3309313520216637243
 GameObject:
   m_ObjectHideFlags: 0

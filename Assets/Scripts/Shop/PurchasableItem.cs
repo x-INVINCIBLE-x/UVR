@@ -13,6 +13,12 @@ public class PurchasableItem : MonoBehaviour
     private XRGrabInteractable grabInteractable;
     [SerializeField] private bool hasPurchased = false;
 
+    [Header("Visual Settings")]
+    public MeshRenderer[] meshes;                 // Mesh renderers in the 3D model
+    private Material[] defaultMaterials;          // Default materials of meshes
+    public Material AffordableMaterial;           // Material for affordable state
+    public Material UnaffordableMaterial;         // Material for unaffordable state
+
     private int playerLayerMask;
 
     private void Awake()
@@ -27,9 +33,52 @@ public class PurchasableItem : MonoBehaviour
 
         // Subscribe to events
         grabInteractable.selectEntered.AddListener(OnGrabAttempt);
+        grabInteractable.hoverEntered.AddListener(OnHoverAttempt);
+        grabInteractable.hoverExited.AddListener(OnHoverExit);
 
         // Player layer for restriction
         playerLayerMask = LayerMask.GetMask("Player");
+
+        // Store default materials
+        meshes = GetComponentsInChildren<MeshRenderer>();
+        defaultMaterials = new Material[meshes.Length];
+        for (int i = 0; i < meshes.Length; i++)
+        {
+            defaultMaterials[i] = meshes[i].sharedMaterial;
+        }
+    }
+
+    private void OnHoverAttempt(HoverEnterEventArgs args)
+    {
+        if (!isShopItem || hasPurchased) return;
+
+        if (AffordableMaterial != null && UnaffordableMaterial != null)
+        {
+            if (CurrencyManager.Instance != null && CurrencyManager.Instance.Gold >= itemData.ItemCost)
+            {
+                // Change to affordable material
+                foreach (MeshRenderer renderer in meshes)
+                {
+                    renderer.sharedMaterial = AffordableMaterial;
+                }
+            }
+            else
+            {
+                // Change to unaffordable material
+                foreach (MeshRenderer renderer in meshes)
+                {
+                    renderer.sharedMaterial = UnaffordableMaterial;
+                }
+            }
+        }
+    }
+
+    private void OnHoverExit(HoverExitEventArgs args)
+    {
+        if (!isShopItem || hasPurchased) return;
+
+        CancelInvoke(nameof(ResetMaterial));
+        Invoke(nameof(ResetMaterial), 0.5f);
     }
 
     private void OnGrabAttempt(SelectEnterEventArgs args)
@@ -60,6 +109,12 @@ public class PurchasableItem : MonoBehaviour
             moneyManager.SpendGold(itemData.ItemCost);
             hasPurchased = true;
             Debug.Log($"{itemData.Name} purchased for {itemData.ItemCost}");
+
+            // Reset visuals to default
+            ResetMaterial();
+
+            //Remove this script from this object only (not prefab)
+            Destroy(this);
         }
         else
         {
@@ -76,9 +131,19 @@ public class PurchasableItem : MonoBehaviour
         }
     }
 
+    private void ResetMaterial()
+    {
+        for (int i = 0; i < meshes.Length; i++)
+        {
+            meshes[i].sharedMaterial = defaultMaterials[i];
+        }
+    }
+
     private void OnDestroy()
     {
         // Unsubscribe
         grabInteractable.selectEntered.RemoveListener(OnGrabAttempt);
+        grabInteractable.hoverEntered.RemoveListener(OnHoverAttempt);
+        grabInteractable.hoverExited.RemoveListener(OnHoverExit);
     }
 }

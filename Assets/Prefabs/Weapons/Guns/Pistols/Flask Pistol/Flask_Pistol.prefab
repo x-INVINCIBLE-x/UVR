@@ -941,6 +941,7 @@ GameObject:
   - component: {fileID: 3607900748598816773}
   - component: {fileID: -1206916407367460510}
   - component: {fileID: 6104269756458222074}
+  - component: {fileID: 6964456397996798848}
   m_Layer: 10
   m_Name: Flask_Pistol
   m_TagString: Weapon
@@ -1366,6 +1367,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: ff2ead5e16e65c44a9ead755b6fc2de5, type: 2}
+--- !u!114 &6964456397996798848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200743150739345974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03588f75fe9d75e41b612292741f40ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: ff2ead5e16e65c44a9ead755b6fc2de5, type: 2}
+  isShopItem: 1
+  hasPurchased: 0
+  meshes: []
+  AffordableMaterial: {fileID: 2100000, guid: 297e32e6cefda4540b52851e8ebe3bd2, type: 2}
+  UnaffordableMaterial: {fileID: 2100000, guid: 3352791c8dd077746b3ae054a8119e54, type: 2}
 --- !u!1 &4862255119533883280
 GameObject:
   m_ObjectHideFlags: 0
