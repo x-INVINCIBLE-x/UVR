@@ -94,6 +94,8 @@ public class SwingAction : MonoBehaviour
         joint.spring = 4.5f;
         joint.damper = 7f;
         joint.massScale = 4.5f;
+
+        actionMediator.rb.freezeRotation = true;
     }
 
     private void StopSwing()
