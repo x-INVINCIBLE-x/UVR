@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Climbing;
 
 [System.Serializable]
 public class WeightedPrefab { public GameObject prefab; public float weight = 1f; }
@@ -58,6 +60,9 @@ public class GridFormationController : FormationProvider
     public List<WeightedPrefab> cornerPrefabs = new List<WeightedPrefab>();
     [Header("Prefabs & Weights")] public List<WeightedPrefab> cuboidPrefabs;
     [Header("Grid Settings")] public int gridWidth = 20, gridDepth = 20;
+    [Header("Snapping Settings")]
+    public float snapGap = 2f;  // adjustable gap between consecutive blocks
+    public Vector3 snapDirection = Vector3.right;
     [Header("Spacing (min/max)")] public float minSpacing = 1f, maxSpacing = 3f;
     [Header("Density")][Range(0f, 1f)] public float density = 1f;
     [Header("Max Jitter XZ")] public float maxJitterXZ = 0.5f;
@@ -101,6 +106,7 @@ public class GridFormationController : FormationProvider
             return;
         }
         difficultyLevel = 0; // Base formation at index 0
+        Editor_DeleteSpawnedGrid();
         InitializeFormations();
 
         if (positionsPerFormation.Count == 0 || positionsPerFormation[0].Count == 0)
@@ -136,8 +142,8 @@ public class GridFormationController : FormationProvider
         {
             positionsPerFormation[0].Add(inst.localPosition);
         }
-
-        Debug.Log("Saved current positions as base spawn formation at index 0.");
+        Debug.Log(positionsPerFormation[0].Count + " positions saved to Formation[0].");
+        Debug.Log("Saved current positions as base spawn formation at index 0. Amount: " + instances.Count);
     }
 
     [ContextMenu("Editor: Delete Spawned Grid")]
@@ -158,34 +164,37 @@ public class GridFormationController : FormationProvider
         if (saveToSO == null)
         {
             saveToSO = ScriptableObject.CreateInstance<GridFormationData>();
-
             string path = "Assets/Data/Grid Data/Grid Position Data";
 
-            if (System.IO.Directory.Exists(path) == false)
-            {
+            if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
-            }
 
-            string assetPathAndName = UnityEditor.AssetDatabase.GenerateUniqueAssetPath(path + "/" + gameObject.name + " Positions.asset");
+            string assetPathAndName = UnityEditor.AssetDatabase.GenerateUniqueAssetPath(
+                path + "/" + gameObject.name + " Positions.asset"
+            );
 
             UnityEditor.AssetDatabase.CreateAsset(saveToSO, assetPathAndName);
             UnityEditor.AssetDatabase.SaveAssets();
-
             Debug.Log("Created new ScriptableObject at: " + assetPathAndName);
         }
 
-        if (positionsPerFormation.Count == 0 || positionsPerFormation[0].Count == 0)
+        if (instances == null || instances.Count == 0)
         {
-            Debug.LogError("No formation data to save.");
+            Debug.LogError("No instances in scene to export.");
             return;
         }
 
-        saveToSO.positions = new List<Vector3>(positionsPerFormation[0]);
+        // Use instances snapshot instead of positionsPerFormation
+        List<Vector3> snapshot = new List<Vector3>();
+        foreach (var inst in instances)
+            snapshot.Add(inst.localPosition);
+
+        saveToSO.positions = snapshot;
 
         UnityEditor.EditorUtility.SetDirty(saveToSO);
         UnityEditor.AssetDatabase.SaveAssets();
 
-        Debug.Log("Exported Formation[0] to ScriptableObject.");
+        Debug.Log($"Exported {snapshot.Count} positions from instances to ScriptableObject.");
     }
 
 #endif
@@ -274,16 +283,10 @@ public class GridFormationController : FormationProvider
         yield return StartCoroutine(SpawnFormation(positionsPerFormation[currentIndex]));
     }
 
-    [ContextMenu("Load Random Formation From Database")]
+    [ContextMenu("Load Current Formation")]
     public void LoadRandomFormationFromDatabase()
     {
-        if (gridDatabase == null)
-        {
-            Debug.LogError("Grid database not assigned.");
-            return;
-        }
-
-        var data = gridDatabase.GetRandomUniqueFormation(groupKey);
+        var data = saveToSO;
         if (data == null || data.positions == null || data.positions.Count == 0)
         {
             Debug.LogError("No grid data returned.");
@@ -291,18 +294,15 @@ public class GridFormationController : FormationProvider
         }
 
         // Convert to basePositionsList and recompute all formations
-        RecomputeFormationsFromBase(data.positions);
 
+        if (instances.Count != 0)
+        {
+            Editor_DeleteSpawnedGrid();
+        }
+        
         currentIndex = 0;
-
-        if (instances.Count == 0)
-        {
-            SpawnFormation(0);
-        }
-        else
-        {
-            RepositionInstances(positionsPerFormation[0]);
-        }
+        RecomputeFormationsFromBase(data.positions);
+        SpawnFormation(0);
     }
 
     private void RepositionInstances(List<Vector3> positions)
@@ -349,38 +349,59 @@ public class GridFormationController : FormationProvider
 
     private void RecomputeFormationsFromBase(List<Vector3> basePositions)
     {
-        // Update grid span based on loaded data
-        if (cuboidPrefabs.Count > 0)
+        var sample = cuboidPrefabs[0].prefab;
+
+        //── rebuild jittered XZ positions ──
+        List<Vector2> jitterXZList = new List<Vector2>();
+        foreach (var p in basePositions)
         {
-            var sample = cuboidPrefabs[0].prefab;
-            gridSpanX = EstimateTotalSpan(sample, gridWidth, minSpacing, maxSpacing);
-            gridSpanZ = EstimateTotalSpan(sample, gridDepth, minSpacing, maxSpacing);
+            float maxJ = Mathf.Min(maxJitterXZ, minSpacing * 0.5f) * (1f - density);
+            float jx = Random.Range(-maxJ, maxJ);
+            float jz = Random.Range(-maxJ, maxJ);
+            jitterXZList.Add(new Vector2(p.x + jx, p.z + jz));
         }
+
+        //── recompute span from actual positions + radius centers ──
+        List<Vector3> spanCandidates = new List<Vector3>(basePositions);
+        foreach (var rp in radiusPrefabs)
+        {
+            if (rp.centerElement != null)
+            {
+                Vector3 centerXZ = transform.position + rp.centerOffset;
+                spanCandidates.Add(centerXZ);
+            }
+        }
+
+        float minX = transform.position.x;
+        float minZ = transform.position.z;
+        float maxX = basePositions.Max(p => p.x);
+        float maxZ = basePositions.Max(p => p.z);
+
+        gridSpanX = maxX - minX;
+        gridSpanZ = maxZ - minZ;
         gridCenter = transform.position + new Vector3(gridSpanX / 2f, 0, gridSpanZ / 2f);
 
+        //── build per-formation variations ──
         positionsPerFormation.Clear();
-
-        var baseXZ = new List<Vector2>();
-        foreach (var p in basePositions)
-            baseXZ.Add(new Vector2(p.x, p.z));
-
         for (int f = 0; f < formations[difficultyLevel].config.Count; f++)
         {
             var config = formations[difficultyLevel].config[f];
             float safeY = maxJitterY * (1f - density);
-            var list = new List<Vector3>();
 
-            for (int i = 0; i < baseXZ.Count; i++)
+            var list = new List<Vector3>();
+            for (int i = 0; i < basePositions.Count; i++)
             {
-                float px = baseXZ[i].x;
-                float pz = baseXZ[i].y;
+                float px = jitterXZList[i].x;
+                float pz = jitterXZList[i].y;
+
                 float y = EvaluateFormation(config.type, new Vector3(px, transform.position.y, pz), f);
                 if (config.jitterY)
                     y += Random.Range(-safeY, safeY);
+
                 list.Add(new Vector3(px, y, pz));
             }
 
-            // Clear central radius areas
+            //── clear radius areas (but never prefab center) ──
             foreach (var rp in radiusPrefabs)
             {
                 if (rp.centerElement != null && rp.centralElementRadius > 0f)
@@ -391,13 +412,16 @@ public class GridFormationController : FormationProvider
                     );
 
                     list.RemoveAll(p =>
-                        Vector2.Distance(new Vector2(p.x, p.z), cXZ)
-                        <= rp.centralElementRadius
-                    );
+                    {
+                        Vector2 pXZ = new Vector2(p.x, p.z);
+                        if (Vector2.Distance(pXZ, cXZ) < 0.001f)
+                            return false; // keep exact center
+                        return Vector2.Distance(pXZ, cXZ) <= rp.centralElementRadius;
+                    });
                 }
             }
 
-            // Add ring centers last
+            //── add radius centers back ──
             foreach (var rp in radiusPrefabs)
             {
                 if (rp.centerElement != null)
@@ -410,8 +434,8 @@ public class GridFormationController : FormationProvider
 
             positionsPerFormation.Add(list);
         }
-
     }
+
 
     public override void NextTransition()
     {
@@ -425,15 +449,12 @@ public class GridFormationController : FormationProvider
 
     void InitializeFormations()
     {
-        //── compute spans (unchanged) ──
         var sample = cuboidPrefabs[0].prefab;
-        gridSpanX = EstimateTotalSpan(sample, gridWidth, minSpacing, maxSpacing);
-        gridSpanZ = EstimateTotalSpan(sample, gridDepth, minSpacing, maxSpacing);
-        gridCenter = transform.position + new Vector3(gridSpanX / 2f, 0, gridSpanZ / 2f);
 
-        //── build a consistent formations of “base” XZ positions with one‐time jitter ──
+        //── build base positions with random spacing ──
         List<Vector3> basePositionsList = new List<Vector3>();
         List<Vector2> jitterXZList = new List<Vector2>();
+
         for (int x = 0; x < gridWidth; x++)
         {
             float spX = Random.Range(minSpacing, maxSpacing);
@@ -456,14 +477,34 @@ public class GridFormationController : FormationProvider
             }
         }
 
-        positionsPerFormation.Clear();
+        //── recompute span from grid + radius centers ──
+        List<Vector3> spanCandidates = new List<Vector3>(basePositionsList);
+        foreach (var rp in radiusPrefabs)
+        {
+            if (rp.centerElement != null)
+            {
+                Vector3 centerXZ = transform.position + rp.centerOffset;
+                spanCandidates.Add(centerXZ);
+            }
+        }
 
+        float minX = transform.position.x;
+        float minZ = transform.position.z;
+        float maxX = basePositionsList.Max(p => p.x);
+        float maxZ = basePositionsList.Max(p => p.z);
+
+        gridSpanX = maxX - minX;
+        gridSpanZ = maxZ - minZ;
+        gridCenter = transform.position + new Vector3(gridSpanX / 2f, 0, gridSpanZ / 2f);
+
+
+        //── build per-formation variations ──
+        positionsPerFormation.Clear();
         for (int f = 0; f < formations[difficultyLevel].config.Count; f++)
         {
             var config = formations[difficultyLevel].config[f];
             float safeY = maxJitterY * (1f - density);
 
-            // 1) Build all grid positions (with frozen XZ jitter, variable Y)
             var list = new List<Vector3>();
             for (int i = 0; i < basePositionsList.Count; i++)
             {
@@ -477,7 +518,7 @@ public class GridFormationController : FormationProvider
                 list.Add(new Vector3(px, y, pz));
             }
 
-            // 2) Now remove any grid position inside a ring’s clear radius
+            //── remove any grid positions inside radius (but never the center) ──
             foreach (var rp in radiusPrefabs)
             {
                 if (rp.centerElement != null && rp.centralElementRadius > 0f)
@@ -488,20 +529,24 @@ public class GridFormationController : FormationProvider
                     );
 
                     list.RemoveAll(p =>
-                        Vector2.Distance(new Vector2(p.x, p.z), cXZ)
-                        <= rp.centralElementRadius
-                    );
+                    {
+                        Vector2 pXZ = new Vector2(p.x, p.z);
+                        // keep exact prefab center
+                        if (Vector2.Distance(pXZ, cXZ) < 0.001f)
+                            return false;
+
+                        return Vector2.Distance(pXZ, cXZ) <= rp.centralElementRadius;
+                    });
                 }
             }
 
-            // 3) After clearing nearby grid points, append each center’s exact position last
+            //── add back exact radius centers ──
             foreach (var rp in radiusPrefabs)
             {
                 if (rp.centerElement != null)
                 {
                     Vector3 centerXZ = gridCenter + rp.centerOffset;
-                    float y = EvaluateFormation(formations[difficultyLevel].config[f].type, centerXZ, f);
-                    // (No Y‐jitter here—keeps matching simple.)
+                    float y = EvaluateFormation(config.type, centerXZ, f);
                     list.Add(new Vector3(centerXZ.x, y, centerXZ.z));
                 }
             }
@@ -509,7 +554,6 @@ public class GridFormationController : FormationProvider
             positionsPerFormation.Add(list);
         }
     }
-
 
     private IEnumerator SpawnFormationGradually(List<Vector3> positions)
     {
@@ -545,6 +589,7 @@ public class GridFormationController : FormationProvider
             Quaternion worldRot = transform.rotation * randomYRotation;
 
             GameObject newBlock = Instantiate(prefabToSpawn, worldPos, worldRot, transform);
+
             try
             {
                 if (deactivateOnSpawn)
@@ -573,7 +618,7 @@ public class GridFormationController : FormationProvider
     {
         // Destroy old
         int n = transform.childCount;
-        for (int i = n-1; i >= 0; i--)
+        for (int i = n - 1; i >= 0; i--)
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
@@ -585,6 +630,7 @@ public class GridFormationController : FormationProvider
         {
             Vector3 pos = positions[i];
             GameObject prefabToSpawn = null;
+            bool isRingCenter = false;
 
             // Is this one of the ring‐centers? (Compare XZ only)
             Vector2 posXZ = new Vector2(pos.x, pos.z);
@@ -600,6 +646,7 @@ public class GridFormationController : FormationProvider
                 if (Vector2.Distance(posXZ, ringCenterXZ) < 0.001f)
                 {
                     prefabToSpawn = rp.centerElement;
+                    isRingCenter = true;
                     break;
                 }
             }
@@ -607,15 +654,78 @@ public class GridFormationController : FormationProvider
             // If not a center, pick by radius
             if (prefabToSpawn == null)
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
-            Quaternion randomYRotation = Quaternion.Euler(0f, 90f * Random.Range(0, 4), 0f);
-            //Transform t = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform).transform;
-            Vector3 worldPos = transform.TransformPoint(pos);
-            Quaternion worldRot = transform.rotation * randomYRotation;
 
-            Transform t = Instantiate(prefabToSpawn, worldPos, worldRot, transform).transform;
-            instances.Add(t);
+            Vector3 worldPos = transform.TransformPoint(pos);
+            Quaternion baseRot = transform.rotation;
+
+            // Instantiate first at base rotation
+            GameObject temp = Instantiate(prefabToSpawn, worldPos, baseRot, transform);
+
+            // ---- FIXED ROTATION ----
+            float randomY = 90f * Random.Range(0, 4);
+
+            // Use colliders to calculate true center
+            Collider[] allCols = temp.GetComponentsInChildren<Collider>();
+            if (allCols.Length > 0)
+            {
+                Bounds bounds = allCols[0].bounds;
+                foreach (var c in allCols) bounds.Encapsulate(c.bounds);
+                Vector3 center = bounds.center;
+
+                temp.transform.RotateAround(center, Vector3.up, randomY);
+            }
+            else
+            {
+                // fallback if no colliders
+                temp.transform.rotation = baseRot * Quaternion.Euler(0f, randomY, 0f);
+            }
+            // ------------------------
+
+            // Only run collision check if NOT a ring center
+            if (!isRingCenter)
+            {
+                var climb = temp.GetComponentInChildren<ClimbInteractable>();
+                if (climb != null)
+                {
+                    Collider[] colliders = climb.GetComponentsInChildren<Collider>();
+                    bool collided = false;
+
+                    foreach (var col in colliders)
+                    {
+                        Collider[] hits = Physics.OverlapBox(
+                            col.bounds.center,
+                            col.bounds.extents * 0.95f,
+                            col.transform.rotation,
+                            ~0,
+                            QueryTriggerInteraction.Ignore
+                        );
+
+                        foreach (var hit in hits)
+                        {
+                            if (hit.transform.IsChildOf(temp.transform)) continue; // ignore self
+                            if (hit.GetComponentInParent<ClimbInteractable>() != null)
+                            {
+                                collided = true;
+                                break;
+                            }
+                        }
+
+                        if (collided) break;
+                    }
+
+                    if (collided)
+                    {
+                        DestroyImmediate(temp);
+                        continue; // skip adding
+                    }
+                }
+            }
+
+            // Passed check → add
+            instances.Add(temp.transform);
         }
     }
+
 
 
     List<Vector3> GetCurrentPositions()
