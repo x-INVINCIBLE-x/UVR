@@ -118,6 +118,9 @@ GameObject:
   m_Component:
   - component: {fileID: 589907368431748813}
   - component: {fileID: 8423382743041134017}
+  - component: {fileID: 8928165938342474188}
+  - component: {fileID: 9006126368997920582}
+  - component: {fileID: 1118730637975501235}
   m_Layer: 11
   m_Name: Coffin box
   m_TagString: Untagged
@@ -158,3 +161,61 @@ MonoBehaviour:
   SkinnedMeshes: []
   highlightMaterial: {fileID: 2100000, guid: ab665ff94b9bfc04d8922d535874b505, type: 2}
   materialUpTime: 3
+--- !u!114 &8928165938342474188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6547363888985743082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299f7c0e1ab5a114990dd6ef2937f699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  DissolveMaterial: {fileID: 2100000, guid: 788b4219a27153a4dbd7c9c3317a71a6, type: 2}
+  Dissolve: 0
+  defaultMaterials: []
+  dissolveRate: 0.0125
+  RefreshRate: 0.025
+  impactDissolveRate: 0.0125
+  impactDissolveThreshold: 0.5
+  currentDissolve: 0
+--- !u!114 &9006126368997920582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6547363888985743082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15756f2d5bb94ec45985ab7daa5e3654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliceRewards:
+    Gold: 700
+    Magika: 1500
+    Experience: 500
+--- !u!65 &1118730637975501235
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6547363888985743082}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.4453349, z: 0.26281694}
+  m_Center: {x: 0, y: -0.16505456, z: 0}

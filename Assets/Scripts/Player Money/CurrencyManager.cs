@@ -28,15 +28,23 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
 
         Instance = this;
     }
-
-    private void OnEnable()
+    private void Start()
     {
         GameEvents.OnRewardProvided += HandleCurrencyGiven;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameEvents.OnRewardProvided -= HandleCurrencyGiven;
+    }
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        
     }
 
     public void AddCurrencyMultiplier(float goldMulti, float magikaMulti)

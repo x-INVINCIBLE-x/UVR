@@ -119,6 +119,8 @@ GameObject:
   - component: {fileID: 4824216001795403990}
   - component: {fileID: 1240126903088820395}
   - component: {fileID: 7232811107571408082}
+  - component: {fileID: 4193589770988086071}
+  - component: {fileID: 3933758395543310232}
   m_Layer: 11
   m_Name: Abyss Roots 2
   m_TagString: Untagged
@@ -182,6 +184,43 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.82056427, y: 1, z: 1.8523254}
   m_Center: {x: 0.23551083, y: 0, z: -0.52148914}
+--- !u!114 &4193589770988086071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2196552783853562510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299f7c0e1ab5a114990dd6ef2937f699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  DissolveMaterial: {fileID: 2100000, guid: 788b4219a27153a4dbd7c9c3317a71a6, type: 2}
+  Dissolve: 0
+  defaultMaterials: []
+  dissolveRate: 0.0125
+  RefreshRate: 0.025
+  impactDissolveRate: 0.0125
+  impactDissolveThreshold: 0.5
+  currentDissolve: 0
+--- !u!114 &3933758395543310232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2196552783853562510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15756f2d5bb94ec45985ab7daa5e3654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliceRewards:
+    Gold: 700
+    Magika: 1500
+    Experience: 500
 --- !u!1 &6187131706867569260
 GameObject:
   m_ObjectHideFlags: 0
