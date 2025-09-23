@@ -79,13 +79,14 @@ public class GridFormationController : FormationProvider
     private List<Vector3> transitionStart = new List<Vector3>();
     private List<Vector3> transitionTarget = new List<Vector3>();
 
-    private float gridSpanX, gridSpanZ; 
-    private Vector3 gridCenter;
-    private int currentIndex = 0; 
-    private bool isTransitioning = false; 
-    private float timer = 0f;
-    private int difficultyLevel = 0;
     private NavMeshSurface[] navMeshSurfaces;
+    private Vector3 gridCenter;
+    private float gridSpanX, gridSpanZ; 
+    private float timer = 0f;
+    private bool isTransitioning = false;
+    private bool isExactRestore = false;
+    private int difficultyLevel = 0;
+    private int currentIndex = 0; 
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -265,7 +266,6 @@ public class GridFormationController : FormationProvider
         difficultyLevel = DungeonManager.Instance.DifficultyLevel - 1;
 
         groupKey = ChallengeManager.instance.CurrentChallenge.GetID();
-        //GridFormationData data = gridDatabase.GetRandomUniqueFormation(groupKey);
 
         GridFormationData data = saveToSO;
 
@@ -275,12 +275,15 @@ public class GridFormationController : FormationProvider
             yield break;
         }
 
-        // Use this base to compute all formations
+        // --- Exact restore mode for setup ---
+        isExactRestore = true;
         RecomputeFormationsFromBase(data.positions);
         currentIndex = 0;
 
         // Gradual spawn with navmesh bake
-        yield return StartCoroutine(SpawnFormation(positionsPerFormation[currentIndex]));
+        yield return StartCoroutine(SpawnFormationGradually(positionsPerFormation[currentIndex]));
+
+        isExactRestore = false; // reset
     }
 
     [ContextMenu("Load Current Formation")]
@@ -293,31 +296,17 @@ public class GridFormationController : FormationProvider
             return;
         }
 
-        // Convert to basePositionsList and recompute all formations
-
         if (instances.Count != 0)
         {
             Editor_DeleteSpawnedGrid();
         }
-        
+
         currentIndex = 0;
+
+        isExactRestore = true;  
         RecomputeFormationsFromBase(data.positions);
         SpawnFormation(0);
-    }
-
-    private void RepositionInstances(List<Vector3> positions)
-    {
-        if (instances.Count != positions.Count)
-        {
-            Debug.LogWarning("Instance count mismatch. Destroying and respawning.");
-            SpawnFormation(0);
-            return;
-        }
-
-        for (int i = 0; i < instances.Count; i++)
-        {
-            instances[i].localPosition = positions[i];
-        }
+        isExactRestore = false; 
     }
 
     [ContextMenu("Reload Random Formation")]
@@ -349,79 +338,50 @@ public class GridFormationController : FormationProvider
 
     private void RecomputeFormationsFromBase(List<Vector3> basePositions)
     {
-        var sample = cuboidPrefabs[0].prefab;
+        gridSpanX = basePositions.Max(p => p.x) - basePositions.Min(p => p.x);
+        gridSpanZ = basePositions.Max(p => p.z) - basePositions.Min(p => p.z);
+        gridCenter = new Vector3(
+            (basePositions.Min(p => p.x) + basePositions.Max(p => p.x)) / 2f,
+            0,
+            (basePositions.Min(p => p.z) + basePositions.Max(p => p.z)) / 2f
+        );
 
-        //── rebuild jittered XZ positions ──
-        List<Vector2> jitterXZList = new List<Vector2>();
-        foreach (var p in basePositions)
-        {
-            float maxJ = Mathf.Min(maxJitterXZ, minSpacing * 0.5f) * (1f - density);
-            float jx = Random.Range(-maxJ, maxJ);
-            float jz = Random.Range(-maxJ, maxJ);
-            jitterXZList.Add(new Vector2(p.x + jx, p.z + jz));
-        }
-
-        //── recompute span from actual positions + radius centers ──
-        List<Vector3> spanCandidates = new List<Vector3>(basePositions);
-        foreach (var rp in radiusPrefabs)
-        {
-            if (rp.centerElement != null)
-            {
-                Vector3 centerXZ = transform.position + rp.centerOffset;
-                spanCandidates.Add(centerXZ);
-            }
-        }
-
-        float minX = transform.position.x;
-        float minZ = transform.position.z;
-        float maxX = basePositions.Max(p => p.x);
-        float maxZ = basePositions.Max(p => p.z);
-
-        gridSpanX = maxX - minX;
-        gridSpanZ = maxZ - minZ;
-        gridCenter = transform.position + new Vector3(gridSpanX / 2f, 0, gridSpanZ / 2f);
-
-        //── build per-formation variations ──
         positionsPerFormation.Clear();
+
         for (int f = 0; f < formations[difficultyLevel].config.Count; f++)
         {
             var config = formations[difficultyLevel].config[f];
             float safeY = maxJitterY * (1f - density);
 
             var list = new List<Vector3>();
-            for (int i = 0; i < basePositions.Count; i++)
+            foreach (var p in basePositions)
             {
-                float px = jitterXZList[i].x;
-                float pz = jitterXZList[i].y;
-
-                float y = EvaluateFormation(config.type, new Vector3(px, transform.position.y, pz), f);
-                if (config.jitterY)
+                float y = EvaluateFormation(config.type, new Vector3(p.x, 0, p.z), f);
+                if (config.jitterY && !isExactRestore) // Y jitter only in procedural mode
                     y += Random.Range(-safeY, safeY);
 
-                list.Add(new Vector3(px, y, pz));
+                list.Add(new Vector3(p.x, y, p.z));
             }
 
-            //── clear radius areas (but never prefab center) ──
-            foreach (var rp in radiusPrefabs)
+            // Skip radius clearing when restoring exact save
+            if (!isExactRestore)
             {
-                if (rp.centerElement != null && rp.centralElementRadius > 0f)
+                foreach (var rp in radiusPrefabs)
                 {
-                    Vector2 cXZ = new Vector2(
-                        gridCenter.x + rp.centerOffset.x,
-                        gridCenter.z + rp.centerOffset.z
-                    );
-
-                    list.RemoveAll(p =>
+                    if (rp.centerElement != null && rp.centralElementRadius > 0f)
                     {
-                        Vector2 pXZ = new Vector2(p.x, p.z);
-                        if (Vector2.Distance(pXZ, cXZ) < 0.001f)
-                            return false; // keep exact center
-                        return Vector2.Distance(pXZ, cXZ) <= rp.centralElementRadius;
-                    });
+                        Vector2 cXZ = new Vector2(gridCenter.x + rp.centerOffset.x, gridCenter.z + rp.centerOffset.z);
+                        list.RemoveAll(p =>
+                        {
+                            Vector2 pXZ = new Vector2(p.x, p.z);
+                            if (Vector2.Distance(pXZ, cXZ) < 0.001f) return false;
+                            return Vector2.Distance(pXZ, cXZ) <= rp.centralElementRadius;
+                        });
+                    }
                 }
             }
 
-            //── add radius centers back ──
+            // Always ensure central elements are added
             foreach (var rp in radiusPrefabs)
             {
                 if (rp.centerElement != null)
@@ -562,77 +522,9 @@ public class GridFormationController : FormationProvider
         foreach (var pos in positions)
         {
             GameObject prefabToSpawn = null;
-
-            Vector2 posXZ = new Vector2(pos.x, pos.z);
-            foreach (var rp in radiusPrefabs)
-            {
-                if (rp.centerElement == null) continue;
-
-                Vector2 ringCenterXZ = new Vector2(
-                    gridCenter.x + rp.centerOffset.x,
-                    gridCenter.z + rp.centerOffset.z
-                );
-
-                if (Vector2.Distance(posXZ, ringCenterXZ) < 0.001f)
-                {
-                    prefabToSpawn = rp.centerElement;
-                    break;
-                }
-            }
-
-            if (prefabToSpawn == null)
-                prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
-
-            Quaternion randomYRotation = Quaternion.Euler(0f, 90f * Random.Range(0, 4), 0f);
-            //GameObject newBlock = Instantiate(prefabToSpawn, pos + new Vector3(0, transform.position.y, 0), randomYRotation, transform);
-            Vector3 worldPos = transform.TransformPoint(pos);
-            Quaternion worldRot = transform.rotation * randomYRotation;
-
-            GameObject newBlock = Instantiate(prefabToSpawn, worldPos, worldRot, transform);
-
-            try
-            {
-                if (deactivateOnSpawn)
-                    newBlock.transform.GetChild(0).gameObject.SetActive(false);
-
-            }
-            catch
-            {
-                Debug.LogWarning("Prefab " + prefabToSpawn.name + " does not have a child to deactivate.");
-            }
-            instances.Add(newBlock.transform);
-
-            count++;
-
-            if (count % spawnPerFrame == 0)
-                yield return null;
-        }
-
-        // Optional: yield after final batch if not a multiple
-        if (count % spawnPerFrame != 0)
-            yield return null;
-    }
-
-
-    void SpawnFormation(int idx)
-    {
-        // Destroy old
-        int n = transform.childCount;
-        for (int i = n - 1; i >= 0; i--)
-        {
-            DestroyImmediate(transform.GetChild(i).gameObject);
-        }
-        instances.Clear();
-
-        var positions = positionsPerFormation[idx];
-
-        for (int i = 0; i < positions.Count; i++)
-        {
-            Vector3 pos = positions[i];
-            GameObject prefabToSpawn = null;
             bool isRingCenter = false;
 
-            // Is this one of the ring‐centers? (Compare XZ only)
+            // --- Center element detection ---
             Vector2 posXZ = new Vector2(pos.x, pos.z);
             foreach (var rp in radiusPrefabs)
             {
@@ -651,38 +543,100 @@ public class GridFormationController : FormationProvider
                 }
             }
 
-            // If not a center, pick by radius
             if (prefabToSpawn == null)
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
 
             Vector3 worldPos = transform.TransformPoint(pos);
             Quaternion baseRot = transform.rotation;
 
-            // Instantiate first at base rotation
             GameObject temp = Instantiate(prefabToSpawn, worldPos, baseRot, transform);
 
-            // ---- FIXED ROTATION ----
-            float randomY = 90f * Random.Range(0, 4);
-
-            // Use colliders to calculate true center
-            Collider[] allCols = temp.GetComponentsInChildren<Collider>();
-            if (allCols.Length > 0)
+            // Skip collision filtering when restoring exact save
+            if (!isExactRestore && !isRingCenter)
             {
-                Bounds bounds = allCols[0].bounds;
-                foreach (var c in allCols) bounds.Encapsulate(c.bounds);
-                Vector3 center = bounds.center;
+                var climb = temp.GetComponentInChildren<ClimbInteractable>();
+                if (climb != null)
+                {
+                    Collider[] colliders = climb.GetComponentsInChildren<Collider>();
+                    bool collided = false;
 
-                temp.transform.RotateAround(center, Vector3.up, randomY);
+                    foreach (var col in colliders)
+                    {
+                        Collider[] hits = Physics.OverlapBox(
+                            col.bounds.center,
+                            col.bounds.extents * 0.95f,
+                            col.transform.rotation,
+                            ~0,
+                            QueryTriggerInteraction.Ignore
+                        );
+
+                        foreach (var hit in hits)
+                        {
+                            if (hit.transform.IsChildOf(temp.transform)) continue;
+                            if (hit.GetComponentInParent<ClimbInteractable>() != null)
+                            {
+                                collided = true;
+                                break;
+                            }
+                        }
+
+                        if (collided) break;
+                    }
+
+                    if (collided)
+                    {
+                        DestroyImmediate(temp);
+                        continue;
+                    }
+                }
             }
-            else
+
+            instances.Add(temp.transform);
+            count++;
+
+            if (count % spawnPerFrame == 0)
+                yield return null;
+        }
+
+        if (count % spawnPerFrame != 0)
+            yield return null;
+    }
+
+    void SpawnFormation(int idx)
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        instances.Clear();
+
+        var positions = positionsPerFormation[idx];
+
+        foreach (var pos in positions)
+        {
+            GameObject prefabToSpawn = null;
+            bool isRingCenter = false;
+
+            Vector2 posXZ = new Vector2(pos.x, pos.z);
+            foreach (var rp in radiusPrefabs)
             {
-                // fallback if no colliders
-                temp.transform.rotation = baseRot * Quaternion.Euler(0f, randomY, 0f);
-            }
-            // ------------------------
+                if (rp.centerElement == null) continue;
+                Vector2 ringCenterXZ = new Vector2(gridCenter.x + rp.centerOffset.x, gridCenter.z + rp.centerOffset.z);
 
-            // Only run collision check if NOT a ring center
-            if (!isRingCenter)
+                if (Vector2.Distance(posXZ, ringCenterXZ) < 0.001f)
+                {
+                    prefabToSpawn = rp.centerElement;
+                    isRingCenter = true;
+                    break;
+                }
+            }
+
+            if (prefabToSpawn == null)
+                prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
+
+            Vector3 worldPos = transform.TransformPoint(pos);
+            GameObject temp = Instantiate(prefabToSpawn, worldPos, transform.rotation, transform);
+
+            // Skip collision checks when restoring exact save
+            if (!isExactRestore && !isRingCenter)
             {
                 var climb = temp.GetComponentInChildren<ClimbInteractable>();
                 if (climb != null)
@@ -721,7 +675,6 @@ public class GridFormationController : FormationProvider
                 }
             }
 
-            // Passed check → add
             instances.Add(temp.transform);
         }
     }

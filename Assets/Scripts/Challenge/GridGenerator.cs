@@ -53,10 +53,10 @@ public class GridGenerator : MonoBehaviour
                 //formationController.transform.parent = null;
             }
         }
-        Debug.Log($"Generated grid formation for key '{key}' with {setupData.gridFormationControllers.Length} formations.");
+        yield return new WaitUntil(() => PrioritySceneGate.Instance != null);
+
         if (PrioritySceneGate.Instance != null)
         {
-            Debug.Log("Marking PrioritySceneGate as ready.");
             PrioritySceneGate.Instance.MarkReady();
             yield return new WaitForEndOfFrame();
             yield return new WaitForSeconds(0.1f);

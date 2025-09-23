@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewGridFormationData", menuName = "GridFormation/GridFormationData")]
+[System.Serializable]
 public class GridFormationData : ScriptableObject
 {
-    public List<Vector3> positions;
+    public List<Vector3> positions = new List<Vector3>();
+    public List<Quaternion> rotations = new List<Quaternion>(); 
 }

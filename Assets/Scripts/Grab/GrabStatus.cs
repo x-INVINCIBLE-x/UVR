@@ -75,8 +75,8 @@ public class GrabStatus : MonoBehaviour
     {
         if (args.interactableObject.transform.TryGetComponent(out XRGrabInteractable interactable))
         {
-            //interactable.transform.parent = args.interactorObject.transform;
-            //rightInteractableObject = interactable.transform;
+            interactable.transform.parent = args.interactorObject.transform;
+            rightInteractableObject = interactable.transform;
             ChangeRightHandStatus(GrabType.Object);
 
         }
