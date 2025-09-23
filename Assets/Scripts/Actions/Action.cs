@@ -13,6 +13,8 @@ public class Action : MonoBehaviour
     [SerializeField] protected float skillCooldown;
     protected float lastTimeSkillUsed = -10f;
     public bool showDurationDisplay = false;
+
+    public AudioClip sfxClip;
     
     protected virtual void Awake()
     {
@@ -36,6 +38,8 @@ public class Action : MonoBehaviour
 
         lastTimeSkillUsed = Time.time;
         ExecuteAbility();
+
+        AudioManager.Instance.PlaySFX2d(actionMediator.audioSource, sfxClip, 1);
 
         if (skillDuration > 0f && showDurationDisplay)
             UI.Instance.playerUI.StartAbilityDurationCooldown(skillDuration);

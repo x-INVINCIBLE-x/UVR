@@ -52,6 +52,8 @@ public class ActionMediator : MonoBehaviour
     private Coroutine rotationFixRoutine = null;
     [SerializeField] private List<float> speedMultipliers = new List<float>();
 
+    public AudioSource audioSource;
+
     public class ConstantVector2InputReader : IXRInputValueReader<Vector2>
     {
         private Vector2 _value;
@@ -76,6 +78,7 @@ public class ActionMediator : MonoBehaviour
     {
         grabStatus = GetComponent<GrabStatus>();
         playerGravity = GetComponent<PlayerGravity>();
+        audioSource = GetComponent<AudioSource>();
         defaultSpeed = moveProvider.moveSpeed;
         //grabStatus.GrabStatusChanged += HandleGrabStatusChange;
     }

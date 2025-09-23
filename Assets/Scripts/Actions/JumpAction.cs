@@ -39,7 +39,7 @@ public class JumpAction : Action
     private void HandleJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (!isPermitted) return;
-
+        AudioManager.Instance.PlaySFX2d(actionMediator.audioSource, sfxClip, 1);
         if (actionMediator.IsGrounded())
         {
             currentJumpCount = jumpCount;
