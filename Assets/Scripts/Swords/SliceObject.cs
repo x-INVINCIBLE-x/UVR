@@ -33,13 +33,17 @@ public class SliceObject : MonoBehaviour
 
     public void Slice(GameObject target)
     {
+        if (target.TryGetComponent(out ISliceable preSliceEvent))
+        {
+            preSliceEvent.PreSlice();
+        }
+
         target.transform.parent = null;
         Vector3 velocity = velocityEstimator.GetVelocityEstimate();
         Vector3 planeNormal = Vector3.Cross(endSlicePoint.position - startSlicePoint.position, velocity);
         planeNormal.Normalize();
 
         SlicedHull hull = target.Slice(endSlicePoint.position, planeNormal);
-       
 
         if (hull != null)
         {
@@ -55,6 +59,16 @@ public class SliceObject : MonoBehaviour
             SetupSlicedComponent(lowerHull, target);
             if (sliceMode == SliceMode.Single) lowerHull.layer = targetLayerInt;
             if (sliceMode == SliceMode.Multi) lowerHull.layer = target.layer;
+
+            if (upperHull.TryGetComponent(out ISliceable sliceEventUp))
+            {
+                sliceEventUp.HandleInstanceSlice();
+            }
+
+            if (lowerHull.TryGetComponent(out ISliceable sliceEventLow))
+            {
+                sliceEventLow.HandleInstanceSlice();
+            }
 
             Destroy(target);
         }

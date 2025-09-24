@@ -48,4 +48,12 @@ public abstract class Turret : MonoBehaviour, ISliceable
         col.enabled = false;
         Deactivate(null);
     }
+
+    public void HandleInstanceSlice()
+    {
+    }
+
+    public void PreSlice()
+    {
+    }
 }
