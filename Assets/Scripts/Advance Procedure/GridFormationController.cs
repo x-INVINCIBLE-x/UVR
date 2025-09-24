@@ -78,6 +78,7 @@ public class GridFormationController : FormationProvider
     private List<List<Vector3>> positionsPerFormation = new List<List<Vector3>>();
     private List<Vector3> transitionStart = new List<Vector3>();
     private List<Vector3> transitionTarget = new List<Vector3>();
+    private List<Quaternion> savedRotations = null;
 
     private NavMeshSurface[] navMeshSurfaces;
     private Vector3 gridCenter;
@@ -185,17 +186,20 @@ public class GridFormationController : FormationProvider
             return;
         }
 
-        // Use instances snapshot instead of positionsPerFormation
-        List<Vector3> snapshot = new List<Vector3>();
-        foreach (var inst in instances)
-            snapshot.Add(inst.localPosition);
+        // Clear and refill
+        saveToSO.positions = new List<Vector3>();
+        saveToSO.rotations = new List<Quaternion>();
 
-        saveToSO.positions = snapshot;
+        foreach (var inst in instances)
+        {
+            saveToSO.positions.Add(inst.localPosition);
+            saveToSO.rotations.Add(inst.localRotation); // store local rotation
+        }
 
         UnityEditor.EditorUtility.SetDirty(saveToSO);
         UnityEditor.AssetDatabase.SaveAssets();
 
-        Debug.Log($"Exported {snapshot.Count} positions from instances to ScriptableObject.");
+        Debug.Log($"Exported {saveToSO.positions.Count} positions + rotations to ScriptableObject.");
     }
 
 #endif
@@ -275,10 +279,10 @@ public class GridFormationController : FormationProvider
             yield break;
         }
 
-        // --- Exact restore mode for setup ---
         isExactRestore = true;
-        RecomputeFormationsFromBase(data.positions);
-        currentIndex = 0;
+        RecomputeFormationsFromBase(data.positions, data.rotations);
+        SpawnFormation(0);
+        isExactRestore = false;
 
         // Gradual spawn with navmesh bake
         yield return StartCoroutine(SpawnFormationGradually(positionsPerFormation[currentIndex]));
@@ -303,10 +307,10 @@ public class GridFormationController : FormationProvider
 
         currentIndex = 0;
 
-        isExactRestore = true;  
-        RecomputeFormationsFromBase(data.positions);
+        isExactRestore = true;
+        RecomputeFormationsFromBase(data.positions, data.rotations);
         SpawnFormation(0);
-        isExactRestore = false; 
+        isExactRestore = false;
     }
 
     [ContextMenu("Reload Random Formation")]
@@ -336,7 +340,7 @@ public class GridFormationController : FormationProvider
         Debug.Log("Reloaded new formation from group: " + groupKey);
     }
 
-    private void RecomputeFormationsFromBase(List<Vector3> basePositions)
+    private void RecomputeFormationsFromBase(List<Vector3> basePositions, List<Quaternion> baseRotations = null)
     {
         gridSpanX = basePositions.Max(p => p.x) - basePositions.Min(p => p.x);
         gridSpanZ = basePositions.Max(p => p.z) - basePositions.Min(p => p.z);
@@ -393,6 +397,15 @@ public class GridFormationController : FormationProvider
             }
 
             positionsPerFormation.Add(list);
+        }
+
+        if (isExactRestore && baseRotations != null && baseRotations.Count == basePositions.Count)
+        {
+            savedRotations = new List<Quaternion>(baseRotations);
+        }
+        else
+        {
+            savedRotations = null;
         }
     }
 
@@ -519,8 +532,9 @@ public class GridFormationController : FormationProvider
     {
         int count = 0;
 
-        foreach (var pos in positions)
+        for (int i = 0; i < positions.Count; i++)
         {
+            Vector3 pos = positions[i];
             GameObject prefabToSpawn = null;
             bool isRingCenter = false;
 
@@ -547,9 +561,20 @@ public class GridFormationController : FormationProvider
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
 
             Vector3 worldPos = transform.TransformPoint(pos);
-            Quaternion baseRot = transform.rotation;
 
-            GameObject temp = Instantiate(prefabToSpawn, worldPos, baseRot, transform);
+            Quaternion rotationToUse;
+            if (isExactRestore && savedRotations != null && i < savedRotations.Count)
+            {
+                // Keep the exact prefab rotation relative to the grid's own rotation
+                rotationToUse = transform.rotation * savedRotations[i];
+            }
+            else
+            {
+                float randomY = 90f * Random.Range(0, 4);
+                rotationToUse = transform.rotation * Quaternion.Euler(0f, randomY, 0f);
+            }
+
+            GameObject temp = Instantiate(prefabToSpawn, worldPos, rotationToUse, transform);
 
             // Skip collision filtering when restoring exact save
             if (!isExactRestore && !isRingCenter)
@@ -604,22 +629,29 @@ public class GridFormationController : FormationProvider
 
     void SpawnFormation(int idx)
     {
+        // Clear existing
         for (int i = transform.childCount - 1; i >= 0; i--)
             DestroyImmediate(transform.GetChild(i).gameObject);
         instances.Clear();
 
         var positions = positionsPerFormation[idx];
 
-        foreach (var pos in positions)
+        for (int i = 0; i < positions.Count; i++)
         {
+            Vector3 pos = positions[i];
             GameObject prefabToSpawn = null;
             bool isRingCenter = false;
 
+            // --- Center element detection ---
             Vector2 posXZ = new Vector2(pos.x, pos.z);
             foreach (var rp in radiusPrefabs)
             {
                 if (rp.centerElement == null) continue;
-                Vector2 ringCenterXZ = new Vector2(gridCenter.x + rp.centerOffset.x, gridCenter.z + rp.centerOffset.z);
+
+                Vector2 ringCenterXZ = new Vector2(
+                    gridCenter.x + rp.centerOffset.x,
+                    gridCenter.z + rp.centerOffset.z
+                );
 
                 if (Vector2.Distance(posXZ, ringCenterXZ) < 0.001f)
                 {
@@ -633,7 +665,20 @@ public class GridFormationController : FormationProvider
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
 
             Vector3 worldPos = transform.TransformPoint(pos);
-            GameObject temp = Instantiate(prefabToSpawn, worldPos, transform.rotation, transform);
+
+            Quaternion rotationToUse;
+            if (isExactRestore && savedRotations != null && i < savedRotations.Count)
+            {
+                // Keep the exact prefab rotation relative to the grid's own rotation
+                rotationToUse = transform.rotation * savedRotations[i];
+            }
+            else
+            {
+                float randomY = 90f * Random.Range(0, 4);
+                rotationToUse = transform.rotation * Quaternion.Euler(0f, randomY, 0f);
+            }
+
+            GameObject temp = Instantiate(prefabToSpawn, worldPos, rotationToUse, transform);
 
             // Skip collision checks when restoring exact save
             if (!isExactRestore && !isRingCenter)
@@ -656,7 +701,7 @@ public class GridFormationController : FormationProvider
 
                         foreach (var hit in hits)
                         {
-                            if (hit.transform.IsChildOf(temp.transform)) continue; // ignore self
+                            if (hit.transform.IsChildOf(temp.transform)) continue;
                             if (hit.GetComponentInParent<ClimbInteractable>() != null)
                             {
                                 collided = true;
@@ -670,7 +715,7 @@ public class GridFormationController : FormationProvider
                     if (collided)
                     {
                         DestroyImmediate(temp);
-                        continue; // skip adding
+                        continue;
                     }
                 }
             }
@@ -678,8 +723,6 @@ public class GridFormationController : FormationProvider
             instances.Add(temp.transform);
         }
     }
-
-
 
     List<Vector3> GetCurrentPositions()
     {
