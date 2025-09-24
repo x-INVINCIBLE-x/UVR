@@ -117,7 +117,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 589907368431748813}
-  - component: {fileID: 8423382743041134017}
   - component: {fileID: 8928165938342474188}
   - component: {fileID: 9006126368997920582}
   - component: {fileID: 1118730637975501235}
@@ -144,23 +143,6 @@ Transform:
   - {fileID: 4544867722040159867}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8423382743041134017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6547363888985743082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dac9f9f13dec1547bb9c52d5c01ee6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meshType: 0
-  Meshes: []
-  SkinnedMeshes: []
-  highlightMaterial: {fileID: 2100000, guid: ab665ff94b9bfc04d8922d535874b505, type: 2}
-  materialUpTime: 3
 --- !u!114 &8928165938342474188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +180,10 @@ MonoBehaviour:
     Gold: 700
     Magika: 1500
     Experience: 500
+  dissolver: {fileID: 8928165938342474188}
+  childDissolvers:
+  - {fileID: 8928165938342474188}
+  AfterSliceLayer: Sliced
 --- !u!65 &1118730637975501235
 BoxCollider:
   m_ObjectHideFlags: 0
