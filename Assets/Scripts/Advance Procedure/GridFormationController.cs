@@ -17,6 +17,7 @@ public class RadiusBasedPrefab
     public Vector3 centerOffset = Vector3.zero;
     public GameObject centerElement;
     public float centralElementRadius = 20f;
+    public float centerYOffset = 0f;
     public List<WeightedPrefab> prefabs; // Prefabs valid for this radius
 }
 
@@ -228,36 +229,36 @@ public class GridFormationController : FormationProvider
         //yield return StartCoroutine(BuildNavMeshGradually());
     }
 
-    void Update()
-    {
-        if (!Application.isPlaying || instances.Count == 0 || formations.Count < 2) return;
-        if (!isTransitioning && Input.GetKeyDown(KeyCode.G))
-        {
-            NextTransition();
-        }
-        if (isTransitioning)
-        {
-            timer += Time.deltaTime;
-            float t = Mathf.Clamp01(timer / transitionDuration);
-            for (int i = 0; i < instances.Count; i++)
-            {
-                Vector3 currentPos = transitionStart[i];
-                Vector3 targetPos = transitionTarget[i];
-                instances[i].localPosition = new Vector3(
-                    currentPos.x,
-                    Mathf.Lerp(currentPos.y, targetPos.y, t),
-                    currentPos.z
-                );
+    //void Update()
+    //{
+    //    if (!Application.isPlaying || instances.Count == 0 || formations.Count < 2) return;
+    //    if (!isTransitioning && Input.GetKeyDown(KeyCode.G))
+    //    {
+    //        NextTransition();
+    //    }
+    //    if (isTransitioning)
+    //    {
+    //        timer += Time.deltaTime;
+    //        float t = Mathf.Clamp01(timer / transitionDuration);
+    //        for (int i = 0; i < instances.Count; i++)
+    //        {
+    //            Vector3 currentPos = transitionStart[i];
+    //            Vector3 targetPos = transitionTarget[i];
+    //            instances[i].localPosition = new Vector3(
+    //                currentPos.x,
+    //                Mathf.Lerp(currentPos.y, targetPos.y, t),
+    //                currentPos.z
+    //            );
 
-            }
-            //instances[i].localPosition = Vector3.Lerp(transitionStart[i], transitionTarget[i], t); // Update X and Z also
-            if (timer >= transitionDuration)
-            {
-                isTransitioning = false;
-                currentIndex = (currentIndex + 1) % formations[difficultyLevel].config.Count;
-            }
-        }
-    }
+    //        }
+    //        //instances[i].localPosition = Vector3.Lerp(transitionStart[i], transitionTarget[i], t); // Update X and Z also
+    //        if (timer >= transitionDuration)
+    //        {
+    //            isTransitioning = false;
+    //            currentIndex = (currentIndex + 1) % formations[difficultyLevel].config.Count;
+    //        }
+    //    }
+    //}
 
     public IEnumerator SetupFormation()
     {
@@ -372,29 +373,43 @@ public class GridFormationController : FormationProvider
             {
                 foreach (var rp in radiusPrefabs)
                 {
-                    if (rp.centerElement != null && rp.centralElementRadius > 0f)
+                    if (rp.centerElement == null || rp.centralElementRadius <= 0f) continue;
+
+                    Vector3 centerXZ = gridCenter + rp.centerOffset;
+                    float y = EvaluateFormation(config.type, centerXZ, f);
+                    Vector3 centerPos = new Vector3(centerXZ.x, y, centerXZ.z);
+
+                    // 1. Remove everything inside the radius
+                    list.RemoveAll(p =>
                     {
-                        Vector2 cXZ = new Vector2(gridCenter.x + rp.centerOffset.x, gridCenter.z + rp.centerOffset.z);
-                        list.RemoveAll(p =>
-                        {
-                            Vector2 pXZ = new Vector2(p.x, p.z);
-                            if (Vector2.Distance(pXZ, cXZ) < 0.001f) return false;
-                            return Vector2.Distance(pXZ, cXZ) <= rp.centralElementRadius;
-                        });
-                    }
+                        // if it's basically the exact center, keep it
+                        if (Vector3.Distance(p, centerPos) < 0.01f)
+                            return false;
+                        // otherwise, delete if inside central radius
+                        return Vector3.Distance(new Vector2(p.x, p.z), new Vector2(centerXZ.x, centerXZ.z)) <= rp.centralElementRadius;
+                    });
+
+                    // 2. Add the central prefab if missing
+                    if (!list.Any(p => Vector3.Distance(p, centerPos) < 0.01f))
+                        list.Add(centerPos);
                 }
+
             }
 
-            // Always ensure central elements are added
             foreach (var rp in radiusPrefabs)
             {
                 if (rp.centerElement != null)
                 {
                     Vector3 centerXZ = gridCenter + rp.centerOffset;
                     float y = EvaluateFormation(config.type, centerXZ, f);
-                    list.Add(new Vector3(centerXZ.x, y, centerXZ.z));
+                    Vector3 centerPos = new Vector3(centerXZ.x, y, centerXZ.z);
+
+                    bool alreadyExists = list.Any(p => Vector3.Distance(p, centerPos) < 0.01f);
+                    if (!alreadyExists)
+                        list.Add(centerPos);
                 }
             }
+
 
             positionsPerFormation.Add(list);
         }
@@ -492,26 +507,33 @@ public class GridFormationController : FormationProvider
             }
 
             //── remove any grid positions inside radius (but never the center) ──
-            foreach (var rp in radiusPrefabs)
+            if (!isExactRestore)
             {
-                if (rp.centerElement != null && rp.centralElementRadius > 0f)
+                foreach (var rp in radiusPrefabs)
                 {
-                    Vector2 cXZ = new Vector2(
-                        gridCenter.x + rp.centerOffset.x,
-                        gridCenter.z + rp.centerOffset.z
-                    );
+                    if (rp.centerElement == null || rp.centralElementRadius <= 0f) continue;
 
+                    Vector3 centerXZ = gridCenter + rp.centerOffset;
+                    float y = EvaluateFormation(config.type, centerXZ, f);
+                    Vector3 centerPos = new Vector3(centerXZ.x, y, centerXZ.z);
+
+                    // 1. Remove everything inside the radius
                     list.RemoveAll(p =>
                     {
-                        Vector2 pXZ = new Vector2(p.x, p.z);
-                        // keep exact prefab center
-                        if (Vector2.Distance(pXZ, cXZ) < 0.001f)
+                        // if it's basically the exact center, keep it
+                        if (Vector3.Distance(p, centerPos) < 0.01f)
                             return false;
-
-                        return Vector2.Distance(pXZ, cXZ) <= rp.centralElementRadius;
+                        // otherwise, delete if inside central radius
+                        return Vector3.Distance(new Vector2(p.x, p.z), new Vector2(centerXZ.x, centerXZ.z)) <= rp.centralElementRadius;
                     });
+
+                    // 2. Add the central prefab if missing
+                    if (!list.Any(p => Vector3.Distance(p, centerPos) < 0.01f))
+                        list.Add(centerPos);
                 }
+
             }
+
 
             //── add back exact radius centers ──
             foreach (var rp in radiusPrefabs)
@@ -520,9 +542,14 @@ public class GridFormationController : FormationProvider
                 {
                     Vector3 centerXZ = gridCenter + rp.centerOffset;
                     float y = EvaluateFormation(config.type, centerXZ, f);
-                    list.Add(new Vector3(centerXZ.x, y, centerXZ.z));
+                    Vector3 centerPos = new Vector3(centerXZ.x, y, centerXZ.z);
+
+                    bool alreadyExists = list.Any(p => Vector3.Distance(p, centerPos) < 0.01f);
+                    if (!alreadyExists)
+                        list.Add(centerPos);
                 }
             }
+
 
             positionsPerFormation.Add(list);
         }
@@ -858,7 +885,7 @@ public class GridFormationController : FormationProvider
 
         // Draw grid outline
         Gizmos.color = Color.yellow;
-        Vector3 center = transform.TransformPoint(gridCenter);
+Vector3 center = transform.TransformPoint(gridCenter);
         float width = gridSpanX;
         float depth = gridSpanZ;
 
