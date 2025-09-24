@@ -52,14 +52,14 @@ public class Weapon : MonoBehaviour
         interactableWeapon.deactivated.RemoveListener(DeactivateWeapon);
     }
 
-    private void PickUpWeapon(SelectEnterEventArgs args)
+    protected virtual void PickUpWeapon(SelectEnterEventArgs args)
     {
         //transform.parent = args.interactorObject.transform;
         finalAttackData = PlayerManager.instance.Player.Stats.CombineWith(attackData);
         finalAttackData.owner = PlayerManager.instance.Player.Stats;
     }
 
-    private void DropWeapon(SelectExitEventArgs args)
+    protected virtual void DropWeapon(SelectExitEventArgs args)
     {
         //transform.parent = null;
         finalAttackData.owner = null;

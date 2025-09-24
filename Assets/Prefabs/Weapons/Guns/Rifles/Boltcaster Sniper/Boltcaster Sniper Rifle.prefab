@@ -856,11 +856,10 @@ GameObject:
   - component: {fileID: -3790289664445849010}
   - component: {fileID: 1881988578716435527}
   - component: {fileID: -3364946090917912399}
-  - component: {fileID: -3024982956286912013}
   - component: {fileID: -85709415823761358}
   - component: {fileID: 3219896544854867035}
   - component: {fileID: -3547444121108719478}
-  - component: {fileID: -4850524013954152992}
+  - component: {fileID: 1665248398430653678}
   m_Layer: 10
   m_Name: Boltcaster Sniper Rifle
   m_TagString: Weapon
@@ -1157,42 +1156,6 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 1
---- !u!114 &-3024982956286912013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4951285828873334640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a59d9957be3c044f9e00663961e2cd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackData: {fileID: 11400000, guid: 99997bffd4c525c4ead0c83880a3c7f0, type: 2}
-  shootingForce: 35
-  recoilForce: 0
-  muzzleVFX: {fileID: 5732568103209889489, guid: dc3350fad137eaf4f8c5609a38edd1b6, type: 3}
-  shootSFX: {fileID: 8300000, guid: 85528486534b42444a28b34573366913, type: 3}
-  fireRate: 1.001
-  maxHeatLimit: 100
-  coolDownRate: 40
-  overheatResistance: 40
-  currentHeat: 0
-  isOverheated: 0
-  overheatRenderer:
-  - {fileID: 3273278901730357511}
-  - {fileID: 8049587082196763675}
-  - {fileID: 2626644181248636276}
-  currentEmissionIntensity: 0
-  minEmissionIntensity: 0.02
-  projectilePrefab: {fileID: -2565223642012065073, guid: 45f3ba94110b3904185f82bab2dc40fd, type: 3}
-  spawnPoints:
-  - {fileID: 6886174309258845709}
-  clickCount: 0
-  minPitch: 1
-  maxPitch: 3
-  bulletLifeTime: 3
 --- !u!114 &-85709415823761358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1247,7 +1210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: a795963d9a3d45b42a4b3439ddc7ec8f, type: 2}
---- !u!114 &-4850524013954152992
+--- !u!114 &1665248398430653678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1256,15 +1219,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 4951285828873334640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03588f75fe9d75e41b612292741f40ed, type: 3}
+  m_Script: {fileID: 11500000, guid: b205846855046cb4fa9aecca78707311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: a795963d9a3d45b42a4b3439ddc7ec8f, type: 2}
-  isShopItem: 1
-  hasPurchased: 0
-  meshes: []
-  AffordableMaterial: {fileID: 2100000, guid: 297e32e6cefda4540b52851e8ebe3bd2, type: 2}
-  UnaffordableMaterial: {fileID: 2100000, guid: 3352791c8dd077746b3ae054a8119e54, type: 2}
+  attackData: {fileID: 11400000, guid: 99997bffd4c525c4ead0c83880a3c7f0, type: 2}
+  shootingForce: 35
+  recoilForce: 0
+  muzzleVFX: {fileID: 5732568103209889489, guid: dc3350fad137eaf4f8c5609a38edd1b6, type: 3}
+  shootSFX: {fileID: 8300000, guid: 85528486534b42444a28b34573366913, type: 3}
+  fireRate: 1.001
+  maxHeatLimit: 100
+  coolDownRate: 40
+  overheatResistance: 40
+  currentHeat: 0
+  isOverheated: 0
+  overheatRenderer:
+  - {fileID: 3273278901730357511}
+  - {fileID: 8049587082196763675}
+  - {fileID: 2626644181248636276}
+  currentEmissionIntensity: 0
+  minEmissionIntensity: 0.02
+  scopeCam: {fileID: 4341695675969355303}
+  projectilePrefab: {fileID: -2565223642012065073, guid: 45f3ba94110b3904185f82bab2dc40fd, type: 3}
+  spawnPoints:
+  - {fileID: 6886174309258845709}
+  clickCount: 0
+  minPitch: 1
+  maxPitch: 3
+  bulletLifeTime: 3
 --- !u!1 &5211179416055347321
 GameObject:
   m_ObjectHideFlags: 0

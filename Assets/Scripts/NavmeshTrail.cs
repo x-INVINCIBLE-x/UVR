@@ -20,6 +20,8 @@ public class NavmeshTrail : MonoBehaviour
         trailAgent = GetComponent<NavMeshAgent>();
         trailAgent.speed = trailSpeed;
         trailVFX.SetActive(false);
+        playerPosition = PlayerManager.instance.PlayerOrigin.transform.position;
+        gameObject.transform.position = playerPosition;
     }
 
     public void ActivateTrail(UnityEngine.InputSystem.InputAction.CallbackContext context)
