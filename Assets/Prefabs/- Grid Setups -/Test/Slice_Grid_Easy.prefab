@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5976085437889816500}
   - component: {fileID: 4789896886745963245}
   m_Layer: 0
-  m_Name: Dual Grid Setup 1
+  m_Name: Slice_Grid_Easy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6570488700997614301}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.42736575, z: 0, w: 0.9040788}
+  m_LocalRotation: {x: 2.209589e-17, y: -0.42736846, z: -0.000000050946284, w: 0.90407753}
   m_LocalPosition: {x: 752, y: 0, z: 285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1638144539450f344b0139b9890a92d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawGizmos: 1
+  drawGizmos: 0
   deactivateOnSpawn: 1
-  spawnPerFrame: 2
+  spawnPerFrame: 1
   saveToSO: {fileID: 11400000, guid: 8a9a3beb5256325449ee7b9d41953bc2, type: 2}
   gridDatabase: {fileID: 11400000, guid: 72725a58839780540b65f2dbae121e5e, type: 2}
   groupKey: Slice
@@ -145,9 +145,9 @@ MonoBehaviour:
   snapDirection: {x: 1, y: 0, z: 0}
   minSpacing: 0
   maxSpacing: 0
-  density: 0.423
+  density: 0.113
   maxJitterXZ: 0
-  maxJitterY: 1
+  maxJitterY: 0
   innerRadius: 100
   outerRadius: 1750
   maxDepth: 400

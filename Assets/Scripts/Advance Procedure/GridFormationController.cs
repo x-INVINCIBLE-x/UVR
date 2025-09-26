@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.AI.Navigation;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Climbing;
 
@@ -53,7 +56,7 @@ public class GridFormationController : FormationProvider
     [SerializeField] private GridFormationData saveToSO;
 
     [SerializeField] private GridFormationDatabase gridDatabase;
-    [SerializeField] private string groupKey = "Default"; 
+    [SerializeField] private string groupKey = "Default";
 
     [Header("Radius Based Prefabs")]
     public List<RadiusBasedPrefab> radiusPrefabs = new List<RadiusBasedPrefab>();
@@ -83,12 +86,12 @@ public class GridFormationController : FormationProvider
 
     private NavMeshSurface[] navMeshSurfaces;
     private Vector3 gridCenter;
-    private float gridSpanX, gridSpanZ; 
+    private float gridSpanX, gridSpanZ;
     private float timer = 0f;
     private bool isTransitioning = false;
     private bool isExactRestore = false;
     private int difficultyLevel = 0;
-    private int currentIndex = 0; 
+    private int currentIndex = 0;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -118,8 +121,14 @@ public class GridFormationController : FormationProvider
             return;
         }
 
-        SpawnFormation(0); // Use the 0 index for spawn formation
+        StartCoroutine(SpawnFormation(0));
         Debug.Log("Initial formation spawned. You may now reposition the blocks.");
+    }
+
+    [ContextMenu("Editor: Stop Procedural Generation")]
+    private void StopGeneration()
+    {
+        StopAllCoroutines();
     }
 
     [ContextMenu("Editor: Save Current Positions to Formation[0]")]
@@ -161,7 +170,7 @@ public class GridFormationController : FormationProvider
         Debug.Log("Cleared grid.");
     }
 
-    [ContextMenu("Editor: Export Formation[0] to ScriptableObject")]
+    [ContextMenu("Editor: Export Children to ScriptableObject")]
     private void Editor_ExportToScriptableObject()
     {
         if (saveToSO == null)
@@ -181,26 +190,88 @@ public class GridFormationController : FormationProvider
             Debug.Log("Created new ScriptableObject at: " + assetPathAndName);
         }
 
-        if (instances == null || instances.Count == 0)
+        if (transform.childCount == 0)
         {
-            Debug.LogError("No instances in scene to export.");
+            Debug.LogError("No children under this GameObject to export.");
             return;
         }
 
-        // Clear and refill
         saveToSO.positions = new List<Vector3>();
         saveToSO.rotations = new List<Quaternion>();
+        saveToSO.prefabs = new List<GameObject>();
 
-        foreach (var inst in instances)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            saveToSO.positions.Add(inst.localPosition);
-            saveToSO.rotations.Add(inst.localRotation); // store local rotation
+            Transform child = transform.GetChild(i);
+            saveToSO.positions.Add(child.localPosition);
+            saveToSO.rotations.Add(child.localRotation);
+
+#if UNITY_EDITOR
+            GameObject prefab = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
+            if (prefab != null)
+            {
+                saveToSO.prefabs.Add(prefab);   // always save prefab asset
+            }
+            else
+            {
+                Debug.LogError($"Could not find prefab source for {child.name}. Make sure it’s a prefab instance!");
+                saveToSO.prefabs.Add(null); // placeholder so indices stay aligned
+            }
+#endif
         }
 
         UnityEditor.EditorUtility.SetDirty(saveToSO);
         UnityEditor.AssetDatabase.SaveAssets();
 
-        Debug.Log($"Exported {saveToSO.positions.Count} positions + rotations to ScriptableObject.");
+        Debug.Log($"Exported {saveToSO.positions.Count} children (pos+rot+prefab) to ScriptableObject.");
+    }
+
+
+    [ContextMenu("Blind Restore From ScriptableObject")]
+    public void BlindRestoreFromSO()
+    {
+        if (saveToSO == null ||
+            saveToSO.positions == null ||
+            saveToSO.prefabs == null ||
+            saveToSO.positions.Count == 0)
+        {
+            Debug.LogError("ScriptableObject data is missing or incomplete.");
+            return;
+        }
+
+        // Clear old instances
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        instances.Clear();
+
+        for (int i = 0; i < saveToSO.positions.Count; i++)
+        {
+            GameObject prefab = saveToSO.prefabs[i];
+            if (prefab == null)
+            {
+                Debug.LogWarning($"⚠️ Missing prefab at index {i}, skipping.");
+                continue;
+            }
+
+            Vector3 localPos = saveToSO.positions[i];
+            Quaternion localRot = (saveToSO.rotations != null && i < saveToSO.rotations.Count)
+                ? saveToSO.rotations[i]
+                : Quaternion.identity;
+
+#if UNITY_EDITOR
+            GameObject temp = (GameObject)PrefabUtility.InstantiatePrefab(prefab, transform);
+            temp.transform.localPosition = localPos;
+            temp.transform.localRotation = localRot;
+#else
+            GameObject temp = Instantiate(prefab, transform);
+            temp.transform.localPosition = localPos;
+            temp.transform.localRotation = localRot;
+#endif
+
+            instances.Add(temp.transform);
+        }
+
+        Debug.Log($" Blind restored {instances.Count} objects from ScriptableObject.");
     }
 
 #endif
@@ -260,6 +331,7 @@ public class GridFormationController : FormationProvider
     //    }
     //}
 
+    [ContextMenu("Setup Formation from ScriptableObject")]
     public IEnumerator SetupFormation()
     {
         if (gridDatabase == null)
@@ -269,7 +341,6 @@ public class GridFormationController : FormationProvider
         }
 
         difficultyLevel = DungeonManager.Instance.DifficultyLevel - 1;
-
         groupKey = ChallengeManager.instance.CurrentChallenge.GetID();
 
         GridFormationData data = saveToSO;
@@ -280,16 +351,68 @@ public class GridFormationController : FormationProvider
             yield break;
         }
 
-        isExactRestore = true;
-        RecomputeFormationsFromBase(data.positions, data.rotations);
-        SpawnFormation(0);
-        isExactRestore = false;
-
-        // Gradual spawn with navmesh bake
-        yield return StartCoroutine(SpawnFormationGradually(positionsPerFormation[currentIndex]));
-
-        isExactRestore = false; // reset
+        StartCoroutine(BlindRestoreFromSOGradual());
     }
+
+    [ContextMenu("Blind Restore From SO (Gradual)")]
+    public void StartBlindRoutine() => StartCoroutine(BlindRestoreFromSOGradual());
+    public IEnumerator BlindRestoreFromSOGradual()
+    {
+        if (saveToSO == null ||
+            saveToSO.positions == null ||
+            saveToSO.prefabs == null ||
+            saveToSO.positions.Count == 0)
+        {
+            Debug.LogError(" ScriptableObject data is missing or incomplete.");
+            yield break;
+        }
+
+        // Clear old instances
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        instances.Clear();
+
+        int count = 0;
+
+        for (int i = 0; i < saveToSO.positions.Count; i++)
+        {
+            GameObject prefab = saveToSO.prefabs[i];
+            if (prefab == null)
+            {
+                Debug.LogWarning($"Missing prefab at index {i}, skipping.");
+                continue;
+            }
+
+            Vector3 localPos = saveToSO.positions[i];
+            Quaternion localRot = (saveToSO.rotations != null && i < saveToSO.rotations.Count)
+                ? saveToSO.rotations[i]
+                : Quaternion.identity;
+
+#if UNITY_EDITOR
+            GameObject temp = (GameObject)PrefabUtility.InstantiatePrefab(prefab, transform);
+            temp.transform.localPosition = localPos;
+            temp.transform.localRotation = localRot;
+#else
+        GameObject temp = Instantiate(prefab, transform);
+        temp.transform.localPosition = localPos;
+        temp.transform.localRotation = localRot;
+#endif
+
+            instances.Add(temp.transform);
+            count++;
+
+            // Yield every N spawns
+            if (count % spawnPerFrame == 0)
+                yield return null;
+        }
+
+        // Final yield if we ended mid-frame
+        if (count % spawnPerFrame != 0)
+            yield return null;
+
+        Debug.Log($"Blind restored {instances.Count} objects gradually from ScriptableObject.");
+    }
+
 
     [ContextMenu("Load Current Formation")]
     public void LoadRandomFormationFromDatabase()
@@ -310,7 +433,7 @@ public class GridFormationController : FormationProvider
 
         isExactRestore = true;
         RecomputeFormationsFromBase(data.positions, data.rotations);
-        SpawnFormation(0);
+        StartCoroutine(SpawnFormation(0));
         isExactRestore = false;
     }
 
@@ -343,6 +466,16 @@ public class GridFormationController : FormationProvider
 
     private void RecomputeFormationsFromBase(List<Vector3> basePositions, List<Quaternion> baseRotations = null)
     {
+        if (isExactRestore)
+        {
+            positionsPerFormation.Clear();
+            // treat them as local, not world
+            positionsPerFormation.Add(new List<Vector3>(basePositions));
+            savedRotations = baseRotations != null ? new List<Quaternion>(baseRotations) : null;
+            return;
+        }
+
+
         gridSpanX = basePositions.Max(p => p.x) - basePositions.Min(p => p.x);
         gridSpanZ = basePositions.Max(p => p.z) - basePositions.Min(p => p.z);
         gridCenter = new Vector3(
@@ -565,25 +698,34 @@ public class GridFormationController : FormationProvider
             GameObject prefabToSpawn = null;
             bool isRingCenter = false;
 
-            // --- Center element detection ---
-            Vector2 posXZ = new Vector2(pos.x, pos.z);
-            foreach (var rp in radiusPrefabs)
+            if (isExactRestore && saveToSO.prefabs != null && i < saveToSO.prefabs.Count)
             {
-                if (rp.centerElement == null) continue;
+                prefabToSpawn = saveToSO.prefabs[i];
+            }
 
-                Vector2 ringCenterXZ = new Vector2(
-                    gridCenter.x + rp.centerOffset.x,
-                    gridCenter.z + rp.centerOffset.z
-                );
-
-                if (Vector2.Distance(posXZ, ringCenterXZ) < 0.001f)
+            // --- Center element detection ---
+            if (prefabToSpawn == null)
+            {
+                Vector2 posXZ = new Vector2(pos.x, pos.z);
+                foreach (var rp in radiusPrefabs)
                 {
-                    prefabToSpawn = rp.centerElement;
-                    isRingCenter = true;
-                    break;
+                    if (rp.centerElement == null) continue;
+
+                    Vector2 ringCenterXZ = new Vector2(
+                        gridCenter.x + rp.centerOffset.x,
+                        gridCenter.z + rp.centerOffset.z
+                    );
+
+                    if (Vector2.Distance(posXZ, ringCenterXZ) < 0.001f)
+                    {
+                        prefabToSpawn = rp.centerElement;
+                        isRingCenter = true;
+                        break;
+                    }
                 }
             }
 
+            // --- Fallback to weighted selection ---
             if (prefabToSpawn == null)
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
 
@@ -592,7 +734,6 @@ public class GridFormationController : FormationProvider
             Quaternion rotationToUse;
             if (isExactRestore && savedRotations != null && i < savedRotations.Count)
             {
-                // Keep the exact prefab rotation relative to the grid's own rotation
                 rotationToUse = transform.rotation * savedRotations[i];
             }
             else
@@ -601,7 +742,19 @@ public class GridFormationController : FormationProvider
                 rotationToUse = transform.rotation * Quaternion.Euler(0f, randomY, 0f);
             }
 
-            GameObject temp = Instantiate(prefabToSpawn, worldPos, rotationToUse, transform);
+            GameObject temp = null;
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                temp = (GameObject)PrefabUtility.InstantiatePrefab(prefabToSpawn, transform);
+                temp.transform.localPosition = pos;
+                temp.transform.localRotation = rotationToUse;
+            }
+            else
+#endif
+            {
+                temp = Instantiate(prefabToSpawn, worldPos, rotationToUse, transform);
+            }
 
             // Skip collision filtering when restoring exact save
             if (!isExactRestore && !isRingCenter)
@@ -654,7 +807,8 @@ public class GridFormationController : FormationProvider
             yield return null;
     }
 
-    void SpawnFormation(int idx)
+
+    IEnumerator SpawnFormation(int idx)
     {
         // Clear existing
         for (int i = transform.childCount - 1; i >= 0; i--)
@@ -669,25 +823,34 @@ public class GridFormationController : FormationProvider
             GameObject prefabToSpawn = null;
             bool isRingCenter = false;
 
-            // --- Center element detection ---
-            Vector2 posXZ = new Vector2(pos.x, pos.z);
-            foreach (var rp in radiusPrefabs)
+            if (isExactRestore && saveToSO.prefabs != null && i < saveToSO.prefabs.Count)
             {
-                if (rp.centerElement == null) continue;
+                prefabToSpawn = saveToSO.prefabs[i];
+            }
 
-                Vector2 ringCenterXZ = new Vector2(
-                    gridCenter.x + rp.centerOffset.x,
-                    gridCenter.z + rp.centerOffset.z
-                );
-
-                if (Vector2.Distance(posXZ, ringCenterXZ) < 0.001f)
+            // --- Center element detection ---
+            if (prefabToSpawn == null)
+            {
+                Vector2 posXZ = new Vector2(pos.x, pos.z);
+                foreach (var rp in radiusPrefabs)
                 {
-                    prefabToSpawn = rp.centerElement;
-                    isRingCenter = true;
-                    break;
+                    if (rp.centerElement == null) continue;
+
+                    Vector2 ringCenterXZ = new Vector2(
+                        gridCenter.x + rp.centerOffset.x,
+                        gridCenter.z + rp.centerOffset.z
+                    );
+
+                    if (Vector2.Distance(posXZ, ringCenterXZ) < 0.001f)
+                    {
+                        prefabToSpawn = rp.centerElement;
+                        isRingCenter = true;
+                        break;
+                    }
                 }
             }
 
+            // --- Fallback to weighted selection ---
             if (prefabToSpawn == null)
                 prefabToSpawn = GetWeightedRandomPrefabAtPosition(pos);
 
@@ -696,7 +859,6 @@ public class GridFormationController : FormationProvider
             Quaternion rotationToUse;
             if (isExactRestore && savedRotations != null && i < savedRotations.Count)
             {
-                // Keep the exact prefab rotation relative to the grid's own rotation
                 rotationToUse = transform.rotation * savedRotations[i];
             }
             else
@@ -705,7 +867,29 @@ public class GridFormationController : FormationProvider
                 rotationToUse = transform.rotation * Quaternion.Euler(0f, randomY, 0f);
             }
 
-            GameObject temp = Instantiate(prefabToSpawn, worldPos, rotationToUse, transform);
+            GameObject temp = null;
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                if (prefabToSpawn == null)
+                {
+                    Debug.LogWarning($"Prefab missing at index {i}");
+                    continue;
+                }
+
+                temp = (GameObject)PrefabUtility.InstantiatePrefab(prefabToSpawn, transform);
+                temp.transform.localPosition = pos;          // safer than SetPositionAndRotation
+                temp.transform.localRotation = Quaternion.identity;
+                temp.transform.localScale = prefabToSpawn.transform.localScale;
+                UnityEditor.EditorUtility.SetDirty(temp);
+                yield return null; // wait a frame for prefab to initialize properly
+            }
+            else
+#endif
+            {
+                temp = Instantiate(prefabToSpawn, worldPos, rotationToUse, transform);
+            }
+
 
             // Skip collision checks when restoring exact save
             if (!isExactRestore && !isRingCenter)
@@ -749,6 +933,7 @@ public class GridFormationController : FormationProvider
 
             instances.Add(temp.transform);
         }
+        yield return null;
     }
 
     List<Vector3> GetCurrentPositions()
@@ -885,7 +1070,7 @@ public class GridFormationController : FormationProvider
 
         // Draw grid outline
         Gizmos.color = Color.yellow;
-Vector3 center = transform.TransformPoint(gridCenter);
+        Vector3 center = transform.TransformPoint(gridCenter);
         float width = gridSpanX;
         float depth = gridSpanZ;
 

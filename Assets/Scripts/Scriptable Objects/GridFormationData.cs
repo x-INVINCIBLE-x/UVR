@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+[CreateAssetMenu(fileName = "GridFormationData", menuName = "Grid/GridFormationData")]
 public class GridFormationData : ScriptableObject
 {
-    public List<Vector3> positions = new List<Vector3>();
-    public List<Quaternion> rotations = new List<Quaternion>(); 
+    public List<Vector3> positions;
+    public List<Quaternion> rotations;
+    public List<GameObject> prefabs;
 }
