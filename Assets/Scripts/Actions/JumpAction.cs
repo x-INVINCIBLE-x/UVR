@@ -18,6 +18,13 @@ public class JumpAction : Action
     private int currentJumpCount;
     private bool jumpStarted = false;
 
+    [SerializeField] private bool changeFOV = true;
+    [SerializeField] private int jumpFOV = 65;
+    [SerializeField] private float fovChangeDuration = 0.25f;
+    [SerializeField] private AnimationCurve fovCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+    private float defaultFOV;
+    private Coroutine fovCoroutine;
     private Coroutine jumpCoroutine;
 
     protected override void Start()
@@ -26,6 +33,7 @@ public class JumpAction : Action
         inputManager.A.action.performed += HandleJump;
         actionMediator.OnTimeModified += HandleTimeChange;
 
+        defaultFOV = Camera.main.fieldOfView;
         currentJumpCount = jumpCount;
     }
 
@@ -72,7 +80,6 @@ public class JumpAction : Action
 
         StartCoroutine(AcceleratedJumpRoutine(acceleration));
     }
-
     private IEnumerator LerpJump()
     {
         float jumpDuration = 2f * Mathf.Sqrt(2f * jumpHeight / -Physics.gravity.y);
@@ -81,7 +88,13 @@ public class JumpAction : Action
         actionMediator.immuneInterpolation = true;
         actionMediator.playerGravity.DisableGravity();
         previousMove = Vector3.zero;
-        
+
+        if (changeFOV)
+        {
+            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
+            fovCoroutine = StartCoroutine(ChangeFOVRoutine(defaultFOV, jumpFOV, fovChangeDuration));
+        }
+
         while (elapsed < jumpDuration)
         {
             if (actionMediator.grabStatus.IsClimbing())
@@ -92,18 +105,22 @@ public class JumpAction : Action
 
             float deltaHeight = height - previousMove.y;
 
-            // Instead of controller.Move, directly change Y position
             Vector3 pos = PlayerManager.instance.PlayerOrigin.transform.position;
             pos.y += deltaHeight;
             PlayerManager.instance.PlayerOrigin.transform.position = pos;
 
             previousMove.y = height;
 
-            // Don't auto-stop in air for multiple jumps
             if (elapsed > 0.2f && actionMediator.IsGrounded())
             {
                 actionMediator.playerGravity.EnableGravity();
-                currentJumpCount = jumpCount; // reset on landing
+                currentJumpCount = jumpCount;
+
+                if (changeFOV)
+                {
+                    if (fovCoroutine != null) StopCoroutine(fovCoroutine);
+                    fovCoroutine = StartCoroutine(ChangeFOVRoutine(Camera.main.fieldOfView, defaultFOV, fovChangeDuration));
+                }
                 yield break;
             }
 
@@ -118,9 +135,29 @@ public class JumpAction : Action
         actionMediator.playerGravity.EnableGravity();
         previousMove = Vector3.zero;
 
+        if (changeFOV)
+        {
+            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
+            fovCoroutine = StartCoroutine(ChangeFOVRoutine(Camera.main.fieldOfView, defaultFOV, fovChangeDuration));
+        }
+
         jumpCoroutine = null;
     }
 
+    private IEnumerator ChangeFOVRoutine(float from, float to, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = Mathf.Clamp01(elapsed / duration);
+            float curveValue = fovCurve.Evaluate(t);
+            Camera.main.fieldOfView = Mathf.Lerp(from, to, curveValue);
+
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        Camera.main.fieldOfView = to;
+    }
 
     private IEnumerator AcceleratedJumpRoutine(float jumpAcceleration)
     {
@@ -128,12 +165,16 @@ public class JumpAction : Action
         actionMediator.playerGravity.DisableGravity();
         previousMove = Vector3.zero;
 
-        // Initial upward velocity (based on jumpAcceleration and jumpHeight)
+        if (changeFOV)
+        {
+            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
+            fovCoroutine = StartCoroutine(ChangeFOVRoutine(defaultFOV, jumpFOV, fovChangeDuration));
+        }
+
         float velocity = Mathf.Sqrt(2f * jumpAcceleration * jumpHeight * acceleratedJumpMultiplier);
 
-        while (velocity > 0f && !actionMediator.IsGrounded()) // Changed OR to AND
+        while (velocity > 0f && !actionMediator.IsGrounded())
         {
-            // Apply upward movement if velocity > 0
             if (velocity > 0f)
             {
                 float deltaHeight = velocity * Time.deltaTime;
@@ -145,25 +186,34 @@ public class JumpAction : Action
                 previousMove.y += deltaHeight;
             }
 
-            // Update velocity (gravity effect)
             velocity += Physics.gravity.y * Time.deltaTime;
 
-            // Landing check (after initial lift-off)
             if (previousMove.y > 0.2f && actionMediator.IsGrounded())
             {
                 actionMediator.playerGravity.EnableGravity();
-                currentJumpCount = jumpCount; // reset on landing
+                currentJumpCount = jumpCount;
+
+                if (changeFOV)
+                {
+                    if (fovCoroutine != null) StopCoroutine(fovCoroutine);
+                    fovCoroutine = StartCoroutine(ChangeFOVRoutine(Camera.main.fieldOfView, defaultFOV, fovChangeDuration));
+                }
                 break;
             }
 
             yield return null;
         }
 
-        // Restore gravity fully at end
         actionMediator.immuneInterpolation = false;
         actionMediator.playerGravity.EnableGravity();
         previousMove = Vector3.zero;
         jumpCoroutine = null;
+
+        if (changeFOV)
+        {
+            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
+            fovCoroutine = StartCoroutine(ChangeFOVRoutine(Camera.main.fieldOfView, defaultFOV, fovChangeDuration));
+        }
     }
 
     public void AddJumps(int amt) => jumpCount += amt;

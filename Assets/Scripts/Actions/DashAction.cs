@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Windows;
 
 public class DashAction : Action
@@ -20,12 +21,18 @@ public class DashAction : Action
     private Vector2 input;
 
     private Vector3 heightOffset = new Vector3(0f, 0.5f, 0f);
+    public bool changeFOV = true;
+    private float defaultFOV;
+    public int dashFOV = 61;
+
+    [SerializeField] private AnimationCurve fovCurve = AnimationCurve.EaseInOut(0, 0, 1, 0);
 
     protected override void Start()
     {
         base.Start();
 
         defaultDashForce = dashForce;
+        defaultFOV = Camera.main.fieldOfView;
         //actionMediator.OnTimeModified += HandleTimeModification;
 
         inputManager.B.action.performed += Dash;
@@ -45,8 +52,14 @@ public class DashAction : Action
         if (!canSwingDash && actionMediator.grabStatus.IsSwinging()) return;
         if (actionMediator.grabStatus.IsClimbing()) return;
 
+        Vector3 dashVelocity = direction * dashForce;
+        float step = dashVelocity.magnitude * Time.unscaledDeltaTime;
+        if (HasObstacleInPath(direction, step)) return;
+
         if (dashCoroutine != null)
+        {
             StopCoroutine(dashCoroutine);
+        }
 
         lastTimeSkillUsed = Time.time;
         dashCoroutine = StartCoroutine(DashRoutine());
@@ -54,9 +67,6 @@ public class DashAction : Action
 
     private IEnumerator DashRoutine()
     {
-        //actionMediator.immuneInterpolation = true;
-        //actionMediator.SetPhysicalMotion(true, true);
-
         float timer = 0f;
 
         // Compute dash direction once
@@ -66,35 +76,40 @@ public class DashAction : Action
 
         Vector3 dashVelocity = direction * dashForce;
 
+        float baseFOV = defaultFOV;
+
+        // DASH LOOP
         while (timer < dashDuration)
         {
             // Distance to move this frame
             float step = dashVelocity.magnitude * Time.unscaledDeltaTime;
             Vector3 move = direction * step;
 
-            // Check if obstacle in front (considering capsule size)
+            // Stop if obstacle detected
             if (HasObstacleInPath(direction, step))
-            {
-                break; // stop dash early if blocked
-            }
+                break;
 
-            // Move via transform
+            // Move player
             PlayerManager.instance.PlayerOrigin.transform.position += move;
+
+            // FOV change (increase + decrease during dash)
+            if (changeFOV)
+            {
+                float t = Mathf.Clamp01(timer / dashDuration); 
+                float curveValue = fovCurve.Evaluate(t);     
+                Camera.main.fieldOfView = Mathf.Lerp(baseFOV, dashFOV, curveValue);
+            }
 
             timer += Time.unscaledDeltaTime;
             yield return null;
         }
 
-        //actionMediator.immuneInterpolation = false;
-
-        //if (actionMediator.IsGrounded())
-        //    actionMediator.DisablePhysicalMotion(0f, true);
-        //else
-        //    actionMediator.DisablePhysicalMotionOnLand(true);
+        // Ensure final reset
+        if (changeFOV)
+            Camera.main.fieldOfView = baseFOV;
 
         dashCoroutine = null;
     }
-
 
     private bool HasObstacleInPath(Vector3 dir, float checkDistance)
     {
