@@ -55,20 +55,13 @@ public class Buff : ScriptableObject
         {
             string applicator = "";
 
-            switch (modifier.modType)
+            applicator = modifier.modType switch
             {
-                case StatModType.Flat:
-                    applicator = $"+{modifier.value}";
-                    break;
-                case StatModType.PercentAdd:
-                    applicator = $"{modifier.value}%";
-                    break;
-                default:
-                    applicator = $"x{modifier.value + 1}";
-                    break;
-            }
-
-            sb.AppendLine($"{modifier.stat.ToString()} : {applicator}");
+                StatModType.Flat => $"+{modifier.value}",
+                StatModType.PercentAdd => $"{modifier.value}%",
+                _ => $"x{modifier.value + 1}",
+            };
+            sb.AppendLine($"{modifier.stat} : {applicator}");
         }
 
         return sb.ToString();
