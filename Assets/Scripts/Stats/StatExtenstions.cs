@@ -36,6 +36,11 @@ public static class StatExtensions
         combined.radianceDamage = a.radianceDamage.CombineWith(b.radianceDamage, modifier);
         combined.gaiaDamage = a.gaiaDamage.CombineWith(b.gaiaDamage, modifier);
 
+        combined.burnDamage = b.burnDamage;
+        combined.frostSpeedReduction = b.frostSpeedReduction;
+        combined.blitzSurroundingDamage = b.blitzSurroundingDamage;
+        combined.gaiaHealAmount = b.gaiaHealAmount;
+
         return combined;
     }
 
@@ -52,6 +57,11 @@ public static class StatExtensions
         combined.hexDamage = a.hexDamage.CombineWith(b.hexDamage);
         combined.radianceDamage = a.radianceDamage.CombineWith(b.radianceDamage);
         combined.gaiaDamage = a.gaiaDamage.CombineWith(b.gaiaDamage);
+
+        combined.burnDamage = a.burnDamage + b.burnDamage;
+        combined.frostSpeedReduction = a.frostSpeedReduction + b.frostSpeedReduction;
+        combined.blitzSurroundingDamage = a.blitzSurroundingDamage + b.blitzSurroundingDamage;
+        combined.gaiaHealAmount = a.gaiaHealAmount + b.gaiaHealAmount;
 
         return combined;
     }

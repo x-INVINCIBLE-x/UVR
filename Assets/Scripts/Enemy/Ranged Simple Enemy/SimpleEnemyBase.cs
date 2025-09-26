@@ -228,7 +228,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         {
             HashSet<Transform> hitTransforms = new HashSet<Transform>();
             Collider[] colliders = Physics.OverlapSphere(transform.position, surroundingHitRadius, allyLayer);
-
+            Debug.Log("hit");
             foreach (var col in colliders)
             {
                 if (hitTransforms.Contains(col.transform.root)) continue;
