@@ -228,14 +228,12 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         {
             HashSet<Transform> hitTransforms = new HashSet<Transform>();
             Collider[] colliders = Physics.OverlapSphere(transform.position, surroundingHitRadius, allyLayer);
-            Debug.Log("hit");
             foreach (var col in colliders)
             {
                 if (hitTransforms.Contains(col.transform.root)) continue;
                 if (col.transform.root == transform.root) continue;
 
                 hitTransforms.Add(col.transform.root);
-                Debug.Log($"Hit Surrounding Enemy: {col.name}");
                 IDamageable damageable = col.GetComponentInParent<IDamageable>();
                 if (damageable != null)
                 {

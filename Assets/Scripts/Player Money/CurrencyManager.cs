@@ -13,8 +13,8 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
     private List<float> goldMultipliers = new List<float>();
     private List<float> magikaMultipliers = new List<float>();
 
-    public float CurrentGoldMultiplier { get; private set; }
-    public float CurrentMagikaMultiplier { get; private set; }
+    public float CurrentGoldMultiplier { get; private set; } = 1f;
+    public float CurrentMagikaMultiplier { get; private set; } = 1f;
 
     public event System.Action<int, int> OnCurrencyChanged;
 
