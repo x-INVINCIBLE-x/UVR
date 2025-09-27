@@ -1,0 +1,232 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8280856428737318769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8911913591136712382}
+  - component: {fileID: 3670703919846009516}
+  - component: {fileID: 4783577269791209690}
+  - component: {fileID: 315856680197436560}
+  m_Layer: 0
+  m_Name: TimeTrial_Grid_Quad_Accessory_Easy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8911913591136712382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8280856428737318769}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.36081082, z: 0, w: 0.9326391}
+  m_LocalPosition: {x: 362, y: -0, z: 775.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 42.3, z: 0}
+--- !u!114 &3670703919846009516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8280856428737318769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1638144539450f344b0139b9890a92d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawGizmos: 0
+  deactivateOnSpawn: 1
+  spawnPerFrame: 1
+  saveToSO: {fileID: 11400000, guid: ed06a98b234a54c449178c5940e1dbd6, type: 2}
+  gridDatabase: {fileID: 11400000, guid: 72725a58839780540b65f2dbae121e5e, type: 2}
+  groupKey: Slice
+  radiusPrefabs:
+  - radius: 40
+    centerOffset: {x: 0, y: 0, z: 0}
+    centerElement: {fileID: 0}
+    centralElementRadius: 40
+    centerYOffset: 0
+    prefabs: []
+  cornerPrefabs:
+  - prefab: {fileID: 5068854031626633136, guid: 369de00258a0e48418db33d8fb099c48, type: 3}
+    weight: 1
+  - prefab: {fileID: 7609915391036661921, guid: 85f223bbcdfa0534d83645d12b041f5b, type: 3}
+    weight: 1
+  - prefab: {fileID: 1785732444385638350, guid: ae0f3ca6387300a4a903e5a7c1eb8fe0, type: 3}
+    weight: 1
+  - prefab: {fileID: 5324778295045588374, guid: 1b5939f5eb6316d41b38725474fa190e, type: 3}
+    weight: 1
+  - prefab: {fileID: 1738201253236683952, guid: fa7a971d7de935648beda83af834f7d1, type: 3}
+    weight: 1
+  cuboidPrefabs:
+  - prefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
+    weight: 1
+  gridWidth: 30
+  gridDepth: 30
+  snapGap: 0
+  snapDirection: {x: 1, y: 0, z: 0}
+  minSpacing: 0
+  maxSpacing: 0
+  density: 0.046
+  maxJitterXZ: 0
+  maxJitterY: 0
+  innerRadius: 100
+  outerRadius: 1750
+  maxDepth: 400
+  sineAmplitude: 250
+  sineFrequency: 1
+  customWaveSettings:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    amplitude: 10
+    axis: 2
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    amplitude: 2
+    axis: 1
+  formations:
+  - difficultyLevel: 1
+    config:
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+  - difficultyLevel: 2
+    config:
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+  - difficultyLevel: 3
+    config:
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+    - type: 1
+      jitterX: 0
+      jitterY: 0
+  transitionDuration: 2
+--- !u!114 &4783577269791209690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8280856428737318769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
+--- !u!114 &315856680197436560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8280856428737318769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: -334000983
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.083333336
+  m_MinRegionArea: 10
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
