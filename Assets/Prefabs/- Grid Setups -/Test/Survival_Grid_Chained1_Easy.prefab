@@ -1,0 +1,260 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8027439496166327098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3919871128005526101}
+  - component: {fileID: 1200211045036881450}
+  - component: {fileID: 2737452399967832692}
+  - component: {fileID: 1291292160250347089}
+  m_Layer: 0
+  m_Name: Survival_Grid_Chained1_Easy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3919871128005526101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027439496166327098}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -345, y: -728, z: 1031}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1200211045036881450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027439496166327098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1638144539450f344b0139b9890a92d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawGizmos: 1
+  deactivateOnSpawn: 1
+  spawnPerFrame: 1
+  saveToSO: {fileID: 11400000, guid: 5f224b3d32538fd40a5fa9aa9aff64af, type: 2}
+  gridDatabase: {fileID: 11400000, guid: 72725a58839780540b65f2dbae121e5e, type: 2}
+  groupKey: Slice
+  radiusPrefabs:
+  - radius: 400
+    centerOffset: {x: 0, y: 0, z: 0}
+    centerElement: {fileID: 0}
+    centralElementRadius: 0
+    centerYOffset: 0
+    prefabs:
+    - prefab: {fileID: 1806929911081268846, guid: c63172d8f38ae464f9e565e248152521, type: 3}
+      weight: 10
+    - prefab: {fileID: 7123390032290945761, guid: 7cde4d776637c7b4aa5eef7582a0784a, type: 3}
+      weight: 10
+    - prefab: {fileID: 3433538684502565419, guid: 820a4e9f0aed89247a31987bdbf30c5b, type: 3}
+      weight: 10
+    - prefab: {fileID: 5180985487718942631, guid: 8832817fc8095b7409893c33ac792172, type: 3}
+      weight: 10
+    - prefab: {fileID: 4008438186527085041, guid: 5cbbb8d4a04103e46a77ebf0c1079f6e, type: 3}
+      weight: 10
+    - prefab: {fileID: 1015880761529596253, guid: 860a61ea5e171f641872fb54d601d93f, type: 3}
+      weight: 10
+    - prefab: {fileID: 7286421891589626632, guid: d799baab4fe268b4abee9384f7ea7c60, type: 3}
+      weight: 10
+    - prefab: {fileID: 9176573989414481643, guid: 32e437cf8e246024ab76efef7c397998, type: 3}
+      weight: 10
+    - prefab: {fileID: 2348508520606842157, guid: 74b3f2f4fd62d8e4cb65c3a25ce2d33a, type: 3}
+      weight: 10
+    - prefab: {fileID: 2348508520606842157, guid: 74b3f2f4fd62d8e4cb65c3a25ce2d33a, type: 3}
+      weight: 20
+    - prefab: {fileID: 8732559354285266218, guid: 6b711e3eae5dbce459f795fa42177397, type: 3}
+      weight: 20
+    - prefab: {fileID: 8732559354285266218, guid: 6b711e3eae5dbce459f795fa42177397, type: 3}
+      weight: 20
+    - prefab: {fileID: 814940262096534163, guid: 5bff52f3a80ccdd4b9f77a746779fcf4, type: 3}
+      weight: 10
+    - prefab: {fileID: 3312342478167346258, guid: 7f78d72f56321144ab3d7b35adfb4bf8, type: 3}
+      weight: 10
+  cornerPrefabs:
+  - prefab: {fileID: 5068854031626633136, guid: 369de00258a0e48418db33d8fb099c48, type: 3}
+    weight: 1
+  - prefab: {fileID: 7609915391036661921, guid: 85f223bbcdfa0534d83645d12b041f5b, type: 3}
+    weight: 1
+  - prefab: {fileID: 1785732444385638350, guid: ae0f3ca6387300a4a903e5a7c1eb8fe0, type: 3}
+    weight: 1
+  - prefab: {fileID: 5324778295045588374, guid: 1b5939f5eb6316d41b38725474fa190e, type: 3}
+    weight: 1
+  - prefab: {fileID: 1738201253236683952, guid: fa7a971d7de935648beda83af834f7d1, type: 3}
+    weight: 1
+  cuboidPrefabs:
+  - prefab: {fileID: 1749108633849772715, guid: 4d869de74c1050545b11b42c480142af, type: 3}
+    weight: 1
+  gridWidth: 90
+  gridDepth: 40
+  snapGap: 0
+  snapDirection: {x: 1, y: 0, z: 0}
+  minSpacing: 0
+  maxSpacing: 0
+  density: 0.113
+  maxJitterXZ: 0
+  maxJitterY: 0
+  innerRadius: 100
+  outerRadius: 1750
+  maxDepth: 400
+  sineAmplitude: 250
+  sineFrequency: 1
+  customWaveSettings:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    amplitude: 10
+    axis: 2
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    amplitude: 2
+    axis: 1
+  formations:
+  - difficultyLevel: 1
+    config:
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+  - difficultyLevel: 2
+    config:
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+  - difficultyLevel: 3
+    config:
+    - type: 2
+      jitterX: 0
+      jitterY: 0
+    - type: 1
+      jitterX: 0
+      jitterY: 0
+  transitionDuration: 2
+--- !u!114 &2737452399967832692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027439496166327098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
+--- !u!114 &1291292160250347089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027439496166327098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: -334000983
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.083333336
+  m_MinRegionArea: 10
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0

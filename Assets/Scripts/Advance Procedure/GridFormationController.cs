@@ -173,13 +173,17 @@ public class GridFormationController : FormationProvider
     [ContextMenu("Editor: Export Children to ScriptableObject")]
     private void Editor_ExportToScriptableObject()
     {
-        if (saveToSO == null)
-        {
-            saveToSO = ScriptableObject.CreateInstance<GridFormationData>();
-            string path = "Assets/Data/Grid Data/Grid Position Data";
+#if UNITY_EDITOR
+        string path = "Assets/Data/Grid Data/Grid Position Data";
 
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
+        if (!System.IO.Directory.Exists(path))
+            System.IO.Directory.CreateDirectory(path);
+
+        // Check if existing SO is valid and matches GameObject name
+        if (saveToSO == null || !saveToSO.name.StartsWith(gameObject.name))
+        {
+            // Create a new ScriptableObject if null OR name mismatch
+            saveToSO = ScriptableObject.CreateInstance<GridFormationData>();
 
             string assetPathAndName = UnityEditor.AssetDatabase.GenerateUniqueAssetPath(
                 path + "/" + gameObject.name + " Positions.asset"
@@ -187,6 +191,7 @@ public class GridFormationController : FormationProvider
 
             UnityEditor.AssetDatabase.CreateAsset(saveToSO, assetPathAndName);
             UnityEditor.AssetDatabase.SaveAssets();
+
             Debug.Log("Created new ScriptableObject at: " + assetPathAndName);
         }
 
@@ -206,24 +211,23 @@ public class GridFormationController : FormationProvider
             saveToSO.positions.Add(child.localPosition);
             saveToSO.rotations.Add(child.localRotation);
 
-#if UNITY_EDITOR
             GameObject prefab = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject);
             if (prefab != null)
             {
-                saveToSO.prefabs.Add(prefab);   // always save prefab asset
+                saveToSO.prefabs.Add(prefab);
             }
             else
             {
                 Debug.LogError($"Could not find prefab source for {child.name}. Make sure it’s a prefab instance!");
-                saveToSO.prefabs.Add(null); // placeholder so indices stay aligned
+                saveToSO.prefabs.Add(null); // keep alignment
             }
-#endif
         }
 
         UnityEditor.EditorUtility.SetDirty(saveToSO);
         UnityEditor.AssetDatabase.SaveAssets();
 
         Debug.Log($"Exported {saveToSO.positions.Count} children (pos+rot+prefab) to ScriptableObject.");
+#endif
     }
 
 

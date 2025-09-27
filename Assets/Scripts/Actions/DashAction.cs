@@ -18,6 +18,7 @@ public class DashAction : Action
     public bool canSwingDash = true;
     private float defaultDashForce;
     private Coroutine dashCoroutine;
+    private Coroutine resetRoutine;
     private Vector2 input;
 
     private Vector3 heightOffset = new Vector3(0f, 0.5f, 0f);
@@ -78,6 +79,11 @@ public class DashAction : Action
 
         float baseFOV = defaultFOV;
 
+        if (resetRoutine != null)
+        {
+            StopCoroutine(resetRoutine);
+        }
+
         // DASH LOOP
         while (timer < dashDuration)
         {
@@ -95,8 +101,8 @@ public class DashAction : Action
             // FOV change (increase + decrease during dash)
             if (changeFOV)
             {
-                float t = Mathf.Clamp01(timer / dashDuration); 
-                float curveValue = fovCurve.Evaluate(t);     
+                float t = Mathf.Clamp01(timer / dashDuration);
+                float curveValue = Mathf.Sin(t * Mathf.PI); 
                 Camera.main.fieldOfView = Mathf.Lerp(baseFOV, dashFOV, curveValue);
             }
 
@@ -106,7 +112,10 @@ public class DashAction : Action
 
         // Ensure final reset
         if (changeFOV)
-            Camera.main.fieldOfView = baseFOV;
+        {
+            resetRoutine = StartCoroutine(SmoothResetFOV(baseFOV));
+            yield return resetRoutine;
+        }
 
         dashCoroutine = null;
     }
@@ -126,6 +135,23 @@ public class DashAction : Action
             checkDistance + 0.05f, // extra buffer
             obstacleLayerMask
         );
+    }
+
+    private IEnumerator SmoothResetFOV(float targetFOV, float duration = 0.25f)
+    {
+        float startFOV = Camera.main.fieldOfView;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = elapsed / duration;
+            Camera.main.fieldOfView = Mathf.Lerp(startFOV, targetFOV, t);
+            yield return null;
+        }
+
+        Camera.main.fieldOfView = targetFOV; // final clamp
+        resetRoutine = null;
     }
 
     //private void HandleTimeModification(float modifier)

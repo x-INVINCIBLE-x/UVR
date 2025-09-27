@@ -26,6 +26,7 @@ public class JumpAction : Action
     private float defaultFOV;
     private Coroutine fovCoroutine;
     private Coroutine jumpCoroutine;
+    private Coroutine resetRoutine;
 
     protected override void Start()
     {
@@ -91,8 +92,8 @@ public class JumpAction : Action
 
         if (changeFOV)
         {
-            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
-            fovCoroutine = StartCoroutine(ChangeFOVRoutine(defaultFOV, jumpFOV, fovChangeDuration));
+            if (fovCoroutine != null)
+                StopCoroutine(fovCoroutine);
         }
 
         while (elapsed < jumpDuration)
@@ -102,7 +103,6 @@ public class JumpAction : Action
 
             float t = elapsed / jumpDuration;
             float height = 4f * jumpHeight * t * (1 - t);
-
             float deltaHeight = height - previousMove.y;
 
             Vector3 pos = PlayerManager.instance.PlayerOrigin.transform.position;
@@ -115,19 +115,20 @@ public class JumpAction : Action
             {
                 actionMediator.playerGravity.EnableGravity();
                 currentJumpCount = jumpCount;
+                break;
+            }
 
-                if (changeFOV)
-                {
-                    if (fovCoroutine != null) StopCoroutine(fovCoroutine);
-                    fovCoroutine = StartCoroutine(ChangeFOVRoutine(Camera.main.fieldOfView, defaultFOV, fovChangeDuration));
-                }
-                yield break;
+            if (changeFOV)
+            {
+                float curveValue = fovCurve.Evaluate(t); 
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, jumpFOV, curveValue);
             }
 
             elapsed += Time.deltaTime;
             yield return null;
         }
 
+      
         actionMediator.playerGravity.SetYVelocity(
             -Mathf.Sqrt(2 * -Physics.gravity.y * jumpHeight) * blendDuration
         );
@@ -137,26 +138,13 @@ public class JumpAction : Action
 
         if (changeFOV)
         {
-            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
-            fovCoroutine = StartCoroutine(ChangeFOVRoutine(Camera.main.fieldOfView, defaultFOV, fovChangeDuration));
+            if (fovCoroutine != null)
+                StopCoroutine(fovCoroutine);
+
+            fovCoroutine = StartCoroutine(ResetFOVRoutine(fovChangeDuration));
         }
 
         jumpCoroutine = null;
-    }
-
-    private IEnumerator ChangeFOVRoutine(float from, float to, float duration)
-    {
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            float t = Mathf.Clamp01(elapsed / duration);
-            float curveValue = fovCurve.Evaluate(t);
-            Camera.main.fieldOfView = Mathf.Lerp(from, to, curveValue);
-
-            elapsed += Time.unscaledDeltaTime;
-            yield return null;
-        }
-        Camera.main.fieldOfView = to;
     }
 
     private IEnumerator AcceleratedJumpRoutine(float jumpAcceleration)
@@ -165,42 +153,41 @@ public class JumpAction : Action
         actionMediator.playerGravity.DisableGravity();
         previousMove = Vector3.zero;
 
+        float velocity = Mathf.Sqrt(2f * jumpAcceleration * jumpHeight * acceleratedJumpMultiplier);
+        float totalDuration = (2f * velocity) / -Physics.gravity.y;
+        float elapsed = 0f;
         if (changeFOV)
         {
-            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
-            fovCoroutine = StartCoroutine(ChangeFOVRoutine(defaultFOV, jumpFOV, fovChangeDuration));
+            if (fovCoroutine != null)
+                StopCoroutine(fovCoroutine);
         }
-
-        float velocity = Mathf.Sqrt(2f * jumpAcceleration * jumpHeight * acceleratedJumpMultiplier);
 
         while (velocity > 0f && !actionMediator.IsGrounded())
         {
-            if (velocity > 0f)
-            {
-                float deltaHeight = velocity * Time.deltaTime;
-                Vector3 move = Vector3.up * deltaHeight;
+            float deltaHeight = velocity * Time.deltaTime;
+            Vector3 move = Vector3.up * deltaHeight;
 
-                if (actionMediator.controller.enabled)
-                    actionMediator.controller.Move(move);
+            if (actionMediator.controller.enabled)
+                actionMediator.controller.Move(move);
 
-                previousMove.y += deltaHeight;
-            }
-
+            previousMove.y += deltaHeight;
             velocity += Physics.gravity.y * Time.deltaTime;
 
             if (previousMove.y > 0.2f && actionMediator.IsGrounded())
             {
                 actionMediator.playerGravity.EnableGravity();
                 currentJumpCount = jumpCount;
-
-                if (changeFOV)
-                {
-                    if (fovCoroutine != null) StopCoroutine(fovCoroutine);
-                    fovCoroutine = StartCoroutine(ChangeFOVRoutine(Camera.main.fieldOfView, defaultFOV, fovChangeDuration));
-                }
                 break;
             }
 
+            if (changeFOV)
+            {
+                float t = Mathf.Clamp01(elapsed / totalDuration);
+                float curveValue = fovCurve.Evaluate(t);
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, jumpFOV, curveValue);
+            }
+
+            elapsed += Time.deltaTime;
             yield return null;
         }
 
@@ -211,9 +198,28 @@ public class JumpAction : Action
 
         if (changeFOV)
         {
-            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
-            fovCoroutine = StartCoroutine(ChangeFOVRoutine(Camera.main.fieldOfView, defaultFOV, fovChangeDuration));
+            if (fovCoroutine != null)
+                StopCoroutine(fovCoroutine);
+
+            fovCoroutine = StartCoroutine(ResetFOVRoutine(fovChangeDuration));
         }
+    }
+
+    private IEnumerator ResetFOVRoutine(float duration = 0.25f)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float curveValue = fovCurve.Evaluate(t);
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, defaultFOV, curveValue);
+            yield return null;
+        }
+
+        Camera.main.fieldOfView = defaultFOV;
+        fovCoroutine = null;
     }
 
     public void AddJumps(int amt) => jumpCount += amt;
