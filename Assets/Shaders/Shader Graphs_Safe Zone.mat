@@ -24,7 +24,6 @@ Material:
   disabledShaderPasses:
   - MOTIONVECTORS
   - SHADOWCASTER
-  - DepthOnly
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -65,8 +64,8 @@ Material:
     - _SrcBlend: 5
     - _Surface: 1
     - _ZTest: 4
-    - _ZWrite: 0
-    - _ZWriteControl: 2
+    - _ZWrite: 1
+    - _ZWriteControl: 1
     m_Colors:
     - _Direction: {r: 0.1, g: 0.2, b: 0, a: 0}
     - _Fresnel_Color: {r: 0, g: 1.4980392, b: 0.033174127, a: 1}
