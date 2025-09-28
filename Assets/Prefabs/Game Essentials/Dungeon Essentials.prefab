@@ -238,7 +238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challengeID: Survival
-  survivalDuration: 500
+  difficultyStep: 0
+  baseSurvivalDuration: 180
   timer: 0
   safeZone: {fileID: -6364688204710881444, guid: 6b436428fb31b1249a4d90d8d5c3fb57, type: 3}
   damageOutsideSafeZone: {fileID: 11400000, guid: a0a9d27b0c8856c4ab6bb4e6acc47e62, type: 2}
@@ -247,6 +248,10 @@ MonoBehaviour:
   minMoveDistance: 3
   speedIncreaseRate: 0.05
   maxSpeed: 20
+  difficultyScaling:
+    duration: 0
+  scalingCap:
+    duration: 0
 --- !u!114 &4416125102421606189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challengeID: Slice
+  difficultyStep: 0
   totalCrystals: 3
   statueShield: {fileID: 1198433312203469917, guid: 34b28b7ad9fce9c4a9ff7303607c2a65, type: 3}
 --- !u!114 &424034783326359032
@@ -275,11 +281,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challengeID: TimeTrial
-  targetAmount: 5
-  challengeDuration: 3
+  difficultyStep: 0
+  baseTargetAmount: 0
+  baseChallengeDuration: 0
   bonusTime: 0
   currentObjective: 0
   targetObjectives: 010000000200000003000000
+  difficultyScaling:
+    duration: 0
+    targetAmount: 0
+  scalingCap:
+    duration: 0
+    targetAmount: 0
 --- !u!1 &5943628886930519494
 GameObject:
   m_ObjectHideFlags: 0
