@@ -856,6 +856,53 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cacfa6f825285764693452270bb747e3, type: 3}
+--- !u!1 &1187031928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1187031930}
+  - component: {fileID: 1187031929}
+  m_Layer: 0
+  m_Name: SafeZone Visualizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1187031929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187031928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434afa324bcb589449a10a5c9f860f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  safeArea: {x: 612, y: 413}
+  positionInfo: {x: 1002, y: 0, z: 1136}
+  rotationInfo: {x: -0, y: 0, z: 0}
+--- !u!4 &1187031930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187031928}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1002, y: 0, z: 1136}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1595740788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4942,6 +4989,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5475658763374387256}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2738205780346492727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6358276656550073058}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.12679, y: 0, z: 128.06604}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2739440184129732296
 GameObject:
   m_ObjectHideFlags: 0
@@ -6423,6 +6485,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+--- !u!114 &4382810774186943236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6358276656550073058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7e21c8e3e0e0741834b8eb282234e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  formationGroups:
+  - gridKey: Slice
+    formations:
+    - {fileID: 11400000, guid: 1252d14e72324344989bb0a1c829799a, type: 2}
+  - gridKey: TimeTrial
+    formations:
+    - {fileID: 11400000, guid: 27452993b8be77940a457ac231ba463d, type: 2}
+  - gridKey: Survival
+    formations:
+    - {fileID: 11400000, guid: a63d03821f5120b4fa6dc24f6e7247d0, type: 2}
+  testGrid: Survival
 --- !u!4 &4387403423676504673
 Transform:
   m_ObjectHideFlags: 0
@@ -9119,6 +9204,23 @@ Transform:
   - {fileID: 5586391291168604635}
   m_Father: {fileID: 8643977493914394553}
   m_LocalEulerAnglesHint: {x: 5.811, y: 0, z: 0}
+--- !u!1 &6358276656550073058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2738205780346492727}
+  - component: {fileID: 4382810774186943236}
+  m_Layer: 0
+  m_Name: Grid Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &6360836724663652364
 Transform:
   m_ObjectHideFlags: 0
@@ -12850,3 +12952,5 @@ SceneRoots:
   - {fileID: 961948812}
   - {fileID: 1167031142}
   - {fileID: 269432851}
+  - {fileID: 1187031930}
+  - {fileID: 2738205780346492727}

@@ -1,6 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GridGenerator : MonoBehaviour
 {
@@ -14,10 +15,33 @@ public class GridGenerator : MonoBehaviour
     public static GridGenerator Instance { get; private set; }
 
     [SerializeField] public List<GridGroup> formationGroups;
-
+    [SerializeField] private string testGrid;
     [SerializeField] private Dictionary<string, List<GridSetupData>> gridSetupDatabase = new();
     private readonly Dictionary<string, List<int>> unusedIndicesPerGroup = new();
     [System.NonSerialized] private bool isInitialized = false;
+    private string currentKey;
+    private GridSetupData currentSetupData;
+
+    [ContextMenu("Grid Test")]
+    private void Editor_GridTest()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(this.transform.GetChild(i).gameObject);
+        }
+        InitializeIfNeeded();
+        GridSetupData setupData = GetRandomUniqueFormation(testGrid);
+
+        for (int i = 0; i < setupData.gridFormationControllers.Length; i++)
+        {
+            if (setupData.gridFormationControllers[i] != null)
+            {
+                GridFormationController formationController = Instantiate(setupData.gridFormationControllers[i], setupData.positions[i], setupData.rotations[i], transform);
+            }
+        }
+        gridSetupDatabase.Clear();
+        isInitialized = false;
+    }
 
     private void Awake()
     {
@@ -32,12 +56,15 @@ public class GridGenerator : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(GenerateGrids(ChallengeManager.instance.CurrentChallenge.GetID()));
+        currentKey = ChallengeManager.instance.CurrentChallenge.GetID();
+        StartCoroutine(GenerateGrids(currentKey));
     }
 
     public IEnumerator GenerateGrids(string key)
     {
         GridSetupData setupData = GetRandomUniqueFormation(key);
+
+        currentSetupData = setupData;
 
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
@@ -109,6 +136,10 @@ public class GridGenerator : MonoBehaviour
             unusedIndicesPerGroup[kvp.Key] = indices;
         }
     }
+
+    public Vector3 GetSafeRotation() => currentSetupData.safeRotation;
+    public Vector2 GetSafeArea() => currentSetupData.safeArea;
+    public Vector3 GetSafePosition() => currentSetupData.safePosition;
 
     private void InitializeIfNeeded()
     {

@@ -32,7 +32,10 @@ public abstract class Challenge: MonoBehaviour
     public event System.Action OnChallengeCompleted;
     public event System.Action OnChallengeFailed;
 
-    public abstract void InitializeChallenge();
+    [Tooltip("After how many level the difficulty of challege will increase")]
+    [SerializeField] protected int difficultyStep;
+
+    public abstract void InitializeChallenge(int level);
 
     public virtual void StartChallenge()
     {

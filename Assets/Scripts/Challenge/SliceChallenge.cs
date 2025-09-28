@@ -13,7 +13,7 @@ public class SliceChallenge : Challenge
         technicalDetails = $"Destroy the {totalCrystals} CRYSTALS and finally THE STATUE to complete the challenge.";
     }
 
-    public override void InitializeChallenge()
+    public override void InitializeChallenge(int level)
     {
         status = ChallengeStatus.InProgress;
         activeCrystals = totalCrystals;

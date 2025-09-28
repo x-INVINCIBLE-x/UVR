@@ -7,6 +7,10 @@ public class GridSetupData : ScriptableObject
     public Vector3[] positions;
     public Quaternion[] rotations;
 
+    public Vector3 safePosition;
+    public Vector3 safeRotation;
+    public Vector2 safeArea;
+
     [ContextMenu("Save Transforms")]
     public void SaveTransforms()
     {

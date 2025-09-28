@@ -3,7 +3,14 @@ using UnityEngine;
 
 public class SurvivalChallenge : Challenge
 {
-    [SerializeField] private float survivalDuration = 300;
+    [System.Serializable]
+    private class DifficultyScaling
+    {
+        public int duration;
+    }
+
+    [SerializeField] private float baseSurvivalDuration = 180f;
+    private float survivalDuration = 300;
     [SerializeField] private float timer;
     [SerializeField] private SafeZone safeZone;
 
@@ -24,16 +31,18 @@ public class SurvivalChallenge : Challenge
     private float safeRadius;
     private GameObject safeZoneInstance;
 
-    private void Awake()
-    {
-        technicalDetails = $"SURVIVE for {survivalDuration} seconds to complete the challenge.";
-    }
+    [SerializeField] private DifficultyScaling difficultyScaling;
+    [SerializeField] private DifficultyScaling scalingCap;
 
-    public override void InitializeChallenge()
+    public override void InitializeChallenge(int level)
     {
+        int scaleFactor = level / difficultyStep;
+        survivalDuration = Mathf.Min(scalingCap.duration, baseSurvivalDuration + (difficultyScaling.duration * scaleFactor));
+
         status = ChallengeStatus.InProgress;
         timer = survivalDuration;
         finalMoveSpeed = moveSpeed;
+        technicalDetails = $"SURVIVE for {survivalDuration} seconds to complete the challenge.";
     }
 
     public override void StartChallenge()
@@ -106,29 +115,38 @@ public class SurvivalChallenge : Challenge
 
     private IEnumerator MoveSafeZoneRoutine()
     {
+        Vector3 areaCenter = GridGenerator.Instance.GetSafePosition();
+        Vector2 areaSize = GridGenerator.Instance.GetSafeArea();
+        Quaternion areaRotation = Quaternion.Euler(GridGenerator.Instance.GetSafeRotation());
+
         while (true)
         {
             yield return new WaitForEndOfFrame();
             Vector3 currentPos = safeZoneInstance.transform.position;
-            Vector3 targetPos;
+            Vector3 targetPos = currentPos;
 
-            do
+            // keep trying until a valid new point is found
+            for (int attempts = 0; attempts < 20; attempts++)
             {
-                // pick a random point within the circle radius around centrePoint
-                Vector2 randomCircle = Random.insideUnitCircle * safeRadius;
-                targetPos = new Vector3(
-                    centrePoint.x + randomCircle.x,
-                    currentPos.y,
-                    centrePoint.z + randomCircle.y
-                );
-            } while (Vector3.Distance(currentPos, targetPos) < minMoveDistance);
+                float randomX = Random.Range(-areaSize.x * 0.5f, areaSize.x * 0.5f);
+                float randomZ = Random.Range(-areaSize.y * 0.5f, areaSize.y * 0.5f);
+
+                Vector3 localOffset = new Vector3(randomX, 0, randomZ);
+                Vector3 candidate = areaCenter + areaRotation * localOffset;
+                candidate.y = currentPos.y;
+
+                if (Vector3.Distance(currentPos, candidate) >= minMoveDistance)
+                {
+                    targetPos = candidate;
+                    break;
+                }
+            }
 
             Debug.Log($"Safe Zone moving to: {targetPos}");
 
             // move towards target
             while (Vector3.Distance(safeZoneInstance.transform.position, targetPos) > 0.1f)
             {
-                Debug.Log($"Safe Zone moving... Current Pos: {safeZoneInstance.transform.position}, Target Pos: {targetPos}");
                 safeZoneInstance.transform.position = Vector3.MoveTowards(
                     safeZoneInstance.transform.position,
                     targetPos,
@@ -141,6 +159,8 @@ public class SurvivalChallenge : Challenge
             yield return new WaitForSeconds(stopDuration);
         }
     }
+
+
 
     public override string GetProgressText()
     {

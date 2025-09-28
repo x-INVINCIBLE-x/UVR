@@ -16,8 +16,15 @@ public enum ObjectiveType
 
 public class TimeTrialChallenge : Challenge
 {
-    [SerializeField] private int targetAmount;
-    [SerializeField] private int challengeDuration;
+    [System.Serializable]
+    private class DifficultyScaling
+    {
+        public int duration;
+        public int targetAmount;
+    }
+
+    [SerializeField] private int baseTargetAmount;
+    [SerializeField] private int baseChallengeDuration;
     [Tooltip("Added Extra Time for getting closrt to objective")]
     [SerializeField] private float bonusTime;
 
@@ -31,8 +38,17 @@ public class TimeTrialChallenge : Challenge
     private Coroutine currentRoutine;
     private string objectiveString ="";
 
-    public override void InitializeChallenge()
+    private int targetAmount;
+    private int challengeDuration;
+    [SerializeField] private DifficultyScaling difficultyScaling;
+    [SerializeField] private DifficultyScaling scalingCap;
+
+    public override void InitializeChallenge(int level)
     {
+        int scalingFactor = level / difficultyStep;
+        challengeDuration = Mathf.Min(scalingCap.duration, baseChallengeDuration + (difficultyScaling.duration * scalingFactor));
+        targetAmount = Mathf.Min(scalingCap.targetAmount, baseTargetAmount + (difficultyScaling.targetAmount * scalingFactor));
+
         status = ChallengeStatus.InProgress;
         timer = challengeDuration;
         currentAmount = 0;
@@ -92,7 +108,7 @@ public class TimeTrialChallenge : Challenge
         currentAmount++;
         timer += bonusTime;
 
-        if (currentAmount == possibleTargets.Count)
+        if (currentAmount == targetAmount)
         {
             ChallengeCompleted();
         }

@@ -262,17 +262,28 @@ public class GridFormationController : FormationProvider
                 ? saveToSO.rotations[i]
                 : Quaternion.identity;
 
+            GameObject temp = null;
+
 #if UNITY_EDITOR
-            GameObject temp = (GameObject)PrefabUtility.InstantiatePrefab(prefab, transform);
-            temp.transform.localPosition = localPos;
-            temp.transform.localRotation = localRot;
+            if (!Application.isPlaying)
+            {
+                temp = (GameObject)PrefabUtility.InstantiatePrefab(prefab, transform);
+                temp.transform.localPosition = localPos;
+                temp.transform.localRotation = localRot;
+            }
+            else
+            {
+                temp = Instantiate(prefab, transform);
+                temp.transform.localPosition = localPos;
+                temp.transform.localRotation = localRot;
+            }
 #else
-            GameObject temp = Instantiate(prefab, transform);
+            temp = Instantiate(prefab, transform);
             temp.transform.localPosition = localPos;
             temp.transform.localRotation = localRot;
 #endif
 
-            instances.Add(temp.transform);
+                instances.Add(temp.transform);
         }
 
         Debug.Log($" Blind restored {instances.Count} objects from ScriptableObject.");
@@ -392,15 +403,28 @@ public class GridFormationController : FormationProvider
                 ? saveToSO.rotations[i]
                 : Quaternion.identity;
 
+
+            GameObject temp = null;
+
 #if UNITY_EDITOR
-            GameObject temp = (GameObject)PrefabUtility.InstantiatePrefab(prefab, transform);
+            if (!Application.isPlaying)
+            {
+                temp = (GameObject)PrefabUtility.InstantiatePrefab(prefab, transform);
+                temp.transform.localPosition = localPos;
+                temp.transform.localRotation = localRot;
+            }
+            else
+            {
+                temp = Instantiate(prefab, transform);
+                temp.transform.localPosition = localPos;
+                temp.transform.localRotation = localRot;
+            }
+#else
+            temp = Instantiate(prefab, transform);
             temp.transform.localPosition = localPos;
             temp.transform.localRotation = localRot;
-#else
-        GameObject temp = Instantiate(prefab, transform);
-        temp.transform.localPosition = localPos;
-        temp.transform.localRotation = localRot;
 #endif
+
 
             instances.Add(temp.transform);
             count++;
