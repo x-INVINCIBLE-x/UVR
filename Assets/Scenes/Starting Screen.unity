@@ -14945,6 +14945,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1413158396}
   - component: {fileID: 1413158395}
+  - component: {fileID: 1413158397}
   m_Layer: 0
   m_Name: Exit portal
   m_TagString: Untagged
@@ -14993,6 +14994,18 @@ Transform:
   - {fileID: 967370156}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 137.649}
+--- !u!114 &1413158397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413158394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cadd1a273fd318418af61f9a316de56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &1416632242
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24758,6 +24771,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2774220342951786549}
   - component: {fileID: 2774220342951786550}
+  - component: {fileID: 2774220342951786551}
   m_Layer: 0
   m_Name: Tutorial portal
   m_TagString: Untagged
@@ -24893,6 +24907,36 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3859299, y: 1.3542758, z: 3.2200432}
   m_Center: {x: -0.11810307, y: 0.011806764, z: 1.6296055}
+--- !u!114 &2774220342951786551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534335996928340606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fada6a6c5b35fe0498ccddb699b63e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+    sceneName: 
+  targetScene:
+    sceneAsset: {fileID: 102900000, guid: 29da25232e8497842b8d36919b0494ab, type: 3}
+    scenePath: Assets/Scenes/Tutorial V2.unity
+    sceneName: Tutorial V2
+  providedTransitionScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+    sceneName: 
+  priorityScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+    sceneName: 
+  Core: {fileID: 0}
+  fader: {fileID: 0}
 --- !u!23 &2913825468905232689
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -28341,6 +28385,7 @@ GameObject:
   - component: {fileID: 5711518222501418758}
   - component: {fileID: 1365699251306744053}
   - component: {fileID: 611190535}
+  - component: {fileID: 5711518222501418759}
   m_Layer: 0
   m_Name: door_wood_0
   m_TagString: Untagged
@@ -29206,6 +29251,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5236952441509059730}
   m_Mesh: {fileID: 5429899130342296758, guid: f6e9f5c20d0bb274998c0a2c09414cfd, type: 3}
+--- !u!114 &5711518222501418759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5236952441509059730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fada6a6c5b35fe0498ccddb699b63e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+    sceneName: 
+  targetScene:
+    sceneAsset: {fileID: 102900000, guid: 72c96a6fe86774c44afdb5ea69ea8cb4, type: 3}
+    scenePath: Assets/Scenes/--- Build Scenes ---/Gothic City.unity
+    sceneName: Gothic City
+  providedTransitionScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+    sceneName: 
+  priorityScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+    sceneName: 
+  Core: {fileID: 0}
+  fader: {fileID: 0}
 --- !u!33 &5714439756408427133
 MeshFilter:
   m_ObjectHideFlags: 0

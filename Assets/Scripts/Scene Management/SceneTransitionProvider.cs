@@ -33,6 +33,7 @@ public class SceneTransitionProvider : MonoBehaviour
     private Coroutine currentTransitionRoutine = null;
 
 #if UNITY_EDITOR
+    [ContextMenu("Update References")]
     private void OnValidate()
     {
         transitionScene?.UpdateFields();
@@ -162,12 +163,15 @@ public class SceneTransitionProvider : MonoBehaviour
         if (isPrioritySceneLoaded)
         {
             Scene prioScene = SceneManager.GetSceneByName(prioritySceneName);
+            EnsureSingleCore(prioScene);
             SceneManager.MoveGameObjectToScene(Core, prioScene);
         }
         else
         {
+            EnsureSingleCore(targetSceneObj);
             SceneManager.MoveGameObjectToScene(Core, targetSceneObj);
         }
+
 
         SceneManager.SetActiveScene(targetSceneObj);
 
@@ -202,13 +206,16 @@ public class SceneTransitionProvider : MonoBehaviour
         // Move Core to priority if loaded, else target
         if (isPrioritySceneLoaded)
         {
-            Scene prioScene = SceneManager.GetSceneByName(priorityScene.SceneName);
+            Scene prioScene = SceneManager.GetSceneByName(prioritySceneName);
+            EnsureSingleCore(prioScene);
             SceneManager.MoveGameObjectToScene(Core, prioScene);
         }
         else
         {
+            EnsureSingleCore(targetSceneObj);
             SceneManager.MoveGameObjectToScene(Core, targetSceneObj);
         }
+
 
         SceneManager.SetActiveScene(targetSceneObj);
 
@@ -293,4 +300,18 @@ public class SceneTransitionProvider : MonoBehaviour
             prioritySceneName = string.Empty;
         }
     }
+
+    private void EnsureSingleCore(Scene targetScene)
+    {
+        foreach (GameObject root in targetScene.GetRootGameObjects())
+        {
+            if (root.name == "Core")
+            {
+                Debug.Log($"Destroying existing Core in scene {targetScene.name} before moving transitioning Core.");
+                DestroyImmediate(root);
+                break;
+            }
+        }
+    }
+
 }

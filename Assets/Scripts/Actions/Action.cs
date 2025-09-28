@@ -24,7 +24,8 @@ public class Action : MonoBehaviour
     protected virtual void Start()
     {
         inputManager = InputManager.Instance;
-        inputManager.YTap.action.performed += ctx => StartAbility();
+        if (inputManager != null )
+            inputManager.YTap.action.performed += ctx => StartAbility();
     }
 
     public virtual void PermitAbility(bool status)
@@ -62,6 +63,7 @@ public class Action : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        inputManager.YTap.action.performed -= ctx => StartAbility();
+        if (inputManager != null)
+            inputManager.YTap.action.performed -= ctx => StartAbility();
     }
 }
