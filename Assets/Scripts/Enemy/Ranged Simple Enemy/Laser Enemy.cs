@@ -8,6 +8,7 @@ public class LaserEnemy : SimpleEnemyBase
     public GameObject LaserVFX;
     public Transform projectileSpawn;
     public Vector3 LaserStartOffset;
+    public float laserSetTime = 2f; // can be used to increase the duration for laser to lerp and reach the player
     public CapsuleCollider laserCollider;
 
     private LineRenderer laserRenderer;
@@ -134,15 +135,14 @@ public class LaserEnemy : SimpleEnemyBase
     {
         shouldUpdateLaser = false;
         Vector3 startOffset = Player.position + LaserStartOffset;
-        float duration = 2f; // can be used to increase the duration for laser to lerp and reach the player
         float time = 0f; //  timer intialization
 
-        while (time < duration)
+        while (time < laserSetTime)
         {
             time += Time.deltaTime;
 
             Vector3 startPoint = projectileSpawn.position;
-            Vector3 endPoint = Vector3.Lerp(startOffset, Player.position + PlayerBodyOffset, time / duration);
+            Vector3 endPoint = Vector3.Lerp(startOffset, Player.position + PlayerBodyOffset, time / laserSetTime);
 
             laserRenderer.SetPosition(1, endPoint);
 

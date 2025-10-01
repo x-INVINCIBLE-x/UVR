@@ -150,6 +150,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         InitializeAilmentData();
 
         currentBaseSpeed = walkSpeed;
+        UpdateMovementSpeed();
     }
     private void HandleGlobalMovementSpeedChange(float newGlobalMultiplier)
     {

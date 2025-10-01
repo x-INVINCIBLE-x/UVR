@@ -32222,6 +32222,7 @@ GameObject:
   - component: {fileID: 2362195912959937799}
   - component: {fileID: 8774719650749462226}
   - component: {fileID: 5441397615880271183}
+  - component: {fileID: 5324822676827488100}
   m_Layer: 14
   m_Name: Muncher Frost
   m_TagString: Untagged
@@ -32524,7 +32525,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -334000983
   m_Radius: 0.02
-  m_Speed: 2
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -32532,8 +32533,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.13
-  m_BaseOffset: 0.1
+  m_Height: 0.132
+  m_BaseOffset: 0.115
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1622596439489351459
@@ -32560,13 +32561,13 @@ MonoBehaviour:
     Gold: 0
     Magika: 0
     Experience: 0
-  sightRange: 4
+  sightRange: 18
   attackRange: 0.13
   attackCooldownTime: 2
-  walkpointRange: 4
+  walkpointRange: 4.5
   patrollwaitTime: 2
   walkPoint: {x: 0, y: 0, z: 0}
-  walkSpeed: 3
+  walkSpeed: 4.5
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -32580,7 +32581,7 @@ MonoBehaviour:
   attackData: {fileID: 11400000, guid: ce5cf932bc24aea42b172f02a038c32e, type: 2}
   enemyStats: {fileID: 2362195912959937799}
   dissolver: {fileID: 8774719650749462226}
-  surroundingHitRadius: 10
+  surroundingHitRadius: 17.9
   blitzProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
   healProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
   sfxSource: {fileID: 380290307789595545}
@@ -32769,6 +32770,24 @@ MonoBehaviour:
   SkinnedMeshes: []
   highlightMaterial: {fileID: 2100000, guid: 40c534a1bdac14b4a92fdfce5d0dbe1e, type: 2}
   materialUpTime: 3
+--- !u!114 &5324822676827488100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5918217600509512548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: ce5cf932bc24aea42b172f02a038c32e, type: 2}
+  damageRate: 2
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &6238913483825836753
 GameObject:
   m_ObjectHideFlags: 0

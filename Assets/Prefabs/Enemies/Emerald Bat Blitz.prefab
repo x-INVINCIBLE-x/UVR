@@ -43616,6 +43616,7 @@ GameObject:
   - component: {fileID: 3127341135651936624}
   - component: {fileID: 8270770565486420007}
   - component: {fileID: 6452298998325342744}
+  - component: {fileID: 672175351005122217}
   m_Layer: 14
   m_Name: Emerald Bat Blitz
   m_TagString: Untagged
@@ -43953,13 +43954,13 @@ MonoBehaviour:
     Gold: 0
     Magika: 0
     Experience: 0
-  sightRange: 15
-  attackRange: 2
+  sightRange: 20
+  attackRange: 0.4
   attackCooldownTime: 1
   walkpointRange: 6
   patrollwaitTime: 2
   walkPoint: {x: 0, y: 0, z: 0}
-  walkSpeed: 3
+  walkSpeed: 5
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -43973,7 +43974,7 @@ MonoBehaviour:
   attackData: {fileID: 11400000, guid: 52025f6ce63e33d4f826966384e2c576, type: 2}
   enemyStats: {fileID: 8270770565486420007}
   dissolver: {fileID: 3127341135651936624}
-  surroundingHitRadius: 0
+  surroundingHitRadius: 19.47
   blitzProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
   healProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
   sfxSource: {fileID: 6834814851172165848}
@@ -44162,6 +44163,24 @@ MonoBehaviour:
   SkinnedMeshes: []
   highlightMaterial: {fileID: 2100000, guid: 40c534a1bdac14b4a92fdfce5d0dbe1e, type: 2}
   materialUpTime: 3
+--- !u!114 &672175351005122217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7425291390152605344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: 52025f6ce63e33d4f826966384e2c576, type: 2}
+  damageRate: 2
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7441934200619897709
 GameObject:
   m_ObjectHideFlags: 0

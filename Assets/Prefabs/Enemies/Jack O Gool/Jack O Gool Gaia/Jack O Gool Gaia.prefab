@@ -48317,9 +48317,9 @@ MonoBehaviour:
     Gold: 0
     Magika: 0
     Experience: 1000
-  sightRange: 10
-  attackRange: 7
-  attackCooldownTime: 1
+  sightRange: 24
+  attackRange: 16
+  attackCooldownTime: 0
   walkpointRange: 6
   patrollwaitTime: 4
   walkPoint: {x: 0, y: 0, z: 0}
@@ -48337,19 +48337,20 @@ MonoBehaviour:
   attackData: {fileID: 11400000, guid: 1857b18574764ac46a75442ba8c3fd71, type: 2}
   enemyStats: {fileID: 704925170173664723}
   dissolver: {fileID: 1193436436578167327}
-  surroundingHitRadius: 10
+  surroundingHitRadius: 23.8
   blitzProjectile: {fileID: 541757065818075778, guid: d1ca0f4b7a96cfd4cb9fa8e793cd7538, type: 3}
   healProjectile: {fileID: 6428853215137849390, guid: 09596badd6e771241a83d74e0a091a33, type: 3}
   sfxSource: {fileID: 1512257416460944430}
   attackClip: {fileID: 8300000, guid: 7e68645e316d39444be8bf430f49f7f8, type: 3}
   enemyHitCry: {fileID: 8300000, guid: 587b7741f3ac52f48816a95bc096bf9d, type: 3}
   enemyDeath: {fileID: 8300000, guid: b8833599be5e4374595ac5b913988914, type: 3}
-  magicChargeTime: 3
+  magicChargeTime: 2
   minSpeedMultiplier: 0.1
   maxSpeedMultiplier: 3
   LaserVFX: {fileID: 7737819306282149012, guid: 8f56a61fc62ea2442840eb189c17cf8b, type: 3}
   projectileSpawn: {fileID: 2069007299234587746}
-  LaserStartOffset: {x: 0, y: -2, z: 0}
+  LaserStartOffset: {x: 0, y: -3, z: 0}
+  laserSetTime: 1.6
   laserCollider: {fileID: 5928733453362287607}
 --- !u!114 &704925170173664723
 MonoBehaviour:
@@ -48843,7 +48844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4371366812919853477, guid: 048dae737d8f8854b95c8501e1a71b09, type: 3}
       propertyPath: MaxChargeTime
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9101103585561200933, guid: 048dae737d8f8854b95c8501e1a71b09, type: 3}
       propertyPath: m_Name

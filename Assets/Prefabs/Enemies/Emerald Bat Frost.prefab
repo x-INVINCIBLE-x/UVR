@@ -22573,6 +22573,7 @@ GameObject:
   - component: {fileID: 4379163303104914819}
   - component: {fileID: 9143006226866099728}
   - component: {fileID: 551216835386904063}
+  - component: {fileID: 3840268236617980015}
   m_Layer: 14
   m_Name: Emerald Bat Frost
   m_TagString: Untagged
@@ -22910,13 +22911,13 @@ MonoBehaviour:
     Gold: 0
     Magika: 0
     Experience: 0
-  sightRange: 15
-  attackRange: 2
+  sightRange: 20
+  attackRange: 0.4
   attackCooldownTime: 1
   walkpointRange: 6
   patrollwaitTime: 2
   walkPoint: {x: 0, y: 0, z: 0}
-  walkSpeed: 3
+  walkSpeed: 4
   searchingWalkPoint: 0
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -22930,7 +22931,7 @@ MonoBehaviour:
   attackData: {fileID: 11400000, guid: 34528f73bf06cab4e977816bf95a1cdf, type: 2}
   enemyStats: {fileID: 9143006226866099728}
   dissolver: {fileID: 4379163303104914819}
-  surroundingHitRadius: 0
+  surroundingHitRadius: 19.34
   blitzProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
   healProjectile: {fileID: 3395073727305226742, guid: ffcf29789482c4c4c81ea1576b162c4d, type: 3}
   sfxSource: {fileID: 2319905763916933798}
@@ -23119,6 +23120,24 @@ MonoBehaviour:
   SkinnedMeshes: []
   highlightMaterial: {fileID: 2100000, guid: 40c534a1bdac14b4a92fdfce5d0dbe1e, type: 2}
   materialUpTime: 3
+--- !u!114 &3840268236617980015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4620072146950942476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: 34528f73bf06cab4e977816bf95a1cdf, type: 2}
+  damageRate: 2
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &4793866350823059183
 GameObject:
   m_ObjectHideFlags: 0
