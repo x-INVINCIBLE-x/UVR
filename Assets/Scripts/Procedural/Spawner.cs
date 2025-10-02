@@ -13,6 +13,11 @@ public enum Prop {
     Turret,
     EnemyMelee,
     EnemyRange,
+    JackOGools,
+    GoblinShield,
+    FellironTurret,
+    EmeraldBats,
+    Munchers,
     Extra
 }
 
