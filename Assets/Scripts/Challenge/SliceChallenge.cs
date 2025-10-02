@@ -18,7 +18,7 @@ public class SliceChallenge : Challenge
         status = ChallengeStatus.InProgress;
         activeCrystals = totalCrystals;
         
-        statueShield.SetActive(true);
+        //statueShield.SetActive(true);
     }
 
     public override void StartChallenge()
@@ -58,6 +58,7 @@ public class SliceChallenge : Challenge
 
             if (activeCrystals == 0)
             {
+                statueShield = ChallengeManager.instance.shieldPrefab;
                 statueShield.SetActive(false);
             }
         }

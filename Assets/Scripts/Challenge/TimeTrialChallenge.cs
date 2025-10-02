@@ -9,9 +9,31 @@ public enum ObjectiveType
     StartCrystal,
     MeleeEnemy,
     RangedEnemy,
+    JackOGools,
+    GoblinShield,
+    FellironTurret,
+    EmeraldBats,
     Turret,
     Crystal,
     Statue
+}
+
+[System.Serializable]
+public class ObjectiveSettings
+{
+    public ObjectiveType objectiveType;
+
+    [Header("Base Values")]
+    public int baseTargetAmount;
+    public int baseChallengeDuration;
+
+    [Header("Scaling Per Level")]
+    public int targetAmountScaling;
+    public int durationScaling;
+
+    [Header("Scaling Cap")]
+    public int maxTargetAmount;
+    public int maxDuration;
 }
 
 public class TimeTrialChallenge : Challenge
@@ -23,8 +45,6 @@ public class TimeTrialChallenge : Challenge
         public int targetAmount;
     }
 
-    [SerializeField] private int baseTargetAmount;
-    [SerializeField] private int baseChallengeDuration;
     [Tooltip("Added Extra Time for getting closrt to objective")]
     [SerializeField] private float bonusTime;
 
@@ -40,31 +60,52 @@ public class TimeTrialChallenge : Challenge
 
     private int targetAmount;
     private int challengeDuration;
-    [SerializeField] private DifficultyScaling difficultyScaling;
-    [SerializeField] private DifficultyScaling scalingCap;
 
+    [SerializeField] private List<ObjectiveSettings> objectiveSettingsList = new();
+    /// <summary>
+    /// Scaling directly add that value on level change
+    /// </summary>
+    /// <param name="level"></param>
     public override void InitializeChallenge(int level)
     {
         int scalingFactor = level / difficultyStep;
-        challengeDuration = Mathf.Min(scalingCap.duration, baseChallengeDuration + (difficultyScaling.duration * scalingFactor));
-        targetAmount = Mathf.Min(scalingCap.targetAmount, baseTargetAmount + (difficultyScaling.targetAmount * scalingFactor));
-
-        status = ChallengeStatus.InProgress;
-        timer = challengeDuration;
-        currentAmount = 0;
 
         if (possibleTargets.Count == 0)
         {
             ResetTargets();
         }
 
+        // pick objective
         int targetIndex = UnityEngine.Random.Range(0, possibleTargets.Count);
         currentObjective = possibleTargets[targetIndex];
+        possibleTargets.Remove(currentObjective);
+
+        // find settings for this objective
+        ObjectiveSettings settings = objectiveSettingsList.Find(s => s.objectiveType == currentObjective);
+        if (settings == null)
+        {
+            Debug.LogError($"No settings defined for objective {currentObjective}");
+            return;
+        }
+
+        // apply scaling and caps
+        challengeDuration = Mathf.Min(
+            settings.maxDuration,
+            settings.baseChallengeDuration + (settings.durationScaling * scalingFactor)
+        );
+
+        targetAmount = Mathf.Min(
+            settings.maxTargetAmount,
+            settings.baseTargetAmount + (settings.targetAmountScaling * scalingFactor)
+        );
+
+        status = ChallengeStatus.InProgress;
+        timer = challengeDuration;
+        currentAmount = 0;
 
         UpdateConditionText();
-
-        possibleTargets.Remove(currentObjective);
     }
+
 
     public override void StartChallenge()
     {

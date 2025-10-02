@@ -96,6 +96,5 @@ public class PlayerGravity : MonoBehaviour
     private void OnFallDetected()
     {
         Transform playerBody = PlayerManager.instance.PlayerOrigin.transform;
-        Debug.Log($"Player is falling fast! Y velocity: {velocity.y}, Position: {playerBody.position}");
     }
 }

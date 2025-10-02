@@ -223,8 +223,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challenges:
-  - {fileID: 1640362732571325783}
+  - {fileID: 424034783326359032}
   possibleChallenges: 
+  shieldPrefab: {fileID: 0}
 --- !u!114 &1640362732571325783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challengeID: Survival
-  difficultyStep: 0
+  difficultyStep: 1
   baseSurvivalDuration: 180
   timer: 0
   safeZone: {fileID: -6364688204710881444, guid: 6b436428fb31b1249a4d90d8d5c3fb57, type: 3}
@@ -265,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challengeID: Slice
-  difficultyStep: 0
+  difficultyStep: 1
   totalCrystals: 3
   statueShield: {fileID: 1198433312203469917, guid: 34b28b7ad9fce9c4a9ff7303607c2a65, type: 3}
 --- !u!114 &424034783326359032
@@ -281,18 +282,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   challengeID: TimeTrial
-  difficultyStep: 0
-  baseTargetAmount: 0
-  baseChallengeDuration: 0
-  bonusTime: 0
+  difficultyStep: 1
+  bonusTime: 5
   currentObjective: 0
-  targetObjectives: 010000000200000003000000
-  difficultyScaling:
-    duration: 0
-    targetAmount: 0
-  scalingCap:
-    duration: 0
-    targetAmount: 0
+  targetObjectives: 0300000004000000050000000600000007000000
+  objectiveSettingsList:
+  - objectiveType: 3
+    baseTargetAmount: 12
+    baseChallengeDuration: 120
+    targetAmountScaling: 2
+    durationScaling: 5
+    maxTargetAmount: 25
+    maxDuration: 180
+  - objectiveType: 4
+    baseTargetAmount: 12
+    baseChallengeDuration: 120
+    targetAmountScaling: 2
+    durationScaling: 5
+    maxTargetAmount: 25
+    maxDuration: 180
+  - objectiveType: 5
+    baseTargetAmount: 6
+    baseChallengeDuration: 120
+    targetAmountScaling: 1
+    durationScaling: 5
+    maxTargetAmount: 25
+    maxDuration: 180
+  - objectiveType: 6
+    baseTargetAmount: 12
+    baseChallengeDuration: 120
+    targetAmountScaling: 2
+    durationScaling: 5
+    maxTargetAmount: 25
+    maxDuration: 180
+  - objectiveType: 7
+    baseTargetAmount: 5
+    baseChallengeDuration: 120
+    targetAmountScaling: 1
+    durationScaling: 5
+    maxTargetAmount: 25
+    maxDuration: 180
 --- !u!1 &5943628886930519494
 GameObject:
   m_ObjectHideFlags: 0

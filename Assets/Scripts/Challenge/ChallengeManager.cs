@@ -14,6 +14,8 @@ public class ChallengeManager : MonoBehaviour
     public event System.Action OnChallengeSuccess;
     public event System.Action OnChallengeFail;
 
+    [HideInInspector] public GameObject shieldPrefab;
+
     private void Awake()
     {
         if (instance == null)
@@ -70,7 +72,6 @@ public class ChallengeManager : MonoBehaviour
         CurrentChallenge = challenges[challengeIndex];
         CurrentChallenge.InitializeChallenge(DungeonManager.Instance.DifficultyLevel); // To be changed (Round Dependency)
 
-        OnChallengeChoosen?.Invoke(CurrentChallenge);
 
         CurrentChallenge.OnChallengeCompleted += HandleChallengeSuccess;
         CurrentChallenge.OnChallengeFailed += HandleChallengeFailure;
@@ -79,6 +80,8 @@ public class ChallengeManager : MonoBehaviour
 
         if (possibleChallenges.Count == 0)
             ResetPossibleChallenges();
+
+        OnChallengeChoosen?.Invoke(CurrentChallenge);
     }
 
     public void ForceChallengeFail()
@@ -114,6 +117,8 @@ public class ChallengeManager : MonoBehaviour
         for (int i = 0; i < challenges.Length; i++)
             possibleChallenges.Add(i);
     }
+
+    public void RegisterShield(GameObject shield) => shieldPrefab = shield;
 
     private void OnDestroy()
     {

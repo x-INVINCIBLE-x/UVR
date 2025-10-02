@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class GridGenerator : MonoBehaviour
 {
     [System.Serializable]
@@ -36,7 +38,10 @@ public class GridGenerator : MonoBehaviour
         {
             if (setupData.gridFormationControllers[i] != null)
             {
-                GridFormationController formationController = Instantiate(setupData.gridFormationControllers[i], setupData.positions[i], setupData.rotations[i], transform);
+                var prefab = setupData.gridFormationControllers[i].gameObject;
+                var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, transform);
+
+                instance.transform.SetPositionAndRotation(setupData.positions[i], setupData.rotations[i]);
             }
         }
         gridSetupDatabase.Clear();
