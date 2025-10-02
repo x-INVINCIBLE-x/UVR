@@ -15,7 +15,7 @@ public class SpawnerActivator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Spawner spawner = other.GetComponentInParent<Spawner>();
+        Spawner spawner = other.GetComponentInParent<Spawner>(true);
         if (spawner == null)
         {
             if (other.transform.childCount > 0) 

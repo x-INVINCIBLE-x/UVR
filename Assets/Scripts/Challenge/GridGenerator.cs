@@ -73,7 +73,7 @@ public class GridGenerator : MonoBehaviour
 
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            Destroy(this.transform.GetChild(i).gameObject);
+            Destroy(transform.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < setupData.gridFormationControllers.Length; i++)

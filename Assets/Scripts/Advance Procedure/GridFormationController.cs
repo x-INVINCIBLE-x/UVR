@@ -305,9 +305,17 @@ public class GridFormationController : FormationProvider
             Debug.LogWarning($"{gameObject.name} has no config for this difficulty level, using last available.");
             difficultyLevel = formations.Count - 1;
         }
+
+        ChallengeManager.instance.OnChallengeFail += DeleteSpawnedGrid;
         //SetupFormation();
     }
-
+    private void OnDisable()
+    {
+        if (ChallengeManager.instance != null)
+        {
+            ChallengeManager.instance.OnChallengeFail -= DeleteSpawnedGrid;
+        }
+    }
 
     private IEnumerator SpawnFormation(List<Vector3> positions)
     {
@@ -315,6 +323,21 @@ public class GridFormationController : FormationProvider
         //yield return StartCoroutine(BuildNavMeshGradually());
     }
 
+    public void DeleteSpawnedGrid()
+    {
+        StartCoroutine(DeleteRoutine());
+    }
+
+    IEnumerator DeleteRoutine()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+            yield return null;
+        }
+        instances.Clear();
+        positionsPerFormation.Clear();
+    }
     //void Update()
     //{
     //    if (!Application.isPlaying || instances.Count == 0 || formations.Count < 2) return;
@@ -428,6 +451,8 @@ public class GridFormationController : FormationProvider
 
             instances.Add(temp.transform);
             count++;
+
+            temp.transform.GetChild(0).gameObject.SetActive(false);
 
             // Yield every N spawns
             if (count % spawnPerFrame == 0)

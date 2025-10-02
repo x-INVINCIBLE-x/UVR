@@ -114,6 +114,15 @@ public class SceneTransitionProvider : MonoBehaviour
         {
             yield return TransitionDirectly(previousScene);
         }
+
+        try
+        {
+            gameObject.SetActive(false);
+        }
+        catch
+        {
+            // Ignore if object is destroyed during transition
+        }
     }
 
     private IEnumerator TransitionWithIntermediate(Scene previousScene, SceneReference transitionSceneRef)

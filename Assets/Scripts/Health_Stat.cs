@@ -32,6 +32,12 @@ public class Health_Stat : MonoBehaviour, IDamageable
     {   
         dissolver.StartDissolve();
         GameEvents.OnElimination?.Invoke(objectiveType);
+        StartCoroutine(Death());
+    }
+
+    IEnumerator Death()
+    {
+        yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
     }
 
