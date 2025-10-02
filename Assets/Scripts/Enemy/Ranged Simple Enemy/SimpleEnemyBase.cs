@@ -11,7 +11,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpeedModifiable
 { // Base class for all simple enemy types
-
+    [SerializeField] protected ObjectiveType objectiveType;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected Transform Player;
     [SerializeField] protected EnemyFXHandler FXManager;
@@ -305,6 +305,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
             currentCheckRoutine = null;
         }
 
+        GameEvents.OnElimination?.Invoke(objectiveType);
         GameEvents.RaiseReward(this);
 
         Invoke(nameof(Despawn), 2);

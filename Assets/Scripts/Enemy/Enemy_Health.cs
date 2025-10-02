@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Health : HealthController
+public class Enemy_Health : Health_Stat
 {
     
 }

@@ -37,10 +37,6 @@ public class DungeonManager : MonoBehaviour
 
     public event Action<int> OnDifficultyChange;
 
-    //IDK if it belongs here????
-    //[SerializeField] private GameObject endGround;
-    //public GameObject tempEnemy;
-
 #if UNITY_EDITOR
     private void OnValidate()
     {

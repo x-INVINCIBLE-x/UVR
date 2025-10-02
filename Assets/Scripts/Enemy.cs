@@ -239,8 +239,8 @@ public class Enemy : MonoBehaviour, IRewardProvider<GameReward>, ISpeedModifiabl
 
     public virtual void BulletImpact( Vector3 force,Vector3 hitPoint,Rigidbody rb)
     {
-        if(health.ShouldDie())
-            StartCoroutine(DeathImpactCourutine(force,hitPoint,rb));
+        //if(health.ShouldDie())
+        //    StartCoroutine(DeathImpactCourutine(force,hitPoint,rb));
     }
     private IEnumerator DeathImpactCourutine(Vector3 force, Vector3 hitPoint, Rigidbody rb)
     {
