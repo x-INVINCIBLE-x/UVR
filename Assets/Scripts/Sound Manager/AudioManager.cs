@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {   
@@ -37,6 +38,11 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private int maxSimultaneousSFX = 3;
     [SerializeField] private AudioSource audioSourcePrefab;
+    [Space]
+    [Header("Mixer Settings")]
+    [SerializeField] private AudioMixerGroup MusicMixer;
+    [SerializeField] private AudioMixerGroup SFXMixer;
+
     private Queue<AudioSource> audioPool = new Queue<AudioSource>();
     private List<AudioSource> activeSources = new List<AudioSource>();
 
@@ -44,9 +50,15 @@ public class AudioManager : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
 
+        // Intializing Audio Sources onto Audio Manager
         musicSource = this.gameObject.AddComponent<AudioSource>();
         musicSource2 = this.gameObject.AddComponent<AudioSource>();
         sfxSource = this.gameObject.AddComponent<AudioSource>();
+
+        // Intializing  Output(AudioMixer)
+        musicSource.outputAudioMixerGroup = MusicMixer;
+        musicSource2.outputAudioMixerGroup = MusicMixer;
+        sfxSource.outputAudioMixerGroup = SFXMixer;
 
         // Loop the music sources
         musicSource.loop = true;
