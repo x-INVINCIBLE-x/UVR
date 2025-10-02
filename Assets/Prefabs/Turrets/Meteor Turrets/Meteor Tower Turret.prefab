@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 18d71131826f24e4c9beb233424f1236, type: 2}
+  - {fileID: 2100000, guid: 0c221636757e8d84bb55fbb4c8592a12, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -423,7 +423,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2520982588923094752, guid: 2ff623d2bda06544eb17083e2ed93fe6, type: 3}
+  - {fileID: 2100000, guid: 35bc5fa426ba5c84995e47ce482e190b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -622,7 +622,7 @@ MonoBehaviour:
   meshType: 0
   Meshes: []
   SkinnedMeshes: []
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: ee86e9a268520a743a264b74a9054e20, type: 2}
   materialUpTime: 3
 --- !u!1 &3085153099363379132
 GameObject:
@@ -906,7 +906,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3849104114699516231, guid: 2ff623d2bda06544eb17083e2ed93fe6, type: 3}
+  - {fileID: 2100000, guid: 0c221636757e8d84bb55fbb4c8592a12, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -937,6 +937,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1462530133411120266}
+  - component: {fileID: 8397707853163633700}
+  - component: {fileID: 420226766923291426}
   m_Layer: 14
   m_Name: Meteor Tower Turret
   m_TagString: Untagged
@@ -960,6 +962,40 @@ Transform:
   - {fileID: 127835925765246142}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8397707853163633700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784815060237926969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2885be506038304428d5e46cd1ac1b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveType: 7
+  dissolver: {fileID: 420226766923291426}
+  maxHealth: 300
+  currentHealth: 300
+--- !u!114 &420226766923291426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784815060237926969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  dissolveRate: 0.0125
+  refreshRate: 0.025
+  impactDissolveRate: 0.0125
+  impactDissolveThreshold: 0.5
+  currentDissolve: 0
 --- !u!1 &4861837559463411673
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,7 +1188,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4520708305124157940, guid: 2ff623d2bda06544eb17083e2ed93fe6, type: 3}
+  - {fileID: 2100000, guid: a9a533336fcaccc4a9a0e725d96ea0b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

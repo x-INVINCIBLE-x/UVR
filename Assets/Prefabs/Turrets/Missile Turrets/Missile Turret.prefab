@@ -73,6 +73,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7637083518674901805}
+  - component: {fileID: 1656752584619235229}
+  - component: {fileID: 9212689951531435186}
   m_Layer: 14
   m_Name: Missile Turret
   m_TagString: Untagged
@@ -96,6 +98,40 @@ Transform:
   - {fileID: 1105341533059696240}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1656752584619235229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2798432278959384176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2885be506038304428d5e46cd1ac1b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveType: 7
+  dissolver: {fileID: 9212689951531435186}
+  maxHealth: 300
+  currentHealth: 300
+--- !u!114 &9212689951531435186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2798432278959384176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c4d7cd2d0c22e4a905c731edef1040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Meshes: []
+  dissolveRate: 0.0125
+  refreshRate: 0.025
+  impactDissolveRate: 0.0125
+  impactDissolveThreshold: 0.5
+  currentDissolve: 0
 --- !u!1 &3075520586307766626
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +260,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3012804157547431491, guid: a76547fdec51dca45b414284d58f85f0, type: 3}
+  - {fileID: 2100000, guid: 6ae832a2de9fce44f87e263fd8b7b961, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

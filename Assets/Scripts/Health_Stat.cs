@@ -6,6 +6,7 @@ using UnityEngine;
 public class Health_Stat : MonoBehaviour, IDamageable
 {
     [SerializeField] private ObjectiveType objectiveType = ObjectiveType.Turret;
+    [SerializeField] private MeshDissolver dissolver;
     public int maxHealth;
     public int currentHealth;
 
@@ -23,11 +24,13 @@ public class Health_Stat : MonoBehaviour, IDamageable
             Eliminate();
         }
 
+        dissolver.StartImpactDissolve(0.1f);
         return new DamageResult(true, currentHealth <= 0, attackData.physicalDamage.Value, null);
     }
 
     private void Eliminate()
-    {
+    {   
+        dissolver.StartDissolve();
         GameEvents.OnElimination?.Invoke(objectiveType);
         Destroy(gameObject);
     }

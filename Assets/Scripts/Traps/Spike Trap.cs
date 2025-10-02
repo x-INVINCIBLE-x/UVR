@@ -12,6 +12,8 @@ public class SpikeTrap : MonoBehaviour
     [SerializeField] BoxCollider spikeCollider;
     [SerializeField]private Vector3 movePosition;
     [SerializeField] private float moveDuration;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip activateSpikeTrap;
     private Vector3 startPosition;
  
     [Space]
@@ -37,7 +39,7 @@ public class SpikeTrap : MonoBehaviour
     private void ActivateSpike()
     {
         spikes.SetActive(true);
-
+        audioSource.PlayOneShot(activateSpikeTrap);
         spikes.transform.DOLocalMove(startPosition + movePosition , moveDuration).SetEase(ease).SetLoops(2,LoopType.Yoyo);
     }
 
