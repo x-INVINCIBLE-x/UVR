@@ -58,10 +58,7 @@ public class FollowPlayer : MonoBehaviour
 
     private void UpdateFollowPosition()
     {
-        followPosition = playerTransform.position
-                         + playerTransform.right * offset.x
-                         + playerTransform.up * offset.y
-                         + playerTransform.forward * offset.z;
+        followPosition = playerTransform.TransformPoint(offset);
 
         if (!followY)
             followPosition.y = transform.position.y;
@@ -91,6 +88,7 @@ public class FollowPlayer : MonoBehaviour
         }
     }
 
+
     private void SetupLazyFollow()
     {
         if (!TryGetComponent(out LazyFollow lazyFollow))
@@ -98,7 +96,7 @@ public class FollowPlayer : MonoBehaviour
             lazyFollow = gameObject.AddComponent<LazyFollow>();
         }
 
-        lazyFollow.target = Camera.main.transform;
+        lazyFollow.target = PlayerManager.instance.Player.playerBody;
         lazyFollow.targetOffset = offset;
         lazyFollow.rotationFollowMode = LazyFollow.RotationFollowMode.Follow;
     }

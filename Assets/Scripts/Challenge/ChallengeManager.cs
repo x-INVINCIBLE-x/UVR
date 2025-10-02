@@ -81,6 +81,12 @@ public class ChallengeManager : MonoBehaviour
             ResetPossibleChallenges();
     }
 
+    public void ForceChallengeFail()
+    {
+        if (CurrentChallenge != null)
+            CurrentChallenge.ChallengeFailed();
+    }
+
     private void HandleChallengeSuccess()
     {
         // Instantiate door and level upgrade

@@ -54,6 +54,11 @@ public class AudioManager : MonoBehaviour
         // Intialization
         isPlayingMusicSource1 = true;
 
+        if (audioSourcePrefab == null)
+        {
+            Debug.LogWarning("AudioManager: AudioSource Prefab is not assigned!");
+            return;
+        }
         for (int i = 0; i < maxSimultaneousSFX; i++)
         {
             AudioSource src = Instantiate(audioSourcePrefab, transform);

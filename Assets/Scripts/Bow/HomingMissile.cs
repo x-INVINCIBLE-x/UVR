@@ -138,7 +138,11 @@ public class HomingMissile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (_targetLayer != default && (_targetLayer.value & (1 << collision.gameObject.layer)) == 0) return;
-        if (_explosionPrefab) Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        if (_explosionPrefab)
+        {
+            GameObject newExp = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(newExp, 3f);
+        }
         if (collision.transform.TryGetComponent(out IAimable ex)) ex.Explode();
 
         IDamageable damagable = collision.transform.GetComponentInParent<IDamageable>();
@@ -152,6 +156,8 @@ public class HomingMissile : MonoBehaviour
     private void SelfDestruct()
     {
         _isActive = false;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
         ObjectPool.instance.ReturnObject(gameObject);
     }
 

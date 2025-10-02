@@ -24,8 +24,8 @@ public class Action : MonoBehaviour
     protected virtual void Start()
     {
         inputManager = InputManager.Instance;
-        if (inputManager != null )
-            inputManager.YTap.action.performed += ctx => StartAbility();
+        //if (inputManager != null )
+        //    inputManager.YTap.action.performed += ctx => StartAbility();
     }
 
     public virtual void PermitAbility(bool status)
@@ -35,8 +35,6 @@ public class Action : MonoBehaviour
 
     protected virtual void StartAbility()
     {
-        if (!CanUseAbility()) return;
-
         lastTimeSkillUsed = Time.time;
         ExecuteAbility();
 
@@ -63,7 +61,7 @@ public class Action : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        if (inputManager != null)
-            inputManager.YTap.action.performed -= ctx => StartAbility();
+        //if (inputManager != null)
+        //    inputManager.YTap.action.performed -= ctx => StartAbility();
     }
 }

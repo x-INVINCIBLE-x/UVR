@@ -52,6 +52,7 @@ public class DashAction : Action
         if (!CanUseAbility()) return;
         if (!canSwingDash && actionMediator.grabStatus.IsSwinging()) return;
         if (actionMediator.grabStatus.IsClimbing()) return;
+        StartAbility();
 
         Vector3 dashVelocity = direction * dashForce;
         float step = dashVelocity.magnitude * Time.unscaledDeltaTime;
