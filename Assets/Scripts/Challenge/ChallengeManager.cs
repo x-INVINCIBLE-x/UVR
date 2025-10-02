@@ -16,11 +16,17 @@ public class ChallengeManager : MonoBehaviour
 
     [HideInInspector] public GameObject shieldPrefab;
 
+    [Header("Optional First Challenge")]
+    [Tooltip("If assigned, this will be forced as the first challenge before randomization.")]
+    public Challenge preChosenChallenge;
+
+    private bool usedPreChosen = false;
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
-        else 
+        else
             Destroy(gameObject);
 
         if (challenges == null || challenges.Length == 0)
@@ -38,9 +44,7 @@ public class ChallengeManager : MonoBehaviour
     private void HandleChallengeStart(ObjectiveType type)
     {
         if (type == ObjectiveType.StartCrystal)
-        {
             StartChallenge();
-        }
     }
 
     private void Update()
@@ -51,34 +55,51 @@ public class ChallengeManager : MonoBehaviour
             StartChallenge();
     }
 
-    // Starting Sliceable Crystal must be marked as StartCrystal to Start Challenge
     private void StartChallenge()
     {
-        if ( CurrentChallenge == null)
+        if (CurrentChallenge == null)
         {
             Debug.Log("No Current Challenge");
             return;
         }
-        
+
         CurrentChallenge.StartChallenge();
         OnChallengeStart?.Invoke(CurrentChallenge.Type);
     }
 
     public void ChooseChallenge()
     {
+        if (preChosenChallenge != null && !usedPreChosen)
+        {
+            CurrentChallenge = preChosenChallenge;
+            usedPreChosen = true;
+
+            int idx = System.Array.IndexOf(challenges, preChosenChallenge);
+            if (idx >= 0)
+                possibleChallenges.Remove(idx); 
+
+            InitializeCurrent();
+            return;
+        }
+
         int index = Random.Range(0, possibleChallenges.Count);
         int challengeIndex = possibleChallenges[index];
 
         CurrentChallenge = challenges[challengeIndex];
-        CurrentChallenge.InitializeChallenge(DungeonManager.Instance.DifficultyLevel); // To be changed (Round Dependency)
-
-        CurrentChallenge.OnChallengeCompleted += HandleChallengeSuccess;
-        CurrentChallenge.OnChallengeFailed += HandleChallengeFailure;
-
         possibleChallenges.Remove(challengeIndex);
 
         if (possibleChallenges.Count == 0)
             ResetPossibleChallenges();
+
+        InitializeCurrent();
+    }
+
+    private void InitializeCurrent()
+    {
+        CurrentChallenge.InitializeChallenge(DungeonManager.Instance.DifficultyLevel);
+
+        CurrentChallenge.OnChallengeCompleted += HandleChallengeSuccess;
+        CurrentChallenge.OnChallengeFailed += HandleChallengeFailure;
 
         OnChallengeChoosen?.Invoke(CurrentChallenge);
     }
@@ -91,8 +112,6 @@ public class ChallengeManager : MonoBehaviour
 
     private void HandleChallengeSuccess()
     {
-        // Instantiate door and level upgrade
-
         OnChallengeSuccess?.Invoke();
 
         ChooseChallenge();
@@ -102,9 +121,8 @@ public class ChallengeManager : MonoBehaviour
 
     private void HandleChallengeFailure()
     {
-        // Exit Core from dungeon
         OnChallengeFail?.Invoke();
-        
+
         CurrentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
         CurrentChallenge.OnChallengeFailed -= HandleChallengeFailure;
     }
@@ -115,6 +133,14 @@ public class ChallengeManager : MonoBehaviour
 
         for (int i = 0; i < challenges.Length; i++)
             possibleChallenges.Add(i);
+
+        // If preChosen was used, allow it back into pool
+        if (preChosenChallenge != null && usedPreChosen)
+        {
+            int idx = System.Array.IndexOf(challenges, preChosenChallenge);
+            if (idx >= 0 && !possibleChallenges.Contains(idx))
+                possibleChallenges.Add(idx);
+        }
     }
 
     public void RegisterShield(GameObject shield) => shieldPrefab = shield;

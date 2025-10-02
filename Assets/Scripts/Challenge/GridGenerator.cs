@@ -89,9 +89,10 @@ public class GridGenerator : MonoBehaviour
 
         if (PrioritySceneGate.Instance != null)
         {
+            Debug.Log("Marking Priority Scene Gate Ready");
             PrioritySceneGate.Instance.MarkReady();
             yield return new WaitForEndOfFrame();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(10f);
             PrioritySceneGate.Instance.MarkUnready();
         }
     }

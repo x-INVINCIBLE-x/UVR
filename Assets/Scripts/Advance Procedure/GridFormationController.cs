@@ -330,6 +330,7 @@ public class GridFormationController : FormationProvider
 
     IEnumerator DeleteRoutine()
     {
+        yield return new WaitForSeconds(2f); 
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             Destroy(transform.GetChild(i).gameObject);
