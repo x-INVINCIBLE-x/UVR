@@ -72,7 +72,6 @@ public class ChallengeManager : MonoBehaviour
         CurrentChallenge = challenges[challengeIndex];
         CurrentChallenge.InitializeChallenge(DungeonManager.Instance.DifficultyLevel); // To be changed (Round Dependency)
 
-
         CurrentChallenge.OnChallengeCompleted += HandleChallengeSuccess;
         CurrentChallenge.OnChallengeFailed += HandleChallengeFailure;
 

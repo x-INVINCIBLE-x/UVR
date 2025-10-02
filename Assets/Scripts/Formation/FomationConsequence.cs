@@ -30,6 +30,9 @@ public abstract class FomationConsequence : MonoBehaviour
         controller.OnFormationComplete += HandleFormationComplete;
         controller.OnUnwrapStart += HandleUnwrapStart;
 
+        ChallengeManager.instance.OnChallengeSuccess += HandleUnwrapComplete;
+        ChallengeManager.instance.OnChallengeFail += HandleUnwrapComplete;
+
         subscribedControllers.Add(controller);
     }
 
@@ -40,6 +43,9 @@ public abstract class FomationConsequence : MonoBehaviour
         controller.OnFormationStart -= HandleFormationStart;
         controller.OnFormationComplete -= HandleFormationComplete;
         controller.OnUnwrapStart -= HandleUnwrapStart;
+
+        ChallengeManager.instance.OnChallengeSuccess -= HandleUnwrapComplete;
+        ChallengeManager.instance.OnChallengeFail -= HandleUnwrapComplete;
 
         subscribedControllers.Remove(controller);
     }
