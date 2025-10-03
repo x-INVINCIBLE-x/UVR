@@ -3300,6 +3300,7 @@ GameObject:
   - component: {fileID: 796760060345159351}
   - component: {fileID: -8128616129321801433}
   - component: {fileID: 6754500868094641427}
+  - component: {fileID: 8873111898907995838}
   m_Layer: 0
   m_Name: House Block 3
   m_TagString: Untagged
@@ -3535,6 +3536,40 @@ MonoBehaviour:
       m_AllowFreeYMovement: 1
       m_AllowFreeZMovement: 1
     m_Variable: {fileID: 0}
+--- !u!114 &8873111898907995838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2348508520606842157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4f8f80982d02644ac4631e16936510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entities:
+  - propPrefab: {fileID: 0}
+    prop: 8
+    position: {x: 0, y: 1, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    patrolPoints: []
+  - propPrefab: {fileID: 0}
+    prop: 7
+    position: {x: -6, y: 1, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    patrolPoints: []
+  - propPrefab: {fileID: 0}
+    prop: 7
+    position: {x: -6, y: 1, z: -10}
+    rotation: {x: 0, y: 0, z: 0}
+    patrolPoints: []
+  - propPrefab: {fileID: 0}
+    prop: 9
+    position: {x: 0, y: 1, z: -10}
+    rotation: {x: 0, y: 0, z: 0}
+    patrolPoints: []
+  strictlyCurrentDifficulty: 0
 --- !u!1 &2397126503571224891
 GameObject:
   m_ObjectHideFlags: 0

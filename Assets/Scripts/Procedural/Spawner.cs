@@ -41,6 +41,11 @@ public class Spawner : MonoBehaviour
         { Prop.Turret, Color.blue },
         { Prop.EnemyMelee, Color.yellow},
         { Prop.EnemyRange, Color.red},
+        { Prop.JackOGools, Color.orange },
+        { Prop.GoblinShield, Color.darkOrchid },
+        { Prop.FellironTurret, Color.darkSeaGreen},
+        { Prop.EmeraldBats, Color.magenta },
+        { Prop.Munchers, Color.cadetBlue },
         { Prop.Extra, Color.cyan },
     };
 
