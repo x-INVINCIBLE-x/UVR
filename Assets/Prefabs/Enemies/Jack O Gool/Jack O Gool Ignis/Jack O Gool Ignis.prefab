@@ -15745,6 +15745,7 @@ Transform:
   m_Children:
   - {fileID: 7075738185730041406}
   - {fileID: 3566256580650837147}
+  - {fileID: 11570141423939492}
   - {fileID: 2885479600977311927}
   - {fileID: 8380274119854876551}
   - {fileID: 4312468402497529488}
@@ -16051,6 +16052,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveType: 3
+  currencyUI: {fileID: 0}
+  currencyUIOffset: {fileID: 11570141423939492}
   agent: {fileID: 603392773403426806}
   Player: {fileID: 3566256580650837147}
   FXManager: {fileID: 7876773100989104300}
@@ -36779,6 +36782,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &5020417461860152433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11570141423939492}
+  m_Layer: 14
+  m_Name: 'CurrencySpawn '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &11570141423939492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5020417461860152433}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.061048605, y: 0, z: 0, w: 0.99813485}
+  m_LocalPosition: {x: 1.53, y: 1.539, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4940216678937706978}
+  m_LocalEulerAnglesHint: {x: -7, y: 0, z: 0}
 --- !u!1 &5121160711474857049
 GameObject:
   m_ObjectHideFlags: 0

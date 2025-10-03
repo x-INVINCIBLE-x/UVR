@@ -164,6 +164,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd730b499476b844c9541778122588ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &358189798369117524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 320831317599291811}
+  m_Layer: 14
+  m_Name: CurrencySpawn  (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &320831317599291811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358189798369117524}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.619, y: 1.492, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9173465357851480512}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &373809157108418983
 GameObject:
   m_ObjectHideFlags: 0
@@ -27101,6 +27132,7 @@ Transform:
   - {fileID: 7432801636049335966}
   - {fileID: 5038162348016253543}
   - {fileID: 761359987400568165}
+  - {fileID: 320831317599291811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &968598162716219846
@@ -27421,6 +27453,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveType: 3
+  currencyUI: {fileID: 0}
+  currencyUIOffset: {fileID: 320831317599291811}
   agent: {fileID: 2601110852664123673}
   Player: {fileID: 0}
   FXManager: {fileID: 5494221572636014442}
