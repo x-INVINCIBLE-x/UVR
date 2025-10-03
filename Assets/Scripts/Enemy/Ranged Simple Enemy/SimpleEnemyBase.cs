@@ -12,6 +12,8 @@ using UnityEngine.AI;
 public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpeedModifiable
 { // Base class for all simple enemy types
     [SerializeField] protected ObjectiveType objectiveType;
+    [SerializeField] protected CurrencyUI currencyUI;
+    [SerializeField] protected Transform currencyUIOffset;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected Transform Player;
     [SerializeField] protected EnemyFXHandler FXManager;
@@ -304,6 +306,10 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
             StopCoroutine(currentCheckRoutine);
             currentCheckRoutine = null;
         }
+
+        CurrencyUI uiInstance = Instantiate(currencyUI, currencyUIOffset.position, Quaternion.identity);
+        uiInstance.UpdateUI(eliminationReward.Gold, eliminationReward.Magika);
+        Destroy(uiInstance.gameObject, 2f);
 
         GameEvents.OnElimination?.Invoke(objectiveType);
         GameEvents.RaiseReward(this);
