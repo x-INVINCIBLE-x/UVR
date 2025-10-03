@@ -31,7 +31,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private AudioClip levelupSFX;
 
     [Header("Full scrreen effect")]
-    [SerializeField] private FullscreenEffectController fullScreenEffect;
+    [SerializeField] private HitEffectController hitEffectController;
     
     private Transform[] durationSegments;
     private Coroutine cooldownCoroutine;
@@ -74,7 +74,7 @@ public class PlayerUI : MonoBehaviour
         healthCanvas.gameObject.SetActive(true);
         healthCanvas.alpha = 1;
 
-        fullScreenEffect.PlayHitEffect();
+        hitEffectController.PlayHitEffect();
 
         if (healthRoutine != null)
             StopCoroutine(healthRoutine);
@@ -112,29 +112,29 @@ public class PlayerUI : MonoBehaviour
     {   
         if (isActivated == true)
         {   
-            if (fullScreenEffect != null)
-            {
-                fullScreenEffect.ActivateFullscreenEffect(type);
-                Debug.Log("Activated Fullscreen Effect for " + type);
-            }
-            player.Stats.GetAilmentStatus(type).AilmentEffectEnded += HandleEffectEnd;
+            //if (fullScreenEffect != null)
+            //{
+            //    fullScreenEffect.ActivateFullscreenEffect(type);
+            //    Debug.Log("Activated Fullscreen Effect for " + type);
+            //}
+            //player.Stats.GetAilmentStatus(type).AilmentEffectEnded += HandleEffectEnd;
         }
     }
 
     private void HandleEffectEnd(AilmentType type)
     {   
-        if (fullScreenEffect != null)
-        {
-            fullScreenEffect.DeactivateFullscreenEffect();
-            Debug.Log("Deactivated Fullscreen Effect for " + type);
-        }
-        player.Stats.GetAilmentStatus(type).AilmentEffectEnded -= HandleEffectEnd;
+        //if (fullScreenEffect != null)
+        //{
+        //    fullScreenEffect.DeactivateFullscreenEffect();
+        //    Debug.Log("Deactivated Fullscreen Effect for " + type);
+        //}
+        //player.Stats.GetAilmentStatus(type).AilmentEffectEnded -= HandleEffectEnd;
     }
 
     private void HandleDeath()
     {
-        if (fullScreenEffect != null)
-            fullScreenEffect.DeactivateFullscreenEffect();
+        //if (fullScreenEffect != null)
+        //    fullScreenEffect.DeactivateFullscreenEffect();
     }
 
     private void UpdateHealthUI(float normalizedValue)

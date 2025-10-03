@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FullscreenEffectController : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float fullScreenDisplayTime = 1.0f;
-    [SerializeField] private float effectFadeOutTime = 0.5f;
-    [SerializeField] private float hitEffectDuration = 0.3f;
+    [SerializeField] private float effectFadeOutTime = 0.15f;
+    [SerializeField] private float hitEffectDuration = 0.1f; // how long hit flash stays
 
     [Header("References")]
     [SerializeField] private FullScreenPassRendererFeature fullScreenEffect;
@@ -23,19 +25,20 @@ public class FullscreenEffectController : MonoBehaviour
     private static readonly int effectIntensity = Shader.PropertyToID("_Vignette_Intensity");
     private static readonly int effectPower = Shader.PropertyToID("_Vignette_Power");
 
-    // Default values
+    // Default values of effect material
+    private float defaulteffectIntensity;
     private float defaulteffectPower;
 
-    // Coroutines
-    private Coroutine ailmentCoroutine;
-    private Coroutine hitCoroutine;
+    // Coroutine reference
+    private Coroutine fullScreenCorountine;
 
-    // Current effect
+    // Current material reference
     private Material effectMaterial;
 
-    [SerializeField] private float transitionEffectPower = 0f; // visible = low
-    [SerializeField] private float effectFaderRate = 0.5f;
-    [SerializeField] private float refreshRate = 0.02f;
+    // Values to set for shader
+    [SerializeField] private float transitionEffectPower = 25f;
+    [SerializeField] private float effectFaderRate = 0.0125f;
+    [SerializeField] private float refreshRate = 0.025f;
     private float currenteffectPower;
 
     private void Start()
@@ -43,122 +46,147 @@ public class FullscreenEffectController : MonoBehaviour
         fullScreenEffect.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayHitEffect();
-        }
-    }
-
     public void ActivateFullscreenEffect(AilmentType ailmentType)
     {
         switch (ailmentType)
         {
-            case AilmentType.Ignis: effectMaterial = FireEffectMaterial; break;
-            case AilmentType.Gaia: effectMaterial = DendroEffectMaterial; break;
-            case AilmentType.Blitz: effectMaterial = ElectricEffectMaterial; break;
-            case AilmentType.Frost: effectMaterial = IceEffectMaterial; break;
-            case AilmentType.Hex: effectMaterial = DarkEffectMaterial; break;
-            case AilmentType.Radiance: effectMaterial = HolyEffectMaterial; break;
+            case AilmentType.Ignis:
+                effectMaterial = FireEffectMaterial;
+                break;
+            case AilmentType.Gaia:
+                effectMaterial = DendroEffectMaterial;
+                break;
+            case AilmentType.Blitz:
+                effectMaterial = ElectricEffectMaterial;
+                break;
+            case AilmentType.Frost:
+                effectMaterial = IceEffectMaterial;
+                break;
+            case AilmentType.Hex:
+                effectMaterial = DarkEffectMaterial;
+                break;
+            case AilmentType.Radiance:
+                effectMaterial = HolyEffectMaterial;
+                break;
         }
 
-        defaulteffectPower = effectMaterial.GetFloat(effectPower);
+        defaulteffectIntensity = effectMaterial.GetFloat("_Vignette_Intensity");
+        defaulteffectPower = effectMaterial.GetFloat("_Vignette_Power");
 
-        if (ailmentCoroutine != null) StopCoroutine(ailmentCoroutine);
-        ailmentCoroutine = StartCoroutine(StartFullscreenEffect(effectMaterial));
+        if (fullScreenCorountine != null)
+        {
+            StopCoroutine(fullScreenCorountine);
+        }
+        fullScreenCorountine = StartCoroutine(StartFullscreenEffect(effectMaterial));
     }
 
     public void DeactivateFullscreenEffect()
     {
-        if (ailmentCoroutine != null) StopCoroutine(ailmentCoroutine);
-        ailmentCoroutine = StartCoroutine(EndFullscreenEffect(effectMaterial));
+        if (fullScreenCorountine != null)
+        {
+            StopCoroutine(fullScreenCorountine);
+        }
+        fullScreenCorountine = StartCoroutine(EndFullscreenEffect(effectMaterial));
     }
 
     private IEnumerator StartFullscreenEffect(Material material)
     {
         fullScreenEffect.SetActive(true);
+        fullScreenEffect.passMaterial = material;
 
+        material.SetFloat(effectPower, transitionEffectPower);
         currenteffectPower = transitionEffectPower;
-        while (currenteffectPower < defaulteffectPower)
+
+        while (currenteffectPower > defaulteffectPower)
         {
-            currenteffectPower = Mathf.Clamp(currenteffectPower + effectFaderRate, transitionEffectPower, defaulteffectPower);
+            currenteffectPower -= effectFaderRate;
             material.SetFloat(effectPower, currenteffectPower);
-            fullScreenEffect.passMaterial = material; // refresh assignment
             yield return new WaitForSeconds(refreshRate);
         }
 
+        // Wait for configured display time, then fade out automatically
         yield return new WaitForSeconds(fullScreenDisplayTime);
         DeactivateFullscreenEffect();
-        ailmentCoroutine = null;
+
+        fullScreenCorountine = null;
     }
 
     private IEnumerator EndFullscreenEffect(Material material)
     {
-        while (currenteffectPower > transitionEffectPower)
+        while (currenteffectPower < transitionEffectPower)
         {
-            currenteffectPower = Mathf.Clamp(currenteffectPower - effectFaderRate, transitionEffectPower, defaulteffectPower);
+            currenteffectPower += effectFaderRate;
             material.SetFloat(effectPower, currenteffectPower);
-            fullScreenEffect.passMaterial = material; // refresh assignment
             yield return new WaitForSeconds(refreshRate);
         }
 
+        fullScreenCorountine = null;
+
+        // Restore defaults and disable effect
         material.SetFloat(effectPower, defaulteffectPower);
-        fullScreenEffect.passMaterial = null;
+        fullScreenEffect.passMaterial = null; // clear reference
         fullScreenEffect.SetActive(false);
-        ailmentCoroutine = null;
     }
 
+    /// <summary>
+    /// Play a quick flash effect using HitEffectMaterial (for damage feedback).
+    /// </summary>
     public void PlayHitEffect()
     {
-        if (hitCoroutine != null) StopCoroutine(hitCoroutine);
-        hitCoroutine = StartCoroutine(HitEffectRoutine());
+        if (fullScreenCorountine != null)
+        {
+            StopCoroutine(fullScreenCorountine);
+        }
+        fullScreenCorountine = StartCoroutine(HitEffectRoutine());
     }
 
     private IEnumerator HitEffectRoutine()
     {
         fullScreenEffect.SetActive(true);
+        fullScreenEffect.passMaterial = HitEffectMaterial;
 
+        // Cache defaults
         float defaultPower = HitEffectMaterial.GetFloat(effectPower);
-        float power = defaultPower;
 
-        // Flash = decrease power
-        while (power > transitionEffectPower)
+        // Fade in
+        float power = defaultPower;
+        while (power < transitionEffectPower)
         {
-            power = Mathf.Max(transitionEffectPower, power - effectFaderRate * 5f);
+            power += effectFaderRate * 2f; // faster flash
             HitEffectMaterial.SetFloat(effectPower, power);
-            fullScreenEffect.passMaterial = HitEffectMaterial; // refresh assignment
             yield return new WaitForSeconds(refreshRate);
         }
 
+        // Hold at peak
         yield return new WaitForSeconds(hitEffectDuration);
 
-        // Fade back = increase to default
-        while (power < defaultPower)
+        // Fade out
+        while (power > defaultPower)
         {
-            power = Mathf.Min(defaultPower, power + effectFaderRate * 5f);
+            power -= effectFaderRate * 2f;
             HitEffectMaterial.SetFloat(effectPower, power);
-            fullScreenEffect.passMaterial = HitEffectMaterial; // refresh assignment
             yield return new WaitForSeconds(refreshRate);
         }
 
+        // Restore
         HitEffectMaterial.SetFloat(effectPower, defaultPower);
-
-        if (ailmentCoroutine == null)
-        {
-            fullScreenEffect.passMaterial = null;
-            fullScreenEffect.SetActive(false);
-        }
-
-        hitCoroutine = null;
+        fullScreenEffect.passMaterial = null;
+        fullScreenEffect.SetActive(false);
+        fullScreenCorountine = null;
     }
 
     private void OnDisable()
     {
         if (effectMaterial != null)
+        {
             effectMaterial.SetFloat(effectPower, defaulteffectPower);
+        }
 
-        HitEffectMaterial.SetFloat(effectPower, HitEffectMaterial.GetFloat(effectPower));
+        if (HitEffectMaterial != null)
+        {
+            HitEffectMaterial.SetFloat(effectPower, 0f);
+        }
+
         fullScreenEffect.passMaterial = null;
         fullScreenEffect.SetActive(false);
     }
