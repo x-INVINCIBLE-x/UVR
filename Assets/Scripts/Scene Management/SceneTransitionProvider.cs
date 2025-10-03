@@ -290,6 +290,7 @@ public class SceneTransitionProvider : MonoBehaviour
 
         foreach (GameObject obj in rootObjects)
         {
+            Debug.Log("Root Object: " + obj.name);
             if (obj.name == "Core")
             {
                 return obj;

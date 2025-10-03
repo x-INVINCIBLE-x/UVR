@@ -21,8 +21,6 @@ public class PlayerManager : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-        else
-            Destroy(gameObject);
     }
 
     public void SetPlayerPosition(Vector3 targetPosition)

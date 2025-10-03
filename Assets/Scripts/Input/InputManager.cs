@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
 
     ///
     public InputActionProperty activate;
-    private void Start()
+    private void Awake()
     {
         if (Instance == null)
             Instance = this; 
