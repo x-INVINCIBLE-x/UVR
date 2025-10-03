@@ -39,7 +39,11 @@ public class SpikeTrap : MonoBehaviour
     private void ActivateSpike()
     {
         spikes.SetActive(true);
-        audioSource.PlayOneShot(activateSpikeTrap);
+        if(activateSpikeTrap != null)
+        {
+            audioSource.PlayOneShot(activateSpikeTrap);
+        }
+       
         spikes.transform.DOLocalMove(startPosition + movePosition , moveDuration).SetEase(ease).SetLoops(2,LoopType.Yoyo);
     }
 
