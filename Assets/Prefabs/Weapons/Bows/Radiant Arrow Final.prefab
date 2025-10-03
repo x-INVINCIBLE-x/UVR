@@ -131,8 +131,8 @@ GameObject:
   - component: {fileID: 5231629382678314228}
   - component: {fileID: 2253549638526307326}
   - component: {fileID: 1960905174237865459}
-  - component: {fileID: -3318729187650462988}
   - component: {fileID: 995397242838674608}
+  - component: {fileID: 8335936450909304565}
   m_Layer: 13
   m_Name: Radiant Arrow Final
   m_TagString: Untagged
@@ -316,23 +316,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-3318729187650462988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4662338454233567465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 652403e0f71b4104a862e3c616b7a377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeTime: 4
-  impactVFX: {fileID: 0}
-  impactSFX: {fileID: 0}
-  impactDuration: 0.5
-  blastRadius: 0
 --- !u!65 &995397242838674608
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -352,8 +335,26 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.08277235, z: 0.37494493}
-  m_Center: {x: 0, y: 0, z: 1.5482849}
+  m_Size: {x: 0.1977001, y: 0.08277235, z: 0.40505672}
+  m_Center: {x: 0, y: 0, z: 1.5633408}
+--- !u!114 &8335936450909304565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4662338454233567465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: 6db3d658697c960478de058cd99f027a, type: 2}
+  damageRate: 0.2
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!1 &5491814476065512309
 GameObject:
   m_ObjectHideFlags: 0

@@ -166,9 +166,20 @@ public class LaserEnemy : SimpleEnemyBase
     {
         base.HandleDeath();
 
-        if (currentLaser != null)
+        // Stop all ongoing routines
+        if (laserRoutine != null)
         {
-            DestroyLaser();
+            StopCoroutine(laserRoutine);
+            laserRoutine = null;
         }
+        if (chargeRoutine != null)
+        {
+            StopCoroutine(chargeRoutine);
+            chargeRoutine = null;
+        }
+
+        // Destroy laser and cleanup
+        DestroyLaser();
     }
+
 }

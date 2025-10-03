@@ -24470,6 +24470,7 @@ GameObject:
   - component: {fileID: 995802610269535352}
   - component: {fileID: 3814119594921971329}
   - component: {fileID: 7842369755937919025}
+  - component: {fileID: 1852677928296546744}
   m_Layer: 16
   m_Name: Bloody Revenge Projectile
   m_TagString: Untagged
@@ -29468,3 +29469,21 @@ MonoBehaviour:
   impactSFX: {fileID: 8300000, guid: b86f14af76b9e60499e3e5f8dfc70338, type: 3}
   impactDuration: 0.5
   blastRadius: 0
+--- !u!114 &1852677928296546744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8859724247132129830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: 84fbb2c7ae1390f4395bc90bb6a8fc23, type: 2}
+  damageRate: 0.2
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 16384
