@@ -74,6 +74,7 @@ public class PlayerUI : MonoBehaviour
         healthCanvas.gameObject.SetActive(true);
         healthCanvas.alpha = 1;
 
+        fullScreenEffect.PlayHitEffect();
 
         if (healthRoutine != null)
             StopCoroutine(healthRoutine);
