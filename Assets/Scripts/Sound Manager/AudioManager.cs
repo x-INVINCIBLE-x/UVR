@@ -36,6 +36,7 @@ public class AudioManager : MonoBehaviour
 
     private bool isPlayingMusicSource1; // if it is true then musicSource is playing , If it is false then musicSource 2 is playing
 
+    public SoundMixerManager soundMixerManager;
     [SerializeField] private int maxSimultaneousSFX = 3;
     [SerializeField] private AudioSource audioSourcePrefab;
     [Space]
@@ -48,8 +49,15 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
-
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         // Intializing Audio Sources onto Audio Manager
         musicSource = this.gameObject.AddComponent<AudioSource>();
         musicSource2 = this.gameObject.AddComponent<AudioSource>();

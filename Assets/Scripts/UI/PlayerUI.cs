@@ -112,7 +112,10 @@ public class PlayerUI : MonoBehaviour
         if (isActivated == true)
         {   
             if (fullScreenEffect != null)
+            {
                 fullScreenEffect.ActivateFullscreenEffect(type);
+                Debug.Log("Activated Fullscreen Effect for " + type);
+            }
             player.Stats.GetAilmentStatus(type).AilmentEffectEnded += HandleEffectEnd;
         }
     }
@@ -120,7 +123,10 @@ public class PlayerUI : MonoBehaviour
     private void HandleEffectEnd(AilmentType type)
     {   
         if (fullScreenEffect != null)
+        {
             fullScreenEffect.DeactivateFullscreenEffect();
+            Debug.Log("Deactivated Fullscreen Effect for " + type);
+        }
         player.Stats.GetAilmentStatus(type).AilmentEffectEnded -= HandleEffectEnd;
     }
 

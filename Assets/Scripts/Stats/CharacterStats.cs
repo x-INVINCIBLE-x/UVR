@@ -46,7 +46,7 @@ public enum AilmentType
 public class AilmentStatus
 {
     [HideInInspector] public AilmentType Type;
-    [HideInInspector] public float Value;
+    public float Value;
     public Stat resistance;
     public Stat defence;
     public bool isMaxed = false;
