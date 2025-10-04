@@ -44,7 +44,6 @@ public class DamageOnTouch : MonoBehaviour
 
         if (damagable != null && !damagables.Contains(damagable) && !buffer.Contains(damagable))
         {
-            Debug.Log("Give damage");
             damagable.TakeDamage(attackData);
             damagables.Add(damagable);
         }

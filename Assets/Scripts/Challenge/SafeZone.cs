@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class SafeZone : MonoBehaviour
 {
+    [SerializeField] public float damageInterval = 2f;
     private PlayerStats playerStats;
     private bool isActive = false;
     private Coroutine damageCoroutine = null;
     private AttackData damageData;
-
+    
     private void Start()
     {
         playerStats = PlayerManager.instance.Player.Stats;
@@ -37,7 +38,7 @@ public class SafeZone : MonoBehaviour
 
         if (damageCoroutine == null && other.CompareTag("Player"))
         {
-            StartCoroutine(DamageRoutine());
+            damageCoroutine = StartCoroutine(DamageRoutine());
         }
     }
 
@@ -45,7 +46,7 @@ public class SafeZone : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(damageInterval);
             playerStats.TakeDamage(damageData);
         }
     }

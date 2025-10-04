@@ -118,10 +118,12 @@ public class UmbrellaFormationConsequence : FomationConsequence
 
     private Vector3 GetPointInInnerRadius()
     {
+        if (spawnerInstance == null) return Vector3.zero;
+
         Vector3 center = spawnerInstance.bounds.center;
         Vector2 randomCircle = Random.insideUnitCircle * innerRadius;
         
-        if (Random.Range(0, 1f) < 0.3f)
+        if (Random.Range(0, 1f) < 0.2f)
         {
             randomCircle = Vector3.zero;
         }

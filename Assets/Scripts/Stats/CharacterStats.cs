@@ -260,6 +260,8 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
     public DamageResult TakeDamage(AttackData attackData)
     {
+        if (attackData.hexDamage.Value > 0)
+            Debug.Log(attackData.name  + "damage" + attackData.hexDamage.Value);
         AilmentType ailmentType = GetAilmentType(attackData);
         TakeAilmentDamage(attackData, ailmentType);
         return TakePhysicalDamage(attackData, ailmentType);

@@ -57,6 +57,7 @@ MonoBehaviour:
     centerOffset: {x: 400, y: 0, z: 550}
     centerElement: {fileID: 7034414583517266989, guid: ca2d5a2e61a7d8b4e8f530fae3df9477, type: 3}
     centralElementRadius: 100
+    centerYOffset: 0
     prefabs:
     - prefab: {fileID: 3312342478167346258, guid: 7f78d72f56321144ab3d7b35adfb4bf8, type: 3}
       weight: 1
@@ -64,6 +65,7 @@ MonoBehaviour:
     centerOffset: {x: -600, y: 0, z: 0}
     centerElement: {fileID: 7034414583517266989, guid: ca2d5a2e61a7d8b4e8f530fae3df9477, type: 3}
     centralElementRadius: 100
+    centerYOffset: 0
     prefabs:
     - prefab: {fileID: 3366249703053718997, guid: 939b66fad84f7e8469b0073800bd0ee6, type: 3}
       weight: 1
@@ -75,11 +77,13 @@ MonoBehaviour:
     centerOffset: {x: 400, y: 0, z: 550}
     centerElement: {fileID: 0}
     centralElementRadius: 0
+    centerYOffset: 0
     prefabs: []
   - radius: 1000
     centerOffset: {x: 0, y: 0, z: 0}
     centerElement: {fileID: 4739613752448104849, guid: 1f71ccfd2585c294db9c50b635140529, type: 3}
     centralElementRadius: 100
+    centerYOffset: 0
     prefabs:
     - prefab: {fileID: 1806929911081268846, guid: c63172d8f38ae464f9e565e248152521, type: 3}
       weight: 20
@@ -129,6 +133,7 @@ MonoBehaviour:
     centerOffset: {x: -600, y: 0, z: 0}
     centerElement: {fileID: 4739613752448104849, guid: 1f71ccfd2585c294db9c50b635140529, type: 3}
     centralElementRadius: 100
+    centerYOffset: 0
     prefabs:
     - prefab: {fileID: 1806929911081268846, guid: c63172d8f38ae464f9e565e248152521, type: 3}
       weight: 20
@@ -182,6 +187,8 @@ MonoBehaviour:
     weight: 1
   gridWidth: 70
   gridDepth: 70
+  snapGap: 2
+  snapDirection: {x: 1, y: 0, z: 0}
   minSpacing: 20
   maxSpacing: 20
   density: 0.1
@@ -465,6 +472,7 @@ MonoBehaviour:
     centerOffset: {x: 0, y: 0, z: 0}
     centerElement: {fileID: 0}
     centralElementRadius: 100
+    centerYOffset: 0
     prefabs:
     - prefab: {fileID: 8036748130436375255, guid: 9840b1929c30b88419d4b1f8fde5fef9, type: 3}
       weight: 1
@@ -484,6 +492,8 @@ MonoBehaviour:
     weight: 1
   gridWidth: 70
   gridDepth: 70
+  snapGap: 2
+  snapDirection: {x: 1, y: 0, z: 0}
   minSpacing: 15
   maxSpacing: 15
   density: 0.04
@@ -1039,11 +1049,11 @@ MonoBehaviour:
   gridChangeDuration: 5
   timedForamtions:
   - cubeFormationController: {fileID: 5748234482282748767}
-    duration: 50
+    duration: 60
   - cubeFormationController: {fileID: 3526463747834264901}
-    duration: 50
+    duration: 60
   - cubeFormationController: {fileID: 6885477660519354693}
-    duration: 50
+    duration: 60
   scalingFormations:
   - difficultyLevel: 1
     formations:
@@ -1052,12 +1062,12 @@ MonoBehaviour:
       formationInfo:
       - layoutName: Formation Generator
         layout: {fileID: 9038558215129218732}
-        position: {x: 1400, y: 450, z: 1400}
+        position: {x: 1000, y: 130, z: 1135}
         rotation: {x: 0, y: 0, z: 0}
         duration: 1
       - layoutName: Formation Aesthetics Inner
         layout: {fileID: 6495539339580959240}
-        position: {x: 1400, y: 450, z: 1400}
+        position: {x: 1000, y: 130, z: 1135}
         rotation: {x: 0, y: 0, z: 0}
         duration: 1
     - formationName: Umbrella + ring
@@ -1065,9 +1075,9 @@ MonoBehaviour:
       formationInfo:
       - layoutName: Formation Generator
         layout: {fileID: 9038558215129218732}
-        position: {x: 1400, y: 250, z: 1400}
+        position: {x: 1000, y: 100, z: 1135}
         rotation: {x: 0, y: 0, z: 0}
-        duration: 0
+        duration: 1
   - difficultyLevel: 2
     formations:
     - formationName: 
@@ -1075,12 +1085,12 @@ MonoBehaviour:
       formationInfo:
       - layoutName: Formation Generator
         layout: {fileID: 9038558215129218732}
-        position: {x: 1000, y: 1000, z: 0}
+        position: {x: 1000, y: 130, z: 1135}
         rotation: {x: 10, y: 10, z: 10}
         duration: 0
       - layoutName: Formation Generator
         layout: {fileID: 9038558215129218732}
-        position: {x: 1000, y: 1000, z: 0}
+        position: {x: 1000, y: 100, z: 1135}
         rotation: {x: 10, y: 10, z: 10}
         duration: 0
     - formationName: 
@@ -1088,7 +1098,7 @@ MonoBehaviour:
       formationInfo:
       - layoutName: Formation Aesthetics Inner
         layout: {fileID: 6495539339580959240}
-        position: {x: 2000, y: 2000, z: 0}
+        position: {x: 1000, y: 130, z: 1135}
         rotation: {x: 50, y: 40, z: 50}
         duration: 0
 --- !u!1 &7255974970426631854

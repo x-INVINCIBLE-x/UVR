@@ -14,7 +14,7 @@ public class ChallengeManager : MonoBehaviour
     public event System.Action OnChallengeSuccess;
     public event System.Action OnChallengeFail;
 
-    [HideInInspector] public GameObject shieldPrefab;
+    public GameObject shieldPrefab;
 
     [Header("Optional First Challenge")]
     [Tooltip("If assigned, this will be forced as the first challenge before randomization.")]

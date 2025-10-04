@@ -330,7 +330,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2205453309880487115}
-  - {fileID: 6737424674130561345}
   - {fileID: 1389943241206264687}
   - {fileID: 1520632797609300916}
   - {fileID: 6138947488818135141}
@@ -709,6 +708,8 @@ GameObject:
   - component: {fileID: 380835546678021406}
   - component: {fileID: 771079309513417071}
   - component: {fileID: 3694780284963699036}
+  - component: {fileID: 5968344467550307069}
+  - component: {fileID: 9156144023964641127}
   m_Layer: 0
   m_Name: defaultMaterial
   m_TagString: Untagged
@@ -784,6 +785,41 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5968344467550307069
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2318226058962358101}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3382409283333923501, guid: c0ed649309a96f547b14975a99e07f89, type: 3}
+--- !u!114 &9156144023964641127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2318226058962358101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de301eb03223bb14e93295fa3955bc84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 9
 --- !u!1 &2390160085800025375
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,7 +1750,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3782440475864160519}
-  - component: {fileID: 3805185072057653405}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -1737,18 +1772,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2205453309880487115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3805185072057653405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4318106747518962990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dd1b36111e03c644a5d7defc248c897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4924740856591776811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,6 +1842,7 @@ Transform:
   - {fileID: 6827650658959742268}
   - {fileID: 2755167775583305644}
   - {fileID: 3782440475864160519}
+  - {fileID: 6737424674130561345}
   m_Father: {fileID: 7031517092060600625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5289824408865695665
@@ -1939,6 +1963,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6737424674130561345}
+  - component: {fileID: 5340061125728976943}
   m_Layer: 0
   m_Name: lovecraftian_sculpture (1)
   m_TagString: Untagged
@@ -1955,13 +1980,25 @@ Transform:
   m_GameObject: {fileID: 6423588655161848018}
   serializedVersion: 2
   m_LocalRotation: {x: -0.4881728, y: 0.5115539, z: 0.51155376, w: 0.4881728}
-  m_LocalPosition: {x: -4.807007, y: 0.37400007, z: -4.508999}
+  m_LocalPosition: {x: -4.8070073, y: 0.3739999, z: -4.508999}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5604098445719896608}
-  m_Father: {fileID: 7031517092060600625}
+  m_Father: {fileID: 2205453309880487115}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 92.68}
+--- !u!114 &5340061125728976943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6423588655161848018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312e16a82ed651845974f5382b992271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6820717533205636984
 GameObject:
   m_ObjectHideFlags: 0
