@@ -52,6 +52,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
     [SerializeField] protected AudioClip attackClip;
     [SerializeField] protected AudioClip enemyHitCry;
     [SerializeField] protected AudioClip enemyDeath;
+    [SerializeField] protected GameObject deathParticleVfx;
 
     private readonly WaitForSeconds attackCheckCooldown = new(0.2f);
     private LayerMask playerLayer;
@@ -153,6 +154,8 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
 
         currentBaseSpeed = walkSpeed;
         UpdateMovementSpeed();
+
+        deathParticleVfx.SetActive(false);
     }
     private void HandleGlobalMovementSpeedChange(float newGlobalMultiplier)
     {
@@ -295,6 +298,8 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         isDead = true;
         enemyEventManager.EnemyDeath(enemyID); 
 
+
+        deathParticleVfx.SetActive(true);
         sfxSource.PlayOneShot(enemyDeath);
 
         if (agent.enabled)
@@ -334,6 +339,8 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
             StopCoroutine(currentCheckRoutine);
             currentCheckRoutine = null;
         }
+
+        deathParticleVfx.SetActive(false);
     }
 
     private void OnDestroy()
