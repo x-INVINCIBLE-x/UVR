@@ -65,4 +65,24 @@ public class NormalEnemy : SimpleEnemyBase
 
         Invoke(nameof(ResetAttack), AttackCooldownTime);
     }
+
+    protected override void HandleDeath()
+    {
+        base.HandleDeath();
+        CancelAllActions();
+    }
+
+    private void OnDisable()
+    {
+        CancelAllActions();
+    }
+
+    private void CancelAllActions()
+    {
+        CancelInvoke(); // Cancels any pending Invoke calls (like NormalAttack or ResetAttack)
+        isChargingAttack = false;
+        hasAttacked = false;
+        vfxSpawned = false;
+        FXManager.DestroyMagicCircleVFX();
+    }
 }

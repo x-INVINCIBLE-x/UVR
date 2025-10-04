@@ -6,9 +6,9 @@ public class SoundMixerManager : MonoBehaviour
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private float volumeStep = 0.05f;
 
-    [SerializeField, Range(minVolume, maxVolume)] private float masterLevel = 1f;
-    [SerializeField, Range(minVolume, maxVolume)] private float bgLevel = 1f;
-    [SerializeField, Range(minVolume, maxVolume)] private float sfxLevel = 1f;
+    [SerializeField, Range(minVolume, maxVolume)] public float masterLevel = 1f;
+    [SerializeField, Range(minVolume, maxVolume)] public float bgLevel = 1f;
+    [SerializeField, Range(minVolume, maxVolume)] public float sfxLevel = 1f;
 
     private const float maxVolume = 1f;
     private const float minVolume = 0.0001f;
@@ -23,14 +23,7 @@ public class SoundMixerManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            SubtractMasterVolume();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            AddMasterVolume();
-        }
+        
     }
     private float ApplyVolume(string parameter, float level)
     {

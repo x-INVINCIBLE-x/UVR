@@ -79,4 +79,26 @@ public class VolleyEnemy : SimpleEnemyBase
         proj.GetComponent<Rigidbody>().linearVelocity = velocity;
     }
 
+    protected override void HandleDeath()
+    {
+        base.HandleDeath();
+        CancelAllActions();
+    }
+
+    private void OnDisable()
+    {
+        CancelAllActions();
+    }
+
+    private void CancelAllActions()
+    {
+        // Cancel pending invokes (like VolleyAttack or ResetAttack)
+        CancelInvoke();
+        isChargingAttack = false;
+        hasAttacked = false;
+        vfxSpawned = false;
+
+        FXManager.DestroyMagicCircleVFX();
+    }
+
 }
