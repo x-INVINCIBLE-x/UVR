@@ -6,13 +6,25 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
+    public class StatusColorCode
+    {
+        public AilmentType type;
+        public Color color;
+    }
+
     [SerializeField] private Player player;
 
     [Header("Health UI")]
     [SerializeField] private SkinnedMeshRenderer[] healthRenderes;
+    [SerializeField] private SkinnedMeshRenderer[] statusRenderers;
+
     private static readonly int DissolveAmountID = Shader.PropertyToID("_Horizontal_Dissolve_Amount");
     private const float dissolveMaxValue = 0.725f;
     private const float dissolveMinValue = 0.990f;
+
+    [Header("Ailment Display")]
+    [SerializeField] private CharacterStatusVfx statusVfx;
+    [SerializeField] private StatusColorCode[] statusColors;
 
     [Header("Ability Duration UI")]
     [SerializeField] private Image durationFill;
@@ -110,25 +122,25 @@ public class PlayerUI : MonoBehaviour
 
     private void HandleStatusChange(AilmentType type, bool isActivated, float effectAmount)
     {   
-        if (isActivated == true)
+        if (isActivated == true && statusVfx != null)
         {   
-            //if (fullScreenEffect != null)
-            //{
-            //    fullScreenEffect.ActivateFullscreenEffect(type);
-            //    Debug.Log("Activated Fullscreen Effect for " + type);
-            //}
-            //player.Stats.GetAilmentStatus(type).AilmentEffectEnded += HandleEffectEnd;
+            statusVfx.SpawnStatusVFX(type, true);
+            player.Stats.GetAilmentStatus(type).AilmentEffectEnded += HandleEffectEnd;
         }
     }
 
     private void HandleEffectEnd(AilmentType type)
     {   
+        if (statusVfx != null)
+        {
+            statusVfx.SpawnStatusVFX(type, false);
+        }
         //if (fullScreenEffect != null)
         //{
         //    fullScreenEffect.DeactivateFullscreenEffect();
         //    Debug.Log("Deactivated Fullscreen Effect for " + type);
         //}
-        //player.Stats.GetAilmentStatus(type).AilmentEffectEnded -= HandleEffectEnd;
+        player.Stats.GetAilmentStatus(type).AilmentEffectEnded -= HandleEffectEnd;
     }
 
     private void HandleDeath()
