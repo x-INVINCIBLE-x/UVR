@@ -48,6 +48,11 @@ public class GameManager : MonoBehaviour, ISaveable
         Core.name = "Core";
     }
 
+    private void Start()
+    {
+        SavingWrapper.instance.Load();
+    }
+
     public void SetLastRoundData(ObjectiveType type, int amount)
     {
         switch (type)
@@ -75,7 +80,6 @@ public class GameManager : MonoBehaviour, ISaveable
         }
 
         enemiesEliminatedLastRound += amount;
-        totalAttempts++;
     }
 
     public void SetLastLevel(int level)
@@ -83,7 +87,7 @@ public class GameManager : MonoBehaviour, ISaveable
         lastDepth = level;
         highestDepthReached = Mathf.Max(highestDepthReached, level);
         totalEnemiesKilled += enemiesEliminatedLastRound;
-
+        totalAttempts++;
         if (SavingWrapper.instance != null)
             SavingWrapper.instance.Save();
     }

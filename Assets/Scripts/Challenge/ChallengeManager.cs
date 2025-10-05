@@ -21,6 +21,8 @@ public class ChallengeManager : MonoBehaviour
     public Challenge preChosenChallenge;
 
     private bool usedPreChosen = false;
+    [SerializeField] private AudioClip winAudio;
+    [SerializeField] private AudioClip failAudio;
 
     private void Awake()
     {
@@ -117,6 +119,9 @@ public class ChallengeManager : MonoBehaviour
         ChooseChallenge();
         CurrentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
         CurrentChallenge.OnChallengeFailed -= HandleChallengeFailure;
+
+        if (AudioManager.Instance != null && winAudio != null)
+            AudioManager.Instance.PlaySystemSFX(winAudio);
     }
 
     private void HandleChallengeFailure()
@@ -125,6 +130,9 @@ public class ChallengeManager : MonoBehaviour
 
         CurrentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
         CurrentChallenge.OnChallengeFailed -= HandleChallengeFailure;
+
+        if (AudioManager.Instance != null && failAudio != null)
+            AudioManager.Instance.PlaySystemSFX(failAudio);
     }
 
     private void ResetPossibleChallenges()

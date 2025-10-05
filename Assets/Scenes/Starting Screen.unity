@@ -20156,6 +20156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2058659558}
   - component: {fileID: 2058659557}
+  - component: {fileID: 2058659559}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -20177,6 +20178,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 2953057016828120978, guid: 342d8c61967628541a04456b961334a1, type: 3}
   friendlyFire: 0
+  highestDepthReached: 0
+  lastDepth: 0
+  totalEnemiesKilled: 0
+  totalGoolsKilled: 0
+  totalShieldKilled: 0
+  totalMuncherKilled: 0
+  totalBatzKilled: 0
+  totalIronturetKilled: 0
+  totalTurretsDestroyed: 0
+  enemiesEliminatedLastRound: 0
+  goolsKilledLastRound: 0
+  shieldKilledLastRound: 0
+  muncherKilledLastRound: 0
+  batzKilledLastRound: 0
+  ironturetKilledLastRound: 0
+  turretsDestroyedLastRound: 0
+  totalAttempts: 0
 --- !u!4 &2058659558
 Transform:
   m_ObjectHideFlags: 0
@@ -20192,6 +20210,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2058659559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058659556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea9374b509b70f4bba37e4a2ca8cf00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueIdentifier: 68efd2c7-2ddd-4cf7-84e8-6bdcf37bbeb6
 --- !u!1 &2060029488
 GameObject:
   m_ObjectHideFlags: 0

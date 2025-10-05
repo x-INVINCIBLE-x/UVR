@@ -319,7 +319,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         GameEvents.OnElimination?.Invoke(objectiveType);
         GameEvents.RaiseReward(this);
 
-        Invoke(nameof(Despawn), 2);
+        Invoke(nameof(Despawn), 2f);
     }
 
     private void OnEnable()
