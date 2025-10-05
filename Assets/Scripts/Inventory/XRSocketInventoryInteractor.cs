@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Receiver.Primitives;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor
 {
@@ -19,6 +22,7 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
     private bool hasWeaponInSlot = false;
 
     [SerializeField] public float spawnDelay = 0f;
+    private Quaternion spawnRotation;
 
     protected override void Awake()
     {
@@ -27,10 +31,10 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
         closeHandler = GetComponentInParent<UIToogleHandler>();
     }
 
+#if UNITY_EDITOR
     [ContextMenu("Generate UID")]
     private void GenerateUID()
     {
-            Debug.Log("enter");
         if (Application.IsPlaying(gameObject)) return;
         if (string.IsNullOrEmpty(gameObject.scene.path)) return;
 
@@ -43,7 +47,7 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
             serializedObject.ApplyModifiedProperties();
         }
     }
-
+#endif
     public override bool CanHover(UnityEngine.XR.Interaction.Toolkit.Interactables.IXRHoverInteractable interactable)
     {
         return base.CanHover(interactable) && interactable.transform.CompareTag(targetTag.ToString());
@@ -71,6 +75,7 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
         hasWeaponInSlot = true;
         InventoryItem item = new InventoryItem(weapon.data);
         InventoryManager.Instance.AddItemFromSocket(item, ID);
+        spawnRotation = currentWeapon.transform.rotation;
         //inventoryManager.AddItemFromSocket(weapon, this);
     }
 
@@ -105,7 +110,11 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
         InventoryItem item = InventoryManager.Instance.GetItem(ID);
         if (item != null)
         {
-            currentWeapon = Instantiate(item.data.Model, transform.position + new Vector3(0, 0.5f, 0), attachTransform.rotation).GetComponent<Item>();
+            currentWeapon = Instantiate(item.data.Model, transform.position + new Vector3(0, 0.5f, 0), spawnRotation).GetComponent<Item>();
+            if (currentWeapon.TryGetComponent(out PurchasableItem purchasable))
+            {
+                Destroy(purchasable);
+            }
         }
     }
 

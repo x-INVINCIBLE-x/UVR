@@ -8,7 +8,7 @@ using System;
 public class InventoryManager : MonoBehaviour, ISaveable
 {
     public static InventoryManager Instance {  get; private set; }
-    [SerializeField] public Dictionary<string, InventoryItem> weapondDict = new();
+    public Dictionary<string, InventoryItem> weapondDict = new();
 
     public Dictionary<ItemData, ItemInfo> inventoryItemsDict = new();
     public UIItemSlot[] slots;

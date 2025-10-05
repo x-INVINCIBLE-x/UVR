@@ -10,6 +10,7 @@ public class FollowPlayer : MonoBehaviour
     [SerializeField] private bool rotateWithPlayer = false;
     [SerializeField] private bool followY = false;
     [SerializeField] private bool followPlayerOnce = false;
+    [SerializeField] private bool followOnEnableOnly = false;
     [SerializeField] private Vector3 offset;
 
     private Vector3 followPosition;
@@ -20,6 +21,13 @@ public class FollowPlayer : MonoBehaviour
         if (PlayerManager.instance != null)
         {
             playerTransform = PlayerManager.instance.Player.playerBody;
+        }
+
+        if (followOnEnableOnly && playerTransform != null)
+        {
+            UpdateFollowPosition();
+            Follow();
+            LookAt();
         }
     }
 
@@ -35,7 +43,7 @@ public class FollowPlayer : MonoBehaviour
     private void Update()
     {
         if (useLazyFollow) return;
-
+        if (followOnEnableOnly) return;
         if (followPlayerOnce && hasFollowedOnce) return;
 
         if (playerTransform == null)
