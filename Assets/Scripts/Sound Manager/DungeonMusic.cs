@@ -25,13 +25,12 @@ public class DungeonMusic : MonoBehaviour
         EnemyEventManager.Instance.OnEnemySeePlayer  += OnEngageCombat;
         EnemyEventManager.Instance.OnEnemyLostPlayer += OnDisengageCombat;
         EnemyEventManager.Instance.OnEnemyDeath += OnDisengageCombat; // Also disengage combat when all enemies are dead
+        ChallengeManager.instance.OnChallengeFail += OnChallengeFail;
     }
 
     private void OnDestroy()
     {   
-        EnemyEventManager.Instance.OnEnemySeePlayer -= OnEngageCombat;
-        EnemyEventManager.Instance.OnEnemyLostPlayer -= OnDisengageCombat;
-        EnemyEventManager.Instance.OnEnemyDeath -= OnDisengageCombat; // Unsubscribe to avoid memory leaks
+
     }
 
     private void OnEngageCombat(int enemyId)
@@ -70,5 +69,14 @@ public class DungeonMusic : MonoBehaviour
         }
     }
 
-    
+    private void OnChallengeFail()
+    {
+       AudioManager.Instance.PlayMusicWithFade(null,0);
+
+        EnemyEventManager.Instance.OnEnemySeePlayer -= OnEngageCombat;
+        EnemyEventManager.Instance.OnEnemyLostPlayer -= OnDisengageCombat;
+        EnemyEventManager.Instance.OnEnemyDeath -= OnDisengageCombat; // Unsubscribe to avoid memory leaks
+        ChallengeManager.instance.OnChallengeFail -= OnChallengeFail;
+    }
+
 }

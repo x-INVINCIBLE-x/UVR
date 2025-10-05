@@ -18,6 +18,7 @@ public class EnemyEventManager : MonoBehaviour
     {   
         if(Instance != null && Instance != this)
         {
+            Debug.LogWarning(Instance.gameObject.name + " already exists, destroying " + this.gameObject.name);
             Destroy(this.gameObject);
             return;
         }
@@ -27,6 +28,15 @@ public class EnemyEventManager : MonoBehaviour
 
     public int GetNewEnemyID() => nextEnemyID++;
 
+    private void OnEnable()
+    {
+        ActiveEnemies.Clear();
+    }
+
+    private void OnDisable()
+    {
+        ActiveEnemies.Clear();
+    }
 
     // Call this method to trigger on
     public void SeePlayer(int enemyID)

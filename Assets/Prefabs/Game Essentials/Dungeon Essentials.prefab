@@ -1,5 +1,60 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &971154896576551671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8552122417926067981}
+  - component: {fileID: 1302095304015912008}
+  m_Layer: 0
+  m_Name: Dungeon Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8552122417926067981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971154896576551671}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6517624357674343893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1302095304015912008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971154896576551671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098fa9e807911ab4e8adeb1b8acc3f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dungeonTheme:
+  - {fileID: 8300000, guid: 55761750c0c54054abfbb329b2c62586, type: 3}
+  - {fileID: 8300000, guid: 4fb5c4096641ff04b8c7ce0bf5b33d7a, type: 3}
+  - {fileID: 8300000, guid: bae90147091023349851242020c59f0a, type: 3}
+  - {fileID: 8300000, guid: c7eaa9499f5cbc44788e75dd9a8a24db, type: 3}
+  battleTheme:
+  - {fileID: 8300000, guid: cd7288ec05e808b43ab8488885ed52ef, type: 3}
+  - {fileID: 8300000, guid: 2475cf479c8978f4b84ded632a74b23e, type: 3}
+  - {fileID: 8300000, guid: 647f9d1e026adb548a137e76eb2de21a, type: 3}
+  - {fileID: 8300000, guid: 7a57a52d7be9f4d4abc1f1123dab0eab, type: 3}
+  transitionTime: 5
 --- !u!1 &3090583521205103612
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6517624357674343893}
+  - component: {fileID: 622316143789603765}
   m_Layer: 0
   m_Name: Dungeon Essentials
   m_TagString: Untagged
@@ -173,6 +229,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2793619389290489173}
   - {fileID: 6729770576392158882}
   - {fileID: 7656869024173632173}
   - {fileID: 2968447982482715229}
@@ -180,8 +237,21 @@ Transform:
   - {fileID: 8200193875574487565}
   - {fileID: 7218403497563214288}
   - {fileID: 7673722230233441684}
+  - {fileID: 8552122417926067981}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &622316143789603765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5302657304476110489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc227f18e807de4ab725be981b0a840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5414482438387155517
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,6 +573,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8017117959476096792, guid: a37ba9837ca9bc5469d75bb0c9938c7c, type: 3}
   m_PrefabInstance: {fileID: 4671636453395410508}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5409403334888546976
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6517624357674343893}
+    m_Modifications:
+    - target: {fileID: 5893176680458232608, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_Name
+      value: Enemy Event manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -54.98207
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.6036997
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+--- !u!4 &2793619389290489173 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7914761492704380917, guid: 29f325c334b7b9646b0d1baf7ec3d639, type: 3}
+  m_PrefabInstance: {fileID: 5409403334888546976}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7402281062507383199
 PrefabInstance:

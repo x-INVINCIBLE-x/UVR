@@ -103,6 +103,20 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusicWithFade(AudioClip newClip,float transitionTime = 1.0f)
     {   
+        if (newClip == null)
+        {   
+            musicSource.Stop();
+            musicSource2.Stop();
+            musicSource.clip = null;
+            musicSource2.clip = null;
+
+            if (musicCoroutine != null)
+            {
+                StopCoroutine(musicCoroutine);
+            }
+            return;
+        }
+
         // Determine which AudioSource is active
         AudioSource activeSource = (isPlayingMusicSource1) ? musicSource : musicSource2;
         // Coroutine Check
@@ -217,7 +231,14 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayMusicWithCrossFade(AudioClip newClip, float transitionTime = 1.0f)
     {
-        if (newClip == null) return;
+        if (newClip == null)
+        {
+            musicSource.Stop();
+            musicSource2.Stop();
+            musicSource.clip = null;
+            musicSource2.clip = null;
+            return;
+        }
 
         // Determine which AudioSource is active
         AudioSource activeSource = (isPlayingMusicSource1) ? musicSource : musicSource2; // Terinary operation to check if musicSource is playing (Read Above)

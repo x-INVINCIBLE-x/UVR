@@ -330,6 +330,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         wasPlayerInSight = false;
         walkPoint = transform.position;
         currentCheckRoutine = StartCoroutine(CheckRoutine());
+        deathParticleVfx.SetActive(false);
     }
 
     private void OnDisable()
@@ -347,6 +348,8 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
     {
         enemyStats.OnDamageTaken -= HandleHit;
         enemyStats.OnDeath -= HandleDeath;
+
+        deathParticleVfx.SetActive(false);
     }
 
     protected void Despawn()
