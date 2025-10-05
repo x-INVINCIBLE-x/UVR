@@ -49,7 +49,8 @@ public class BomberEnemy : SimpleEnemyBase
             GameEvents.RaiseReward(this);
         }
 
-        Invoke(nameof(Despawn), 2);
+        if (ObjectPool.instance != null)
+            ObjectPool.instance.ReturnObject(gameObject, 2f);
     }
 
     private void SelfDestruct()

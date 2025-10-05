@@ -298,8 +298,9 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         isDead = true;
         enemyEventManager.EnemyDeath(enemyID); 
 
+        if (deathParticleVfx != null)
+            deathParticleVfx.SetActive(true);
 
-        deathParticleVfx.SetActive(true);
         sfxSource.PlayOneShot(enemyDeath);
 
         if (agent.enabled)
@@ -319,7 +320,8 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         GameEvents.OnElimination?.Invoke(objectiveType);
         GameEvents.RaiseReward(this);
 
-        Invoke(nameof(Despawn), 2f);
+        if (ObjectPool.instance != null)
+            ObjectPool.instance.ReturnObject(gameObject, 2f);
     }
 
     private void OnEnable()
