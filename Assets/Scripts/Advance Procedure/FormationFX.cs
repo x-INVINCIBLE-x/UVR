@@ -3,7 +3,7 @@ using UnityEngine;
 public class FormationFX : MonoBehaviour
 {
     [SerializeField] private DynamicFormationController cubeFormationController;
-
+    [SerializeField] private AudioClip formationCompleteAudio;
     private void Start()
     {
         cubeFormationController.OnFormationStart += HandleFormationStart;
@@ -25,6 +25,7 @@ public class FormationFX : MonoBehaviour
     private void HandleFormationComplete(FormationType formationType)
     {
         Debug.Log("Formation Complete -> " + formationType);
+        AudioManager.Instance.PlaySystemSFX(formationCompleteAudio);
     }
 
     private void HandleFormationStart()

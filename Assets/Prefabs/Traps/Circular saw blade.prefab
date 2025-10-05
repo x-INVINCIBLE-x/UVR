@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 4943546620148802884}
   - component: {fileID: 1564993157401879662}
   - component: {fileID: 8821171672469015733}
+  - component: {fileID: 4163786398921285740}
   m_Layer: 0
   m_Name: Circular saw blade_Material.004_0
   m_TagString: Untagged
@@ -276,6 +277,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 18.233318, y: 17.840189, z: 0.21999998}
   m_Center: {x: 0.0000038146968, y: 0, z: 0}
+--- !u!114 &4163786398921285740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4913673440413769244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: 6102fd224eefd6e4e872996a24204974, type: 2}
+  damageRate: 0.75
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &6488868442704096896
 GameObject:
   m_ObjectHideFlags: 0

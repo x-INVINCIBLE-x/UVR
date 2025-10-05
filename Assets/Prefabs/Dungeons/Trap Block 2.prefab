@@ -2961,7 +2961,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 122
+  m_VersionIndex: 170
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4433,7 +4433,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 122
+  m_VersionIndex: 170
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -6748,7 +6748,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 122
+  m_VersionIndex: 170
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -8015,6 +8015,7 @@ GameObject:
   - component: {fileID: 2267012184843173955}
   - component: {fileID: 8178612756100523954}
   - component: {fileID: 4810904205467217523}
+  - component: {fileID: 7802991909716799770}
   m_Layer: 21
   m_Name: Circular saw blade_Material.004_0
   m_TagString: Untagged
@@ -8105,12 +8106,30 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 17.75234, y: 18.152557, z: 0.22000007}
   m_Center: {x: -0.000027020771, y: 0.09180785, z: 0.000122065336}
+--- !u!114 &7802991909716799770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2778098859960747434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: 6102fd224eefd6e4e872996a24204974, type: 2}
+  damageRate: 0.75
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &2829528161974869672
 GameObject:
   m_ObjectHideFlags: 0
@@ -9125,6 +9144,7 @@ GameObject:
   - component: {fileID: 3108860202048758816}
   - component: {fileID: 864316406766817837}
   - component: {fileID: 4920208712757531853}
+  - component: {fileID: 5263938906740438829}
   m_Layer: 21
   m_Name: Circular saw blade_Material.004_0
   m_TagString: Untagged
@@ -9215,12 +9235,30 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 17.75234, y: 18.152557, z: 0.22000007}
   m_Center: {x: -0.000027020771, y: 0.09180785, z: 0.000122065336}
+--- !u!114 &5263938906740438829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3267743481628292432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: 6102fd224eefd6e4e872996a24204974, type: 2}
+  damageRate: 0.75
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &3268821826382809451
 GameObject:
   m_ObjectHideFlags: 0
@@ -10244,6 +10282,7 @@ GameObject:
   - component: {fileID: 8777163026325189232}
   - component: {fileID: 5248963649461243773}
   - component: {fileID: 7319009417718484006}
+  - component: {fileID: 9042445166640533656}
   m_Layer: 21
   m_Name: Dungeon Grinder 2 (3)
   m_TagString: Untagged
@@ -10339,14 +10378,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 2.5156584
+  m_Height: 1.9753793
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: -0.032833908, z: -0.00000016672625}
 --- !u!114 &8777163026325189232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10478,6 +10517,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9042445166640533656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665823900289747994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: d696e62c42f83b445bdf53ccfc40e159, type: 2}
+  damageRate: 1
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &3689078334049962558
 GameObject:
   m_ObjectHideFlags: 0
@@ -11177,7 +11234,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 128
+  m_VersionIndex: 176
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -22366,6 +22423,7 @@ GameObject:
   - component: {fileID: 4214437261613820627}
   - component: {fileID: 1960930287066863540}
   - component: {fileID: 579033912327831629}
+  - component: {fileID: 7009781455564225056}
   m_Layer: 21
   m_Name: Dungeon Grinder 2 (2)
   m_TagString: Untagged
@@ -22461,14 +22519,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 2.5156584
+  m_Height: 1.9753793
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: -0.032833908, z: -0.00000016672625}
 --- !u!114 &4214437261613820627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22600,6 +22658,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7009781455564225056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8536085669377412289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: d696e62c42f83b445bdf53ccfc40e159, type: 2}
+  damageRate: 1
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &8576654938963638830
 GameObject:
   m_ObjectHideFlags: 0

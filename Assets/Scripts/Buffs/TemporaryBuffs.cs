@@ -367,6 +367,9 @@ public class TemporaryBuffs : MonoBehaviour
 
         foreach (BuffInfo buffInfo in onDamageBuffs)
             yield return buffInfo.buff;
+
+        foreach (BuffInfo buffInfo in onHealthBuffs)
+            yield return buffInfo.buff;
     }
 
     private void OnDestroy()

@@ -2039,6 +2039,7 @@ GameObject:
   - component: {fileID: 7627699905370037266}
   - component: {fileID: -6997317097476938892}
   - component: {fileID: -5099520354804645430}
+  - component: {fileID: 473971963294662538}
   m_Layer: 0
   m_Name: Dungeon Grinder
   m_TagString: Untagged
@@ -2134,14 +2135,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 2.5156584
+  m_Height: 1.9753793
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: -0.032833908, z: -0.00000016672625}
 --- !u!114 &7627699905370037266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2273,6 +2274,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &473971963294662538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6574664154192102466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669099cd84758ee408c4832f3f0be13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackData: {fileID: 11400000, guid: d696e62c42f83b445bdf53ccfc40e159, type: 2}
+  damageRate: 1
+  bufferDuration: 1
+  layerToDamage:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &6655304274623579973
 GameObject:
   m_ObjectHideFlags: 0
