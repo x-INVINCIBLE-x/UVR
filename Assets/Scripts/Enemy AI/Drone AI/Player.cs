@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
         positionResetRoutine = StartCoroutine(SetToSafePosition());
     }
 
+    public Vector3 GetSafePosition() => lastSafePosition + safePositionOffset;
+
     private IEnumerator SetToSafePosition()
     {
         PlayerManager.instance.ActionMediator.DisableControl();
