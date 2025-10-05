@@ -49,6 +49,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
     public void AddItemFromSocket(InventoryItem item, string socket)
     {
         weapondDict.Add(socket, item);
+        SavingWrapper.instance.Save();
     }
 
     public void RemoveItemFromSocket(string socket)
@@ -60,6 +61,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
         }
 
         weapondDict.Remove(socket);
+        SavingWrapper.instance.Save();
     }
 
     public InventoryItem GetItem(string item)

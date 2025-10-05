@@ -37,6 +37,15 @@ public class DungeonManager : MonoBehaviour
 
     public event Action<int> OnDifficultyChange;
 
+    #region Stats
+    public int enemiesEliminatedLastRound = 0;
+    public int goolsKilledLastRound = 0;
+    public int shieldKilledLastRound = 0;
+    public int muncherKilledLastRound = 0;
+    public int batzKilledLastRound = 0;
+    public int ironturetKilledLastRound = 0;
+    public int turretsDestroyedLastRound = 0;
+    #endregion
 #if UNITY_EDITOR
     private void OnValidate()
     {
@@ -75,6 +84,9 @@ public class DungeonManager : MonoBehaviour
     {
         buffHandler.OnBuffPick += GetHandleBuffSelection;
 
+        if (GameManager.instance != null)
+            GameManager.instance.enemiesEliminatedLastRound = 0;
+    
         ChallengeManager challengeManager = ChallengeManager.instance;
 
         if (challengeManager != null)
@@ -82,6 +94,8 @@ public class DungeonManager : MonoBehaviour
             ChallengeManager.instance.OnChallengeSuccess += HandleLevelCompletion;
             ChallengeManager.instance.OnChallengeFail += HandleLevelFailure;
         }
+
+        GameEvents.OnElimination += HandleElimination;
     }
 
     public void HandleLevelCompletion()
@@ -99,6 +113,16 @@ public class DungeonManager : MonoBehaviour
         transitionProvider.StartTransition();
 
         currentFailTransitionSceneIndex = (currentFailTransitionSceneIndex + 1) % dungeonFailTransitionScene.Length;
+
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.SetLastRoundData(ObjectiveType.JackOGools, goolsKilledLastRound);
+            GameManager.instance.SetLastRoundData(ObjectiveType.GoblinShield, shieldKilledLastRound);
+            GameManager.instance.SetLastRoundData(ObjectiveType.EmeraldBats, batzKilledLastRound);
+            GameManager.instance.SetLastRoundData(ObjectiveType.FellironTurret, ironturetKilledLastRound);
+            GameManager.instance.SetLastRoundData(ObjectiveType.Turret, turretsDestroyedLastRound);
+            GameManager.instance.SetLastLevel(Level);
+        }
     }
 
     private void UpdateDifficulty()
@@ -150,6 +174,29 @@ public class DungeonManager : MonoBehaviour
         transitionProvider.transform.root.gameObject.SetActive(false);
     }
 
+    private void HandleElimination(ObjectiveType type)
+    {
+        switch (type)
+        {
+            case ObjectiveType.JackOGools:
+                goolsKilledLastRound++;
+                break;
+            case ObjectiveType.GoblinShield:
+                shieldKilledLastRound++;
+                break;
+            case ObjectiveType.EmeraldBats:
+                batzKilledLastRound++;
+                break;
+            case ObjectiveType.FellironTurret:
+                ironturetKilledLastRound++;
+                break;
+            case ObjectiveType.Turret:
+                turretsDestroyedLastRound++;
+                break;
+        }
+
+        enemiesEliminatedLastRound++;
+    }
     private void OnDestroy()
     {
         if (ChallengeManager.instance != null)

@@ -5,15 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class SavingWrapper : MonoBehaviour
 {
+    public static SavingWrapper instance;
     private const string currentSaveKey = "currentSaveName";
     [SerializeField] float fadeInTime = 0.2f;
     [SerializeField] float fadeOutTime = 0.2f;
     [SerializeField] int firstLevelBuildIndex = 1;
     [SerializeField] int menuLevelBuildIndex = 0;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
-        //LoadGame(currentSaveKey);
+        LoadGame(currentSaveKey);
     }
 
     public void ContinueGame()
@@ -30,7 +36,7 @@ public class SavingWrapper : MonoBehaviour
     public void LoadGame(string saveFile)
     {
         SetCurrentSave(saveFile);
-        ContinueGame();
+        //ContinueGame();
     }
 
     public void LoadMenu()

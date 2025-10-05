@@ -21,7 +21,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
     [SerializeField] private LayerMask allyLayer;
     [SerializeField] private Transform spawnPosition;
 
-    [SerializeField] private GameReward eliminationReward;
+    [SerializeField] protected GameReward eliminationReward;
 
     [SerializeField] protected float sightRange, attackRange;
     [SerializeField] private float attackCooldownTime = 2f;
@@ -56,20 +56,20 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
 
     private readonly WaitForSeconds attackCheckCooldown = new(0.2f);
     private LayerMask playerLayer;
-    private Coroutine currentCheckRoutine = null;
+    protected Coroutine currentCheckRoutine = null;
     private Collider m_Collider;
 
     private bool hitSurroundingEnemies = false;
     private bool healPlayer = false;
     private Coroutine healthTimerCoroutine;
-    private int enemyID;
+    protected int enemyID;
     protected bool isDead;
     private bool HealthUIActive = false;
     protected bool attackSoundPlayed = false;
 
     private AttackData ailmentData;
 
-    private EnemyEventManager enemyEventManager;
+    protected EnemyEventManager enemyEventManager;
  
     private bool registered = false;
 
@@ -349,7 +349,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         enemyStats.OnDeath -= HandleDeath;
     }
 
-    private void Despawn()
+    protected void Despawn()
     {
         if (ObjectPool.instance != null)
             ObjectPool.instance.ReturnObject(gameObject);

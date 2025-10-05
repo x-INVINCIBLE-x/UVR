@@ -135,6 +135,7 @@ public class CurrencyManager : MonoBehaviour ,ISaveable
         Magika = saveCurrencies.Magika;
     }
 
+    [System.Serializable]
     public class SaveCurrencies
     {
         public int Gold;

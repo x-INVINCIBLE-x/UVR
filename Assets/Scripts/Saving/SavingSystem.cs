@@ -70,6 +70,7 @@ public class SavingSystem : MonoBehaviour
     private Dictionary<string, object> LoadFile(string saveFile)
     {
         string path = GetPathFromSaveFile(saveFile);
+        Debug.Log("Loading from " + path);
         if (!File.Exists(path))
         {
             return new Dictionary<string, object>();

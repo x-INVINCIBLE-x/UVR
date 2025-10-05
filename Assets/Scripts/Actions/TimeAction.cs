@@ -19,7 +19,15 @@ public class TimeAction : Action
     protected override void Start()
     {
         base.Start();
+        if (inputManager != null)
+            inputManager.YTap.action.performed += ctx => HandleAbility();
         //inputManager.leftJoystickPress.action.performed += EndAbility;
+    }
+
+    private void HandleAbility()
+    {
+        if (CanUseAbility())
+            StartAbility(); 
     }
 
     protected override void ExecuteAbility()
@@ -96,4 +104,10 @@ public class TimeAction : Action
         ResetTimeScale();
         timerRoutine = null;
     }
+
+    protected override void OnDestroy()
+    {
+        if (inputManager != null)
+            inputManager.YTap.action.performed += ctx => HandleAbility();
+    } 
 }
