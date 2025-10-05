@@ -63,8 +63,11 @@ public class SliceAttacks : WeaponAbilitiesBase
     {
         if (AbilityEnable)
         {
-            WeaponVFX.SetActive(true);
-
+            if (WeaponVFX != null)
+            {
+                WeaponVFX.SetActive(true);
+            }
+            
             switch (sliceAttackType)
             {
                 case TypesOfSlices.Straight:

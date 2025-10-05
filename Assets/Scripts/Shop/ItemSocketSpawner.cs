@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -19,31 +20,38 @@ public class ItemSocketSpawner : MonoBehaviour
     public TextMeshProUGUI ItemDesc;
     public TextMeshProUGUI ItemCost;
 
-    private void Start()
+    private void Awake()
     {
         socketInteractor = GetComponent<XRSocketInteractor>();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(SpawnItemAfterFrame());
+    }
+
+    private IEnumerator SpawnItemAfterFrame()
+    {
+        yield return null;
 
         if (itemData != null && itemData.Model != null)
         {
-            GameObject itemInstance = Instantiate(itemData.Model , AttachPoint.position , Quaternion.identity);
-            socketInteractor.StartManualInteraction(itemInstance.GetComponent<IXRSelectInteractable>()); // Manually attaches the weapon when it spawns in the socket at the start of the game
+            GameObject itemInstance = Instantiate(itemData.Model, AttachPoint.position, AttachPoint.rotation);
+
+            IXRSelectInteractable interactable = itemInstance.GetComponent<IXRSelectInteractable>();
+            if (interactable != null)
+                socketInteractor.StartManualInteraction(interactable);
+
             ItemDesc.text = itemData.Name;
             ItemCost.text = itemData.ItemCost.ToString();
 
             PurchasableItem purchasable = itemInstance.GetComponent<PurchasableItem>();
-            if(purchasable != null)
+            if (purchasable != null)
             {
                 purchasable.itemData = itemData;
-                purchasable.isShopItem = true; // this bool makes it a shop item when instantiate (only the instance of the object)
-
+                purchasable.isShopItem = true;
             }
-
-
-
         }
-
-        
     }
-
 
 }

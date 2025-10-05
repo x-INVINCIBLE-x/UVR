@@ -55,6 +55,8 @@ public class Weapon : MonoBehaviour
     protected virtual void PickUpWeapon(SelectEnterEventArgs args)
     {
         //transform.parent = args.interactorObject.transform;
+        if (args.interactorObject.transform.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+
         finalAttackData = PlayerManager.instance.Player.Stats.CombineWith(attackData);
         finalAttackData.owner = PlayerManager.instance.Player.Stats;
     }

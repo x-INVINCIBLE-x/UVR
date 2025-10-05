@@ -44,6 +44,9 @@ public class UmbrellaFormationConsequence : FomationConsequence
     {
         if (formationType != type) return;
 
+        isActive = false;
+        StopCoroutine(StartSpawnRoutine());
+
         if (spawnerInstance)
         {
             Destroy(spawnerInstance.gameObject);

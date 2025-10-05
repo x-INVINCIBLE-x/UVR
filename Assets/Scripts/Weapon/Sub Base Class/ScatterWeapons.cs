@@ -66,11 +66,11 @@ public class ScatterWeapons : Weapon
         }
     }
 
-    private void Start()
-    {
-        InputManager.Instance.activate.action.performed += ctx => ScatterShot();
+    //private void Start()
+    //{
+    //    InputManager.Instance.activate.action.performed += ctx => ScatterShot();
 
-    }
+    //}
     protected virtual void ScatterShot()
     {
         if (!CanShoot()) return;
