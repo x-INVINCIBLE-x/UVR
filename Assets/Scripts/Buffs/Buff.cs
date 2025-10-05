@@ -102,7 +102,8 @@ public class Buff : ScriptableObject
         }
         else
         {
-            sb.AppendLine($"Buff reactivates after {cooldownDuration}.");
+            if (cooldownDuration > 0)
+                sb.AppendLine($"Buff reactivates after {cooldownDuration}.");
         }
 
         return sb.ToString();
