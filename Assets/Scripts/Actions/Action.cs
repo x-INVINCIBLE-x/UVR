@@ -35,7 +35,7 @@ public class Action : MonoBehaviour
 
     protected virtual void StartAbility()
     {
-        lastTimeSkillUsed = Time.time;
+        lastTimeSkillUsed = Time.unscaledTime;
         ExecuteAbility();
 
         AudioManager.Instance.PlaySFX2d(actionMediator.audioSource, sfxClip, 1);
@@ -49,8 +49,9 @@ public class Action : MonoBehaviour
         
     }
 
-    protected virtual bool CanUseAbility()
+    protected bool CanUseAbility()
     {
+        Debug.Log(lastTimeSkillUsed + skillCooldown + " " + Time.unscaledTime);
         if (!isPermitted || lastTimeSkillUsed + skillCooldown > Time.unscaledTime)
         {
             return false;

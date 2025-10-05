@@ -63,7 +63,6 @@ public class DashAction : Action
             StopCoroutine(dashCoroutine);
         }
 
-        lastTimeSkillUsed = Time.time;
         dashCoroutine = StartCoroutine(DashRoutine());
     }
 
