@@ -20,7 +20,8 @@ Shader "Hidden/VolumetricFog"
 
             #include "./VolumetricFog.hlsl"
 
-            #pragma multi_compile _ _FORWARD_PLUS
+           // Clustered lighting support for Unity 6+
+            #pragma multi_compile _ USE_FORWARD_PLUS USE_CLUSTER_LIGHT_LOOP FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK CLUSTER_LIGHT_LOOP_SUBTRACTIVE_LIGHT_CHECK
 
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS
