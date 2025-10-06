@@ -74,7 +74,7 @@ Shader "SkyMaster/ShaderVolumeClouds-Desktop-SM3.0 v3.4.4 SHADOWED" {
 		//			// Universal Pipeline keywords
 		#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
 		#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
-		#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+		// #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 		#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
 		//
 		//v0.4a
