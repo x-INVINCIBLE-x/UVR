@@ -49,13 +49,17 @@ public abstract class Challenge: MonoBehaviour
 
     public virtual void ChallengeFailed()
     {
+        Debug.Log("Base ChallengeFailed() called");
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
+        Debug.Log("Base ChallengeFailed called");
         StartCoroutine(RaiseChallengeFailRoutine(4f));
     }
 
     private IEnumerator RaiseChallengeFailRoutine(float time)
     {
+        Debug.Log("Challenge Failed Invoked " + time);
         yield return new WaitForSeconds(time);
+        Debug.Log("Challenge Failed Invoked");
         OnChallengeFailed?.Invoke();
     }
 

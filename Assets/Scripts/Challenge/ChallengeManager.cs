@@ -49,14 +49,6 @@ public class ChallengeManager : MonoBehaviour
             StartChallenge();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-            ChooseChallenge();
-        if (Input.GetKeyDown(KeyCode.V))
-            StartChallenge();
-    }
-
     private void StartChallenge()
     {
         if (CurrentChallenge == null)
@@ -99,9 +91,9 @@ public class ChallengeManager : MonoBehaviour
     private void InitializeCurrent()
     {
         CurrentChallenge.InitializeChallenge(DungeonManager.Instance.DifficultyLevel);
-
         CurrentChallenge.OnChallengeCompleted += HandleChallengeSuccess;
         CurrentChallenge.OnChallengeFailed += HandleChallengeFailure;
+        Debug.Log(CurrentChallenge.name + " Initialized");
 
         OnChallengeChoosen?.Invoke(CurrentChallenge);
     }
@@ -116,9 +108,9 @@ public class ChallengeManager : MonoBehaviour
     {
         OnChallengeSuccess?.Invoke();
 
-        ChooseChallenge();
         CurrentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
         CurrentChallenge.OnChallengeFailed -= HandleChallengeFailure;
+        ChooseChallenge();
 
         if (AudioManager.Instance != null && winAudio != null)
             AudioManager.Instance.PlaySystemSFX(winAudio);
@@ -127,7 +119,8 @@ public class ChallengeManager : MonoBehaviour
     private void HandleChallengeFailure()
     {
         OnChallengeFail?.Invoke();
-
+        Debug.Log("ChallengeManager  Failed Invoked");
+         
         CurrentChallenge.OnChallengeCompleted -= HandleChallengeSuccess;
         CurrentChallenge.OnChallengeFailed -= HandleChallengeFailure;
 

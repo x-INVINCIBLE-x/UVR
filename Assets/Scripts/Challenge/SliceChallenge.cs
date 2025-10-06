@@ -35,19 +35,19 @@ public class SliceChallenge : Challenge
 
         status = ChallengeStatus.Success;
 
-        GameEvents.OnElimination -= HandleElimination;
         base.ChallengeCompleted();
+        GameEvents.OnElimination -= HandleElimination;
     }
 
     public override void ChallengeFailed()
     {
         if (status == ChallengeStatus.Success)
             return;
-
         status = ChallengeStatus.Failed;
+        Debug.Log("Base ChallengeFailed() called");
+        base.ChallengeFailed();
 
         GameEvents.OnElimination -= HandleElimination;
-        base.ChallengeFailed();
     }
 
     public void HandleElimination(ObjectiveType type)

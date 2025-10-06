@@ -113,7 +113,7 @@ public class DungeonManager : MonoBehaviour
         transitionProvider.StartTransition();
 
         currentFailTransitionSceneIndex = (currentFailTransitionSceneIndex + 1) % dungeonFailTransitionScene.Length;
-
+        Debug.Log("Level Failed");
         if (GameManager.instance != null)
         {
             GameManager.instance.SetLastRoundData(ObjectiveType.JackOGools, goolsKilledLastRound);

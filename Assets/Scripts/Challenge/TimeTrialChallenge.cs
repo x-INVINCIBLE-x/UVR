@@ -110,6 +110,7 @@ public class TimeTrialChallenge : Challenge
     public override void StartChallenge()
     {
         base.StartChallenge();
+        status = ChallengeStatus.InProgress;
         GameEvents.OnElimination += UpdateChallengeStatus;
         PlayerManager.instance.OnPlayerDeath += ChallengeFailed;
         currentRoutine = StartCoroutine(StartChallengeRoutine());
@@ -120,25 +121,24 @@ public class TimeTrialChallenge : Challenge
         if (status == ChallengeStatus.Failed) return;
 
         status = ChallengeStatus.Success;
-        GameEvents.OnElimination -= UpdateChallengeStatus;
 
         if (currentRoutine != null)
             StopCoroutine(currentRoutine);
 
         base.ChallengeCompleted();
+        GameEvents.OnElimination -= UpdateChallengeStatus;
     }
 
     public override void ChallengeFailed()
     {
         if (status == ChallengeStatus.Success) return;
-        Debug.Log("Failed");
         status = ChallengeStatus.Failed;
-        GameEvents.OnElimination -= UpdateChallengeStatus;
-
         if (currentRoutine != null)
             StopCoroutine(currentRoutine);
 
+        Debug.Log("TT called");
         base.ChallengeFailed();
+        GameEvents.OnElimination -= UpdateChallengeStatus;
     }
 
     private void UpdateChallengeStatus(ObjectiveType type)

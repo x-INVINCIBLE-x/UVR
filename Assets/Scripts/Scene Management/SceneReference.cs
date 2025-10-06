@@ -7,7 +7,9 @@ using System;
 [Serializable]
 public class SceneReference
 {
+#if UNITY_EDITOR
     [SerializeField] private SceneAsset sceneAsset;
+#endif
     [SerializeField] private string scenePath;
     [SerializeField] private string sceneName;
 

@@ -382,9 +382,14 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
 
         if (walkPointSet)
         {
-            if (agent.isActiveAndEnabled)
-                agent.SetDestination(walkPoint);
-
+            try
+            {
+                if (agent.isActiveAndEnabled)
+                    agent.SetDestination(walkPoint);
+            }
+            catch (System.Exception _)
+            {
+            }
             Vector3 distanceToWalkPoint = transform.position - walkPoint;
             distanceToWalkPoint.y = 0;
             if (distanceToWalkPoint.sqrMagnitude < 1f)

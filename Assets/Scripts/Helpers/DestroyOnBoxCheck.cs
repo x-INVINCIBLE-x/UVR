@@ -112,7 +112,7 @@ public class DestroyOnBoxCheck : MonoBehaviour
                 GameObject obj = current.gameObject;
 
                 // Skip if it's our own root
-                if (obj == this.transform.root.gameObject || obj.transform.root == this.transform)
+                if (obj == this.transform.root.gameObject || obj.transform.root == this.transform || obj.CompareTag("StartingBlock"))
                 {
                     Debug.Log("Skipping self root");
                 }

@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 808786725479005505, guid: 7530c7bc6cb0af14b8b0c230d938d902, type: 3}
+      propertyPath: offset.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1806679398012346966, guid: 7530c7bc6cb0af14b8b0c230d938d902, type: 3}
       propertyPath: m_LocalPosition.x
       value: 255.55873
@@ -170,6 +174,10 @@ PrefabInstance:
     - target: {fileID: 2870220700772843741, guid: 7530c7bc6cb0af14b8b0c230d938d902, type: 3}
       propertyPath: m_Name
       value: Challenge UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452370216625875297, guid: 7530c7bc6cb0af14b8b0c230d938d902, type: 3}
+      propertyPath: offset.y
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -761,6 +769,10 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3526463747834264901, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: cubePrefab
+      value: 
+      objectReference: {fileID: 4483529751950793336, guid: df28a37637225e34e90f5482ad8162b0, type: 3}
+    - target: {fileID: 3526463747834264901, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: startRadius
       value: 140
       objectReference: {fileID: 0}
@@ -940,6 +952,10 @@ PrefabInstance:
       propertyPath: cubeCount
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 5748234482282748767, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: cubePrefab
+      value: 
+      objectReference: {fileID: 4483529751950793336, guid: df28a37637225e34e90f5482ad8162b0, type: 3}
     - target: {fileID: 5748234482282748767, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: startRadius
       value: 100
@@ -1132,6 +1148,10 @@ PrefabInstance:
       propertyPath: cubeCount
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 6885477660519354693, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
+      propertyPath: cubePrefab
+      value: 
+      objectReference: {fileID: 4483529751950793336, guid: df28a37637225e34e90f5482ad8162b0, type: 3}
     - target: {fileID: 6885477660519354693, guid: 01939723e6e550642aa89fe81f71be72, type: 3}
       propertyPath: startHeight
       value: 0
@@ -1735,7 +1755,7 @@ GameObject:
   - component: {fileID: 4732279228971512355}
   - component: {fileID: 4732279228971512356}
   m_Layer: 0
-  m_Name: Staring Block
+  m_Name: Staring Area
   m_TagString: StartingBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7750,7 +7770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 222879761478958814}
   m_Layer: 0
-  m_Name: Block Container
+  m_Name: Area Container
   m_TagString: StartingBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

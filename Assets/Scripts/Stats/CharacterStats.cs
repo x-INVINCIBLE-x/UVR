@@ -231,6 +231,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
             //{ Stats.StaminaRegain, staminaRegain },
             { Stats.PhysicalAtk, physicalDamage },
             { Stats.IgnisAtk, ignisDamage },
+            { Stats.FrostAtk, frostDamage },
             { Stats.BlitzAtk, blitzDamage },
             { Stats.HexAtk, hexDamage },
             { Stats.RadianceAtk, radianceDamage },
