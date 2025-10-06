@@ -20,7 +20,22 @@ Shader "Hidden/VolumetricFog"
 
             #include "./VolumetricFog.hlsl"
 
-           // Clustered lighting support for Unity 6+
+            // ===== Forward Plus / Clustered lighting support for Unity 6+ =====
+            #ifndef UNIVERSAL_FORWARD_PLUS_KEYWORD_DEPRECATED_INCLUDED
+            #define UNIVERSAL_FORWARD_PLUS_KEYWORD_DEPRECATED_INCLUDED
+
+            #if defined(_FORWARD_PLUS)
+                #warning "_FORWARD_PLUS shader keyword has been deprecated. Use _CLUSTER_LIGHT_LOOP instead."
+                #define USE_FORWARD_PLUS USE_CLUSTER_LIGHT_LOOP
+                #define FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK CLUSTER_LIGHT_LOOP_SUBTRACTIVE_LIGHT_CHECK
+
+                #ifndef _CLUSTER_LIGHT_LOOP
+                    #define _CLUSTER_LIGHT_LOOP 1
+                #endif
+            #endif
+            #endif
+            // =================================================================
+
             #pragma multi_compile _ USE_FORWARD_PLUS USE_CLUSTER_LIGHT_LOOP FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK CLUSTER_LIGHT_LOOP_SUBTRACTIVE_LIGHT_CHECK
 
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
@@ -42,6 +57,7 @@ Shader "Hidden/VolumetricFog"
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
+                // Use input.texcoord and input.positionCS.xy directly
                 return VolumetricFog(input.texcoord, input.positionCS.xy);
             }
 
@@ -157,9 +173,7 @@ Shader "Hidden/VolumetricFog"
         }
 
         UsePass "Hidden/VolumetricFog/VOLUMETRICFOGRENDER"
-
         UsePass "Hidden/VolumetricFog/VOLUMETRICFOGHORIZONTALBLUR"
-            
         UsePass "Hidden/VolumetricFog/VOLUMETRICFOGVERTICALBLUR"
 
         Pass
