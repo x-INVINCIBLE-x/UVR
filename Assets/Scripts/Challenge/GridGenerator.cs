@@ -24,6 +24,7 @@ public class GridGenerator : MonoBehaviour
     private string currentKey;
     private GridSetupData currentSetupData;
 
+#if UNITY_EDITOR
     [ContextMenu("Grid Test")]
     private void Editor_GridTest()
     {
@@ -47,7 +48,7 @@ public class GridGenerator : MonoBehaviour
         gridSetupDatabase.Clear();
         isInitialized = false;
     }
-
+#endif
     private void Awake()
     {
         if (Instance != null && Instance != this)

@@ -186,7 +186,6 @@ public class FormationHandler : MonoBehaviour
             {
                 if (formation.formationInfo[j].layout == null)
                 {
-                    Debug.LogWarning($"Layout for formation '{formation.formationName}' is not set. Please check the setup.");
                     continue;
                 }
                 formation.formationInfo[j].layout.gameObject.SetActive(status);

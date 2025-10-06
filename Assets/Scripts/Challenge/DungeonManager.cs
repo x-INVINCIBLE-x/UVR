@@ -46,21 +46,21 @@ public class DungeonManager : MonoBehaviour
     public int ironturetKilledLastRound = 0;
     public int turretsDestroyedLastRound = 0;
     #endregion
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        for (int i = 0; i < dungeonFailTransitionScene.Length; i++)
-        {
-            dungeonFailTransitionScene[i].UpdateFields();
-        }
-        for (int i = 0; i < dungeonSuccessTransitionScene.Length; i++)
-        {
-            dungeonSuccessTransitionScene[i].UpdateFields();
-        }
-        cityScene.UpdateFields();
-        EditorUtility.SetDirty(this);
-    }
-#endif
+//#if UNITY_EDITOR
+//    private void OnValidate()
+//    {
+//        for (int i = 0; i < dungeonFailTransitionScene.Length; i++)
+//        {
+//            dungeonFailTransitionScene[i].UpdateFields();
+//        }
+//        for (int i = 0; i < dungeonSuccessTransitionScene.Length; i++)
+//        {
+//            dungeonSuccessTransitionScene[i].UpdateFields();
+//        }
+//        cityScene.UpdateFields();
+//        EditorUtility.SetDirty(this);
+//    }
+//#endif
 
     private void Awake()
     {

@@ -467,7 +467,7 @@ public class GridFormationController : FormationProvider
         Debug.Log($"Blind restored {instances.Count} objects gradually from ScriptableObject.");
     }
 
-
+#if UNITY_EDITOR
     [ContextMenu("Load Current Formation")]
     public void LoadRandomFormationFromDatabase()
     {
@@ -490,7 +490,7 @@ public class GridFormationController : FormationProvider
         StartCoroutine(SpawnFormation(0));
         isExactRestore = false;
     }
-
+#endif
     [ContextMenu("Reload Random Formation")]
     public void ReloadRandomFormation(string ID)
     {

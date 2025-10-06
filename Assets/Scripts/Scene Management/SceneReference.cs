@@ -15,7 +15,7 @@ public class SceneReference
 
     public string ScenePath => scenePath;
     public string SceneName => sceneName;
-    public bool IsValid => sceneAsset != null && sceneName != "" && scenePath != "";
+    public bool IsValid => !string.IsNullOrEmpty(scenePath) && !string.IsNullOrEmpty(sceneName);
 
 #if UNITY_EDITOR
     public void UpdateFields()
