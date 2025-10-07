@@ -7,6 +7,7 @@ public class HealingTurret : Turret
     [SerializeField] private float healingFrequency = 0.5f;
     private WaitForSeconds healingTimer;
     private bool isHealing = false;
+    private Coroutine healingCoroutine;
 
     private void Start()
     {
@@ -17,8 +18,13 @@ public class HealingTurret : Turret
     {
         isHealing = true;
 
+        if (healingCoroutine != null)
+        {
+            StopCoroutine(healingCoroutine);
+        }
+
         CharacterStats stats = PlayerManager.instance.Player.Stats;
-        StartCoroutine(HealingRoutine(stats));
+        healingCoroutine = StartCoroutine(HealingRoutine(stats));
     }
 
     protected override void Deactivate(Collider deactivatingCollider)
@@ -33,5 +39,7 @@ public class HealingTurret : Turret
             stats.Heal(healingAmount);
             yield return healingTimer;
         }
+
+        healingCoroutine = null;
     }
 }
