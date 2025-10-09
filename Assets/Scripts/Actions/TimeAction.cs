@@ -7,6 +7,7 @@ public class TimeAction : Action
 {
     public DynamicMoveProvider dynamicMoveProvider;
     public ContinuousTurnProvider continuousTurnProvider;
+    public TimeEffectActivator timeEffect;
 
     private float slowTimer = 0f;
     private float defaultMoveSpeed;
@@ -95,6 +96,7 @@ public class TimeAction : Action
 
     IEnumerator TimeSlowDurationRoutine()
     {
+        timeEffect.StartTimeEffect();
         while (slowTimer > 0)
         {
             slowTimer -= Time.deltaTime * 1 / Time.timeScale;
@@ -102,6 +104,7 @@ public class TimeAction : Action
         }
 
         ResetTimeScale();
+        timeEffect.StopTimeEffect();
         timerRoutine = null;
     }
 
