@@ -13,7 +13,6 @@ public class TimeAction : Action
     private float defaultTurnSpeed;
     private float defaultRbTorque;
     private float defaultRbMaxAngularVelocity;
-    public bool Active;
 
     private Coroutine timerRoutine = null;
 
