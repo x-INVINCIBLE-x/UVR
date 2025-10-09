@@ -9,24 +9,32 @@ public class TimeEffectActivator : MonoBehaviour
     [SerializeField] private AudioSource timeAudioSource;
     [SerializeField] private AudioClip timeStopStart;
     [SerializeField] private AudioClip timeStopEnd;
-    [SerializeField] private float wipeSizeSpeed = 2f; // Adjust for desired animation speed
+    [SerializeField] private float wipeSizeSpeed = 2f; // Animation speed
 
     private RecallSettings recallEffect;
     private Coroutine wipeCoroutine;
 
     private void Start()
     {
-        if (recallVolume != null)
-            recallVolume.profile.TryGet(out recallEffect);
-
-        if (recallEffect == null)
+        if (recallVolume == null || recallVolume.profile == null)
         {
-            Debug.LogError("RecallSettings not found in Volume Profile!");
+            Debug.LogError("Recall Volume or Profile is missing!");
             enabled = false;
             return;
         }
 
-        // Initialize values
+        if (!recallVolume.profile.TryGet(out recallEffect) || recallEffect == null)
+        {
+            Debug.LogError(" RecallSettings not found in Volume Profile!");
+            enabled = false;
+            return;
+        }
+
+        InitializeEffect();
+    }
+
+    private void InitializeEffect()
+    {
         recallEffect.active = false;
         recallEffect.wipeSize.overrideState = true;
         recallEffect.wipeOriginPoint.overrideState = true;
@@ -34,54 +42,66 @@ public class TimeEffectActivator : MonoBehaviour
         recallEffect.noiseScale.value = 100f;
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Z) && wipeCoroutine == null)
-    //    {
-    //        wipeCoroutine = StartCoroutine(TimeStopEffect(true));
-    //    }
+    public void StartTimeEffect()
+    {
+        if (wipeCoroutine != null) StopCoroutine(wipeCoroutine);
+        wipeCoroutine = StartCoroutine(TimeStopEffect(true));
+    }
 
-    //    if (Input.GetKeyDown(KeyCode.X) && wipeCoroutine == null)
-    //    {
-    //        wipeCoroutine = StartCoroutine(TimeStopEffect(false));
-    //    }
-    //}
-
-    public void StartTimeEffect() => StartCoroutine(TimeStopEffect(true));
-    public void StopTimeEffect() => StartCoroutine(TimeStopEffect(false));
+    public void StopTimeEffect()
+    {
+        if (wipeCoroutine != null) StopCoroutine(wipeCoroutine);
+        wipeCoroutine = StartCoroutine(TimeStopEffect(false));
+    }
 
     private IEnumerator TimeStopEffect(bool status)
     {
-        float startSize = recallEffect.wipeSize.value;
         float targetSize = status ? 2.5f : 0f;
 
-        yield return null;
-
-        // If activating, force start from 0 before enabling the effect
         if (status)
         {
+            recallEffect.active = true;
             recallEffect.wipeSize.value = 0f;
             recallEffect.noiseScale.value = 100f;
-            recallEffect.active = true;
         }
 
+        // Play Audio
         AudioClip clipToPlay = status ? timeStopStart : timeStopEnd;
-        AudioManager.Instance.PlaySFX2d(timeAudioSource, clipToPlay, 1f);
+        if (clipToPlay != null && timeAudioSource != null)
+            AudioManager.Instance.PlaySFX2d(timeAudioSource, clipToPlay, 1f);
 
-        // Animate wipeSize smoothly
+        // Animate Transition
         while (Mathf.Abs(recallEffect.wipeSize.value - targetSize) > 0.01f)
         {
-            yield return null; // smoother than WaitForEndOfFrame
-            recallEffect.wipeSize.value = Mathf.MoveTowards(recallEffect.wipeSize.value, targetSize, wipeSizeSpeed * Time.unscaledDeltaTime);
+            recallEffect.wipeSize.value = Mathf.MoveTowards(
+                recallEffect.wipeSize.value,
+                targetSize,
+                wipeSizeSpeed * Time.unscaledDeltaTime
+            );
 
-            // Animate noise proportionally to wipeSize
-            recallEffect.noiseScale.value = Mathf.Lerp(100f, 199f, Mathf.InverseLerp(0f, 2.5f, recallEffect.wipeSize.value));
+            yield return null;
         }
 
-        // If deactivating, smoothly hide effect
+        // End Effect
         if (!status)
             recallEffect.active = false;
 
         wipeCoroutine = null;
+    }
+
+    private void OnDisable()
+    {
+        if (wipeCoroutine != null)
+        {
+            StopCoroutine(wipeCoroutine);
+            wipeCoroutine = null;
+        }
+
+        if (recallEffect != null)
+        {
+            recallEffect.wipeSize.value = 0f;
+            recallEffect.noiseScale.value = 100f;
+            recallEffect.active = false;
+        }
     }
 }
