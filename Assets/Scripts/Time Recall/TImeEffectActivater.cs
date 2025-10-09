@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 
-public class TImeEffectActivater : MonoBehaviour
+public class TimeEffectActivater : MonoBehaviour
 {
     public Volume recallVolume;
 
