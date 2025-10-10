@@ -41,7 +41,7 @@ public class BomberEnemy : SimpleEnemyBase
 
         if (shouldGetReward)
         {
-            CurrencyUI uiInstance = Instantiate(currencyUI, currencyUIOffset.position, Quaternion.identity);
+            CurrencyRewardUI uiInstance = Instantiate(currencyUI, currencyUIOffset.position, Quaternion.identity);
             uiInstance.UpdateUI(eliminationReward.Gold, eliminationReward.Magika);
             Destroy(uiInstance.gameObject, 2f);
 
