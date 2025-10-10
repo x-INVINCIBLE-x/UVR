@@ -7,6 +7,9 @@ public class FollowPlayer : MonoBehaviour
 
     [Header("Follow Settings")]
     [SerializeField] private bool useLazyFollow = false;
+    [SerializeField] private LazyFollow.RotationFollowMode followMode = LazyFollow.RotationFollowMode.Follow;
+    [SerializeField] private float lazySpeed = 6f;
+
     [SerializeField] private bool rotateWithPlayer = false;
     [SerializeField] private bool followY = false;
     [SerializeField] private bool followPlayerOnce = false;
@@ -104,8 +107,9 @@ public class FollowPlayer : MonoBehaviour
             lazyFollow = gameObject.AddComponent<LazyFollow>();
         }
 
+        lazyFollow.movementSpeed = lazySpeed;
         lazyFollow.target = PlayerManager.instance.Player.playerBody;
         lazyFollow.targetOffset = offset;
-        lazyFollow.rotationFollowMode = LazyFollow.RotationFollowMode.Follow;
+        lazyFollow.rotationFollowMode = followMode;
     }
 }
