@@ -1,7 +1,3 @@
-using NUnit.Framework;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class BuffMVC : MonoBehaviour
@@ -9,12 +5,20 @@ public class BuffMVC : MonoBehaviour
     [SerializeField] private TemporaryBuffs model;
     [SerializeField] private BuffView view;
 
+    private void OnEnable()
+    {
+        model = TemporaryBuffs.instance;
+
+        if (model != null)
+            SetupDisplay();
+    }
+#if UNITY_EDITOR
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.U))
             SetupDisplay();
     }
-
+#endif
     public void SetupDisplay()
     {
         if (model == null || view == null)
@@ -23,9 +27,11 @@ public class BuffMVC : MonoBehaviour
             return;
         }
 
+        view.ClearBuffsUI();
+
         foreach (Buff buff in model.GetCurrentBuffs())
         {
-            view.CreateBuffUI(buff.buffName, buff.icon, buff.iconColor ,buff.flavourText);
+            view.CreateBuffUI(buff.buffName, buff.icon, buff.frontMaterial, buff.iconColor, buff.flavourText);
         }
     }
 }

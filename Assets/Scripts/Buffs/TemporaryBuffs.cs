@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TemporaryBuffs : MonoBehaviour
 {
+    public static TemporaryBuffs instance; // TODO: To be removed
+
     public List<Buff> oneOffBufffs = new(); // => Temporary Buff always working, Stats + 10
     public List<Buff> timerBuffs = new(); // => Activates after certain period of time, if always active then calls itself
     public List<BuffInfo> onHitBuffs = new();
@@ -31,6 +33,14 @@ public class TemporaryBuffs : MonoBehaviour
     private HashSet<Buff> activeBuffs = new();
     private Dictionary<Buff, int> buffStacks = new();
     private Dictionary<Buff, Coroutine> activeStackCoroutines = new();
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     private void Start()
     {
