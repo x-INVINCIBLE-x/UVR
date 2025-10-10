@@ -30,7 +30,7 @@ public class DungeonMusic : MonoBehaviour
 
     private void OnDestroy()
     {   
-
+        AudioManager.Instance.StopMusic();
     }
 
     private void OnEngageCombat(int enemyId)

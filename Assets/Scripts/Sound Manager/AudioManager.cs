@@ -101,6 +101,17 @@ public class AudioManager : MonoBehaviour
         activeSource.Play();
     }
 
+    public void StopMusic()
+    {
+        isPlayingMusicSource1 = false;
+
+        musicSource.Stop();
+        musicSource2.Stop();
+
+        musicSource.clip = null;
+        musicSource2.clip = null;
+    }
+
     public void PlayMusicWithFade(AudioClip newClip,float transitionTime = 1.0f)
     {   
         if (newClip == null)
