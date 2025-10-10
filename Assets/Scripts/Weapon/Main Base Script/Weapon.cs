@@ -64,8 +64,8 @@ public class Weapon : MonoBehaviour
     protected virtual void DropWeapon(SelectExitEventArgs args)
     {
         //transform.parent = null;
-        finalAttackData.owner = null;
         finalAttackData = attackData;
+        finalAttackData.owner = null;
     }
     
     protected virtual void ActivateWeapon(ActivateEventArgs args)

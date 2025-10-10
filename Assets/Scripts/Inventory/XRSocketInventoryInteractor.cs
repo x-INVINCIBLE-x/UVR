@@ -21,7 +21,7 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
     private bool isSafe = false;
     private bool hasWeaponInSlot = false;
 
-    [SerializeField] public float spawnDelay = 0f;
+    private float spawnDelay = 0f;
     private Quaternion spawnRotation;
 
     protected override void Awake()
@@ -75,7 +75,6 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
         hasWeaponInSlot = true;
         InventoryItem item = new InventoryItem(weapon.data);
         InventoryManager.Instance.AddItemFromSocket(item, ID);
-        spawnRotation = currentWeapon.transform.rotation;
         //inventoryManager.AddItemFromSocket(weapon, this);
     }
 
@@ -105,12 +104,14 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
 
     private IEnumerator SpawnWeapon()
     {
-        yield return new WaitForSeconds(spawnDelay);
+        //yield return new WaitForSeconds(spawnDelay);
+
+        yield return null;
 
         InventoryItem item = InventoryManager.Instance.GetItem(ID);
         if (item != null)
         {
-            currentWeapon = Instantiate(item.data.Model, transform.position + new Vector3(0, 0.5f, 0), spawnRotation).GetComponent<Item>();
+            currentWeapon = Instantiate(item.data.Model, transform.position + new Vector3(0, 0.1f, 0), spawnRotation).GetComponent<Item>();
             if (currentWeapon.TryGetComponent(out PurchasableItem purchasable))
             {
                 Destroy(purchasable);
@@ -132,6 +133,8 @@ public class XRSocketInventoryInteractor : UnityEngine.XR.Interaction.Toolkit.In
         {
             return;
         }
+
+        spawnRotation = currentWeapon.transform.rotation;
 
         Destroy(currentWeapon.gameObject);
         currentWeapon = null;

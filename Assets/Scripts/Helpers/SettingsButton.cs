@@ -54,7 +54,5 @@ public class SettingsButton : MonoBehaviour
     public void EndGame()
     {
         Application.Quit();
-    }
-
-    
+    }    
 }
