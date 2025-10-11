@@ -73,6 +73,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
  
     private bool registered = false;
 
+    private float defaultMagucChargeTime;
     [SerializeField] private float magicChargeTime = 2f;
     public float MagicChargeTime => magicChargeTime / AttackSpeedMultiplier;
 
@@ -149,6 +150,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
         enemyStats.OnDeath += HandleDeath;
         enemyStats.OnAilmentStatusChange += HandleAilment;
         enemyStats.OnHealthChanged += HandleHealthChange; //Event called when healthchange (gives normalized health value)
+        defaultMagucChargeTime = magicChargeTime;
         magicChargeTime = MagicChargeTime;
         InitializeAilmentData();
 
@@ -216,10 +218,11 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
             else
             {
                 localSpeedMultiplier = 1f;
+                localAttackSpeedMultiplier = 1f;
             }
 
             //agent.speed = isActivated ? walkSpeed * 0.5f : walkSpeed;
-            magicChargeTime = isActivated ? MagicChargeTime * 1.5f : magicChargeTime;
+            magicChargeTime = isActivated ? MagicChargeTime * 1.5f : defaultMagucChargeTime;
         }
     }   
 
