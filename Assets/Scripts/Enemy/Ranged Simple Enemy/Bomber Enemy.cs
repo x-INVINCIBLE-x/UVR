@@ -55,10 +55,13 @@ public class BomberEnemy : SimpleEnemyBase
 
     private void SelfDestruct()
     {
+        if (isDead) return;
+
+        isDead = true;
         shouldGetReward = false;
         Invoke(nameof(SelfKill),0.1f);
-        FXManager.SelfDestructingVFX(1f);
-        ObjectPool.instance.ReturnObject(gameObject,selfDestructTime);
+        FXManager.SelfDestructingVFX(1.5f);
+        ObjectPool.instance.ReturnObject(gameObject);
     }
 
     private void SelfKill() => enemyStats.KillCharacter();

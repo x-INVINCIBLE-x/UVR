@@ -66,7 +66,13 @@ public class FallResetHandler : MonoBehaviour
         Vector3 spawnPos = FindValidPositionNear(safePos, radius);
 
         weapon.transform.position = spawnPos;
-        weapon.GetComponent<Rigidbody>()?.WakeUp();
+
+        Rigidbody rb = weapon.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.WakeUp();
+            rb.linearVelocity = Vector3.zero;
+        }
 
         Debug.Log($"Weapon '{weapon.name}' respawned at {spawnPos}");
     }

@@ -387,7 +387,7 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
                 if (agent.isActiveAndEnabled)
                     agent.SetDestination(walkPoint);
             }
-            catch (System.Exception _)
+            catch (System.Exception)
             {
             }
             Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -447,7 +447,6 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
 
     protected virtual void Chase()
     {
-        Debug.Log($"Chasing Player: {Player.name}");
         if (enemyEventManager != null)
         {
             enemyEventManager.SeePlayer(enemyID);
@@ -494,7 +493,6 @@ public class SimpleEnemyBase : MonoBehaviour, IRewardProvider<GameReward>, ISpee
 
     private void ShowExclamationOnly()
     {
-        Debug.Log($"Showing Exclamation Mark for Player: {Player.name}");
         FXManager.SpawnQuestionMark(false);
         FXManager.SpawnExclamationMark(true);
     }
