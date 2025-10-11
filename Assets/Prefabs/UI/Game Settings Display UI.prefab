@@ -3051,7 +3051,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.21854346, y: 0.20881289, z: -0.67257136, w: 0.67548776}
   m_LocalPosition: {x: 661.12, y: 1.47, z: 440.63}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3961511873756099206}
@@ -3070,6 +3070,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useLazyFollow: 0
+  followMode: 3
+  lazySpeed: 6
   rotateWithPlayer: 1
   followY: 1
   followPlayerOnce: 0
@@ -3087,6 +3089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6efcc89794e7e844906535bea6b70f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  closeOnMove: 0
 --- !u!114 &4068955847534496164
 MonoBehaviour:
   m_ObjectHideFlags: 0

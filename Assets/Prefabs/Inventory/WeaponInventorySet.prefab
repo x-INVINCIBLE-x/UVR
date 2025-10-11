@@ -46,11 +46,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useLazyFollow: 0
+  followMode: 3
+  lazySpeed: 6
   rotateWithPlayer: 1
   followY: 1
   followPlayerOnce: 0
   followOnEnableOnly: 0
-  offset: {x: 0, y: 0, z: -0.15}
+  offset: {x: 0, y: -0.1, z: 0.02}
 --- !u!1 &423381690383622036
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6efcc89794e7e844906535bea6b70f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  closeOnMove: 1
 --- !u!1 &1083857971983975456
 GameObject:
   m_ObjectHideFlags: 0

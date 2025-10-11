@@ -31,6 +31,7 @@ public class SceneTransitionProvider : MonoBehaviour
     private float stayDuraion = 5;
     private bool unloadPriorityScene = false;
     private Coroutine currentTransitionRoutine = null;
+    [SerializeField] private bool unloadPriorityWhenReady = false;
 
 #if UNITY_EDITOR
     [ContextMenu("Update References")]
@@ -149,6 +150,13 @@ public class SceneTransitionProvider : MonoBehaviour
         {
             yield return new WaitUntil(() =>
                 PrioritySceneGate.Instance != null && PrioritySceneGate.Instance.IsReady);
+
+            // NEW: Unload priority immediately when it's marked ready
+            if (unloadPriorityWhenReady)
+            {
+                UnloadPriorityScene();
+                isPrioritySceneLoaded = false;
+            }
         }
 
         AsyncOperation loadTarget = SceneManager.LoadSceneAsync(targetScene.SceneName, LoadSceneMode.Additive);
@@ -163,7 +171,8 @@ public class SceneTransitionProvider : MonoBehaviour
 
         Scene targetSceneObj = SceneManager.GetSceneByName(targetScene.SceneName);
 
-        if (unloadPriorityScene)
+        // OLD: Unload manually only if still loaded
+        if (unloadPriorityScene && isPrioritySceneLoaded)
         {
             UnloadPriorityScene();
         }
@@ -181,7 +190,6 @@ public class SceneTransitionProvider : MonoBehaviour
             SceneManager.MoveGameObjectToScene(Core, targetSceneObj);
         }
 
-
         SceneManager.SetActiveScene(targetSceneObj);
 
         Scene lmScene = targetSceneObj;
@@ -193,10 +201,9 @@ public class SceneTransitionProvider : MonoBehaviour
             lm.SetPlayerToSpawnPosition();
 
         yield return UnloadScene(transitionSceneRef.SceneName);
-        
+
         yield return HandleFadeIn();
     }
-
 
     private IEnumerator TransitionDirectly(Scene previousScene)
     {

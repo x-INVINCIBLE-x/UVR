@@ -23,7 +23,7 @@ public class FollowPlayer : MonoBehaviour
     {
         if (PlayerManager.instance != null)
         {
-            playerTransform = PlayerManager.instance.Player.playerBody;
+            playerTransform = PlayerManager.instance.PlayerOrigin.transform;
         }
 
         if (followOnEnableOnly && playerTransform != null)
@@ -51,7 +51,7 @@ public class FollowPlayer : MonoBehaviour
 
         if (playerTransform == null)
         {
-            playerTransform = PlayerManager.instance.Player.playerBody;
+            playerTransform = PlayerManager.instance.PlayerOrigin.transform;
 
             if (playerTransform == null)
             {
