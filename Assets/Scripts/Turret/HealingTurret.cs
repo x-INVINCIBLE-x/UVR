@@ -1,13 +1,20 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class HealingTurret : Turret
 {
+    [Header("Healing Properties")]
     [SerializeField] private int healingAmount = 50;
     [SerializeField] private float healingFrequency = 0.5f;
     private WaitForSeconds healingTimer;
-    private bool isHealing = false;
     private Coroutine healingCoroutine;
+    private bool isHealing = false;
+
+    [Header("Healing Limiter")]
+    [SerializeField] private bool hasLimit = false;
+    [SerializeField] private int healingLimit = 100;
+    private int healed = 0;
 
     private void Start()
     {
@@ -32,11 +39,24 @@ public class HealingTurret : Turret
         isHealing = false;
     }
 
+    private void OnHealComplete()
+    {
+        Debug.Log("Heal Complete");
+    }
+
     private IEnumerator HealingRoutine(CharacterStats stats)
     {
         while (isHealing)
         {
+            if (hasLimit && healed >= healingLimit)
+            {
+                OnHealComplete();
+                yield break;
+            }
+
             stats.Heal(healingAmount);
+            healed += healingAmount;
+
             yield return healingTimer;
         }
 
