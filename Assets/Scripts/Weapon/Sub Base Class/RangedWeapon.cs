@@ -60,7 +60,15 @@ public class RangedWeapon : Weapon
             //Debug.Log($"Original Emission Color: {originalEmissionColor}, Max Intensity: {maxEmissionIntensity}");
         }
     }
-
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot();
+        }
+    }
+#endif
     protected virtual void Shoot()
     {
         if (!CanShoot()) return;

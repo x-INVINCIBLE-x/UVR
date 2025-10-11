@@ -53,12 +53,12 @@ public class AilmentStatus
     [HideInInspector] public float ailmentLimit = 100;
     public event Action<AilmentType> AilmentEffectEnded;
     [HideInInspector] public bool isActive = false;
+    public Coroutine ailmentRoutine;
 
     public IEnumerator ReduceValueOverTime(float resistance = -1)
     {
         if (resistance < 0)
             resistance = this.resistance.Value;
-
         while (Value > 0)
         {
             isActive = true;
@@ -81,6 +81,7 @@ public class AilmentStatus
         }
 
         isActive = false;
+        ailmentRoutine = null;
     }
 
     public void Reset()
@@ -347,8 +348,8 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
         ailmentStatus.Value = Mathf.Min(ailmentStatus.ailmentLimit + ailmentLimitOffset, ailmentStatus.Value + effectAmount);
 
-        if (!ailmentStatus.isActive)
-            StartCoroutine(ailmentStatus.ReduceValueOverTime());
+        if (!ailmentStatus.isActive && !ailmentStatus.isMaxed)
+            ailmentStatus.ailmentRoutine = StartCoroutine(ailmentStatus.ReduceValueOverTime());
 
         OnAilmentStatusChange?.Invoke(ailmentType, false, 0f);
 
@@ -357,7 +358,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
 
         OnAilmentStatusChange?.Invoke(ailmentType, true, ailmentEffect);
 
-        StopCoroutine(ailmentStatus.ReduceValueOverTime());
+        StopCoroutine(ailmentStatus.ailmentRoutine);
         StartCoroutine(ailmentStatus.ReduceValueOverTime(maxResistance));
 
         ApplyAilment(ailmentType, ailmentEffect);
