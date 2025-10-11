@@ -52,7 +52,7 @@ public abstract class Challenge: MonoBehaviour
         Debug.Log("Base ChallengeFailed() called");
         PlayerManager.instance.OnPlayerDeath -= ChallengeFailed;
         Debug.Log("Base ChallengeFailed called");
-        StartCoroutine(RaiseChallengeFailRoutine(4f));
+        StartCoroutine(RaiseChallengeFailRoutine(1f));
     }
 
     private IEnumerator RaiseChallengeFailRoutine(float time)

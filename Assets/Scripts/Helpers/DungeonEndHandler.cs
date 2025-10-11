@@ -10,7 +10,7 @@ public class DungeonEndHandler : MonoBehaviour
 
     private void HandleDungeonEnd()
     {
-        Destroy(gameObject);
+        Destroy(gameObject, 5f);
     }
 
     private void OnDestroy()
